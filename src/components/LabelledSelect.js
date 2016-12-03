@@ -14,7 +14,7 @@ class LabelledSelect extends Component{
     return(
       <label className="pt-label pt-inline">
         {this.props.children}
-        <div className="pt-select" style={{width:"200px", float:"right"}}>
+        <div className="pt-select" style={{width:"200px", marginRight:"auto", float:"right"}}>
           <select defaultValue={0}>
             {this.props.options.map(this.renderOption)}
           </select>

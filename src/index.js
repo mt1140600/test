@@ -11,6 +11,6 @@ import TaxDetails from './views/TaxDetails';
 import PaymentDetails from './views/PaymentDetails';
 import POCDetails from './views/POCDetails';
 import SellerInterview from './views/SellerInterview';
-import TnC from './views/TnC'
+import TnC from './views/TnC';
 
-ReactDOM.render(<VerifyOtp/>,document.getElementById('app'));
+ReactDOM.render(<SellerInterview/>,document.getElementById('app'));
