@@ -1,22 +1,16 @@
-/* eslint-disable import/default */
-
 import React from 'react';
-import {render} from 'react-dom';
-import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
-import routes from './routes';
-import configureStore from './store/configureStore';
-require('./favicon.ico'); // Tell webpack to load favicon.ico
-import './styles/styles.scss'; // Yep, that's right. You can import SASS/CSS files too! Webpack will run the associated loader and plug this into the page.
-import { syncHistoryWithStore } from 'react-router-redux';
+import ReactDOM from 'react-dom';
+require('@blueprintjs/core/dist/blueprint.css');
+require('./styles/stylesheet.css');
 
-const store = configureStore();
+import Login from './views/Login';
+import SellerDetails from './views/SellerDetails';
+import Signup from './views/Signup';
+import VerifyOtp from './views/VerifyOtp';
+import TaxDetails from './views/TaxDetails';
+import PaymentDetails from './views/PaymentDetails';
+import POCDetails from './views/POCDetails';
+import SellerInterview from './views/SellerInterview';
+import TnC from './views/TnC'
 
-// Create an enhanced history that syncs navigation events with the store
-const history = syncHistoryWithStore(browserHistory, store);
-
-render(
-  <Provider store={store}>
-    <Router history={history} routes={routes} />
-  </Provider>, document.getElementById('app')
-);
+ReactDOM.render(<VerifyOtp/>,document.getElementById('app'));

@@ -1,27 +1,30 @@
-import React, { PropTypes } from 'react';
-import { Link, IndexLink } from 'react-router';
+import React, {Component} from 'react';
+import { Button, FocusStyleManager, InputGroup } from "@blueprintjs/core";
 
-// This is a class-based component because the current
-// version of hot reloading won't hot reload a stateless
-// component at the top-level.
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <IndexLink to="/">Home</IndexLink>
-        {' | '}
-        <Link to="/fuel-savings">Demo App</Link>
-        {' | '}
-        <Link to="/about">About</Link>
-        <br/>
-        {this.props.children}
+FocusStyleManager.onlyShowFocusOnTabs();
+
+class App extends Component{
+  render(){
+    return(
+      <div className="container">
+          <div className="col" style={{textAlign:"center"}}>
+              <h2 className="pt-intent-primary item">Prokure</h2>
+              <div className="pt-control-group pt-vertical item">
+                  <div className="pt-input-group pt-large " >
+                    <input type="text" className="pt-input" placeholder="Email" />
+                  </div>
+                  <div className="pt-input-group pt-large" >
+                    <input type="password" className="pt-input" placeholder="Password" />
+                  </div>
+              </div>
+              <Button className="pt-intent-primary pt-button-height-large item">Log in</Button>
+              <a className="item">Forgot Password?</a>
+              <Button className="pt-intent-warning item">Create new account</Button>
+              <p className="item">© 2016 Cerise Internet Technologies</p>
+          </div>
       </div>
     );
   }
 }
-
-App.propTypes = {
-  children: PropTypes.element
-};
 
 export default App;
