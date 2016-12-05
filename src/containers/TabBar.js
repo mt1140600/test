@@ -32,11 +32,9 @@ class TabBar extends Component{
     );
   }
   render(){
-    console.log(tabs);
-    console.log(tabPanels);
     return(
-      <Tabs>
-        <TabList>
+      <Tabs className="tabs">
+        <TabList className="tabsBar">
           {tabs.map(this.renderTabs)}
         </TabList>
         {tabPanels.map(this.renderTabPanels)}
