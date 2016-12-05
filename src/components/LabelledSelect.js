@@ -24,4 +24,9 @@ class LabelledSelect extends Component{
   }
 }
 
+LabelledSelect.propTypes = {
+  children: React.PropTypes.node,
+  options: React.PropTypes.array
+};
+
 export default LabelledSelect;

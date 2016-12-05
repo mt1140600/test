@@ -11,4 +11,9 @@ class LabelledTextInput extends Component{
   }
 }
 
+LabelledTextInput.propTypes = {
+  children: React.PropTypes.node,
+  style: React.PropTypes.object
+};
+
 export default LabelledTextInput;

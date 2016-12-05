@@ -13,4 +13,8 @@ import POCDetails from './views/POCDetails';
 import SellerInterview from './views/SellerInterview';
 import TnC from './views/TnC';
 
+// import Perf from 'react-addons-perf';
+// window.Perf = Perf;
+// Perf.start();
+
 ReactDOM.render(<SellerInterview/>,document.getElementById('app'));

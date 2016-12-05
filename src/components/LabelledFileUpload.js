@@ -14,4 +14,8 @@ class LabelledFileUpload extends Component{
   }
 }
 
+LabelledFileUpload.propTypes = {
+  children: React.PropTypes.node
+};
+
 export default LabelledFileUpload;

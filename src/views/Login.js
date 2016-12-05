@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { Button, FocusStyleManager, InputGroup } from "@blueprintjs/core";
-var logo = require('../images/prokure_logo.png');
-FocusStyleManager.onlyShowFocusOnTabs();
+import { Button, FocusStyleManager } from "@blueprintjs/core";
+const logo = require('../images/prokure_logo.png');
+FocusStyleManager.isActive();
 
 class Login extends Component{
   render(){
@@ -10,7 +10,7 @@ class Login extends Component{
 
         <div className="col" style={{textAlign:"center"}}>
 
-          <img src = {logo} style={{width:"100px",height:"100px",margin:"auto"}}></img>
+          <img src = {logo} style={{width:"100px",height:"100px",margin:"auto"}} />
           <br/>
           <h2 className="pt-intent-primary item">Prokure</h2>
           <div className="pt-control-group pt-vertical item">
@@ -24,11 +24,11 @@ class Login extends Component{
           <br/>
           <Button className="pt-intent-primary pt-button-height-large item">Log in</Button>
           <br/>
-          <a className="item" style={{color:"grey"}}>Forgot Password?</a>
+          <a className="item pt-text-muted" style={{color:"#5c7080"}}>Forgot Password?</a>
           <br/>
           <Button className="pt-intent-warning item">Create new account</Button>
           <br/>
-          <p className="item" style={{color:"grey"}}>© 2016 Cerise Internet Technologies</p>
+          <p className="item pt-text-muted">© 2016 Cerise Internet Technologies</p>
 
         </div>
 

@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
-import LabelledTextInput from '../components/LabelledTextInput';
-import LabelledSelect from '../components/LabelledSelect';
-import LabelledCheckbox from '../components/LabelledCheckbox';
-import LabelledFileUpload from '../components/LabelledFileUpload';
 FocusStyleManager.onlyShowFocusOnTabs();
 
 class TnC extends Component{

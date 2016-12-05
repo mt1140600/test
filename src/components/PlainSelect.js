@@ -5,13 +5,11 @@ class PlainSelect extends Component{
     super();
     this.renderOptions = this.renderOptions.bind(this);
   }
-
   renderOptions(item, index){
     return(
       <option key={index} value={index}>{item}</option>
     );
   }
-
   render(){
     return(
       <div className="pt-select" style={{marginRight:"auto"}}>
@@ -22,5 +20,9 @@ class PlainSelect extends Component{
     );
   }
 }
+
+PlainSelect.propTypes = {
+  options: React.PropTypes.array
+};
 
 export default PlainSelect;

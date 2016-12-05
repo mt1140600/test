@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { Button, FocusStyleManager, InputGroup } from "@blueprintjs/core";
-var logo = require('../images/prokure_logo.png');
+import { Button, FocusStyleManager } from "@blueprintjs/core";
+const logo = require('../images/prokure_logo.png');
 FocusStyleManager.onlyShowFocusOnTabs();
 
 class Signup extends Component{
@@ -10,7 +10,7 @@ class Signup extends Component{
 
         <div className="col" style={{textAlign:"center"}}>
 
-          <img src = {logo} style={{width:"100px",height:"100px",margin:"auto"}}></img>
+          <img src = {logo} style={{width:"100px",height:"100px",margin:"auto"}} />
           <br/>
           <h2 className="pt-intent-primary item">Prokure</h2>
           <br/>
