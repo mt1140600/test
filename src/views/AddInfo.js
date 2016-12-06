@@ -8,7 +8,7 @@ FocusStyleManager.onlyShowFocusOnTabs();
 const establishments = ["Manufacturer","Wholesaler","Distributer","Importer"];
 const websites = ["Flipkart","Amazon","Snapdeal","Shopclues","Indiamart","Just Dial","Wydr","Shotang","Just Buy Live"];
 
-class SellerInterview extends Component{
+class AddInfo extends Component{
   constructor(){
     super();
     this.alignCheckboxes = this.alignCheckboxes.bind(this);
@@ -57,4 +57,4 @@ class SellerInterview extends Component{
   }
 }
 
-export default SellerInterview;
+export default AddInfo;

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import TabBar from './TabBar';
+import TabLayout from './TabLayout';
 import ViewNameBar from '../components/ViewNameBar';
 import Header from '../components/Header';
 import ProgressBar from '../components/ProgressBar';
@@ -14,7 +14,7 @@ class AccountSetup extends Component{
         <Header/>
         <ViewNameBar/>
         <ProgressBar/>
-        <TabBar/>
+        <TabLayout/>
       </div>
     );
   }

@@ -2,17 +2,17 @@ import React, {Component} from 'react';
 import {Tabs, TabList, Tab, TabPanel} from "@blueprintjs/core";
 
 import VerifyOtp from '../views/VerifyOtp';
-import SellerDetails from '../views/SellerDetails';
+import SellerInfo from '../views/SellerInfo';
 import TaxDetails from '../views/TaxDetails';
 import PaymentDetails from '../views/PaymentDetails';
 import POCDetails from '../views/POCDetails';
-import SellerInterview from '../views/SellerInterview';
+import AddInfo from '../views/AddInfo';
 import TnC from '../views/TnC';
 
-const tabs      = ["Mobile Verification", "SellerInformation",  "Tax Details",  "Payment Details",  "Point of Contact", "Seller Interview", "Terms & Conditions"];
-const tabPanels = [     VerifyOtp,            SellerDetails,     TaxDetails,      PaymentDetails,       POCDetails,         SellerInterview,      TnC];
+const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Terms & Conditions"];
+const tabPanels = [     VerifyOtp,            SellerInfo,          TaxDetails,    PaymentDetails,       POCDetails,            AddInfo,                    TnC];
 
-class TabBar extends Component{
+class TabLayout extends Component{
   constructor(){
     super();
     this.renderTabs = this.renderTabs.bind(this);
@@ -43,4 +43,4 @@ class TabBar extends Component{
   }
 }
 
-export default TabBar;
+export default TabLayout;
