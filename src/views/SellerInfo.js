@@ -9,11 +9,33 @@ import * as constants from '../constants';
 FocusStyleManager.onlyShowFocusOnTabs();
 
 class SellerInfo extends Component{
+
   constructor(){
     super();
+    this.pincodeToAddress = this.pincodeToAddress.bind(this);
+  }
+
+  pincodeToAddress(pincode){
+    console.log("Google GeoCode API - Getting address corresponding to pincode: "+pincode);
+    var getAddress = new XMLHttpRequest();
+    var url = constants.pathGeocode+pincode;
+    // var url = fileUrl;
+    getAddress.open("GET", url, true);
+    getAddress.onload = () => {
+      if(getAddress.status === 200){
+        console.log(JSON.parse(getAddress.response).results);
+        // this.setState({orderJSON: JSON.parse(getAddress.response)});
+      }
+      else{
+        console.log("Something went wrong; Status: "+getAddress.status);
+      }
+    }
+    getAddress.send(null);
   }
 
   render(){
+    this.pincodeToAddress("110023");
+    console.log("lol");
     return(
       <div className="container">
 

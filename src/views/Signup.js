@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
+import {reCaptchaSiteKey} from '../constants'
 const logo = require('../images/prokure_logo.png');
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -23,13 +24,21 @@ class Signup extends Component{
             <div className="pt-input-group pt-large " >
               <input type="text" className="pt-input" placeholder="Business Name" />
             </div>
+          </div>
+          <br/>
+          <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
               <input type="text" className="pt-input" placeholder="Email ID" />
             </div>
             <div className="pt-input-group pt-large" >
               <input type="password" className="pt-input" placeholder="Password" />
             </div>
+            <div className="pt-input-group pt-large" >
+              <input type="password" className="pt-input" placeholder="Confirm Password" />
+            </div>
           </div>
+          <br/>
+          <div className="g-recaptcha" data-sitekey={reCaptchaSiteKey} ></div>
           <br/>
           <Button className="pt-intent-primary pt-button-height-large item">Sign up</Button>
           <br/>
