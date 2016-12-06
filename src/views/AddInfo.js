@@ -27,6 +27,9 @@ class AddInfo extends Component{
 
           <div className="col" style={{width:"500px"}}>
 
+            <h2> Additional Information </h2>
+            <br/>
+
             <h6> Type of establishment </h6>
             <div style={{display:"flex",flexWrap:"wrap"}}>
               {this.alignCheckboxes(establishments,2)}
