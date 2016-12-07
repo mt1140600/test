@@ -17,17 +17,9 @@ class SellerInfo extends Component{
     this.pincodeToAddress = this.pincodeToAddress.bind(this);
     this.updateInfo = this.updateInfo.bind(this);
     this.updateOperationalHours = this.updateOperationalHours.bind(this);
-    this.alignCheckboxes = this.alignCheckboxes.bind(this);
     this.storeForm = this.storeForm.bind(this);
     this.validationState = {storeName: false, pincode: false, add1: false, add2: true,state: false, city: false, wadd1:false, wadd2:true, wpincode:false, wstate:false, wcity:false, category:false, workingDays:true, operationalHours:true };//this is not a state. Just an instance variable because, it's value can be calculated with state
     this.state = {storeName:"", pincode:"", add1:"", add2:"",state:"Choose State", city:"", wadd1:"", wadd2:"", wpincode:"",wstate:"Choose State", wcity:"", category:"Choose Primary Category", workingDays: [], operationalHours:["8","am","5","pm"]};
-  }
-
-  alignCheckboxes(arr, cols){
-   const styleObj = {flexBasis:`${100/cols}%`}; //Dividing the container into required columns
-   return arr.map((item,index)=>(
-      <LabelledCheckbox key={index} style={styleObj}>{item}</LabelledCheckbox>
-    ));
   }
 
   updateInfo(field,value,vState){

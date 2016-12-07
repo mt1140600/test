@@ -44,7 +44,7 @@ class LabelledTextInput extends Component{
 
 LabelledTextInput.propTypes = {
 
-  children: React.PropTypes.string,
+  children: React.PropTypes.node,
   value: React.PropTypes.string,
   onChange: React.PropTypes.func,
   validationState: React.PropTypes.bool,

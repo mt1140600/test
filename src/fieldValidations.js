@@ -4,7 +4,7 @@ export function noValidation(){
     return true;
 }
 
-export function validateMandatoryString(value){
+export function validateMandatoryString(value){ //also doubles up for checking if an array is not empty
   if(value.length > 0) return true;
   else return false;
 }
@@ -25,7 +25,7 @@ export function validatePAN(value){
 
 }
 
-export function validateTIN(value) {//11digits followed by V
+export function validateVAT(value) {//11digits followed by V
   let pattern = /^([0-9]){11}V$/;
   return pattern.test(value);
 }
@@ -36,10 +36,16 @@ export function validateCST(value){//11digits followed by C
 }
 
 export function validateIFSC(value){
-
+  let pattern = /^([A-Z]{4})0([0-9A-Z]){6}$/i;
+  return pattern.test(value);
 }
 
 export function validateSelect(invalidOption, currentOption){ //Since select has options like Choose state, we need to mark these as invalid options
   if(invalidOption === currentOption) return false;
   else return true;
+}
+
+export function validateAccountNumber(value){
+  if( typeof(Number(value))==="number" && value.length >= 11 && Number(value) > 0) return true;
+  else return false;
 }
