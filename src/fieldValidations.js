@@ -1,3 +1,4 @@
+//Return true if field value is valid
 
 export function noValidation(){
     return true;
@@ -26,7 +27,7 @@ export function validatePAN(value){
 
 export function validateTIN(value) {//11digits followed by V
   let pattern = /^([0-9]){11}V$/;
-  return pattern.test(value)
+  return pattern.test(value);
 }
 
 export function validateCST(value){//11digits followed by C
@@ -36,4 +37,9 @@ export function validateCST(value){//11digits followed by C
 
 export function validateIFSC(value){
 
+}
+
+export function validateSelect(invalidOption, currentOption){ //Since select has options like Choose state, we need to mark these as invalid options
+  if(invalidOption === currentOption) return false;
+  else return true;
 }

@@ -4,6 +4,7 @@ import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledSelect from '../components/LabelledSelect';
 import LabelledCheckbox from '../components/LabelledCheckbox';
 import PlainSelect from '../components/PlainSelect';
+import LabelledCheckboxGroup from '../components/LabelledCheckboxGroup';
 import * as constants from '../constants';
 import * as fieldValidations from '../fieldValidations';
 
@@ -15,9 +16,11 @@ class SellerInfo extends Component{
     super();
     this.pincodeToAddress = this.pincodeToAddress.bind(this);
     this.updateInfo = this.updateInfo.bind(this);
+    this.updateOperationalHours = this.updateOperationalHours.bind(this);
     this.alignCheckboxes = this.alignCheckboxes.bind(this);
-    this.validationState = {storeName: false, pincode: false, add1: false, add2: true, city: false, wadd1:false, wadd2:true, wpincode:false, wcity:false };//this is not a state. Just an instance variable because, it's value can be calculated with state
-    this.state = {storeName:"", pincode:"", add1:"", add2:"", city:"", wadd1:"", wadd2:"", wpincode:"", wcity:""};
+    this.storeForm = this.storeForm.bind(this);
+    this.validationState = {storeName: false, pincode: false, add1: false, add2: true,state: false, city: false, wadd1:false, wadd2:true, wpincode:false, wstate:false, wcity:false, category:false, workingDays:true, operationalHours:true };//this is not a state. Just an instance variable because, it's value can be calculated with state
+    this.state = {storeName:"", pincode:"", add1:"", add2:"",state:"Choose State", city:"", wadd1:"", wadd2:"", wpincode:"",wstate:"Choose State", wcity:"", category:"Choose Primary Category", workingDays: [], operationalHours:["8","am","5","pm"]};
   }
 
   alignCheckboxes(arr, cols){
@@ -30,6 +33,12 @@ class SellerInfo extends Component{
   updateInfo(field,value,vState){
       this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
       this.setState({[`${field}`]:value});
+  }
+
+  updateOperationalHours(field,value){
+    let newOperationalHours = [...this.state.operationalHours];
+    newOperationalHours[field] = value;
+    this.updateInfo("operationalHours",newOperationalHours,true);
   }
 
   pincodeToAddress(pincode){
@@ -50,10 +59,20 @@ class SellerInfo extends Component{
     getAddress.send(null);
   }
 
+  storeForm(){
+    console.log(JSON.stringify(this.state));
+    let validateSellerInfo = true;
+    for(let key in this.validationState){
+      if(this.validationState[key] === false)
+        validateSellerInfo = false;
+    }
+    const newObj = {...this.state, validateSellerInfo : validateSellerInfo};
+    console.log(JSON.stringify(newObj));
+    localStorage.setItem("sellerInfo",newObj);
+  }
+
   render(){
     // this.pincodeToAddress("110023");
-    console.log("vState",this.validationState);
-    console.log("state",this.state);
     return(
       <div className="container">
 
@@ -71,7 +90,15 @@ class SellerInfo extends Component{
               Store Name
             </LabelledTextInput>
 
-            <LabelledSelect options={constants.productCategories}>Product Category</LabelledSelect>
+            <LabelledSelect
+              options={["Choose Primary Category", ...constants.productCategories]}
+              value={this.state.category}
+              onChange={this.updateInfo.bind(this,"category")}
+              validationState={this.validationState.category}
+              validate={fieldValidations.validateSelect.bind(null,"Choose Primary Category")}
+              helpText={"Choose a valid category"}>
+              Product Category
+            </LabelledSelect>
             <br/>
 
             <h4>Enter your address</h4>
@@ -103,7 +130,16 @@ class SellerInfo extends Component{
               Address Line 2
             </LabelledTextInput>
 
-            <LabelledSelect options={["Choose State", ...constants.states]}>State</LabelledSelect>
+            <LabelledSelect
+              options={["Choose State", ...constants.states]}
+              value={this.state.state}
+              onChange={this.updateInfo.bind(this,"state")}
+              validationState={this.validationState.state}
+              validate={fieldValidations.validateSelect.bind(null,"Choose State")}
+              helpText={"Choose a valid state"}>
+              State
+            </LabelledSelect>
+            <br/>
 
             <LabelledTextInput
               value={this.state.city}
@@ -147,7 +183,17 @@ class SellerInfo extends Component{
               Pin Code
             </LabelledTextInput>
 
-            <LabelledSelect options={["Choose State", ...constants.states]}>State</LabelledSelect>
+            <LabelledSelect
+              options={["Choose State", ...constants.states]}
+              value={this.state.wstate}
+              onChange={this.updateInfo.bind(this,"wstate")}
+              validationState={this.validationState.wstate}
+              validate={fieldValidations.validateSelect.bind(null,"Choose State")}
+              helpText={"Choose a valid state"}>
+              State
+            </LabelledSelect>
+
+            <br/>
 
             <LabelledTextInput
               value={this.state.wcity}
@@ -161,23 +207,44 @@ class SellerInfo extends Component{
             <label className="pt-label pt-inline">
               Operational Hours
               <div style={{float:"right"}}>
-                <PlainSelect options={constants.operationalHours}/>
-                <PlainSelect options={["am","pm"]}/>
+                <PlainSelect
+                  options={constants.operationalHours}
+                  value={this.state.operationalHours[0]}
+                  onChange={this.updateOperationalHours.bind(this,0)}/>
+                <PlainSelect
+                  options={["am","pm"]}
+                  value={this.state.operationalHours[1]}
+                  onChange={this.updateOperationalHours.bind(this,1)}/>
                 <span> to</span>
-                <PlainSelect options={constants.operationalHours}/>
-                <PlainSelect options={["am","pm"]}/>
+                <PlainSelect
+                  options={constants.operationalHours}
+                  value={this.state.operationalHours[2]}
+                  onChange={this.updateOperationalHours.bind(this,2)}/>
+                <PlainSelect
+                  options={["am","pm"]}
+                  value={this.state.operationalHours[3]}
+                  onChange={this.updateOperationalHours.bind(this,3)}/>
               </div>
             </label>
 
-            <label className="pt-label pt-inline" style={{display: "flex"}}>
-              <div style={{flex:"1"}}>Working Days</div>
-                <div style={{display:"flex",flexWrap:"wrap",flex:"1",justifyContent:"space-around"}}>
-                  {this.alignCheckboxes(constants.daysOfTheWeek,2)}
-                </div>
-            </label>
+            <LabelledCheckboxGroup
+              options={constants.daysOfTheWeek}
+              groupColumns={2}
+              value={this.state.workingDays}
+              onChange={this.updateInfo.bind(this,"workingDays")}
+              validationState={this.validationState.workingDays}
+              validate={fieldValidations.noValidation}
+              helpText={null}>
+              Working Days
+            </LabelledCheckboxGroup>
             <br/>
 
-            <Button className="pt-intent-primary" style={{width:"200px",margin:"auto"}}>Continue</Button>
+            <Button
+              className="pt-intent-primary"
+              style={{width:"200px",margin:"auto"}}
+              onClick={this.storeForm}>
+              Continue
+            </Button>
 
           </div>
 

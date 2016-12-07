@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledCheckbox from '../components/LabelledCheckbox';
-import PlainSelect from '../components/PlainSelect';
+import LabelledSelect from '../components/LabelledSelect';
 FocusStyleManager.onlyShowFocusOnTabs();
 
 const establishments = ["Manufacturer","Wholesaler","Distributer","Importer"];
@@ -35,13 +35,14 @@ class AddInfo extends Component{
               {this.alignCheckboxes(establishments,2)}
             </div>
             <br/>
-
-            <h6>Annual Turnover</h6>
-            <PlainSelect options={["Less than 1 Lakh","Between 1 Lakh and 10 Lakhs","Between 10 Lakhs and 1 Crore","More than 1 Crore","I dont know"]} />
             <br/>
 
-            <h6>How many products do you sell?</h6>
-            <PlainSelect options={["1 - 10","11 - 100","101 - 500","More than 500"]} />
+            <LabelledSelect options={["Less than 1 Lakh","Between 1 Lakh and 10 Lakhs","Between 10 Lakhs and 1 Crore","More than 1 Crore","I dont know"]}>Annual Turnover</LabelledSelect>
+            <br/>
+            <br/>
+
+            <LabelledSelect options={["1 - 10","11 - 100","101 - 500","More than 500"]}>How many products do you sell?</LabelledSelect>
+            <br/>
             <br/>
 
             <h6>Other websites you sell on</h6>

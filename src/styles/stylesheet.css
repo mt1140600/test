@@ -45,6 +45,7 @@ body{
   font-weight: 100;
 }
 h2{
+  margin-top: 10px;
   color:blue;
   font-weight: 200;
 }

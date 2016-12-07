@@ -6,6 +6,8 @@ require('./styles/stylesheet.css');
 import Login from './views/Login';
 import Signup from './views/Signup';
 import AccountSetup from './containers/AccountSetup';
+import Dummy from './components/Dummy'
+import LabelledCheckboxGroup from './components/LabelledCheckboxGroup'
 // import Perf from 'react-addons-perf';
 // window.Perf = Perf;
 // Perf.start();
