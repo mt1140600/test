@@ -10,4 +10,4 @@ import AccountSetup from './containers/AccountSetup';
 // window.Perf = Perf;
 // Perf.start();
 
-ReactDOM.render(<Signup/>,document.getElementById('app'));
+ReactDOM.render(<AccountSetup/>,document.getElementById('app'));

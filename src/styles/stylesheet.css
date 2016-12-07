@@ -69,3 +69,11 @@ h6{
 #progressBar{
   margin: 20px 40px 20px 40px;
 }
+.helpText{
+  text-align: left;
+  color: #F55656;
+  font-style: italic;
+}
+.errorField{
+  background-color: #feeeee;
+}
