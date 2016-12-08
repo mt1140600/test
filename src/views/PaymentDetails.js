@@ -11,6 +11,7 @@ class PaymentDetails extends Component{
   constructor(){
     super();
     this.updateInfo = this.updateInfo.bind(this);
+    this.storeForm = this.storeForm.bind(this);
     this.validationState = {accHolderName:false, accNumber:false, IFSC:false, accType:true};
     this.state = {accHolderName:"",accNumber:"",IFSC:"",accType:"Savings"};
   }
@@ -18,6 +19,17 @@ class PaymentDetails extends Component{
   updateInfo(field,value,vState){
       this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
       this.setState({[`${field}`]:value});
+  }
+
+  storeForm(){
+    let validateSubForm = true;
+    for(let key in this.validationState){
+      if(this.validationState[key] === false)
+        validateSubForm = false;
+    }
+    const newObj = {...this.state, validateSubForm : validateSubForm};
+    console.log(JSON.stringify(newObj));
+    localStorage.setItem("paymentDetails",JSON.stringify(newObj));
   }
 
   render(){
@@ -65,10 +77,10 @@ class PaymentDetails extends Component{
               helpText={null}>
               Type
             </LabelledSelect>
-            
+
             <LabelledFileUpload>Cancelled Cheque</LabelledFileUpload>
             <br/>
-            <Button className="pt-intent-primary" style={{margin:"auto"}}>Continue</Button>
+            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.storeForm}>Continue</Button>
 
 
           </div>

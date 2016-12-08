@@ -9,6 +9,7 @@ class TaxDetails extends Component{
   constructor(){
     super();
     this.updateInfo = this.updateInfo.bind(this);
+    this.storeForm = this.storeForm.bind(this);
     this.validationState = {PAN:false, VAT:false, CST:false, certIncorp:false, membICC:false};
     this.state = {PAN:"",VAT:"",CST:"",certIncorp:"",membICC:""};
   }
@@ -16,6 +17,17 @@ class TaxDetails extends Component{
   updateInfo(field,value,vState){
       this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
       this.setState({[`${field}`]:value});
+  }
+
+  storeForm(){
+    let validateSubForm = true;
+    for(let key in this.validationState){
+      if(this.validationState[key] === false)
+        validateSubForm = false;
+    }
+    const newObj = {...this.state, validateSubForm : validateSubForm};
+    console.log(JSON.stringify(newObj));
+    localStorage.setItem("taxDetails",JSON.stringify(newObj));
   }
 
   render(){
@@ -56,9 +68,9 @@ class TaxDetails extends Component{
             <LabelledFileUpload>Certification of Incorporation</LabelledFileUpload>
 
             <LabelledFileUpload>Membership with Indian Chamber of Commerce</LabelledFileUpload>
-            
+
             <br/>
-            <Button className="pt-intent-primary" style={{margin:"auto"}}>Continue</Button>
+            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.storeForm}>Continue</Button>
 
 
           </div>

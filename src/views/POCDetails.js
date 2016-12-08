@@ -11,12 +11,24 @@ class POCDetails extends Component{
     super();
     this.updateInfo = this.updateInfo.bind(this);
     this.validationState = {POCName:true, POCPhone:true, POCEmail:true};
+    this.storeForm = this.storeForm.bind(this);
     this.state = {POCName:"",POCPhone:"",POCEmail:""};
   }
 
   updateInfo(field,value,vState){
       this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
       this.setState({[`${field}`]:value});
+  }
+
+  storeForm(){
+    let validateSubForm = true;
+    for(let key in this.validationState){
+      if(this.validationState[key] === false)
+        validateSubForm = false;
+    }
+    const newObj = {...this.state, validateSubForm : validateSubForm};
+    console.log(JSON.stringify(newObj));
+    localStorage.setItem("POCDetails",JSON.stringify(newObj));
   }
 
   render(){
@@ -55,7 +67,7 @@ class POCDetails extends Component{
               Email ID <small>(optional)</small>
             </LabelledTextInput>
             <br/>
-            <Button className="pt-intent-primary" style={{margin:"auto"}}>Continue</Button>
+            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.storeForm}>Continue</Button>
 
           </div>
 

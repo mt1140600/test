@@ -52,15 +52,14 @@ class SellerInfo extends Component{
   }
 
   storeForm(){
-    console.log(JSON.stringify(this.state));
-    let validateSellerInfo = true;
+    let validateSubForm = true;
     for(let key in this.validationState){
       if(this.validationState[key] === false)
-        validateSellerInfo = false;
+        validateSubForm = false;
     }
-    const newObj = {...this.state, validateSellerInfo : validateSellerInfo};
+    const newObj = {...this.state, validateSubForm : validateSubForm};
     console.log(JSON.stringify(newObj));
-    localStorage.setItem("sellerInfo",newObj);
+    localStorage.setItem("sellerInfo",JSON.stringify(newObj));
   }
 
   render(){

@@ -13,6 +13,7 @@ class AddInfo extends Component{
   constructor(){
     super();
     this.alignCheckboxes = this.alignCheckboxes.bind(this);
+    this.storeForm = this.storeForm.bind(this);
     this.validationState = {typeOfEstablishment:false, annualTurnover:true, numberRangeProducts:true, otherWebsitesSoldOn:true, otherWebsitesSoldOnText:true};
     this.state = {typeOfEstablishment:[], annualTurnover:"Less than 1 Lakh", numberRangeProducts:"1 - 10", otherWebsitesSoldOn:[], otherWebsitesSoldOnText:""};
   }
@@ -27,6 +28,17 @@ class AddInfo extends Component{
    return arr.map((item,index)=>(
       <LabelledCheckbox key={index} style={styleObj}>{item}</LabelledCheckbox>
     ));
+  }
+
+  storeForm(){
+    let validateSubForm = true;
+    for(let key in this.validationState){
+      if(this.validationState[key] === false)
+        validateSubForm = false;
+    }
+    const newObj = {...this.state, validateSubForm : validateSubForm};
+    console.log(JSON.stringify(newObj));
+    localStorage.setItem("addInfo",JSON.stringify(newObj));
   }
 
   render(){
@@ -95,7 +107,7 @@ class AddInfo extends Component{
             </LabelledTextInput>
             <br/>
 
-            <Button className="pt-intent-primary" style={{margin:"auto"}}>Continue</Button>
+            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.storeForm}>Continue</Button>
 
           </div>
 
