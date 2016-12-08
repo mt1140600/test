@@ -6,7 +6,7 @@ import LabelledCheckbox from '../components/LabelledCheckbox';
 import PlainSelect from '../components/PlainSelect';
 import LabelledCheckboxGroup from '../components/LabelledCheckboxGroup';
 import * as constants from '../constants';
-import * as fieldValidations from '../fieldValidations';
+import * as fieldValidations from '../utils/fieldValidations';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 

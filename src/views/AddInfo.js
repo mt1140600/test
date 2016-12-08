@@ -4,7 +4,7 @@ import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledCheckbox from '../components/LabelledCheckbox';
 import LabelledSelect from '../components/LabelledSelect';
 import LabelledCheckboxGroup from '../components/LabelledCheckboxGroup';
-import * as fieldValidations from '../fieldValidations';
+import * as fieldValidations from '../utils/fieldValidations';
 FocusStyleManager.onlyShowFocusOnTabs();
 
 const websites = ["Flipkart","Amazon","Snapdeal","Shopclues","Indiamart","Just Dial","Wydr","Shotang","Just Buy Live"];

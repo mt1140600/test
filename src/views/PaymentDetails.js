@@ -3,7 +3,7 @@ import { Button, FocusStyleManager } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledSelect from '../components/LabelledSelect';
 import LabelledFileUpload from '../components/LabelledFileUpload';
-import * as fieldValidations from '../fieldValidations';
+import * as fieldValidations from '../utils/fieldValidations';
 FocusStyleManager.onlyShowFocusOnTabs();
 
 class PaymentDetails extends Component {

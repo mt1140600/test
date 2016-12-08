@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
-import * as fieldValidations from '../fieldValidations';
+import * as fieldValidations from '../utils/fieldValidations';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
