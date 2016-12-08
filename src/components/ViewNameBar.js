@@ -1,13 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class ViewNameBar extends Component{
-  render(){
-    return(
-      <div id="viewNameBar" className="pt-text-muted">
-          Account Settings
-      </div>
-    );
-  }
+function ViewNameBar(viewName){
+  return(
+    <div id="viewNameBar" className="pt-text-muted">
+        {viewName}
+    </div>
+  );
 }
 
 export default ViewNameBar;

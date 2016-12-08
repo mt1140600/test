@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import TabLayout from './TabLayout';
+import VerticalTabLayout from './VerticalTabLayout';
 import ViewNameBar from '../components/ViewNameBar';
 import Header from '../components/Header';
-import ProgressBar from '../components/ProgressBar';
 
-class AccountSetup extends Component{
+class ProductUpload extends Component{
   constructor(){
     super();
   }
@@ -12,12 +11,11 @@ class AccountSetup extends Component{
     return(
       <div>
         <Header/>
-        {ViewNameBar("Account Settings")}
-        <ProgressBar/>
-        <TabLayout/>
+        {ViewNameBar("Product Upload")}
+        <VerticalTabLayout/>
       </div>
     );
   }
 }
 
-export default AccountSetup;
+export default ProductUpload;
