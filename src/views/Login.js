@@ -3,8 +3,8 @@ import { Button, FocusStyleManager } from "@blueprintjs/core";
 const logo = require('../images/prokure_logo.png');
 FocusStyleManager.isActive();
 
-class Login extends Component{
-  render(){
+class Login extends Component {
+  render() {
     return(
       <div className="container">
 

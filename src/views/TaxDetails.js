@@ -6,7 +6,7 @@ import * as fieldValidations from '../fieldValidations';
 FocusStyleManager.onlyShowFocusOnTabs();
 
 class TaxDetails extends Component{
-  constructor(){
+  constructor() {
     super();
     this.updateInfo = this.updateInfo.bind(this);
     this.storeForm = this.storeForm.bind(this);
@@ -14,12 +14,12 @@ class TaxDetails extends Component{
     this.state = {PAN:"",VAT:"",CST:"",certIncorp:"",membICC:""};
   }
 
-  updateInfo(field,value,vState){
+  updateInfo(field, value, vState) {
       this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
       this.setState({[`${field}`]:value});
   }
 
-  storeForm(){
+  storeForm() {
     let validateSubForm = true;
     for(let key in this.validationState){
       if(this.validationState[key] === false)
@@ -30,7 +30,7 @@ class TaxDetails extends Component{
     localStorage.setItem("taxDetails",JSON.stringify(newObj));
   }
 
-  render(){
+  render() {
     return(
       <div className="container">
 

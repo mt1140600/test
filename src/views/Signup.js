@@ -4,8 +4,8 @@ import {reCaptchaSiteKey} from '../constants'
 const logo = require('../images/prokure_logo.png');
 FocusStyleManager.onlyShowFocusOnTabs();
 
-class Signup extends Component{
-  render(){
+class Signup extends Component {
+  render() {
     return(
       <div className="container">
 

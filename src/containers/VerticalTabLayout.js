@@ -9,17 +9,17 @@ const tabs      = ["Product Upload","Orders"];
 const tabPanels = [UploadProduct,     Orders ];
 
 class VerticalTabLayout extends Component{
-  constructor(){
+  constructor() {
     super();
     this.renderTabs = this.renderTabs.bind(this);
     this.renderTabPanels = this.renderTabPanels.bind(this);
   }
-  renderTabs(item,index){
+  renderTabs(item, index) {
     return(
       <Tab key={index}>{item}</Tab>
     );
   }
-  renderTabPanels(item,index){
+  renderTabPanels(item, index) {
     let DynamicTabPanel = item; //Not using item directly as JSX requires First letter to be capitalised
     return(
       <TabPanel key={index}>
@@ -27,7 +27,7 @@ class VerticalTabLayout extends Component{
       </TabPanel>
     );
   }
-  render(){
+  render() {
     return(
       <Tabs className="tabs pt-vertical">
         <TabList className="tabsBar">

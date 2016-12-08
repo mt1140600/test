@@ -10,9 +10,9 @@ import * as fieldValidations from '../fieldValidations';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
-class SellerInfo extends Component{
+class SellerInfo extends Component {
 
-  constructor(){
+  constructor() {
     super();
     this.pincodeToAddress = this.pincodeToAddress.bind(this);
     this.updateInfo = this.updateInfo.bind(this);
@@ -22,18 +22,18 @@ class SellerInfo extends Component{
     this.state = {storeName:"", pincode:"", add1:"", add2:"",state:"Choose State", city:"", wadd1:"", wadd2:"", wpincode:"",wstate:"Choose State", wcity:"", category:"Choose Primary Category", workingDays: [], operationalHours:["8","am","5","pm"]};
   }
 
-  updateInfo(field,value,vState){
+  updateInfo(field, value, vState) {
       this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
       this.setState({[`${field}`]:value});
   }
 
-  updateOperationalHours(field,value){
+  updateOperationalHours(field, value) {
     let newOperationalHours = [...this.state.operationalHours];
     newOperationalHours[field] = value;
     this.updateInfo("operationalHours",newOperationalHours,true);
   }
 
-  pincodeToAddress(pincode){
+  pincodeToAddress(pincode) {
     console.log("Google GeoCode API - Getting address corresponding to pincode: "+pincode);
     var getAddress = new XMLHttpRequest();
     var url = constants.pathGeocode+pincode;
@@ -51,7 +51,7 @@ class SellerInfo extends Component{
     getAddress.send(null);
   }
 
-  storeForm(){
+  storeForm() {
     let validateSubForm = true;
     for(let key in this.validationState){
       if(this.validationState[key] === false)
@@ -62,7 +62,7 @@ class SellerInfo extends Component{
     localStorage.setItem("sellerInfo",JSON.stringify(newObj));
   }
 
-  render(){
+  render() {
     // this.pincodeToAddress("110023");
     return(
       <div className="container">

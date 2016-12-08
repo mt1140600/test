@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../images/prokure_logo.png';
 
-function header(){
+function header() {
   return(
     <div id="header">
       <a>

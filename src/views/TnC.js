@@ -2,14 +2,14 @@ import React, {Component} from 'react';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 FocusStyleManager.onlyShowFocusOnTabs();
 
-class TnC extends Component{
-  constructor(){
+class TnC extends Component {
+  constructor() {
     super();
     this.submitForm = this.submitForm.bind(this);
     this.tabs = ["sellerInfo","taxDetails","paymentDetails","POCDetails","addInfo"];
   }
 
-  submitForm(){
+  submitForm() {
     let formObj = null;
     let formValidated = true;
     this.tabs.map((item,index)=>{
@@ -22,7 +22,7 @@ class TnC extends Component{
     console.log("validated? "+formValidated);
   }
 
-  render(){
+  render() {
     return(
       <div className="container">
 
