@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PanelHeader from "../components/PanelHeader";
 
 class Orders extends Component{
 
@@ -9,6 +10,7 @@ class Orders extends Component{
   render(){
     return(
         <div>
+          <PanelHeader/>
           Orders
         </div>
     );

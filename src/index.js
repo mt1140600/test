@@ -13,4 +13,4 @@ import LabelledCheckboxGroup from './components/LabelledCheckboxGroup'
 // window.Perf = Perf;
 // Perf.start();
 
-ReactDOM.render(<AccountSetup/>,document.getElementById('app'));
+ReactDOM.render(<ProductUpload/>,document.getElementById('app'));

@@ -20,7 +20,7 @@ class TabLayout extends Component{
   }
   renderTabs(item,index){
     return(
-      <Tab key={index}>{item}</Tab>
+      <Tab key={index} isSelected={true}>{item}</Tab>
     );
   }
   renderTabPanels(item,index){

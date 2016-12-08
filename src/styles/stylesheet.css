@@ -83,3 +83,8 @@ h6{
 .errorField{
   background-color: #feeeee;
 }
+.panelHeader{
+  width: 100%;
+  height: 50px;
+  background-color: grey;
+}
