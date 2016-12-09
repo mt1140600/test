@@ -1,9 +1,18 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {push} from 'react-router-redux';
+import { bindActionCreators } from 'redux';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 const logo = require('../images/prokure_logo.png');
 FocusStyleManager.isActive();
 
 class Login extends Component {
+
+  handleSignupClick = () => {
+      console.log(this.props);
+      this.props.dispatch(push('/signup'));
+  }
+
   render() {
     return(
       <div className="container">
@@ -26,7 +35,7 @@ class Login extends Component {
           <br/>
           <a className="item pt-text-muted" style={{color:"#5c7080"}}>Forgot Password?</a>
           <br/>
-          <Button className="pt-intent-warning item">Create new account</Button>
+          <Button onClick={this.handleSignupClick} className="pt-intent-warning item">Create new account</Button>
           <br/>
           <p className="item pt-text-muted">© 2016 Cerise Internet Technologies</p>
 
@@ -37,4 +46,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect()(Login);

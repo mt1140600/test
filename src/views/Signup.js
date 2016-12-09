@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import {reCaptchaSiteKey} from '../constants'
+import { Link } from 'react-router';
 const logo = require('../images/prokure_logo.png');
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -15,7 +16,7 @@ class Signup extends Component {
           <br/>
           <h2 className="pt-intent-primary item">Prokure</h2>
           <br/>
-          <p style={{color:"grey"}}>Sign up to start selling on our platform now!</p>
+          <p style={{color:"grey"}}>Sign up and start selling on our platform now!</p>
           <br/>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
@@ -42,9 +43,9 @@ class Signup extends Component {
           <br/>
           <Button className="pt-intent-primary pt-button-height-large item">Sign up</Button>
           <br/>
-          <a className="item" style={{color:"grey"}}>Already have an account?</a>
+          <a  className="item" style={{color:"grey"}}>Already have an account?</a>
           <br/>
-          <Button className="pt-intent-warning item">Log in</Button>
+          <Button href="/" className="pt-intent-warning item">Log in</Button>
 
         </div>
 
