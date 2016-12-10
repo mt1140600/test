@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom'
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/login';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import Callout from '../components/Callout';
-import {reCaptchaSiteKey} from '../constants'
+import {reCaptchaSiteKey} from '../constants';
 import  Recaptcha  from 'react-recaptcha';
 const logo = require('../images/prokure_logo.png');
 FocusStyleManager.onlyShowFocusOnTabs();
@@ -27,7 +26,7 @@ class Signup extends Component {
   }
 
   validateEmail = (email)  =>{
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
 
@@ -47,7 +46,6 @@ class Signup extends Component {
         this.setState({showCallout:true, calloutText:"Password should be 4 - 15 character"});
       } else {
         this.setState({showCallout:false});
-        console.log(this.state);
         // this.props.actions.signupUsser(this.state);
       }
     }

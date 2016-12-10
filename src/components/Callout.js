@@ -5,16 +5,16 @@ class Callout extends Component {
     super(props);
     this.state = {
       visible: false
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({visible:nextProps.visible})
+    this.setState({visible:nextProps.visible});
   }
 
 
   handleCloseClick = () => {
-    this.setState({visible:false})
+    this.setState({visible:false});
   }
 
   render () {
@@ -22,11 +22,11 @@ class Callout extends Component {
       return (
         <div className="pt-callout pt-intent-danger" style={{marginTop:'10px', color: '#a94442'}}>
           {this.props.text}
-          <span onClick={this.handleCloseClick} style={{float:'right'}} className="pt-icon-cross"></span>
+          <span onClick={this.handleCloseClick} style={{float:'right'}} className="pt-icon-cross"/>
         </div>
-      )
+      );
     } else {
-      return <div></div>
+      return <div/>;
     }
   }
 }
