@@ -80,6 +80,8 @@ h6{
   margin: 20px 40px 40px 40px;
   padding: 20px;
   border: 1px solid #dee5e7;
+  height: 80vh;
+  overflow: scroll;
 }
 #progressBar{
   margin: 20px 40px 20px 40px;
@@ -109,6 +111,7 @@ h6{
 }
 .pageLayout{
   height: 100%;
+  overflow-y: hidden;
 }
 .verticalTabLayout{
   display: flex;
@@ -141,6 +144,11 @@ h6{
   font-weight: 500;
   width: 110px;
 }
+.tableRowCell{
+  flex:1;
+  text-align: center;
+  display: flex;
+}
 .tableRow{
   border-top: 1px solid #e5e5e5;
   padding: 5px;
@@ -153,11 +161,6 @@ h6{
   height: 30px;
   font-style: italic;
   color: grey;
-}
-.tableRowCell{
-  flex:1;
-  text-align: center;
-  display: flex;
 }
 .tableRowCell.singleLine{
   align-items: center;
