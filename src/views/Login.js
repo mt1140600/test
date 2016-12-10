@@ -15,7 +15,7 @@ class Callout extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps) {
     this.setState({visible:nextProps.visible})
   }
 
@@ -61,7 +61,7 @@ class Login extends Component {
   validateEmail = (email)  =>{
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
-}
+  }
 
   handleLogin = () => {
     if (this.state.email == '' || this.state.password == '') {
@@ -115,10 +115,10 @@ class Login extends Component {
 const mapStateToProps = (state) => ({ 
   todos: state.user 
 });
-console.log(actionCreators);
 
 const mapDispatchToProps = (dispatch) => ({
-  actions : bindActionCreators(actionCreators, dispatch)
+  actions : bindActionCreators(actionCreators, dispatch),
+  dispatch
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

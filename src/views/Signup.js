@@ -1,11 +1,19 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {push} from 'react-router-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from '../actions/login';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import {reCaptchaSiteKey} from '../constants'
-import { Link } from 'react-router';
 const logo = require('../images/prokure_logo.png');
 FocusStyleManager.onlyShowFocusOnTabs();
 
 class Signup extends Component {
+
+  handleLoginClick = () => {
+    this.props.dispatch(push("/"));
+  }
+
   render() {
     return(
       <div className="container">
@@ -43,9 +51,8 @@ class Signup extends Component {
           <br/>
           <Button className="pt-intent-primary pt-button-height-large item">Sign up</Button>
           <br/>
-          <a  className="item" style={{color:"grey"}}>Already have an account?</a>
-          <br/>
-          <Button href="/" className="pt-intent-warning item">Log in</Button>
+          <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Already have an account?</span>
+          <Button onClick={this.handleLoginClick}  className="pt-intent-warning item">Log in</Button>
 
         </div>
 
@@ -54,4 +61,13 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+const mapStateToProps = (state) => ({ 
+  todos: state.user 
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  actions : bindActionCreators(actionCreators, dispatch),
+  dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
