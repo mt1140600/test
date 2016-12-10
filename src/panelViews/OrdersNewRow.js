@@ -18,7 +18,6 @@ class OrdersNewRow extends Component{
 
         <div className="tableRowCell singleLine">
           <CheckboxWrapper>
-            Select All
           </CheckboxWrapper>
         </div>
 
@@ -29,10 +28,12 @@ class OrdersNewRow extends Component{
         </div>
 
         <div className="tableRowCell singleLine">
-          <PlainSelect
-            options={["10","20","30","40","50"]}
-            value={this.props.value.qty}
-            onChange={this.onChange}/>
+          <div style={{width:"110px"}}>
+            <PlainSelect style={{marginRight:0}}
+              options={["10","20","30","40","50"]}
+              value={this.props.value.qty}
+              onChange={this.onChange}/>
+          </div>
         </div>
 
         <div className="tableRowCell singleLine">
@@ -54,7 +55,7 @@ class OrdersNewRow extends Component{
         </div>
 
         <div className="tableRowCell singleLine">
-          <div className="pt-button-group pt-vertical" style={{paddingRight: "10px"}}>
+          <div className="pt-button-group pt-vertical" style={{paddingRight: "10px", alignSelf:"center"}}>
             <button type="button" className="pt-button pt-active">Confirm Item</button>
             <button type="button" className="pt-button">Reject Item</button>
           </div>

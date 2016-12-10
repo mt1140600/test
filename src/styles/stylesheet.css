@@ -80,8 +80,9 @@ h6{
   margin: 20px 40px 40px 40px;
   padding: 20px;
   border: 1px solid #dee5e7;
-  height: 80vh;
+  height: 75vh;
   overflow: scroll;
+  position: relative;
 }
 #progressBar{
   margin: 20px 40px 20px 40px;
@@ -167,6 +168,9 @@ h6{
 }
 #react-paginate{
   text-align: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
 }
 #react-paginate ul {
     display: inline-block;
@@ -178,6 +182,15 @@ h6{
     display: inline-block;
     padding-left: 15px;
     padding-right: 15px;
+    padding: 10px;
+    border: 1px solid #e5e5e5;
+    border-left: 0;
+}
+#react-paginate li:hover {
+  background-color: #e5e5e5;
+}
+#react-paginate li:first-child{
+    border-left: 1px solid #e5e5e5;
 }
 
 #react-paginate .break a {

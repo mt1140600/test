@@ -7,9 +7,10 @@ import Orders from '../panelViews/OrdersPanel';
 import Returns from '../panelViews/Returns';
 import Completed from '../panelViews/Completed';
 import Payment from '../panelViews/Payment';
+import ManageInventory from '../panelViews/ManageInventory';
 
-const tabs      = ["Product Upload","Orders","Returns/Replacements","Completed Orders","Payments"];
-const tabPanels = [UploadProduct,     Orders,   Returns,                Completed ,     Payment];
+const tabs      = ["Product Upload","Manage Inventory", "Orders","Returns/Replacements","Completed Orders","Payments"];
+const tabPanels = [UploadProduct,   ManageInventory,      Orders,   Returns,                Completed ,     Payment];
 
 class VerticalTabLayout extends Component{
   constructor(){
