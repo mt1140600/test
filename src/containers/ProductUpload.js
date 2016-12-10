@@ -7,11 +7,11 @@ class ProductUpload extends Component{
   constructor(){
     super();
   }
+
   render(){
     return(
-      <div>
+      <div className="app">
         <Header/>
-        {ViewNameBar("Product Upload")}
         <VerticalTabLayout/>
       </div>
     );
