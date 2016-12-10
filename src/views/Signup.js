@@ -1,20 +1,74 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom'
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/login';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
+import Callout from '../components/Callout';
 import {reCaptchaSiteKey} from '../constants'
+import  Recaptcha  from 'react-recaptcha';
 const logo = require('../images/prokure_logo.png');
 FocusStyleManager.onlyShowFocusOnTabs();
-
 class Signup extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      username:'',
+      business_name:'',
+      email: '',
+      password: '',
+      password_match:'',
+      showCallout: false,
+      calloutText:"",
+      reCapthaResponse:""
+    };
+  }
+
+  validateEmail = (email)  =>{
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
 
   handleLoginClick = () => {
     this.props.dispatch(push("/"));
   }
 
+  handleSignupClick = () => {
+    if (this.state.username == '' || this.state.business_name == '' || this.state.email == '' || this.state.password == '' || this.state.password_match == '' || this.state.reCapthaResponse == '') {
+      this.setState({showCallout:true, calloutText:"Please fill all the fields"});
+    } else {
+      if (!this.validateEmail(this.state.email)) {
+        this.setState({showCallout:true, calloutText:"Please enter valid email"});
+      } else if (this.state.password != this.state.password_match) {
+        this.setState({showCallout:true, calloutText:"Password did not match"});
+      } else if (this.state.password.length < 4 || this.state.password.length > 15) {
+        this.setState({showCallout:true, calloutText:"Password should be 4 - 15 character"});
+      } else {
+        this.setState({showCallout:false});
+        console.log(this.state);
+        // this.props.actions.signupUsser(this.state);
+      }
+    }
+  }
+
+  callback = () => {};
+
+  verifyCallback = (response) => {
+    this.setState({reCapthaResponse: response});
+  };
+
+  expiredCallback = () => {
+    this.setState({reCapthaResponse: ''});
+  };
+
+  handleFieldUpdate = (field, event) => {
+    this.setState({[`${field}`]:event.target.value});
+  }
+
   render() {
+
     return(
       <div className="container">
 
@@ -28,28 +82,35 @@ class Signup extends Component {
           <br/>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Name" />
+              <input type="text" className="pt-input" placeholder="Name" value={this.state.username} onChange={this.handleFieldUpdate.bind(this, "username")}  />
             </div>
             <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Business Name" />
+              <input type="text" className="pt-input" placeholder="Business Name" value={this.state.business_name} onChange={this.handleFieldUpdate.bind(this, "business_name")}  />
             </div>
           </div>
           <br/>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Email ID" />
+              <input type="text" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
             </div>
-            <div className="pt-input-group pt-large" >
+            <div className="pt-input-group pt-large" value={this.state.password} onChange={this.handleFieldUpdate.bind(this, "password")}  >
               <input type="password" className="pt-input" placeholder="Password" />
             </div>
             <div className="pt-input-group pt-large" >
-              <input type="password" className="pt-input" placeholder="Confirm Password" />
+              <input type="password" className="pt-input" placeholder="Confirm Password" value={this.state.password_match} onChange={this.handleFieldUpdate.bind(this, "password_match")}  />
             </div>
           </div>
           <br/>
-          <div className="g-recaptcha" data-sitekey={reCaptchaSiteKey} ></div>
+          <Recaptcha
+            sitekey={reCaptchaSiteKey}
+            render="explicit"
+            verifyCallback={this.verifyCallback}
+            onloadCallback={this.callback}
+            expiredCallback={this.expiredCallback}
+          />
           <br/>
-          <Button className="pt-intent-primary pt-button-height-large item">Sign up</Button>
+          <Button onClick={this.handleSignupClick} className="pt-intent-primary pt-button-height-large item">Sign up</Button>
+          <Callout text={this.state.calloutText} visible={this.state.showCallout} />
           <br/>
           <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Already have an account?</span>
           <Button onClick={this.handleLoginClick}  className="pt-intent-warning item">Log in</Button>
