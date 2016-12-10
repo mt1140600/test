@@ -79,7 +79,6 @@ class Signup extends Component {
           <h2 className="pt-intent-primary item">Prokure</h2>
           <br/>
           <p style={{color:"grey"}}>Sign up and start selling on our platform now!</p>
-          <br/>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
               <input type="text" className="pt-input" placeholder="Name" value={this.state.username} onChange={this.handleFieldUpdate.bind(this, "username")}  />
@@ -114,6 +113,8 @@ class Signup extends Component {
           <br/>
           <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Already have an account?</span>
           <Button onClick={this.handleLoginClick}  className="pt-intent-warning item">Log in</Button>
+          <br/>
+          <p style={{marginTop:"15px", fontSize:"12px"}} className="item pt-text-muted">© 2016 Cerise Internet Technologies Pvt Ltd</p>
 
         </div>
 
