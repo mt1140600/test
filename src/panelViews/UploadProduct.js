@@ -35,23 +35,22 @@ class UploadProduct extends Component{
       </div>
     );
   }
-
+  // <div className="panelHeader">
+  //   <LabelledSelect
+  //     options={productCategories}
+  // 
+  //     validationState={true}
+  //     validate={fieldValidations.noValidation}
+  //     helpText={"Choose a valid state"}>
+  //     Choose a category:
+  //   </LabelledSelect>
+  //   <div>
+  //     {moment().format("DD-MM-YYYY")}
+  //   </div>
+  // </div>
   render(){
     return(
       <div>
-        <div className="panelHeader">
-          <LabelledSelect
-            options={productCategories}
-
-            validationState={true}
-            validate={fieldValidations.noValidation}
-            helpText={"Choose a valid state"}>
-            Choose a category:
-          </LabelledSelect>
-          <div>
-            {moment().format("DD-MM-YYYY")}
-          </div>
-        </div>
         <div className="tabs" style={{display:"flex",flexDirection:"column",justifyContent:"space-around", alignItems:"center"}}>
           <div>Please fill in the common attributes of the product to be uploaded</div>
           <br/>

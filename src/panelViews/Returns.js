@@ -34,7 +34,6 @@ class  Returns extends Component{
   render(){
     return(
       <div>
-        <PanelHeader />
         <Tabs className="tabs " key="horizontal">
           <TabList className="tabsBar">
             {tabs.map(this.renderTabs)}

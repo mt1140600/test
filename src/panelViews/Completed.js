@@ -123,34 +123,38 @@ class Completed extends Component{
     );
   }
 
+
+  // <div className="panelHeader">
+  //   <div>
+  //     <div style={{marginRight:"10px", display:"inline"}}>
+  //       Select Date Range:
+  //     </div>
+  //     <DatePicker className="pt-input"
+  //       selected={null}
+  //       selectsStart  startDate={null}
+  //       endDate={null}
+  //       onChange={()=>null}
+  //       placeholderText="from"/>
+  //     <DatePicker className="pt-input"
+  //     selected={null}
+  //     selectsEnd  startDate={null}
+  //     endDate={null}
+  //     onChange={()=>null}
+  //     placeholderText="to"/>
+  //     <button className="pt-button" style={{marginLeft:"10px"}}>
+  //       Generate
+  //     </button>
+  //   </div>
+  //   <div>
+  //     {moment().format("DD-MM-YYYY")}
+  //   </div>
+  // </div>
+
+
   render(){
     return(
       <div>
-        <div className="panelHeader">
-          <div>
-            <div style={{marginRight:"10px", display:"inline"}}>
-              Select Date Range:
-            </div>
-            <DatePicker className="pt-input"
-              selected={null}
-              selectsStart  startDate={null}
-              endDate={null}
-              onChange={()=>null}
-              placeholderText="from"/>
-            <DatePicker className="pt-input"
-            selected={null}
-            selectsEnd  startDate={null}
-            endDate={null}
-            onChange={()=>null}
-            placeholderText="to"/>
-            <button className="pt-button" style={{marginLeft:"10px"}}>
-              Generate
-            </button>
-          </div>
-          <div>
-            {moment().format("DD-MM-YYYY")}
-          </div>
-        </div>
+
         <div className="tabs">
           <div style={{display:"flex", justifyContent:"flex-end"}}>
             <div className="pt-input-group .modifier">

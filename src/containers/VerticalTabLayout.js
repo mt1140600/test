@@ -43,17 +43,15 @@ class VerticalTabLayout extends Component{
 
   render(){
     return(
-      <div className="pageLayout">
-        {ViewNameBar(tabs[this.state.currentTab])}
         <div className="verticalTabLayout">
           <div className="verticalTabBar">
             {tabs.map(this.renderTabs)}
           </div>
           <div className="verticalTabPanel">
+            {ViewNameBar(tabs[this.state.currentTab])}
             {tabPanels.map(this.renderTabPanels)}
           </div>
         </div>
-      </div>
     );
   }
 }
