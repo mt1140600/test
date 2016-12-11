@@ -55,7 +55,7 @@ class Login extends Component {
     return(
       <div className="container">
 
-        <div className="col" style={{textAlign:"center", minWidth:"300px"}}>
+        <div className="col" style={{textAlign:"center", minWidth:"300px", paddingTop:"20px"}}>
 
           <img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} />
           <br/>
