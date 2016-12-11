@@ -12,11 +12,6 @@ import PlainSelect from '../components/PlainSelect';
 class OrdersCancelledRow extends Component{
   constructor(){
     super();
-    this.onChange = this.onChange.bind(this);
-  }
-
-  onChange(){
-    return null;
   }
 
   render(){
