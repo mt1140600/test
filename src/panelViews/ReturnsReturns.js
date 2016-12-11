@@ -79,7 +79,7 @@ class ReturnsReturns extends Component{
   constructor(){
     super();
     this.tableHeaders = [{label:"R Date", width: 2},{label:"O Date", width: 2}, {label:"Product Details", width: 8},  {label:"Quantity", width: 2}, {label:"Type", width: 2}, {label:"Reason for Return", width: 4}, {label:"Current Status", width: 4}];
-    this.orders = [{returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax Q24112 fnrelnf egrn", qty: "5", type: "Refund", reasonForReturn: "Other: Size not as expected", currentStatus:"Pickup Initiated for customer"}];
+    this.orders = [{returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax G2 Mud-brown Cover", qty: "5", type: "Refund", reasonForReturn: "Size not as expected", currentStatus:"Customer Pickup Initiated"}, {returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax G2 Mud-brown Cover", qty: "5", type: "Refund", reasonForReturn: "Size not as expected", currentStatus:"Customer Pickup Initiated"}, {returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax G2 Mud-brown Cover", qty: "5", type: "Refund", reasonForReturn: "Size not as expected", currentStatus:"Customer Pickup Initiated"}, {returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax G2 Mud-brown Cover", qty: "5", type: "Refund", reasonForReturn: "Size not as expected", currentStatus:"Customer Pickup Initiated"}, {returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax G2 Mud-brown Cover", qty: "5", type: "Refund", reasonForReturn: "Size not as expected", currentStatus:"Customer Pickup Initiated"}];
   }
 
   renderTableHeaders = (item,index) => {

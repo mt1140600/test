@@ -78,7 +78,7 @@ class Completed extends Component{
   constructor(){
     super();
     this.tableHeaders = [{label:"Date", width:2}, {label:"Items", width:2, tooltip:"Number of Items"}, {label:"Total Amount", width:2} , {label:"M Margin Avg", width:2, tooltip:"Marketplace margin (avg%)"}, {label:"M Margin Rs", width:2, tooltip:"Marketplace margin (in RS)"}, {label:"Final Payment", width: 2}, {label:" ", width:2, orderby:false}];
-    this.orders = [{date:"28 Nov 2016", numberItems:"15", totalAmount:"4000", marketplaceMarginAvg:"6.31%", marketplaceMarginRS: "258.71", finalPayment: "384129"}];
+    this.orders = [{date:"28 Nov 2016", numberItems:"15", totalAmount:"4000", marketplaceMarginAvg:"6.31%", marketplaceMarginRS: "258.71", finalPayment: "384129"}, {date:"28 Nov 2016", numberItems:"15", totalAmount:"4000", marketplaceMarginAvg:"6.31%", marketplaceMarginRS: "258.71", finalPayment: "384129"},{date:"28 Nov 2016", numberItems:"15", totalAmount:"4000", marketplaceMarginAvg:"6.31%", marketplaceMarginRS: "258.71", finalPayment: "384129"}, {date:"28 Nov 2016", numberItems:"15", totalAmount:"4000", marketplaceMarginAvg:"6.31%", marketplaceMarginRS: "258.71", finalPayment: "384129"}];
   }
 
   renderTableHeaders = (item,index) => {

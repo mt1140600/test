@@ -57,6 +57,7 @@ class ReturnsReplacmentsRow extends Component{
         <div className="tableRowCell" style={{flex:"4"}}>
           <div style={{display:"flex", flexDirection:"column", justifyContent:"space-around"}}>
             <div>{this.props.value.currentStatus}</div>
+            <br/>
             <div className="pt-button-group" style={{paddingRight: "10px", alignSelf:"center"}}>
               <button type="button" className="pt-button pt-intent-success">Replace</button>
               <button type="button" className="pt-button pt-intent-danger">Refund</button>
@@ -82,7 +83,7 @@ class ReturnsReplacments extends Component{
   constructor(){
     super();
     this.tableHeaders = [{label:"R Date", width: 2},{label:"O Date", width: 2}, {label:"Product Details", width: 8},  {label:"Quantity", width: 2}, {label:"Type", width: 2}, {label:"Reason for Return", width: 4}, {label:"Current Status", width: 4}];
-    this.orders = [{returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax Q24112 fnrelnf egrn", qty: "5", type: "Replacement", reasonForReturn: "Other: Size not as expectehjhhjd", currentStatus:"Pickup Initiated for customer"}];
+    this.orders = [{returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"HTC One M7 Rigidex Cover", qty: "5", type: "Replacement", reasonForReturn: "Size not as expected", currentStatus:"Customer pickup initiated"}, {returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"XiaoMi R40 Genex Black Cover", qty: "5", type: "Replacement", reasonForReturn: "Product is defective", currentStatus:"Customer pickup initiated"}];
   }
 
   renderTableHeaders = (item,index) => {
