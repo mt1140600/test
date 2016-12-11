@@ -37,7 +37,7 @@ class OrdersPanel extends Component{
     return(
       <div>
         <Tabs className="tabs " key="horizontal">
-          <TabList className="tabsBar">
+          <TabList className="pt-large">
             {tabs.map(this.renderTabs)}
           </TabList>
           {tabPanels.map(this.renderTabPanels)}

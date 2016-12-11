@@ -97,6 +97,7 @@ class PaymentOverview extends Component{
   render(){
     return(
       <div>
+        <br/>
         <div className="tableHeader">
           {this.tableHeaders.map(this.renderTableHeaders)}
         </div>

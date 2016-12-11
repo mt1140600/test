@@ -409,7 +409,7 @@ class ManageInventory extends Component{
     return(
       <div>
         <Tabs className="tabs " key="horizontal">
-          <TabList className="tabsBar">
+          <TabList className="pt-large">
             {this.tabs.map(this.renderTabs)}
           </TabList>
           {this.tabPanels.map(this.renderTabPanels)}

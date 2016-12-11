@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Tabs, TabList, Tab, TabPanel} from "@blueprintjs/core";
 import ViewNameBar from '../components/ViewNameBar';
 
 import UploadProduct from '../panelViews/UploadProduct';
