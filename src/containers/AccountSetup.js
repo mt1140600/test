@@ -5,10 +5,10 @@ import Header from '../components/Header';
 import ProgressBar from '../components/ProgressBar';
 
 class AccountSetup extends Component{
-  constructor(){
+  constructor() {
     super();
   }
-  render(){
+  render() {
     return(
       <div>
         <Header/>

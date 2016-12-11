@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 class ChatBox extends Component{
-  render(){
+  render() {
     return(
       null
     );

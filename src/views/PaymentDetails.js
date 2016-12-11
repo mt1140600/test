@@ -3,12 +3,12 @@ import { Button, FocusStyleManager } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledSelect from '../components/LabelledSelect';
 import LabelledFileUpload from '../components/LabelledFileUpload';
-import * as fieldValidations from '../fieldValidations';
+import * as fieldValidations from '../utils/fieldValidations';
 FocusStyleManager.onlyShowFocusOnTabs();
 
-class PaymentDetails extends Component{
+class PaymentDetails extends Component {
 
-  constructor(){
+  constructor() {
     super();
     this.updateInfo = this.updateInfo.bind(this);
     this.storeForm = this.storeForm.bind(this);
@@ -16,12 +16,12 @@ class PaymentDetails extends Component{
     this.state = {accHolderName:"",accNumber:"",IFSC:"",accType:"Savings"};
   }
 
-  updateInfo(field,value,vState){
+  updateInfo(field, value, vState) {
       this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
       this.setState({[`${field}`]:value});
   }
 
-  storeForm(){
+  storeForm() {
     let validateSubForm = true;
     for(let key in this.validationState){
       if(this.validationState[key] === false)
@@ -32,7 +32,7 @@ class PaymentDetails extends Component{
     localStorage.setItem("paymentDetails",JSON.stringify(newObj));
   }
 
-  render(){
+  render() {
     return(
       <div className="container">
 

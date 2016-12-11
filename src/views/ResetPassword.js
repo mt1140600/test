@@ -8,24 +8,19 @@ import Callout from '../components/Callout';
 const logo = require('../images/prokure_logo.png');
 FocusStyleManager.isActive();
 
-class Login extends Component {
+class ResetPassword extends Component {
   
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      password: '',
       showCallout: false,
       calloutText:"" 
     };
   }
 
-  handleSignupClick = () => {
-      this.props.dispatch(push('/signup'));
-  }
-
-  handleResetPassword = () => {
-      this.props.dispatch(push('/reset'));
+  goBack = () => {
+      this.props.dispatch(push('/'));
   }
 
   handleFieldUpdate = (field, event) => {
@@ -37,15 +32,15 @@ class Login extends Component {
     return re.test(email);
   }
 
-  handleLogin = () => {
-    if (this.state.email == '' || this.state.password == '') {
+  handleReset= () => {
+    if (this.state.email == '') {
       this.setState({showCallout:true, calloutText:"Please fill all the fields"});
     } else {
       if (!this.validateEmail(this.state.email)) {
         this.setState({showCallout:true, calloutText:"Please enter valid email"});
       } else {
         this.setState({showCallout:false});
-        this.props.actions.loginUser(this.state.email,this.state.password);
+        // this.props.actions.handleReset(this.state.email);
       }
     }
     
@@ -62,22 +57,20 @@ class Login extends Component {
           <h2 className="pt-intent-primary item">Prokure</h2>
           <br/>
           <div className="pt-control-group pt-vertical item">
+          <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Input your email to reset your password</span>
+
             <div className="pt-input-group pt-large " >
               <input type="text" className="pt-input" placeholder="Email" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
             </div>
-            <div className="pt-input-group pt-large" >
-              <input type="password" className="pt-input" placeholder="Password" value={this.state.password} onChange={this.handleFieldUpdate.bind(this, "password")} />
-            </div>
           </div>
           <br/>
-          <Button className="pt-intent-primary pt-button-height-large item" onClick={this.handleLogin} >Log in</Button>
+          <Button className="pt-intent-primary pt-button-height-large item" onClick={this.handleReset} >Send</Button>
           <Callout text={this.state.calloutText} visible={this.state.showCallout} />
           <br/>
-          <a onClick={this.handleResetPassword} className="item pt-text-muted" style={{color:"#5c7080"}}>Forgot Password?</a>
+          <br/ >
+          <Button onClick={this.goBack} className="pt-intent-warning item">Go Back</Button>
           <br/>
-          <Button onClick={this.handleSignupClick} className="pt-intent-warning item">Create new account</Button>
-          <br/>
-          <p style={{marginTop:"15px", fontSize:"12px"}} className="item pt-text-muted">© 2016 Cerise Internet Technologies Pvt Ltd</p>
+          <p style={{marginTop:"15px", fontSize:"12px"}} className="item pt-text-muted">© 2016 Cerise Internet Technologies Pvt. Ltd.</p>
 
         </div>
 
@@ -95,4 +88,4 @@ const mapDispatchToProps = (dispatch) => ({
   dispatch
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(ResetPassword);

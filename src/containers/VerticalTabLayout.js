@@ -13,7 +13,7 @@ const tabs      = ["Product Upload","Manage Inventory", "Orders","Returns/Replac
 const tabPanels = [UploadProduct,   ManageInventory,      Orders,   Returns,                Completed ,     Payment];
 
 class VerticalTabLayout extends Component{
-  constructor(){
+  constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.renderTabs = this.renderTabs.bind(this);
@@ -25,13 +25,13 @@ class VerticalTabLayout extends Component{
     this.setState({currentTab: tab});
   }
 
-  renderTabs(item, index){
+  renderTabs(item, index) {
     return(
       <div className="verticalTab" key={index} onClick={()=>{this.handleChange(index);}}>{item}</div>
     );
   }
 
-  renderTabPanels(item,index){
+  renderTabPanels(item,index) {
     let DynamicComponent = item;
     if(this.state.currentTab === index){
       return(

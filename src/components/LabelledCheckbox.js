@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 class LabelledCheckbox extends Component{
-  render(){
+  render() {
     return(
       <label className="pt-control pt-checkbox" style={this.props.style}>
         <input type="checkbox"/>

@@ -12,18 +12,18 @@ import TnC from '../views/TnC';
 const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Terms & Conditions"];
 const tabPanels = [     VerifyOtp,            SellerInfo,          TaxDetails,    PaymentDetails,       POCDetails,            AddInfo,                    TnC];
 
-class TabLayout extends Component{
-  constructor(){
+class TabLayout extends Component {
+  constructor() {
     super();
     this.renderTabs = this.renderTabs.bind(this);
     this.renderTabPanels = this.renderTabPanels.bind(this);
   }
-  renderTabs(item,index){
+  renderTabs(item, index) {
     return(
       <Tab key={index} isSelected={true}>{item}</Tab>
     );
   }
-  renderTabPanels(item,index){
+  renderTabPanels(item, index) {
     let DynamicTabPanel = item; //Not using item directly as JSX requires First letter to be capitalised
     return(
       <TabPanel key={index}>
@@ -31,7 +31,7 @@ class TabLayout extends Component{
       </TabPanel>
     );
   }
-  render(){
+  render() {
     return(
       <Tabs className="tabs">
         <TabList className="tabsBar">

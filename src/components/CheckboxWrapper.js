@@ -3,16 +3,16 @@ import {Checkbox} from "@blueprintjs/core";
 
 class CheckboxWrapper extends Component{
 
-  constructor(){
+  constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(){
+  handleChange() {
     this.props.onChange(this.props.index);
   }
 
-  render(){
+  render() {
     return(
       <div style={this.props.style}>
         <Checkbox  checked={this.props.value} onChange={this.handleChange}>

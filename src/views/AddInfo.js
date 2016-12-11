@@ -4,13 +4,13 @@ import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledCheckbox from '../components/LabelledCheckbox';
 import LabelledSelect from '../components/LabelledSelect';
 import LabelledCheckboxGroup from '../components/LabelledCheckboxGroup';
-import * as fieldValidations from '../fieldValidations';
+import * as fieldValidations from '../utils/fieldValidations';
 FocusStyleManager.onlyShowFocusOnTabs();
 
 const websites = ["Flipkart","Amazon","Snapdeal","Shopclues","Indiamart","Just Dial","Wydr","Shotang","Just Buy Live"];
 
-class AddInfo extends Component{
-  constructor(){
+class AddInfo extends Component {
+  constructor() {
     super();
     this.alignCheckboxes = this.alignCheckboxes.bind(this);
     this.storeForm = this.storeForm.bind(this);
@@ -18,19 +18,19 @@ class AddInfo extends Component{
     this.state = {typeOfEstablishment:[], annualTurnover:"Less than 1 Lakh", numberRangeProducts:"1 - 10", otherWebsitesSoldOn:[], otherWebsitesSoldOnText:""};
   }
 
-  updateInfo(field,value,vState){
+  updateInfo(field, value, vState) {
       this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
       this.setState({[`${field}`]:value});
   }
 
-  alignCheckboxes(arr, cols){
+  alignCheckboxes(arr, cols) {
    const styleObj = {flexBasis:`${100/cols}%`}; //Dividing the container into required columns
    return arr.map((item,index)=>(
       <LabelledCheckbox key={index} style={styleObj}>{item}</LabelledCheckbox>
     ));
   }
 
-  storeForm(){
+  storeForm() {
     let validateSubForm = true;
     for(let key in this.validationState){
       if(this.validationState[key] === false)
@@ -41,7 +41,7 @@ class AddInfo extends Component{
     localStorage.setItem("addInfo",JSON.stringify(newObj));
   }
 
-  render(){
+  render() {
     return(//wrapping checkboxes in a container div, enabling flex display and allowing wrap to enable multiline flexbox
       <div className="container">
 

@@ -1,16 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {render} from 'react-dom';
+import { Provider } from 'react-redux';
+import { Router, browserHistory } from 'react-router';
+import routes from './routes';
+import configureStore from './store/configureStore';
+require('./favicon.ico');
 require('@blueprintjs/core/dist/blueprint.css');
 require('./styles/stylesheet.css');
-
-import Login from './views/Login';
-import Signup from './views/Signup';
-import AccountSetup from './containers/AccountSetup';
-import ProductUpload from './containers/ProductUpload';
-import OrderBy from './components/OrderBy';
-import LabelledCheckboxGroup from './components/LabelledCheckboxGroup';
+import { syncHistoryWithStore } from 'react-router-redux';
 // import Perf from 'react-addons-perf';
 // window.Perf = Perf;
 // Perf.start();
+const store = configureStore();
 
-ReactDOM.render(<ProductUpload/>,document.getElementById('app'));
+// Create an enhanced history that syncs navigation events with the store
+const history = syncHistoryWithStore(browserHistory, store);
+
+render(
+  <Provider store={store}>
+    <Router history={history} routes={routes} />
+  </Provider>, document.getElementById('app')
+);
