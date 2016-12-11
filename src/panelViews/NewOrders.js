@@ -15,38 +15,40 @@ class NewOrders extends Component{
     // this.renderCellLabels = this.renderCellLabels.bind(this);
     this.renderRows = this.renderRows.bind(this);
     this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start"}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
-    this.orders=[{productDetails:"Micromax Q114928102 erkgkerg", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Mig", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Micromax Q114928102jkwrhgkhrgherhrgherhkghkerhgkherg erkgkerg", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
+    this.orders=[{productDetails:"Micromax Q114928102 erkgkerg", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Mig", qty:"10", marketplacePrice:"40000", marketplaceMargin:"10.55%", sellingPrice:"36000" },{productDetails:"Micromax Q8100 Mobile Phone Full metal grey (Tempered glass and cover included)", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
   }
 
   renderTableHeaders = (item,index) => {
-    if(item.tooltip === null)
+    //assigning default values
+    let itemObj = Object.assign({label: "<Label>", width: 1, tooltip: null, orderby: true, justify:"center"}, item);
+
+    if(itemObj.tooltip === null)
       return(
-        <div style={{flex: item.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent: item.justify}} key={index}>
+        <div style={{flex: itemObj.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent: itemObj.justify}} key={index}>
           <div className="tableHeaderText">
-            {item.label}
+            {itemObj.label}
           </div>
           <OrderBy
             value = {null}
-            visible = {item.orderby}
+            visible = {itemObj.orderby}
             handleChange = {()=>null}/>
         </div>
       );
     else
     return(
-      <div style={{flex: item.width,textAlign:"center", display: "flex", alignItems:"center", justifyContent:"center"}} key={index}>
-        <Tooltip
-          style={{display:"none"}}
-          content={item.tooltip}
-          inline={false}
-          position={Position.TOP}>
-          <div className="cellLabel">
-            {item.label}
-            <span className="pt-icon-standard pt-icon-help" style={{paddingLeft:"5px", color:"#7fdc88"}}></span>
-          </div>
-        </Tooltip>
+      <div style={{flex: itemObj.width,textAlign:"center", display: "flex", alignItems:"center", justifyContent:"center"}} key={index}>
+          <Tooltip
+            content={itemObj.tooltip}
+            inline={false}
+            position={Position.TOP}>
+            <div className="cellLabel">
+              {itemObj.label}
+              <span className="pt-icon-standard pt-icon-help" style={{paddingLeft:"5px", color:"#cccccc"}}></span>
+            </div>
+          </Tooltip>
         <OrderBy
           value = {null}
-          visible = {item.orderby}
+          visible = {itemObj.orderby}
           handleChange = {()=>null}/>
       </div>
     );
@@ -61,7 +63,7 @@ class NewOrders extends Component{
   render(){
     return(
       <div>
-
+        <br/>
         <div style={{display:"flex", justifyContent:"space-between"}}>
             <div className="pt-control-group" style={{display:"flex"}}>
               <div style={{marginTop:10, marginRight: 10}}>

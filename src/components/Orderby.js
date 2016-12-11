@@ -7,12 +7,9 @@ export default class OrderBy extends Component{
     this.state = { active: props.value };
   }
 
-  onClick = (value) => {
-    if(this.state.active === value) return null;
-    else {
-      this.setState({ active: value });
-      this.props.handleChange(value);
-    }
+  handleClick = () => {
+    (this.state.active === 1)? this.setState({active: 2}) : this.setState({active: 1});
+    this.props.handleChange(value);
   }
 
   componentWillReceiveProps(nextProps){
@@ -21,15 +18,20 @@ export default class OrderBy extends Component{
   }
 
   render(){
-    let defaultStyle = {flex: 1, height:"16px", display:"flex", alignItems:"center"};     //Adding display: flex here as icon gets rendered in a span ::before
-    let styleTop = (this.state.active === "top")? Object.assign({}, defaultStyle, {color:"#ffb2b2"}) : defaultStyle;
-    let styleBottom = (this.state.active === "bottom")? Object.assign({}, defaultStyle, {color:"#ffb2b2"}) : defaultStyle;
+    let dynamicClassName = null;
+    switch(this.state.active){
+      case 0: dynamicClassName = "pt-icon-double-caret-vertical";
+      break;
+      case 1: dynamicClassName = "pt-icon-caret-down";
+      break;
+      case 2: dynamicClassName = "pt-icon-caret-up";
+      break;
+      default: dynamicClassName = "pt-icon-double-caret-vertical";
+      break;
+    }
     if(this.props.visible === true)
       return(
-        <div style={{display:"flex",flexDirection:"column"}}>
-          <div className="pt-icon-standard pt-icon-caret-up" style={styleTop} onClick={this.onClick.bind(this,"top")}/>
-          <div className="pt-icon-standard pt-icon-caret-down" style={styleBottom} onClick={this.onClick.bind(this,"bottom")}/>
-        </div>
+        <div className = {"pt-icon-standard "+dynamicClassName} onClick={this.handleClick}></div>
       );
     else
       return null;

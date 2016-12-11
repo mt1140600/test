@@ -24,9 +24,10 @@ class OrdersNewRow extends Component{
         </div>
 
         <div className="tableRowCell" style={{flex:"8", justifyContent:"flex-start"}}>
-          <div style={{width:"40px", height:"40px", backgroundColor:"#7fdc88", borderRadius:"4px", marginRight:"10px"}}>
+          <div style={{flex:1}}>
+            <div style={{width:"40px", height:"40px", backgroundColor:"#7fdc88", borderRadius:"4px"}}/>
           </div>
-          <div>
+          <div  style={{flex:6}}>
             {this.props.value.productDetails}
           </div>
         </div>
