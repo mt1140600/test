@@ -38,7 +38,7 @@ class UploadProduct extends Component{
   // <div className="panelHeader">
   //   <LabelledSelect
   //     options={productCategories}
-  // 
+  //
   //     validationState={true}
   //     validate={fieldValidations.noValidation}
   //     helpText={"Choose a valid state"}>
@@ -51,7 +51,7 @@ class UploadProduct extends Component{
   render(){
     return(
       <div>
-        <div className="tabs" style={{display:"flex",flexDirection:"column",justifyContent:"space-around", alignItems:"center"}}>
+        <div className="tabs" style={{display:"flex",flexDirection:"column", alignItems:"center"}}>
           <div>Please fill in the common attributes of the product to be uploaded</div>
           <br/>
           <br/>
