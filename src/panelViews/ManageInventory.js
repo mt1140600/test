@@ -3,7 +3,7 @@ import {Tabs, TabList, Tab, TabPanel} from "@blueprintjs/core";
 import CheckboxWrapper from '../components/CheckboxWrapper';
 import LabelledSelect from '../components/LabelledSelect';
 import {productCategories} from '../constants';
-import * as fieldValidations from '../fieldValidations';
+import * as fieldValidations from '../utils/fieldValidations';
 import ReactPaginate from 'react-paginate';
 import PanelHeader from "../components/PanelHeader";
 import PlainSelect from '../components/PlainSelect';

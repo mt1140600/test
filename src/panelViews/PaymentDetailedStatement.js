@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import CheckboxWrapper from '../components/CheckboxWrapper';
 import LabelledSelect from '../components/LabelledSelect';
 import {productCategories} from '../constants';
-import * as fieldValidations from '../fieldValidations';
+import * as fieldValidations from '../utils/fieldValidations';
 import ReactPaginate from 'react-paginate';
 import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
 import OrderBy from "../components/OrderBy";

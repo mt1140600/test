@@ -37,7 +37,7 @@ const loginUserFailure = (error) => {
 export const loginUser = (email, password, redirect="/") => {
   return function (dispatch) {
     dispatch(loginUserRequest());
-    return fetch(config.apiURL + '/api/merchant/login', {
+    return fetch(config.apiURL + '/api/merchant/signup', {
       method: 'post',
       headers: {
           'Accept': 'application/json',
@@ -53,6 +53,32 @@ export const loginUser = (email, password, redirect="/") => {
     })
     .catch(error => {
         dispatch(loginUserFailure(error));
+    });
+  };
+};
+
+
+export const signupUser = (userData, redirect="/") => {
+  return function (dispatch) {
+    // dispatch(loginUserRequest());
+    return fetch("http://localhost:3000" + '/api/merchant/signup', {
+      method:'post',
+      headers:{
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+        body:JSON.stringify(userData)
+    })
+    .then(checkHttpStatus)
+    .then(parseJSON)
+    .then(response => {
+      console.log(response);
+      // dispatch(loginUserSuccess(response));
+      // dispatch(push(redirect));
+    })
+    .catch(error => {
+        console.log(error);
+        // dispatch(loginUserFailure(error));
     });
   };
 };

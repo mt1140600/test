@@ -21,7 +21,7 @@ class Signup extends Component {
       password_match:'',
       showCallout: false,
       calloutText:"",
-      reCapthaResponse:""
+      reCaptchaResponse:""
     };
   }
 
@@ -35,7 +35,7 @@ class Signup extends Component {
   }
 
   handleSignupClick = () => {
-    if (this.state.username == '' || this.state.business_name == '' || this.state.email == '' || this.state.password == '' || this.state.password_match == '' || this.state.reCapthaResponse == '') {
+    if (this.state.username == '' || this.state.business_name == '' || this.state.email == '' || this.state.password == '' || this.state.password_match == '' || this.state.reCaptchaResponse == '') {
       this.setState({showCallout:true, calloutText:"Please fill all the fields"});
     } else {
       if (!this.validateEmail(this.state.email)) {
@@ -46,7 +46,13 @@ class Signup extends Component {
         this.setState({showCallout:true, calloutText:"Password should be 4 - 15 character"});
       } else {
         this.setState({showCallout:false});
-        // this.props.actions.signupUsser(this.state);
+        this.props.actions.signupUser({
+          username:this.state.username,
+          business_name:this.state.business_name,
+          email:this.state.email,
+          password:this.state.password,
+          reCaptchaResponse:this.state.reCaptchaResponse
+        });
       }
     }
   }
@@ -54,11 +60,11 @@ class Signup extends Component {
   callback = () => {};
 
   verifyCallback = (response) => {
-    this.setState({reCapthaResponse: response});
+    this.setState({reCaptchaResponse: response});
   };
 
   expiredCallback = () => {
-    this.setState({reCapthaResponse: ''});
+    this.setState({reCaptchaResponse: ''});
   };
 
   handleFieldUpdate = (field, event) => {

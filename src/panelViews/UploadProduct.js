@@ -3,7 +3,7 @@ import PanelHeader from "../components/PanelHeader";
 import LabelledSelect from "../components/LabelledSelect";
 import LabelledTextInput from "../components/LabelledTextInput";
 import LabelledFileUpload from "../components/LabelledFileUpload";
-import * as fieldValidations from "../fieldValidations";
+import * as fieldValidations from "../utils/fieldValidations";
 import {Button} from "@blueprintjs/core";
 import {productCategories} from '../constants';
 import moment from "moment";
