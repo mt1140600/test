@@ -4,7 +4,7 @@ import CheckboxWrapper from './CheckboxWrapper';
 import LabelledCheckboxGroup from './LabelledCheckboxGroup';
 
 class Dummy extends Component{
-  constructor(){
+  constructor() {
     super();
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     this.state = {value:["Amazon,Ebay"]};
@@ -12,18 +12,18 @@ class Dummy extends Component{
     this.alter = this.alter.bind(this);
   }
 
-  handleCheckboxChange(index){
+  handleCheckboxChange(index) {
     this.array[index] = !this.array[index];
     console.log(this.array);
   }
 
 
-  alter(newVal,vState){
+  alter(newVal,vState) {
     this.validationState = vState;
     this.setState({value: newVal});
   }
 
-  render(){
+  render() {
     let styleObj={flexBasis: "33%"};
     return(
       <LabelledCheckboxGroup

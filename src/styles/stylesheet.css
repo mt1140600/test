@@ -1,3 +1,12 @@
+html, body{
+  height: 100%;
+}
+#app{
+  height: 100%;
+}
+.app{
+  height: 100%;
+}
 body{
     margin: 0;
     background-color: #f5f5f5;
@@ -71,6 +80,9 @@ h6{
   margin: 20px 40px 40px 40px;
   padding: 20px;
   border: 1px solid #dee5e7;
+  height: 75vh;
+  overflow: scroll;
+  position: relative;
 }
 #progressBar{
   margin: 20px 40px 20px 40px;
@@ -85,6 +97,158 @@ h6{
 }
 .panelHeader{
   width: 100%;
-  height: 50px;
-  background-color: grey;
+  height: 60px;
+  line-height: 60px;
+  padding-left: 40px;
+  padding-right: 40px;
+  background-color: white;
+  border-bottom: 1px solid #e5e5e5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+.pt-tab-panel{
+  width: 100%;
+}
+.pageLayout{
+  height: 100%;
+  overflow-y: hidden;
+}
+.verticalTabLayout{
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+.verticalTabBar{
+  width: 200px;
+  background-color: white;
+  border-right: 1px solid #e5e5e5;
+}
+.verticalTab{
+  height: 60px;
+  line-height: 60px;
+  padding-left: 20px;
+  font-weight: 100;
+  font-size: small;
+  border-bottom: 1px solid #e5e5e5;
+}
+.verticalTab:active, .verticalTab:hover{
+  background-color: #e5e5e5;
+}
+.verticalTabPanel{
+  width: 100%;
+}
+.cellLabel{
+  min-height: 30px;
+  line-height: 30px;
+  color: #404040;
+  font-weight: 500;
+}
+
+.tableHeader{
+  display: flex;
+  border-top: 1px solid #e5e5e5;
+  padding: 5px;
+}
+.tableHeaderText{
+  min-height: 30px;
+  line-height: 30px;
+  color: #404040;
+  font-weight: 500;
+}
+.tableRowCell{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tableRow{
+  border-top: 1px solid #e5e5e5;
+  padding: 5px;
+  min-height: 60px;
+  display: flex;
+}
+.tableRowCategoryName{
+  border-top: 1px solid #e5e5e5;
+  padding: 5px;
+  padding-left: 40px;
+  height: 30px;
+  font-style: italic;
+  color: grey;
+}
+
+#react-paginate{
+  border-top: 1px solid #e5e5e5;
+  padding: 5px;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+#react-paginate ul {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+#react-paginate li {
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding: 10px;
+    border: 1px solid #e5e5e5;
+    border-left: 0;
+}
+#react-paginate li:hover {
+  background-color: #e5e5e5;
+}
+#react-paginate li:first-child{
+    border-left: 1px solid #e5e5e5;
+}
+
+#react-paginate .break a {
+    cursor: default;
+}
+/*
+.pt-tabs.pt-horizontal {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.pt-tabs.pt-horizontal .pt-tab-list {
+    width: 100%;
+    -webkit-flex-direction: row;
+            flex-direction: row;
+    -webkit-align-items: flex-start;
+            align-items: flex-start;
+}
+
+.pt-tabs.pt-horizontal .pt-tab {
+  flex-basis : 25%;
+  padding: 10px 0px;
+}
+
+.pt-tabs.pt-horizontal .pt-tab-indicator-wrapper .pt-tab-indicator {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 3px;
+  background-color: rgba(19, 124, 189, 0.2);
+  height: auto;
+}
+
+.pt-tabs.pt-horizontal .pt-tab-panel {
+  margin-top: 0;
+  padding-left: 20px;
+}*/
+
+/*
+.pt-tabs.pt-vertical {
+  display: -webkit-flex;
+  display: flex;
+}
+.pt-tabs.horizontalTabs .pt-tab-list {
+  flex-direction: row;
+  flex-basis: 25%;
+  align-items: flex-start;
+}*/

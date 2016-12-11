@@ -4,14 +4,13 @@ import ViewNameBar from '../components/ViewNameBar';
 import Header from '../components/Header';
 
 class ProductUpload extends Component{
-  constructor(){
+  constructor() {
     super();
   }
-  render(){
+  render() {
     return(
-      <div>
+      <div className="app">
         <Header/>
-        {ViewNameBar("Product Upload")}
         <VerticalTabLayout/>
       </div>
     );

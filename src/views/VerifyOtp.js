@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-class VerifyOtp extends Component{
-  render(){
+class VerifyOtp extends Component {
+  render() {
     return(
       <div className="container">
 

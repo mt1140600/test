@@ -16,7 +16,7 @@ class PlainSelect extends Component{
   }
   render(){
     return(
-      <div className="pt-select" style={{marginRight:"auto"}}>
+      <div className="pt-select" style={Object.assign({},{marginRight:"auto"},this.props.style)}>
         <select
           value={this.props.value}
           onChange={this.handleChange}>
@@ -30,7 +30,8 @@ class PlainSelect extends Component{
 PlainSelect.propTypes = {
   options: React.PropTypes.array,
   value: React.PropTypes.string,
-  onChange: React.PropTypes.func
+  onChange: React.PropTypes.func,
+  style: React.PropTypes.object
 };
 
 export default PlainSelect;
