@@ -5,23 +5,49 @@ import {productCategories} from '../constants';
 import * as fieldValidations from '../fieldValidations';
 import OrdersNewRow from './OrdersNewRow';
 import ReactPaginate from 'react-paginate';
+import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
+import OrderBy from "../components/OrderBy";
 
 class NewOrders extends Component{
 
   constructor(){
     super();
-    this.renderCellLabels = this.renderCellLabels.bind(this);
+    // this.renderCellLabels = this.renderCellLabels.bind(this);
     this.renderRows = this.renderRows.bind(this);
-    this.cellLabels = ["#","Product Details", "Qty", "Marketplace Price", "Marketplace Margin", "Selling Price",""];
-    this.orders=[{productDetails:"Micromax Q114928102 erkgkerg", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
+    this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start"}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
+    this.orders=[{productDetails:"Micromax Q114928102 erkgkerg", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Mig", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Micromax Q114928102jkwrhgkhrgherhrgherhkghkerhgkherg erkgkerg", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
   }
 
-  renderCellLabels(item,index){
-    return(
-      <div style={{flex:1,textAlign:"center"}} key={index}>
-        <div className="cellLabel">
-          {item}
+  renderTableHeaders = (item,index) => {
+    if(item.tooltip === null)
+      return(
+        <div style={{flex: item.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent: item.justify}} key={index}>
+          <div className="tableHeaderText">
+            {item.label}
+          </div>
+          <OrderBy
+            value = {null}
+            visible = {item.orderby}
+            handleChange = {()=>null}/>
         </div>
+      );
+    else
+    return(
+      <div style={{flex: item.width,textAlign:"center", display: "flex", alignItems:"center", justifyContent:"center"}} key={index}>
+        <Tooltip
+          style={{display:"none"}}
+          content={item.tooltip}
+          inline={false}
+          position={Position.TOP}>
+          <div className="cellLabel">
+            {item.label}
+            <span className="pt-icon-standard pt-icon-help" style={{paddingLeft:"5px", color:"#7fdc88"}}></span>
+          </div>
+        </Tooltip>
+        <OrderBy
+          value = {null}
+          visible = {item.orderby}
+          handleChange = {()=>null}/>
       </div>
     );
   }
@@ -35,16 +61,16 @@ class NewOrders extends Component{
   render(){
     return(
       <div>
-        <br/>
-        <div style={{display:"flex", justifyContent:"space-around"}}>
+
+        <div style={{display:"flex", justifyContent:"space-between"}}>
             <div className="pt-control-group" style={{display:"flex"}}>
               <div style={{marginTop:10, marginRight: 10}}>
                 <CheckboxWrapper>
                   Select All
                 </CheckboxWrapper>
               </div>
-              <button className="pt-button">Dispatch Items</button>
-              <button className="pt-button">Reject Items</button>
+              <button className="pt-button pt-intent-primary">Confirm</button>
+              <button className="pt-button pt-intent-danger">Reject</button>
             </div>
             <div>
               <LabelledSelect
@@ -63,10 +89,9 @@ class NewOrders extends Component{
               </div>
             </div>
           </div>
-      <br/>
-      <br/>
-      <div style={{display:"flex"}}>
-        {this.cellLabels.map(this.renderCellLabels)}
+          <br/>
+      <div className="tableHeader">
+        {this.tableHeaders.map(this.renderTableHeaders)}
       </div>
 
       <div className="tableRowCategoryName">
@@ -75,7 +100,7 @@ class NewOrders extends Component{
 
       {this.orders.map(this.renderRows)}
 
-      <div id="react-paginate" className="tableRow">
+      <div id="react-paginate">
         <ReactPaginate previousLabel={"previous"}
          nextLabel={"next"}
          breakLabel={<a href="">...</a>}

@@ -16,19 +16,23 @@ class OrdersNewRow extends Component{
     return(
       <div className="tableRow" style={{display:"flex"}}>
 
-        <div className="tableRowCell singleLine">
-          <CheckboxWrapper>
-          </CheckboxWrapper>
+        <div className="tableRowCell" style={{flex:"1", justifyContent:"flex-start"}}>
+          <div style={{marginBottom:"-10px"}}>
+            <CheckboxWrapper>
+            </CheckboxWrapper>
+          </div>
         </div>
 
-        <div className="tableRowCell singleLine">
-          <div style={{width:"110px"}}>
+        <div className="tableRowCell" style={{flex:"8", justifyContent:"flex-start"}}>
+          <div style={{width:"40px", height:"40px", backgroundColor:"#7fdc88", borderRadius:"4px", marginRight:"10px"}}>
+          </div>
+          <div>
             {this.props.value.productDetails}
           </div>
         </div>
 
-        <div className="tableRowCell singleLine">
-          <div style={{width:"110px"}}>
+        <div className="tableRowCell" style={{flex:"2"}}>
+          <div>
             <PlainSelect style={{marginRight:0}}
               options={["10","20","30","40","50"]}
               value={this.props.value.qty}
@@ -36,28 +40,28 @@ class OrdersNewRow extends Component{
           </div>
         </div>
 
-        <div className="tableRowCell singleLine">
-          <div style={{width:"110px"}}>
+        <div className="tableRowCell" style={{flex:"2"}}>
+          <div>
             {this.props.value.marketplacePrice}
           </div>
         </div>
 
-        <div className="tableRowCell singleLine">
-          <div style={{width:"110px"}}>
+        <div className="tableRowCell" style={{flex:"2"}}>
+          <div>
             {this.props.value.marketplaceMargin}
           </div>
         </div>
 
-        <div className="tableRowCell singleLine">
-          <div style={{width:"110px"}}>
+        <div className="tableRowCell" style={{flex:"2"}}>
+          <div>
             {this.props.value.sellingPrice}
           </div>
         </div>
 
-        <div className="tableRowCell singleLine">
-          <div className="pt-button-group pt-vertical" style={{paddingRight: "10px", alignSelf:"center"}}>
-            <button type="button" className="pt-button pt-active">Confirm Item</button>
-            <button type="button" className="pt-button">Reject Item</button>
+        <div className="tableRowCell" style={{flex:"4"}}>
+          <div className="pt-button-group" style={{paddingRight: "10px", alignSelf:"center"}}>
+            <button type="button" className="pt-button pt-intent-primary">Confirm</button>
+            <button type="button" className="pt-button pt-intent-danger">Reject</button>
           </div>
         </div>
 

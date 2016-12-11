@@ -143,17 +143,28 @@ h6{
   line-height: 30px;
   color: #404040;
   font-weight: 500;
-  width: 110px;
+}
+
+.tableHeader{
+  display: flex;
+  border-top: 1px solid #e5e5e5;
+}
+.tableHeaderText{
+  min-height: 30px;
+  line-height: 30px;
+  color: #404040;
+  font-weight: 500;
 }
 .tableRowCell{
-  flex:1;
-  text-align: center;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .tableRow{
   border-top: 1px solid #e5e5e5;
   padding: 5px;
   min-height: 60px;
+  display: flex;
 }
 .tableRowCategoryName{
   border-top: 1px solid #e5e5e5;
@@ -163,10 +174,10 @@ h6{
   font-style: italic;
   color: grey;
 }
-.tableRowCell.singleLine{
-  align-items: center;
-}
+
 #react-paginate{
+  border-top: 1px solid #e5e5e5;
+  padding: 5px;
   text-align: center;
   width: 100%;
   position: absolute;
