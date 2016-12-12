@@ -141,14 +141,14 @@ class DispatchedOrders extends Component{
 
           {this.orders.map(this.renderRows)}
 
-          <div id="react-paginate" className="tableRow">
-            <ReactPaginate previousLabel={"previous"}
-             nextLabel={"next"}
+          <div id="react-paginate">
+            <ReactPaginate previousLabel={"<"}
+             nextLabel={">"}
              breakLabel={<a href="">...</a>}
              breakClassName={"break-me"}
              pageCount={10}
              marginPagesDisplayed={2}
-             pageRangeDisplayed={5}
+             pageRangeDisplayed={2}
              onPageChange={()=>null}
              containerClassName={"pagination"}
              subContainerClassName={"pages pagination"}

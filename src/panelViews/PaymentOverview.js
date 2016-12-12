@@ -97,20 +97,21 @@ class PaymentOverview extends Component{
   render(){
     return(
       <div>
+        <br/>
         <div className="tableHeader">
           {this.tableHeaders.map(this.renderTableHeaders)}
         </div>
 
         {this.orders.map(this.renderRows)}
 
-          <div id="react-paginate" className="tableRow">
-            <ReactPaginate previousLabel={"previous"}
-             nextLabel={"next"}
+          <div id="react-paginate">
+            <ReactPaginate previousLabel={"<"}
+             nextLabel={">"}
              breakLabel={<a href="">...</a>}
              breakClassName={"break-me"}
              pageCount={10}
              marginPagesDisplayed={2}
-             pageRangeDisplayed={5}
+             pageRangeDisplayed={2}
              onPageChange={()=>null}
              containerClassName={"pagination"}
              subContainerClassName={"pages pagination"}

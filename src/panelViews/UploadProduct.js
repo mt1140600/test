@@ -35,24 +35,25 @@ class UploadProduct extends Component{
       </div>
     );
   }
-
+  // <div>
+  //   {moment().format("DD-MM-YYYY")}
+  // </div>
   render(){
     return(
       <div>
-        <div className="panelHeader">
-          <LabelledSelect
-            options={productCategories}
-
-            validationState={true}
-            validate={fieldValidations.noValidation}
-            helpText={"Choose a valid state"}>
-            Choose a category:
-          </LabelledSelect>
+        <div className="tabs" style={{display:"flex",flexDirection:"column", alignItems:"center"}}>
           <div>
-            {moment().format("DD-MM-YYYY")}
+            <LabelledSelect
+              options={productCategories}
+
+              validationState={true}
+              validate={fieldValidations.noValidation}
+              helpText={"Choose a valid state"}>
+              Choose a category:
+            </LabelledSelect>
+
           </div>
-        </div>
-        <div className="tabs" style={{display:"flex",flexDirection:"column",justifyContent:"space-around", alignItems:"center"}}>
+          <br/>
           <div>Please fill in the common attributes of the product to be uploaded</div>
           <br/>
           <br/>
@@ -140,6 +141,7 @@ class UploadProduct extends Component{
             <LabelledFileUpload>Image</LabelledFileUpload>
             <a href=""><thin></thin>Click here to add image url from other sites</a>
         </div>
+        <br/>
         <br/>
         <Button style={{width:"200px"}}>Upload CSV of products</Button>
         <br/>

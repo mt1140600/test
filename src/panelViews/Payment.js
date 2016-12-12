@@ -34,9 +34,8 @@ class  Payment extends Component{
   render(){
     return(
       <div>
-        <PanelHeader />
         <Tabs className="tabs " key="horizontal">
-          <TabList className="tabsBar">
+          <TabList className="pt-large">
             {tabs.map(this.renderTabs)}
           </TabList>
           {tabPanels.map(this.renderTabPanels)}

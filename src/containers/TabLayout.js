@@ -34,7 +34,7 @@ class TabLayout extends Component {
   render() {
     return(
       <Tabs className="tabs">
-        <TabList className="tabsBar">
+        <TabList className="pt-large">
           {tabs.map(this.renderTabs)}
         </TabList>
         {tabPanels.map(this.renderTabPanels)}

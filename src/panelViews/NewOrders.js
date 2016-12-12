@@ -88,7 +88,7 @@ class NewOrders extends Component{
   constructor(){
     super();
     this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start"}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
-    this.orders=[{productDetails:"Micromax Q114928102 erkgkerg", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Mig", qty:"10", marketplacePrice:"40000", marketplaceMargin:"10.55%", sellingPrice:"36000" },{productDetails:"Micromax Q8100 Mobile Phone Full metal grey (Tempered glass and cover included)", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
+    this.orders=[{productDetails:"Micromax Q-Pad Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Mig 390 Silicone Durable Cover", qty:"10", marketplacePrice:"200", marketplaceMargin:"10.55%", sellingPrice:"178" },{productDetails:"Micromax Q8100 Mobile Phone Cover (Red, Green, Blue)", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
   }
 
   renderTableHeaders = (item,index) => {
@@ -175,13 +175,13 @@ class NewOrders extends Component{
       {this.orders.map(this.renderRows)}
 
       <div id="react-paginate">
-        <ReactPaginate previousLabel={"previous"}
-         nextLabel={"next"}
+        <ReactPaginate previousLabel={"<"}
+         nextLabel={">"}
          breakLabel={<a href="">...</a>}
          breakClassName={"break-me"}
          pageCount={10}
          marginPagesDisplayed={2}
-         pageRangeDisplayed={5}
+         pageRangeDisplayed={2}
          onPageChange={()=>null}
          containerClassName={"pagination"}
          subContainerClassName={"pages pagination"}
