@@ -44,6 +44,15 @@ body{
   font-size: large;
   font-weight: 100;
 }
+#headerButtons{
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 11;
+  height: 50px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
 #viewNameBar{
   height: 50px;
   background-color: #f6f8f8;
