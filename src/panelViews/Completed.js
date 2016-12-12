@@ -123,32 +123,10 @@ class Completed extends Component{
     );
   }
 
-
-  // <div className="panelHeader">
-  //   <div>
-  //     <div style={{marginRight:"10px", display:"inline"}}>
-  //       Select Date Range:
-  //     </div>
-  //     <DatePicker className="pt-input"
-  //       selected={null}
-  //       selectsStart  startDate={null}
-  //       endDate={null}
-  //       onChange={()=>null}
-  //       placeholderText="from"/>
-  //     <DatePicker className="pt-input"
-  //     selected={null}
-  //     selectsEnd  startDate={null}
-  //     endDate={null}
-  //     onChange={()=>null}
-  //     placeholderText="to"/>
-  //     <button className="pt-button" style={{marginLeft:"10px"}}>
-  //       Generate
-  //     </button>
-  //   </div>
-  //   <div>
-  //     {moment().format("DD-MM-YYYY")}
-  //   </div>
+  // <div>
+  //   {moment().format("DD-MM-YYYY")}
   // </div>
+
 
 
   render(){
@@ -156,12 +134,38 @@ class Completed extends Component{
       <div>
 
         <div className="tabs">
-          <div style={{display:"flex", justifyContent:"flex-end"}}>
+
+          <div style={{display:"flex", justifyContent:"space-between"}}>
+
+            <div className="">
+              <div>
+                <div style={{marginRight:"10px", display:"inline"}}>
+                  Select Date Range:
+                </div>
+                <DatePicker className="pt-input"
+                  selected={null}
+                  selectsStart  startDate={null}
+                  endDate={null}
+                  onChange={()=>null}
+                  placeholderText="from"/>
+                <DatePicker className="pt-input"
+                selected={null}
+                selectsEnd  startDate={null}
+                endDate={null}
+                onChange={()=>null}
+                placeholderText="to"/>
+                <button className="pt-button" style={{marginLeft:"10px"}}>
+                  Generate
+                </button>
+              </div>
+            </div>
+
             <div className="pt-input-group .modifier">
               <span className="pt-icon pt-icon-search"></span>
               <input className="pt-input" type="search" placeholder="Search input" dir="auto" />
             </div>
           </div>
+          <br/>
           <br/>
 
             <div className="tableHeader">
