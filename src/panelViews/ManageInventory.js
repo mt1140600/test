@@ -9,6 +9,7 @@ import PanelHeader from "../components/PanelHeader";
 import PlainSelect from '../components/PlainSelect';
 import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
 import OrderBy from "../components/OrderBy";
+import TableHeaders from '../components/TableHeaders'
 
 
 class ManageInventoryActiveRow extends Component{
@@ -90,42 +91,6 @@ class ManageInventoryActive extends Component{
     this.orders=[{productDetails:"Micromax Q392 IMD Graphic Black Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Curved Tempered glass for Redmi Note 3", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
   }
 
-  renderTableHeaders = (item,index) => {
-    //assigning default values
-    let itemObj = Object.assign({label: "<Label>", width: 1, tooltip: null, orderby: true, justify:"center"}, item);
-
-    if(itemObj.tooltip === null)
-      return(
-        <div style={{flex: itemObj.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent: itemObj.justify}} key={index}>
-          <div className="tableHeaderText">
-            {itemObj.label}
-          </div>
-          <OrderBy
-            value = {null}
-            visible = {itemObj.orderby}
-            handleChange = {()=>null}/>
-        </div>
-      );
-    else
-    return(
-      <div style={{flex: itemObj.width,textAlign:"center", display: "flex", alignItems:"center", justifyContent:"center"}} key={index}>
-          <Tooltip
-            content={itemObj.tooltip}
-            inline={false}
-            position={Position.TOP}>
-            <div className="cellLabel">
-              {itemObj.label}
-              <span className="pt-icon-standard pt-icon-help" style={{paddingLeft:"5px", color:"#cccccc"}}></span>
-            </div>
-          </Tooltip>
-        <OrderBy
-          value = {null}
-          visible = {itemObj.orderby}
-          handleChange = {()=>null}/>
-      </div>
-    );
-  }
-
   renderRows(item, index){
     return(
       <ManageInventoryActiveRow value={item} key={index} />
@@ -164,9 +129,7 @@ class ManageInventoryActive extends Component{
           </div>
         <br/>
 
-        <div className="tableHeader">
-          {this.tableHeaders.map(this.renderTableHeaders)}
-        </div>
+        <TableHeaders tableHeaders={this.tableHeaders} />
 
         <div className="tableRowCategoryName">
           Back Covers
@@ -276,42 +239,6 @@ class ManageInventoryInactive extends Component{
     this.orders=[{productDetails:"Micromax Q392 IMD Graphic Black Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Curved Tempered glass for Redmi Note 3", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
   }
 
-  renderTableHeaders = (item,index) => {
-    //assigning default values
-    let itemObj = Object.assign({label: "<Label>", width: 1, tooltip: null, orderby: true, justify:"center"}, item);
-
-    if(itemObj.tooltip === null)
-      return(
-        <div style={{flex: itemObj.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent: itemObj.justify}} key={index}>
-          <div className="tableHeaderText">
-            {itemObj.label}
-          </div>
-          <OrderBy
-            value = {null}
-            visible = {itemObj.orderby}
-            handleChange = {()=>null}/>
-        </div>
-      );
-    else
-    return(
-      <div style={{flex: itemObj.width,textAlign:"center", display: "flex", alignItems:"center", justifyContent:"center"}} key={index}>
-          <Tooltip
-            content={itemObj.tooltip}
-            inline={false}
-            position={Position.TOP}>
-            <div className="cellLabel">
-              {itemObj.label}
-              <span className="pt-icon-standard pt-icon-help" style={{paddingLeft:"5px", color:"#cccccc"}}></span>
-            </div>
-          </Tooltip>
-        <OrderBy
-          value = {null}
-          visible = {itemObj.orderby}
-          handleChange = {()=>null}/>
-      </div>
-    );
-  }
-
   renderRows(item, index){
     return(
       <ManageInventoryInactiveRow value={item} key={index} />
@@ -350,9 +277,7 @@ class ManageInventoryInactive extends Component{
           </div>
         <br/>
 
-        <div className="tableHeader">
-          {this.tableHeaders.map(this.renderTableHeaders)}
-        </div>
+        <TableHeaders tableHeaders={this.tableHeaders} />
 
         <div className="tableRowCategoryName">
           Back Covers

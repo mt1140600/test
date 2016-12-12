@@ -7,6 +7,7 @@ import ReactPaginate from 'react-paginate';
 import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
 import OrderBy from "../components/OrderBy";
 import PlainSelect from '../components/PlainSelect';
+import TableHeaders from '../components/TableHeaders'
 
 
 
@@ -92,42 +93,6 @@ class ConfirmedOrders extends Component{
     this.orders=[{productDetails:"Micromax Q330 Eren Cover Blue", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }, {productDetails:"Gionee P900 Silicone Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
   }
 
-  renderTableHeaders = (item,index) => {
-    //assigning default values
-    let itemObj = Object.assign({label: "<Label>", width: 1, tooltip: null, orderby: true, justify:"center"}, item);
-
-    if(itemObj.tooltip === null)
-      return(
-        <div style={{flex: itemObj.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent: itemObj.justify}} key={index}>
-          <div className="tableHeaderText">
-            {itemObj.label}
-          </div>
-          <OrderBy
-            value = {null}
-            visible = {itemObj.orderby}
-            handleChange = {()=>null}/>
-        </div>
-      );
-    else
-    return(
-      <div style={{flex: itemObj.width,textAlign:"center", display: "flex", alignItems:"center", justifyContent:"center"}} key={index}>
-          <Tooltip
-            content={itemObj.tooltip}
-            inline={false}
-            position={Position.TOP}>
-            <div className="cellLabel">
-              {itemObj.label}
-              <span className="pt-icon-standard pt-icon-help" style={{paddingLeft:"5px", color:"#cccccc"}}></span>
-            </div>
-          </Tooltip>
-        <OrderBy
-          value = {null}
-          visible = {itemObj.orderby}
-          handleChange = {()=>null}/>
-      </div>
-    );
-  }
-
   renderRows = (item, index) => {
     return(
       <OrdersConfirmedRow value={item} key={index} />
@@ -164,9 +129,7 @@ class ConfirmedOrders extends Component{
           </div>
         </div>
       <br/>
-      <div className="tableHeader">
-        {this.tableHeaders.map(this.renderTableHeaders)}
-      </div>
+      <TableHeaders tableHeaders={this.tableHeaders} />
 
       <div className="tableRowCategoryName">
         Back Covers

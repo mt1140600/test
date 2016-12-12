@@ -4,6 +4,7 @@ import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
 import OrderBy from "../components/OrderBy";
 import PlainSelect from '../components/PlainSelect';
 import CheckboxWrapper from '../components/CheckboxWrapper';
+import TableHeaders from '../components/TableHeaders'
 
 
 
@@ -82,42 +83,6 @@ class ReturnsReturns extends Component{
     this.orders = [{returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax G2 Mud-brown Cover", qty: "5", type: "Refund", reasonForReturn: "Size not as expected", currentStatus:"Customer Pickup Initiated"}, {returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax G2 Mud-brown Cover", qty: "5", type: "Refund", reasonForReturn: "Size not as expected", currentStatus:"Customer Pickup Initiated"}, {returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax G2 Mud-brown Cover", qty: "5", type: "Refund", reasonForReturn: "Size not as expected", currentStatus:"Customer Pickup Initiated"}, {returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax G2 Mud-brown Cover", qty: "5", type: "Refund", reasonForReturn: "Size not as expected", currentStatus:"Customer Pickup Initiated"}, {returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"Micromax G2 Mud-brown Cover", qty: "5", type: "Refund", reasonForReturn: "Size not as expected", currentStatus:"Customer Pickup Initiated"}];
   }
 
-  renderTableHeaders = (item,index) => {
-    //assigning default values
-    let itemObj = Object.assign({label: "<Label>", width: 1, tooltip: null, orderby: true, justify:"center"}, item);
-
-    if(itemObj.tooltip === null)
-      return(
-        <div style={{flex: itemObj.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent: itemObj.justify}} key={index}>
-          <div className="tableHeaderText">
-            {itemObj.label}
-          </div>
-          <OrderBy
-            value = {null}
-            visible = {itemObj.orderby}
-            handleChange = {()=>null}/>
-        </div>
-      );
-    else
-    return(
-      <div style={{flex: itemObj.width,textAlign:"center", display: "flex", alignItems:"center", justifyContent:"center"}} key={index}>
-          <Tooltip
-            content={itemObj.tooltip}
-            inline={false}
-            position={Position.TOP}>
-            <div className="cellLabel">
-              {itemObj.label}
-              <span className="pt-icon-standard pt-icon-help" style={{paddingLeft:"5px", color:"#cccccc"}}></span>
-            </div>
-          </Tooltip>
-        <OrderBy
-          value = {null}
-          visible = {itemObj.orderby}
-          handleChange = {()=>null}/>
-      </div>
-    );
-  }
-
   renderRows(item, index){
     return(
       <ReturnsReturnsRow value={item} key={index} />
@@ -128,9 +93,7 @@ class ReturnsReturns extends Component{
     return(
       <div>
           <br/>
-          <div className="tableHeader">
-            {this.tableHeaders.map(this.renderTableHeaders)}
-          </div>
+          <TableHeaders tableHeaders={this.tableHeaders} />
 
           {this.orders.map(this.renderRows)}
 

@@ -7,6 +7,7 @@ import ReactPaginate from 'react-paginate';
 import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
 import OrderBy from "../components/OrderBy";
 import PlainSelect from '../components/PlainSelect';
+import TableHeaders from '../components/TableHeaders'
 
 
 class OrdersCancelledRow extends Component{
@@ -72,55 +73,13 @@ OrdersCancelledRow.propTypes = {
   value: React.PropTypes.object,
 }
 
-
-
-
-
-
-
 class CancelledOrders extends Component{
 
-  constructor(){
+  constructor() {
     super();
 
-    this.tableHeaders = [{label: "Date", width: 2}, {label: "Product Details", width: 8, justify: "flex-start"}, {label: "Quantity", width: 2}, {label: "M Price", width: 2, tooltip: "Marketplace Price"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin"}, {label: "S Price", width: 2, tooltip: "Selling Price"}, {label: "Reason for Cancellation", width: 4, tooltip: null, orderby: false}];
+    this.tableHeaders = [{label: "Date", width: 3}, {label: "Product Details", width: 8, justify: "flex-start"}, {label: "Quantity", width: 2}, {label: "M Price", width: 2, tooltip: "Marketplace Price"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin"}, {label: "S Price", width: 2, tooltip: "Selling Price"}, {label: "Reason for Cancellation", width: 4, tooltip: null, orderby: false}];
     this.orders=[{date:"23 Nov 2016", productDetails:"Micromax f2552 Full Metal Alchemist", quantity:"20", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36", reasonForCancellation:"Item not available" }];
-  }
-
-  renderTableHeaders = (item,index) => {
-    //assigning default values
-    let itemObj = Object.assign({label: "<Label>", width: 1, tooltip: null, orderby: true, justify:"center"}, item);
-
-    if(itemObj.tooltip === null)
-      return(
-        <div style={{flex: itemObj.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent: itemObj.justify}} key={index}>
-          <div className="tableHeaderText">
-            {itemObj.label}
-          </div>
-          <OrderBy
-            value = {null}
-            visible = {itemObj.orderby}
-            handleChange = {()=>null}/>
-        </div>
-      );
-    else
-    return(
-      <div style={{flex: itemObj.width,textAlign:"center", display: "flex", alignItems:"center", justifyContent:"center"}} key={index}>
-          <Tooltip
-            content={itemObj.tooltip}
-            inline={false}
-            position={Position.TOP}>
-            <div className="cellLabel">
-              {itemObj.label}
-              <span className="pt-icon-standard pt-icon-help" style={{paddingLeft:"5px", color:"#cccccc"}}></span>
-            </div>
-          </Tooltip>
-        <OrderBy
-          value = {null}
-          visible = {itemObj.orderby}
-          handleChange = {()=>null}/>
-      </div>
-    );
   }
 
   renderRows = (item, index) => {
@@ -129,7 +88,7 @@ class CancelledOrders extends Component{
     );
   }
 
-  render(){
+  render() {
     return(
       <div>
         <br/>
@@ -140,10 +99,7 @@ class CancelledOrders extends Component{
           </div>
         </div>
         <br/>
-
-      <div className="tableHeader">
-        {this.tableHeaders.map(this.renderTableHeaders)}
-      </div>
+        <TableHeaders tableHeaders={this.tableHeaders} />
 
       {this.orders.map(this.renderRows)}
 

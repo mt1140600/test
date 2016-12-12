@@ -4,6 +4,7 @@ import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
 import OrderBy from "../components/OrderBy";
 import PlainSelect from '../components/PlainSelect';
 import CheckboxWrapper from '../components/CheckboxWrapper';
+import TableHeaders from '../components/TableHeaders'
 
 class ReturnsReplacmentsRow extends Component{
   constructor(){
@@ -86,42 +87,6 @@ class ReturnsReplacments extends Component{
     this.orders = [{returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"HTC One M7 Rigidex Cover", qty: "5", type: "Replacement", reasonForReturn: "Size not as expected", currentStatus:"Customer pickup initiated"}, {returnDate:"28/11/2016", orderDate:"21/11/2016", productDetails:"XiaoMi R40 Genex Black Cover", qty: "5", type: "Replacement", reasonForReturn: "Product is defective", currentStatus:"Customer pickup initiated"}];
   }
 
-  renderTableHeaders = (item,index) => {
-    //assigning default values
-    let itemObj = Object.assign({label: "<Label>", width: 1, tooltip: null, orderby: true, justify:"center"}, item);
-
-    if(itemObj.tooltip === null)
-      return(
-        <div style={{flex: itemObj.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent: itemObj.justify}} key={index}>
-          <div className="tableHeaderText">
-            {itemObj.label}
-          </div>
-          <OrderBy
-            value = {null}
-            visible = {itemObj.orderby}
-            handleChange = {()=>null}/>
-        </div>
-      );
-    else
-    return(
-      <div style={{flex: itemObj.width,textAlign:"center", display: "flex", alignItems:"center", justifyContent:"center"}} key={index}>
-          <Tooltip
-            content={itemObj.tooltip}
-            inline={false}
-            position={Position.TOP}>
-            <div className="cellLabel">
-              {itemObj.label}
-              <span className="pt-icon-standard pt-icon-help" style={{paddingLeft:"5px", color:"#cccccc"}}></span>
-            </div>
-          </Tooltip>
-        <OrderBy
-          value = {null}
-          visible = {itemObj.orderby}
-          handleChange = {()=>null}/>
-      </div>
-    );
-  }
-
   renderRows(item, index){
     return(
       <ReturnsReplacmentsRow value={item} key={index} />
@@ -132,9 +97,7 @@ class ReturnsReplacments extends Component{
     return(
       <div>
         <br/>
-        <div className="tableHeader">
-          {this.tableHeaders.map(this.renderTableHeaders)}
-        </div>
+        <TableHeaders tableHeaders={this.tableHeaders} />
 
         {this.orders.map(this.renderRows)}
 

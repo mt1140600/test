@@ -7,6 +7,7 @@ import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
 import OrderBy from "../components/OrderBy";
 import PlainSelect from '../components/PlainSelect';
 import CheckboxWrapper from '../components/CheckboxWrapper';
+import TableHeaders from '../components/TableHeaders'
 
 require('react-datepicker/dist/react-datepicker.css');
 
@@ -73,48 +74,13 @@ CompletedOrdersRow.propTypes = {
 
 
 
+
 class Completed extends Component{
 
   constructor(){
     super();
     this.tableHeaders = [{label:"Date", width:2}, {label:"Items", width:2, tooltip:"Number of Items"}, {label:"Total Amount", width:2} , {label:"M Margin Avg", width:2, tooltip:"Marketplace margin (avg%)"}, {label:"M Margin Rs", width:2, tooltip:"Marketplace margin (in RS)"}, {label:"Final Payment", width: 2}, {label:" ", width:2, orderby:false}];
     this.orders = [{date:"28 Nov 2016", numberItems:"15", totalAmount:"4000", marketplaceMarginAvg:"6.31%", marketplaceMarginRS: "258.71", finalPayment: "384129"}, {date:"28 Nov 2016", numberItems:"15", totalAmount:"4000", marketplaceMarginAvg:"6.31%", marketplaceMarginRS: "258.71", finalPayment: "384129"},{date:"28 Nov 2016", numberItems:"15", totalAmount:"4000", marketplaceMarginAvg:"6.31%", marketplaceMarginRS: "258.71", finalPayment: "384129"}, {date:"28 Nov 2016", numberItems:"15", totalAmount:"4000", marketplaceMarginAvg:"6.31%", marketplaceMarginRS: "258.71", finalPayment: "384129"}];
-  }
-
-  renderTableHeaders = (item,index) => {
-    //assigning default values
-    let itemObj = Object.assign({label: "<Label>", width: 1, tooltip: null, orderby: true, justify:"center"}, item);
-
-    if(itemObj.tooltip === null)
-      return(
-        <div style={{flex: itemObj.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent: itemObj.justify}} key={index}>
-          <div className="tableHeaderText">
-            {itemObj.label}
-          </div>
-          <OrderBy
-            value = {null}
-            visible = {itemObj.orderby}
-            handleChange = {()=>null}/>
-        </div>
-      );
-    else
-    return(
-      <div style={{flex: itemObj.width,textAlign:"center", display: "flex", alignItems:"center", justifyContent:"center"}} key={index}>
-          <Tooltip
-            content={itemObj.tooltip}
-            inline={false}
-            position={Position.TOP}>
-            <div className="cellLabel">
-              {itemObj.label}
-              <span className="pt-icon-standard pt-icon-help" style={{paddingLeft:"5px", color:"#cccccc"}}></span>
-            </div>
-          </Tooltip>
-        <OrderBy
-          value = {null}
-          visible = {itemObj.orderby}
-          handleChange = {()=>null}/>
-      </div>
-    );
   }
 
   renderRows = (item, index) => {
@@ -168,9 +134,7 @@ class Completed extends Component{
           <br/>
           <br/>
 
-            <div className="tableHeader">
-              {this.tableHeaders.map(this.renderTableHeaders)}
-            </div>
+          <TableHeaders tableHeaders={this.tableHeaders} />
 
             {this.orders.map(this.renderRows)}
 
