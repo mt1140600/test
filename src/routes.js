@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { UserIsAuthenticated, UserIsAdmin } from './utils/authWrappers.js'
+import { UserIsAuthenticated, UserIsNotAuthenticated } from './utils/authWrappers.js'
 
 
 import TabLayout from './containers/TabLayout';
@@ -13,10 +13,10 @@ import ProductUpload from './containers/ProductUpload';
 
 export default (
   <Route path="/" component={App}>
-    <IndexRoute component={Login}/>
-    <Route path="signup" component={Signup} />
-    <Route path="reset" component={ResetPassword} />
-    <Route path="registration" component={AccountSetup}/>
-    <Route path="upload" component={ProductUpload} />
+    <IndexRoute component={UserIsNotAuthenticated(Login)}/>
+    <Route path="signup" component={UserIsNotAuthenticated(Signup)} />
+    <Route path="reset" component={UserIsNotAuthenticated(ResetPassword)} />
+    <Route path="registration" component={UserIsAuthenticated(ProductUpload)}/>
+    <Route path="dashboard" component={UserIsAuthenticated(ProductUpload)} />
   </Route>
 );

@@ -2,24 +2,24 @@ import { UserAuthWrapper } from 'redux-auth-wrapper';
 import { routerActions } from 'react-router-redux';
 
 export const UserIsAuthenticated = UserAuthWrapper({
-  authSelector: state => state.user,
+  authSelector: state => state.userData,
   redirectAction: routerActions.replace,
   failureRedirectPath: '/',
-  predicate: user => user.isAuthenticated,
+  predicate: userData => userData.user,
   wrapperDisplayName: 'UserIsAuthenticated'
 });
 
-export const UserIsAdmin = UserAuthWrapper({
-  authSelector: state => state.user,
+export const UserIsNotAuthenticated = UserAuthWrapper({
+  authSelector: state => state.userData,
   redirectAction: routerActions.replace,
-  failureRedirectPath: '/',
-  wrapperDisplayName: 'UserIsAdmin',
-  predicate: user => user.isAdmin,
+  failureRedirectPath: '/dashboard',
+  predicate: userData => !userData.user,
+  wrapperDisplayName: 'UserIsNotAuthenticated',
   allowRedirectBack: false
 });
 
 export const VisibleOnlyAdmin = UserAuthWrapper({
-  authSelector: state => state.user,
+  authSelector: state => state.userData,
   wrapperDisplayName: 'VisibleOnlyAdmin',
   predicate: user => user.isAdmin,
   FailureComponent: null
