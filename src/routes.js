@@ -10,6 +10,8 @@ import Signup from './views/Signup';
 import ResetPassword from './views/ResetPassword';
 import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
+import ChatWidget from './components/ChatWidget';
+import Sample from './components/Sample';
 
 export default (
   <Route path="/" component={App}>
@@ -18,5 +20,7 @@ export default (
     <Route path="reset" component={ResetPassword} />
     <Route path="registration" component={AccountSetup}/>
     <Route path="upload" component={ProductUpload} />
+    <Route path="chat" component={ChatWidget} />
+    <Route path="sample" component={Sample} />
   </Route>
 );
