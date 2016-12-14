@@ -5,3 +5,12 @@ export const actionTabChange = (tab) => {
     value: tab
   }
 }
+
+export const updateSellerInfo = (field, value) => {
+  return{
+    type: "Update Seller Info",
+    payload: {
+      [`${field}`]: value
+    }
+  }
+}

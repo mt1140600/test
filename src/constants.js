@@ -6,3 +6,4 @@ export const googleApiKey = "AIzaSyBCIKVw7HU6SO6Zn7ff_DUEkQ7blpDwu3Q";
 export const pathGeocode = "http://maps.googleapis.com/maps/api/geocode/json?address=";
 export const reCaptchaSiteKey = "6Lf8BA4UAAAAAO09u8gvITIdIij2mGGVcdfIwLDB";
 export const reCaptchaSecretKey = "6Lf8BA4UAAAAAP22CL02OVXJnlr3xoxZSEs4qIRA";
+export const pincodeToAddress = "http://dev.adminapi.prokure.it/api/bank_address?pincode=";

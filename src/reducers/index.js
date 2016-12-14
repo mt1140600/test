@@ -1,12 +1,13 @@
 import { combineReducers } from 'redux';
 import {routerReducer} from 'react-router-redux';
 import userData from './userData';
-import {tabReducer} from './registrationForm';
+import * as registrationForm from './registrationForm';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
   userData: userData,
-  registrationCurrentTab: tabReducer
+  registrationCurrentTab: registrationForm.tabReducer,
+  sellerInfo: registrationForm.sellerInfo
 
 });
 
