@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {Tabs, TabList, Tab, TabPanel} from "@blueprintjs/core";
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import VerifyOtp from '../views/VerifyOtp';
 import SellerInfo from '../views/SellerInfo';
@@ -8,6 +10,7 @@ import PaymentDetails from '../views/PaymentDetails';
 import POCDetails from '../views/POCDetails';
 import AddInfo from '../views/AddInfo';
 import TnC from '../views/TnC';
+import {actionTabChange} from '../actions/registration';
 
 const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Terms & Conditions"];
 const tabPanels = [     VerifyOtp,            SellerInfo,          TaxDetails,    PaymentDetails,       POCDetails,            AddInfo,                    TnC];
@@ -31,9 +34,13 @@ class TabLayout extends Component {
       </TabPanel>
     );
   }
+  handleTabChange = (selectedTab, prevTab) => {
+    console.log("New tab selected is "+ selectedTab);
+    this.props.actionTabChange(selectedTab);
+  }
   render() {
     return(
-      <Tabs className="tabs">
+      <Tabs className="tabs" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
         <TabList className="pt-large">
           {tabs.map(this.renderTabs)}
         </TabList>
@@ -43,4 +50,14 @@ class TabLayout extends Component {
   }
 }
 
-export default TabLayout;
+const mapStateToProps = (state) => {
+  return {
+    currentTab : state.registrationCurrentTab
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({actionTabChange: actionTabChange}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TabLayout);
