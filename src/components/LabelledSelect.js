@@ -7,7 +7,6 @@ class LabelledSelect extends Component{
     this.renderOption = this.renderOption.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {clicked: false};
   }
 
   renderOption(item, index){
@@ -17,7 +16,8 @@ class LabelledSelect extends Component{
   }
 
   handleClick(){
-    this.setState({clicked: true});
+    if(this.props.validationState === null)
+    this.props.onChange(this.props.value,false);
   }
 
   handleChange(event){
@@ -26,7 +26,6 @@ class LabelledSelect extends Component{
   }
 
   render(){
-    let errorField = !this.props.validationState && this.state.clicked;
     return(
       <label className="pt-label pt-inline" onFocus={this.handleClick}>
         {this.props.children}
@@ -37,7 +36,7 @@ class LabelledSelect extends Component{
             {this.props.options.map(this.renderOption)}
           </select>
         </div>
-        {(errorField)?<div className="helpText" >{this.props.helpText}</div>:null}
+        {(this.props.validationState === false)?<div className="helpText" >{this.props.helpText}</div>:null}
       </label>
     );
   }

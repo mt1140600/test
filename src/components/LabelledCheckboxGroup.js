@@ -11,11 +11,11 @@ class LabelledCheckboxGroup extends Component{
     this.morphOldToNew = this.morphOldToNew.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.newArr = null;
-    this.state={clicked: false}
   }
 
   handleClick(){
-      this.setState({clicked: true});
+      if(this.props.validationState === null)
+      this.props.onChange(this.props.value,false);
   }
 
   componentWillReceiveProps(nextProps){
@@ -65,13 +65,14 @@ class LabelledCheckboxGroup extends Component{
   }
 
   render(){
-    let errorField = !this.props.validationState && this.state.clicked;
+    // let errorField = !this.props.validationState && this.state.clicked;
+
     return(
       <div onFocus={this.handleClick}>
         <label className="pt-label pt-inline" style={{display: "flex"}}>
           <div style={{flex:"1"}}>
             Working Days
-            {(errorField)?<div className="helpText" >{this.props.helpText}</div>:null}
+            {(this.props.validationState === false)?<div className="helpText" >{this.props.helpText}</div>:null}
           </div>
           <div style={{display:"flex",flexWrap:"wrap",flex:"1",justifyContent:"flex-end"}}>
             {this.alignCheckboxes(this.props.options,this.props.groupColumns)}

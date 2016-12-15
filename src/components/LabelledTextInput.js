@@ -7,11 +7,11 @@ class LabelledTextInput extends Component{
     super();
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {clicked: false};
   }
 
   handleClick(){
-    this.setState({clicked:true});
+    if(this.props.validationState === null)
+    this.props.onChange(this.props.value,false);
   }
 
   handleChange(event){
@@ -20,8 +20,7 @@ class LabelledTextInput extends Component{
   }
 
   render(){
-    let errorField = !this.props.validationState && this.state.clicked;
-    let warningClass = (errorField)?'errorField':'';
+    let warningClass = (this.props.validationState === false)?'errorField':'';
     return(
       <div onFocus={this.handleClick}>
         <label className="pt-label pt-inline container">
@@ -34,7 +33,7 @@ class LabelledTextInput extends Component{
             type="text"
             name={this.props.children}
             dir="auto" />
-          {(errorField)?<div className="helpText" >{this.props.helpText}</div>:null}
+          {(this.props.validationState === false)?<div className="helpText" >{this.props.helpText}</div>:null}
         </label>
       </div>
     );
