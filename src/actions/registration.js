@@ -6,11 +6,14 @@ export const actionTabChange = (tab) => {
   }
 }
 
-export const updateSellerInfo = (field, value) => {
+export const updateSellerInfo = (field, value, vState) => {
   return{
     type: "Update Seller Info",
     payload: {
-      [`${field}`]: value
+      field: field,
+      vState: vState,
+      value: value
+      // [`${field}`]: value
     }
   }
 }
