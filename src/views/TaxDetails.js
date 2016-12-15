@@ -3,6 +3,10 @@ import { Button, FocusStyleManager } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledFileUpload from '../components/LabelledFileUpload';
 import * as fieldValidations from '../utils/fieldValidations';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {updateTaxDetails} from '../actions/registration';
+
 FocusStyleManager.onlyShowFocusOnTabs();
 
 class TaxDetails extends Component{
@@ -10,24 +14,21 @@ class TaxDetails extends Component{
     super();
     this.updateInfo = this.updateInfo.bind(this);
     this.storeForm = this.storeForm.bind(this);
-    this.validationState = {PAN:false, VAT:false, CST:false, certIncorp:false, membICC:false};
-    this.state = {PAN:"",VAT:"",CST:"",certIncorp:"",membICC:""};
   }
 
   updateInfo(field, value, vState) {
-      this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
-      this.setState({[`${field}`]:value});
+      this.props.updateTaxDetails(field, value, vState);
   }
 
   storeForm() {
-    let validateSubForm = true;
-    for(let key in this.validationState){
-      if(this.validationState[key] === false)
-        validateSubForm = false;
-    }
-    const newObj = {...this.state, validateSubForm : validateSubForm};
-    console.log(JSON.stringify(newObj));
-    localStorage.setItem("taxDetails",JSON.stringify(newObj));
+    // let validateSubForm = true;
+    // for(let key in this.validationState){
+    //   if(this.validationState[key] === false)
+    //     validateSubForm = false;
+    // }
+    // const newObj = {...this.state, validateSubForm : validateSubForm};
+    // console.log(JSON.stringify(newObj));
+    // localStorage.setItem("taxDetails",JSON.stringify(newObj));
   }
 
   render() {
@@ -39,29 +40,29 @@ class TaxDetails extends Component{
             <h2> Update your VAT and CST details </h2>
             <br/>
             <LabelledTextInput
-              value={this.state.PAN}
+              value={this.props.taxDetails.value.PAN}
               onChange={this.updateInfo.bind(this,"PAN")}
-              validationState={this.validationState.PAN}
+              validationState={this.props.taxDetails.vState.PAN}
               validate={fieldValidations.validatePAN}
-              helpText={"PAN Number is mandatory"}>
+              helpText={"Enter a valid PAN"}>
               PAN Number
             </LabelledTextInput>
 
             <LabelledTextInput
-              value={this.state.VAT}
+              value={this.props.taxDetails.value.VAT}
               onChange={this.updateInfo.bind(this,"VAT")}
-              validationState={this.validationState.VAT}
+              validationState={this.props.taxDetails.vState.VAT}
               validate={fieldValidations.validateVAT}
-              helpText={"VAT Number is mandatory"}>
+              helpText={"Enter a valid VAT"}>
               VAT/TIN Number
             </LabelledTextInput>
 
             <LabelledTextInput
-              value={this.state.CST}
+              value={this.props.taxDetails.value.CST}
               onChange={this.updateInfo.bind(this,"CST")}
-              validationState={this.validationState.CST}
+              validationState={this.props.taxDetails.vState.CST}
               validate={fieldValidations.validateCST}
-              helpText={"CST Number is mandatory"}>
+              helpText={"Enter a valid CST"}>
               CST Number
             </LabelledTextInput>
 
@@ -80,4 +81,14 @@ class TaxDetails extends Component{
   }
 }
 
-export default TaxDetails;
+const mapStateToProps = (state) => {
+  return {
+    taxDetails : state.taxDetails
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ updateTaxDetails: updateTaxDetails }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaxDetails);

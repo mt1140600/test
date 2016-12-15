@@ -9,6 +9,24 @@ export const tabReducer = (state = 0, action) => {
   }
 }
 
+function createReducer(initialState, actionName){
+
+  return (state = initialState, action) => {
+    switch(action.type){
+      case actionName:
+        const vStateObj = Object.assign({}, state.vState, {[`${action.payload.field}`]: action.payload.vState});
+        const valueObj = Object.assign({}, state.value, {[`${action.payload.field}`]: action.payload.value});
+        return {vState: vStateObj, value: valueObj};
+      break;
+
+      default:
+        return state;
+      break;
+    }
+  }
+
+}
+
 const sellerInfo_initialState = {
   vState:{
     storeName: null,
@@ -43,18 +61,42 @@ const sellerInfo_initialState = {
     operationalHours:["8","am","5","pm"]
   }
 
-}
+};
 
-export const sellerInfo = (state = sellerInfo_initialState, action) => {
-  switch(action.type){
-    case "Update Seller Info":
-      const vStateObj = Object.assign({}, state.vState, {[`${action.payload.field}`]: action.payload.vState});
-      const valueObj = Object.assign({}, state.value, {[`${action.payload.field}`]: action.payload.value});
-      return {vState: vStateObj, value: valueObj};
-    break;
+// export const sellerInfo = (state = sellerInfo_initialState, action) => {
+//   switch(action.type){
+//     case "Update Seller Info":
+//       const vStateObj = Object.assign({}, state.vState, {[`${action.payload.field}`]: action.payload.vState});
+//       const valueObj = Object.assign({}, state.value, {[`${action.payload.field}`]: action.payload.value});
+//       return {vState: vStateObj, value: valueObj};
+//     break;
+//
+//     default:
+//       return state;
+//     break;
+//   }
+// }
 
-    default:
-      return state;
-    break;
+export const sellerInfo = createReducer(sellerInfo_initialState, "Update Seller Info");
+
+const taxDetails_initialState = {
+
+  vState:{
+    PAN:null,
+    VAT:null,
+    CST:null,
+    certIncorp:false,
+    membICC:false
+  },
+
+  value:{
+    PAN:"",
+    VAT:"",
+    CST:"",
+    certIncorp:"",
+    membICC:""
   }
+
 }
+
+export const taxDetails = createReducer(taxDetails_initialState, "Update Tax Details");

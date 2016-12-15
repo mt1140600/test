@@ -11,7 +11,7 @@ class LabelledTextInput extends Component{
 
   handleClick(){
     if(this.props.validationState === null)
-    this.props.onChange(this.props.value,false);
+      this.props.onChange(this.props.value,false);
   }
 
   handleChange(event){

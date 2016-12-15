@@ -7,8 +7,8 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   userData: userData,
   registrationCurrentTab: registrationForm.tabReducer,
-  sellerInfo: registrationForm.sellerInfo
-
+  sellerInfo: registrationForm.sellerInfo,
+  taxDetails: registrationForm.taxDetails
 });
 
 export default rootReducer;
