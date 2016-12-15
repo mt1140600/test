@@ -36,7 +36,7 @@ const sellerInfo_initialState = {
     state: null,
     city: null,
     wadd1:null,
-    wadd2:null,
+    wadd2:true,
     wpincode:null,
     wstate:null,
     wcity:null,

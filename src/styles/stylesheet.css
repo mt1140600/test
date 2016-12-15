@@ -204,6 +204,9 @@ h6{
 #react-paginate .break a {
     cursor: default;
 }
+.red{
+  color: green;
+}
 /*
 .pt-tabs.pt-horizontal {
   display: -webkit-flex;

@@ -37,7 +37,7 @@ const loginUserFailure = (error) => {
 export const loginUser = (email, password, redirect="/") => {
   return function (dispatch) {
     dispatch(loginUserRequest());
-    return fetch(config.apiURL + '/api/merchant/signup', {
+    return fetch(config.apiURL + '/api/merchant/login', {
       method: 'post',
       headers: {
           'Accept': 'application/json',
@@ -61,7 +61,7 @@ export const loginUser = (email, password, redirect="/") => {
 export const signupUser = (userData, redirect="/") => {
   return function (dispatch) {
     // dispatch(loginUserRequest());
-    return fetch("http://localhost:3000" + '/api/merchant/signup', {
+    return fetch(config.apiURL + '/api/merchant/signup', {
       method:'post',
       headers:{
         'Accept':'application/json',

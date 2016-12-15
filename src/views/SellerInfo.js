@@ -45,8 +45,8 @@ class SellerInfo extends Component {
   }
 
   fillCityState(obj){
-    this.props.updateSellerInfo("city", _.startCase(_.toLower(obj.districtname)));
-    this.props.updateSellerInfo("state", _.startCase(_.toLower(obj.statename)));
+    this.props.updateSellerInfo("city", _.startCase(_.toLower(obj.districtname)), true);
+    this.props.updateSellerInfo("state", _.startCase(_.toLower(obj.statename)), true);
   }
 
   pincodeToAddress(pincode) {
@@ -87,11 +87,20 @@ class SellerInfo extends Component {
 
   storeForm() {
     console.log(this.props.sellerInfo.vState);
-    // let validateSubForm = true;
+
+    let validateSubForm = true;
     for(let key in this.props.sellerInfo.vState){
-      if(this.props.sellerInfo.vState[key] === null)
+      if(this.props.sellerInfo.vState[key] === null){
+        this.props.updateSellerInfo(key, this.props.sellerInfo.value[key], false);
         validateSubForm = false;
+      }
+      else if(this.props.sellerInfo.vState[key] === false){
+        validateSubForm = false;
+      }
     }
+
+    if(validateSubForm) console.log("Pushing to DB");
+
     // const newObj = {...this.state, validateSubForm : validateSubForm};
     // console.log(JSON.stringify(newObj));
     // localStorage.setItem("sellerInfo",JSON.stringify(newObj));

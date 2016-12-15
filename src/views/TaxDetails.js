@@ -21,14 +21,21 @@ class TaxDetails extends Component{
   }
 
   storeForm() {
-    // let validateSubForm = true;
-    // for(let key in this.validationState){
-    //   if(this.validationState[key] === false)
-    //     validateSubForm = false;
-    // }
-    // const newObj = {...this.state, validateSubForm : validateSubForm};
-    // console.log(JSON.stringify(newObj));
-    // localStorage.setItem("taxDetails",JSON.stringify(newObj));
+      console.log(this.props.taxDetails.vState);
+
+      let validateSubForm = true;
+      for(let key in this.props.taxDetails.vState){
+        if(this.props.taxDetails.vState[key] === null){
+          this.props.updateTaxDetails(key, this.props.taxDetails.value[key], false);
+          validateSubForm = false;
+        }
+        else if(this.props.taxDetails.vState[key] === false){
+          validateSubForm = false;
+        }
+      }
+
+      if(validateSubForm) console.log("Pushing to DB");
+
   }
 
   render() {

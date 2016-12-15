@@ -27,14 +27,20 @@ class PaymentDetails extends Component {
   }
 
   storeForm() {
-    // let validateSubForm = true;
-    // for(let key in this.props.paymentDetails.vState){
-    //   if(this.props.paymentDetails.vState[key] === false)
-    //     validateSubForm = false;
-    // }
-    // const newObj = {...this.props.paymentDetails.value, validateSubForm : validateSubForm};
-    // console.log(JSON.stringify(newObj));
-    // localStorage.setItem("paymentDetails",JSON.stringify(newObj));
+    console.log(this.props.paymentDetails.vState);
+
+    let validateSubForm = true;
+    for(let key in this.props.paymentDetails.vState){
+      if(this.props.paymentDetails.vState[key] === null){
+        this.props.updatePaymentDetails(key, this.props.paymentDetails.value[key], false);
+        validateSubForm = false;
+      }
+      else if(this.props.paymentDetails.vState[key] === false){
+        validateSubForm = false;
+      }
+    }
+
+    if(validateSubForm) console.log("Pushing to DB");
   }
 
   render() {

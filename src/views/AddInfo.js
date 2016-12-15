@@ -32,14 +32,20 @@ class AddInfo extends Component {
   }
 
   storeForm() {
-    // let validateSubForm = true;
-    // for(let key in this.props.addlInfo.vState){
-    //   if(this.props.addlInfo.vState[key] === false)
-    //     validateSubForm = false;
-    // }
-    // const newObj = {...this.state, validateSubForm : validateSubForm};
-    // console.log(JSON.stringify(newObj));
-    // localStorage.setItem("addInfo",JSON.stringify(newObj));
+    console.log(this.props.addlInfo.vState);
+
+    let validateSubForm = true;
+    for(let key in this.props.addlInfo.vState){
+      if(this.props.addlInfo.vState[key] === null){
+        this.props.updateAddlInfo(key, this.props.addlInfo.value[key], false);
+        validateSubForm = false;
+      }
+      else if(this.props.addlInfo.vState[key] === false){
+        validateSubForm = false;
+      }
+    }
+
+    if(validateSubForm) console.log("Pushing to DB");
   }
 
   render() {

@@ -23,7 +23,7 @@ class TabLayout extends Component {
   }
   renderTabs(item, index) {
     return(
-      <Tab key={index} isSelected={true}>{item}</Tab>
+      <Tab key={index} isSelected={true} className="red">{item}</Tab>
     );
   }
   renderTabPanels(item, index) {
@@ -35,7 +35,6 @@ class TabLayout extends Component {
     );
   }
   handleTabChange = (selectedTab, prevTab) => {
-    console.log("New tab selected is "+ selectedTab);
     this.props.actionTabChange(selectedTab);
   }
   render() {

@@ -21,14 +21,20 @@ class POCDetails extends Component {
   }
 
   storeForm() {
-    // let validateSubForm = true;
-    // for(let key in this.props.pocDetails.vState) {
-    //   if(this.props.pocDetails.vState[key] === false)
-    //     validateSubForm = false;
-    // }
-    // const newObj = {...this.props.pocDetails.value, validateSubForm : validateSubForm};
-    // console.log(JSON.stringify(newObj));
-    // localStorage.setItem("POCDetails",JSON.stringify(newObj));
+    console.log(this.props.pocDetails.vState);
+
+    let validateSubForm = true;
+    for(let key in this.props.pocDetails.vState){
+      if(this.props.pocDetails.vState[key] === null){
+        this.props.updatePOCDetails(key, this.props.pocDetails.value[key], false);
+        validateSubForm = false;
+      }
+      else if(this.props.pocDetails.vState[key] === false){
+        validateSubForm = false;
+      }
+    }
+
+    if(validateSubForm) console.log("Pushing to DB");
   }
 
   render() {
