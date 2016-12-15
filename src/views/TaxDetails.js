@@ -5,7 +5,8 @@ import LabelledFileUpload from '../components/LabelledFileUpload';
 import * as fieldValidations from '../utils/fieldValidations';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {updateTaxDetails} from '../actions/registration';
+import {updateTaxDetails, updateTabValidation} from '../actions/registration';
+import {actionTabChange} from '../actions/registration';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -34,7 +35,14 @@ class TaxDetails extends Component{
         }
       }
 
-      if(validateSubForm) console.log("Pushing to DB");
+      if(validateSubForm){
+        console.log("Pushing to DB");
+        this.props.updateTabValidation(2, true);
+        this.props.actionTabChange(3);
+      }
+      else{
+        this.props.updateTabValidation(2, false);
+      }
 
   }
 
@@ -95,7 +103,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ updateTaxDetails: updateTaxDetails }, dispatch);
+  return bindActionCreators({ updateTaxDetails, updateTabValidation, actionTabChange }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaxDetails);

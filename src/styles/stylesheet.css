@@ -205,7 +205,10 @@ h6{
     cursor: default;
 }
 .red{
-  color: green;
+  color: #ff4c4c;
+}
+.green{
+  color: #7fbf7f;
 }
 /*
 .pt-tabs.pt-horizontal {

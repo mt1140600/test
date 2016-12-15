@@ -4,7 +4,8 @@ import LabelledTextInput from '../components/LabelledTextInput';
 import * as fieldValidations from '../utils/fieldValidations';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {updatePOCDetails} from '../actions/registration';
+import {updatePOCDetails, updateTabValidation} from '../actions/registration';
+import {actionTabChange} from '../actions/registration';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -34,7 +35,14 @@ class POCDetails extends Component {
       }
     }
 
-    if(validateSubForm) console.log("Pushing to DB");
+    if(validateSubForm){
+      console.log("Pushing to DB");
+      this.props.updateTabValidation(4, true);
+      this.props.actionTabChange(5);
+    }
+    else{
+      this.props.updateTabValidation(4, false);
+    }
   }
 
   render() {
@@ -89,7 +97,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ updatePOCDetails: updatePOCDetails }, dispatch );
+  return bindActionCreators({ updatePOCDetails, updateTabValidation, actionTabChange }, dispatch );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(POCDetails);

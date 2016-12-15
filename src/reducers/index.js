@@ -11,7 +11,8 @@ const rootReducer = combineReducers({
   taxDetails: registrationForm.taxDetails,
   paymentDetails: registrationForm.paymentDetails,
   pocDetails: registrationForm.pocDetails,
-  addlInfo: registrationForm.addlInfo
+  addlInfo: registrationForm.addlInfo,
+  tabValidation: registrationForm.tabValidation
 });
 
 export default rootReducer;

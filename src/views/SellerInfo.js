@@ -11,7 +11,9 @@ import * as constants from '../constants';
 import * as fieldValidations from '../utils/fieldValidations';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {updateSellerInfo} from '../actions/registration';
+import {updateSellerInfo, updateTabValidation} from '../actions/registration';
+import {actionTabChange} from '../actions/registration';
+
 var _ = require('lodash');
 // import Immutable from 'immutable';
 // window.Immutable = Immutable;
@@ -99,7 +101,14 @@ class SellerInfo extends Component {
       }
     }
 
-    if(validateSubForm) console.log("Pushing to DB");
+    if(validateSubForm){
+      console.log("Pushing to DB");
+      this.props.updateTabValidation(1, true);
+      this.props.actionTabChange(2);
+    }
+    else{
+      this.props.updateTabValidation(1, false);
+    }
 
     // const newObj = {...this.state, validateSubForm : validateSubForm};
     // console.log(JSON.stringify(newObj));
@@ -297,7 +306,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ updateSellerInfo: updateSellerInfo }, dispatch);
+  return bindActionCreators({ updateSellerInfo, updateTabValidation, actionTabChange }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SellerInfo);

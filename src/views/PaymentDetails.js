@@ -6,7 +6,8 @@ import LabelledFileUpload from '../components/LabelledFileUpload';
 import * as fieldValidations from '../utils/fieldValidations';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {updatePaymentDetails} from '../actions/registration';
+import {updatePaymentDetails, updateTabValidation} from '../actions/registration';
+import {actionTabChange} from '../actions/registration';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -40,7 +41,13 @@ class PaymentDetails extends Component {
       }
     }
 
-    if(validateSubForm) console.log("Pushing to DB");
+    if(validateSubForm){
+      console.log("Pushing to DB");
+      this.props.updateTabValidation(3, true);
+    }
+    else{
+      this.props.updateTabValidation(3, false);
+    }
   }
 
   render() {
@@ -108,7 +115,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({updatePaymentDetails: updatePaymentDetails}, dispatch);
+  return bindActionCreators({updatePaymentDetails, updateTabValidation, actionTabChange}, dispatch);
 
 }
 

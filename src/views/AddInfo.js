@@ -7,7 +7,8 @@ import LabelledCheckboxGroup from '../components/LabelledCheckboxGroup';
 import * as fieldValidations from '../utils/fieldValidations';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {updateAddlInfo} from '../actions/registration';
+import {updateAddlInfo, updateTabValidation} from '../actions/registration';
+import {actionTabChange} from '../actions/registration';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -45,7 +46,14 @@ class AddInfo extends Component {
       }
     }
 
-    if(validateSubForm) console.log("Pushing to DB");
+    if(validateSubForm){
+      console.log("Pushing to DB");
+      this.props.updateTabValidation(5, true);
+      this.props.actionTabChange(6);
+    }
+    else{
+      this.props.updateTabValidation(5, false);
+    }
   }
 
   render() {
@@ -130,7 +138,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ updateAddlInfo: updateAddlInfo }, dispatch);
+    return bindActionCreators({ updateAddlInfo, updateTabValidation, actionTabChange }, dispatch);
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(AddInfo);

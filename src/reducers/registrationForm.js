@@ -146,3 +146,27 @@ const addlInfo_intialState = {
 }
 
 export const addlInfo = createReducer(addlInfo_intialState, "Update Addl Info");
+
+//mobileVerification, sellerInfo, taxDetails, paymentDetails, pointOfContact, addlInfo, TnC
+const tabValidation_initialState = [
+  null,
+  null,
+  null,
+  null,
+  null,
+  null,
+  null
+];
+
+export const tabValidation = (state = tabValidation_initialState, action) => {
+  let newState = [...state];
+  switch(action.type){
+    case "Set Tab Validation":
+      newState[action.payload.index] = action.payload.vState;
+      return newState;
+    break;
+    default:
+      return newState;
+    break;
+  }
+}
