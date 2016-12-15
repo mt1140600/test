@@ -71,7 +71,7 @@ class LabelledCheckboxGroup extends Component{
       <div onFocus={this.handleClick}>
         <label className="pt-label pt-inline" style={{display: "flex"}}>
           <div style={{flex:"1"}}>
-            Working Days
+            {this.props.children}
             {(this.props.validationState === false)?<div className="helpText" >{this.props.helpText}</div>:null}
           </div>
           <div style={{display:"flex",flexWrap:"wrap",flex:"1",justifyContent:"flex-end"}}>

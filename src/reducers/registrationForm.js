@@ -124,3 +124,25 @@ const pocDetails_initialState = {
 }
 
 export const pocDetails = createReducer(pocDetails_initialState, "Update POC Details");
+
+const addlInfo_intialState = {
+
+  vState: {
+    typeOfEstablishment:null,
+    annualTurnover:true,
+    numberRangeProducts:true,
+    otherWebsitesSoldOn:true,
+    otherWebsitesSoldOnText:true
+  },
+
+  value: {
+    typeOfEstablishment:[],
+    annualTurnover:"Less than 1 Lakh",
+    numberRangeProducts:"1 - 10",
+    otherWebsitesSoldOn:[],
+    otherWebsitesSoldOnText:""
+  }
+
+}
+
+export const addlInfo = createReducer(addlInfo_intialState, "Update Addl Info");

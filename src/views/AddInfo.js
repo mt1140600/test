@@ -5,6 +5,10 @@ import LabelledCheckbox from '../components/LabelledCheckbox';
 import LabelledSelect from '../components/LabelledSelect';
 import LabelledCheckboxGroup from '../components/LabelledCheckboxGroup';
 import * as fieldValidations from '../utils/fieldValidations';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {updateAddlInfo} from '../actions/registration';
+
 FocusStyleManager.onlyShowFocusOnTabs();
 
 const websites = ["Flipkart","Amazon","Snapdeal","Shopclues","Indiamart","Just Dial","Wydr","Shotang","Just Buy Live"];
@@ -14,13 +18,10 @@ class AddInfo extends Component {
     super();
     this.alignCheckboxes = this.alignCheckboxes.bind(this);
     this.storeForm = this.storeForm.bind(this);
-    this.validationState = {typeOfEstablishment:false, annualTurnover:true, numberRangeProducts:true, otherWebsitesSoldOn:true, otherWebsitesSoldOnText:true};
-    this.state = {typeOfEstablishment:[], annualTurnover:"Less than 1 Lakh", numberRangeProducts:"1 - 10", otherWebsitesSoldOn:[], otherWebsitesSoldOnText:""};
   }
 
   updateInfo(field, value, vState) {
-      this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
-      this.setState({[`${field}`]:value});
+    this.props.updateAddlInfo(field, value, vState);
   }
 
   alignCheckboxes(arr, cols) {
@@ -31,14 +32,14 @@ class AddInfo extends Component {
   }
 
   storeForm() {
-    let validateSubForm = true;
-    for(let key in this.validationState){
-      if(this.validationState[key] === false)
-        validateSubForm = false;
-    }
-    const newObj = {...this.state, validateSubForm : validateSubForm};
-    console.log(JSON.stringify(newObj));
-    localStorage.setItem("addInfo",JSON.stringify(newObj));
+    // let validateSubForm = true;
+    // for(let key in this.props.addlInfo.vState){
+    //   if(this.props.addlInfo.vState[key] === false)
+    //     validateSubForm = false;
+    // }
+    // const newObj = {...this.state, validateSubForm : validateSubForm};
+    // console.log(JSON.stringify(newObj));
+    // localStorage.setItem("addInfo",JSON.stringify(newObj));
   }
 
   render() {
@@ -53,9 +54,9 @@ class AddInfo extends Component {
             <LabelledCheckboxGroup
               options={["Manufacturer","Wholesaler","Distributer","Importer"]}
               groupColumns={2}
-              value={this.state.typeOfEstablishment}
+              value={this.props.addlInfo.value.typeOfEstablishment}
               onChange={this.updateInfo.bind(this,"typeOfEstablishment")}
-              validationState={this.validationState.typeOfEstablishment}
+              validationState={this.props.addlInfo.vState.typeOfEstablishment}
               validate={fieldValidations.validateMandatoryString}
               helpText={"Choose atleast one option"}>
               Type of establishment
@@ -63,9 +64,9 @@ class AddInfo extends Component {
 
             <LabelledSelect
               options={["Less than 1 Lakh","Between 1 Lakh and 10 Lakhs","Between 10 Lakhs and 1 Crore","More than 1 Crore","I dont know"]}
-              value={this.state.annualTurnover}
+              value={this.props.addlInfo.value.annualTurnover}
               onChange={this.updateInfo.bind(this,"annualTurnover")}
-              validationState={this.validationState.annualTurnover}
+              validationState={this.props.addlInfo.vState.annualTurnover}
               validate={fieldValidations.noValidation}
               helpText={null}>
               Annual Turnover
@@ -75,9 +76,9 @@ class AddInfo extends Component {
 
             <LabelledSelect
               options={["1 - 10","11 - 100","101 - 500","More than 500"]}
-              value={this.state.numberRangeProducts}
+              value={this.props.addlInfo.value.numberRangeProducts}
               onChange={this.updateInfo.bind(this,"numberRangeProducts")}
-              validationState={this.validationState.numberRangeProducts}
+              validationState={this.props.addlInfo.vState.numberRangeProducts}
               validate={fieldValidations.noValidation}
               helpText={null}>
               How many products do you sell?
@@ -88,9 +89,9 @@ class AddInfo extends Component {
             <LabelledCheckboxGroup
               options={["Flipkart","Amazon","Snapdeal","Shopclues","Indiamart","Just Dial","Wydr","Shotang","Just Buy Live"]}
               groupColumns={2}
-              value={this.state.otherWebsitesSoldOn}
+              value={this.props.addlInfo.value.otherWebsitesSoldOn}
               onChange={this.updateInfo.bind(this,"otherWebsitesSoldOn")}
-              validationState={this.validationState.otherWebsitesSoldOn}
+              validationState={this.props.addlInfo.vState.otherWebsitesSoldOn}
               validate={fieldValidations.noValidation}
               helpText={null}>
               Other websites you sell on
@@ -98,9 +99,9 @@ class AddInfo extends Component {
 
 
             <LabelledTextInput
-              value={this.state.otherWebsitesSoldOnText}
+              value={this.props.addlInfo.value.otherWebsitesSoldOnText}
               onChange={this.updateInfo.bind(this,"otherWebsitesSoldOnText")}
-              validationState={this.validationState.otherWebsitesSoldOnText}
+              validationState={this.props.addlInfo.vState.otherWebsitesSoldOnText}
               validate={fieldValidations.noValidation}
               helpText={null}>
               Others
@@ -116,4 +117,14 @@ class AddInfo extends Component {
   }
 }
 
-export default AddInfo;
+const mapStateToProps = (state) => {
+    return {
+      addlInfo: state.addlInfo
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ updateAddlInfo: updateAddlInfo }, dispatch);
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AddInfo);
