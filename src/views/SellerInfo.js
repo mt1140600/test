@@ -70,11 +70,11 @@ class SellerInfo extends Component {
   }
 
   copyAddress = () => {
-    this.props.updateSellerInfo("wadd1", this.props.sellerInfo.value.add1);
-    this.props.updateSellerInfo("wadd2", this.props.sellerInfo.value.add2);
-    this.props.updateSellerInfo("wstate", this.props.sellerInfo.value.state);
-    this.props.updateSellerInfo("wcity", this.props.sellerInfo.value.city);
-    this.props.updateSellerInfo("wpincode", this.props.sellerInfo.value.pincode);
+    this.props.updateSellerInfo("wadd1", this.props.sellerInfo.value.add1, this.props.sellerInfo.vState.add1);
+    this.props.updateSellerInfo("wadd2", this.props.sellerInfo.value.add2, this.props.sellerInfo.vState.add2);
+    this.props.updateSellerInfo("wstate", this.props.sellerInfo.value.state, this.props.sellerInfo.vState.state);
+    this.props.updateSellerInfo("wcity", this.props.sellerInfo.value.city, this.props.sellerInfo.vState.city);
+    this.props.updateSellerInfo("wpincode", this.props.sellerInfo.value.pincode, this.props.sellerInfo.vState.pincode);
   }
 
   handleCopyAddress = () => {
@@ -88,10 +88,10 @@ class SellerInfo extends Component {
   storeForm() {
     console.log(this.props.sellerInfo.vState);
     // let validateSubForm = true;
-    // for(let key in this.props.sellerInfo.vState){
-    //   if(this.props.sellerInfo.vState[key] === false)
-    //     validateSubForm = false;
-    // }
+    for(let key in this.props.sellerInfo.vState){
+      if(this.props.sellerInfo.vState[key] === null)
+        validateSubForm = false;
+    }
     // const newObj = {...this.state, validateSubForm : validateSubForm};
     // console.log(JSON.stringify(newObj));
     // localStorage.setItem("sellerInfo",JSON.stringify(newObj));
