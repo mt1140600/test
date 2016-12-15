@@ -35,3 +35,4 @@ function actionCreator(actionName){
 export const updateSellerInfo = actionCreator("Update Seller Info");
 export const updateTaxDetails = actionCreator("Update Tax Details");
 export const updatePaymentDetails = actionCreator("Update Payment Details");
+export const updatePOCDetails = actionCreator("Update POC Details");

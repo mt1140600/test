@@ -106,3 +106,21 @@ const paymentDetails_initialState = {
 }
 
 export const paymentDetails = createReducer(paymentDetails_initialState, "Update Payment Details");
+
+const pocDetails_initialState = {
+
+  vState: {
+    POCName:true,
+    POCPhone:true,
+    POCEmail:true
+  },
+
+  value: {
+    POCName:"",
+    POCPhone:"",
+    POCEmail:""
+  }
+
+}
+
+export const pocDetails = createReducer(pocDetails_initialState, "Update POC Details");

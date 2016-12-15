@@ -14,6 +14,19 @@ export function validateMobileNumber(value){
   else return false;
 }
 
+export function validateEmail(value){
+  let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return pattern.test(value);
+}
+
+export function validateOptionalEmail(value){
+  if(value === "") return true;
+  else{
+    let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return pattern.test(value);
+  }
+}
+
 export function validatePincode(value){
   if( typeof(Number(value))==="number" && value.length === 6) return true;
   else return false;
