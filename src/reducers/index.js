@@ -8,7 +8,8 @@ const rootReducer = combineReducers({
   userData: userData,
   registrationCurrentTab: registrationForm.tabReducer,
   sellerInfo: registrationForm.sellerInfo,
-  taxDetails: registrationForm.taxDetails
+  taxDetails: registrationForm.taxDetails,
+  paymentDetails: registrationForm.paymentDetails
 });
 
 export default rootReducer;

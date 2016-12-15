@@ -288,7 +288,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ updateSellerInfo: updateSellerInfo },dispatch);
+  return bindActionCreators({ updateSellerInfo: updateSellerInfo }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SellerInfo);

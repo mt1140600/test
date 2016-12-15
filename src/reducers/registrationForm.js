@@ -63,20 +63,6 @@ const sellerInfo_initialState = {
 
 };
 
-// export const sellerInfo = (state = sellerInfo_initialState, action) => {
-//   switch(action.type){
-//     case "Update Seller Info":
-//       const vStateObj = Object.assign({}, state.vState, {[`${action.payload.field}`]: action.payload.vState});
-//       const valueObj = Object.assign({}, state.value, {[`${action.payload.field}`]: action.payload.value});
-//       return {vState: vStateObj, value: valueObj};
-//     break;
-//
-//     default:
-//       return state;
-//     break;
-//   }
-// }
-
 export const sellerInfo = createReducer(sellerInfo_initialState, "Update Seller Info");
 
 const taxDetails_initialState = {
@@ -100,3 +86,23 @@ const taxDetails_initialState = {
 }
 
 export const taxDetails = createReducer(taxDetails_initialState, "Update Tax Details");
+
+const paymentDetails_initialState = {
+
+  vState: {
+    accHolderName:null,
+    accNumber:null,
+    IFSC:null,
+    accType:null
+  },
+
+  value: {
+    accHolderName:"",
+    accNumber:"",
+    IFSC:"",
+    accType:"Savings"
+  }
+
+}
+
+export const paymentDetails = createReducer(paymentDetails_initialState, "Update Payment Details");
