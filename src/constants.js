@@ -6,4 +6,12 @@ export const googleApiKey = "AIzaSyBCIKVw7HU6SO6Zn7ff_DUEkQ7blpDwu3Q";
 export const pathGeocode = "http://maps.googleapis.com/maps/api/geocode/json?address=";
 export const reCaptchaSiteKey = "6Lf8BA4UAAAAAO09u8gvITIdIij2mGGVcdfIwLDB";
 export const reCaptchaSecretKey = "6Lf8BA4UAAAAAP22CL02OVXJnlr3xoxZSEs4qIRA";
-export const pincodeToAddress = "http://dev.adminapi.prokure.it/api/bank_address?pincode=";
+
+// const url = "http://dev.adminapi.prokure.it";
+const url = "http://192.168.0.102:3000";
+
+export const pincodeToAddress = `${url}/api/bank_address?pincode=`;
+export const requestOtp = `${url}/api/phone/request_otp/`;
+export const requestOtpAgain = `${url}/api/phone/request_otp_again`;
+export const verifyOtp = `${url}/api/merchant/phone/verify`;
+export const saveForm = `${url}/api/merchant/update`;

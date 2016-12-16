@@ -7,6 +7,7 @@ const rootReducer = combineReducers({
   routing: routerReducer,
   userData: userData,
   registrationCurrentTab: registrationForm.tabReducer,
+  verifyOtp: registrationForm.verifyOtp,
   sellerInfo: registrationForm.sellerInfo,
   taxDetails: registrationForm.taxDetails,
   paymentDetails: registrationForm.paymentDetails,

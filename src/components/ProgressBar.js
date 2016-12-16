@@ -6,7 +6,7 @@ class ProgressBar extends Component{
     let width = ((this.props.currentTab+1)/ 7)*100;   //as indices start from 0
     return(
       <div id="progressBar">
-        <div className="pt-progress-bar pt-intent-primary">
+        <div className="pt-progress-bar pt-no-stripes pt-intent-primary">
           <div className="pt-progress-meter" style={{width: `${width}%`}}/>
         </div>
       </div>

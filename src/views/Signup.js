@@ -127,7 +127,7 @@ class Signup extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ 
+const mapStateToProps = (state) => ({
   todos: state.userData
 });
 

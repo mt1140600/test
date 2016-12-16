@@ -27,6 +27,17 @@ function createReducer(initialState, actionName){
 
 }
 
+const verifyOtp_initialState = {
+  vState:{
+    phoneNo: null
+  },
+  value:{
+    phoneNo: ""
+  }
+}
+
+export const verifyOtp = createReducer(verifyOtp_initialState, "Update Verify OTP");
+
 const sellerInfo_initialState = {
   vState:{
     storeName: null,

@@ -10,8 +10,8 @@ const loginUserRequest = () => {
 };
 
 const loginUserSuccess = (response) => {
-  localStorage.setItem('token', response.value);
-  localStorage.setItem('user_id', response.userId);
+  localStorage.setItem('token', response.token);
+  localStorage.setItem('user_id', response.merchant._id);
   return {
     type: LOGIN_USER_SUCCESS,
     payload: {
@@ -21,6 +21,7 @@ const loginUserSuccess = (response) => {
 };
 
 const loginUserFailure = (error) => {
+  console.log("failure");
   localStorage.removeItem('token');
   localStorage.removeItem('user_id');
   return {
@@ -34,7 +35,7 @@ const loginUserFailure = (error) => {
 
 
 
-export const loginUser = (email, password, redirect="/") => {
+export const loginUser = (email, password, redirect="/registration") => {
   return function (dispatch) {
     dispatch(loginUserRequest());
     return fetch(config.apiURL + '/api/merchant/login', {

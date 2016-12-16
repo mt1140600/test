@@ -24,6 +24,7 @@ export const updateTaxDetails = actionCreator("Update Tax Details");
 export const updatePaymentDetails = actionCreator("Update Payment Details");
 export const updatePOCDetails = actionCreator("Update POC Details");
 export const updateAddlInfo = actionCreator("Update Addl Info");
+export const updateVerifyOtp = actionCreator("Update Verify OTP");
 
 export const updateTabValidation = (index, vState) => {
   console.log("inside function");
