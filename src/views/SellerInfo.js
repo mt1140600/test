@@ -87,6 +87,47 @@ class SellerInfo extends Component {
     this.setState({copyAddress: !this.state.copyAddress});
   }
 
+  pushDB = () => {
+    console.log("Storing seller info");
+    var request = new XMLHttpRequest();
+    var url = constants.saveForm;
+    var bodyObj = {
+      store_name: this.props.sellerInfo.value.storeName,
+      product_category: this.props.sellerInfo.value.category,
+      address_pincode:  this.props.sellerInfo.value.pincode,
+      address_address_l1: this.props.sellerInfo.value.add1,
+      address_address_l2: this.props.sellerInfo.value.add2,
+      address_city: this.props.sellerInfo.value.city,
+      address_state:  this.props.sellerInfo.value.state,
+      warehouse_pincode:  this.props.sellerInfo.value.wpincode,
+      warehouse_address_l1: this.props.sellerInfo.value.wadd1,
+      warehouse_address_l2: this.props.sellerInfo.value.wadd2,
+      warehouse_city: this.props.sellerInfo.value.wcity,
+      warehouse_state:  this.props.sellerInfo.value.wstate,
+      warehouse_active_days:  this.props.sellerInfo.value.workingDays,
+      warehouse_active_hours: this.props.sellerInfo.value.operationalHours
+
+    }
+    console.log(url);
+    request.open("POST", url, true); //!!Note if you don't add http:// to the url, it will append the current url to the begining of the string eg. http://localhost:3000
+    request.setRequestHeader("Authorization", localStorage.getItem('token'));
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.onload = () => {
+      if(request.status === 200){
+        console.log(request.response);
+        this.props.updateTabValidation(1, true);
+        this.props.actionTabChange(2);
+      }
+      else{
+        alert("Something went wrong");
+        console.log("Something went wrong; Status: "+request.status);
+      }
+    }
+    console.log(JSON.stringify(bodyObj));
+    request.send(JSON.stringify(bodyObj));
+
+  }
+
   storeForm() {
     console.log(this.props.sellerInfo.vState);
 
@@ -102,9 +143,7 @@ class SellerInfo extends Component {
     }
 
     if(validateSubForm){
-      console.log("Pushing to DB");
-      this.props.updateTabValidation(1, true);
-      this.props.actionTabChange(2);
+      this.pushDB();
     }
     else{
       this.props.updateTabValidation(1, false);

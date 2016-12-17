@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updatePOCDetails, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
+import * as constants from '../constants';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -19,6 +20,36 @@ class POCDetails extends Component {
 
   updateInfo(field, value, vState) {
     this.props.updatePOCDetails(field, value, vState);
+  }
+
+
+  pushDB = () => {
+    console.log("Storing seller info");
+    var request = new XMLHttpRequest();
+    var url = constants.saveForm;
+    var bodyObj = {
+      poc_name: this.props.pocDetails.value.POCName,
+      poc_phoneno:  this.props.pocDetails.value.POCPhone,
+      poc_email:  this.props.pocDetails.value.POCEmail
+    }
+    console.log(url);
+    request.open("POST", url, true); //!!Note if you don't add http:// to the url, it will append the current url to the begining of the string eg. http://localhost:3000
+    request.setRequestHeader("Authorization", localStorage.getItem('token'));
+    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    request.onload = () => {
+      if(request.status === 200){
+        console.log(request.response);
+        this.props.updateTabValidation(4, true);
+        this.props.actionTabChange(5);
+      }
+      else{
+        alert("Something went wrong");
+        console.log("Something went wrong; Status: "+request.status);
+      }
+    }
+    console.log(JSON.stringify(bodyObj));
+    request.send(JSON.stringify(bodyObj));
+
   }
 
   storeForm() {
@@ -36,9 +67,7 @@ class POCDetails extends Component {
     }
 
     if(validateSubForm){
-      console.log("Pushing to DB");
-      this.props.updateTabValidation(4, true);
-      this.props.actionTabChange(5);
+      this.pushDB();
     }
     else{
       this.props.updateTabValidation(4, false);

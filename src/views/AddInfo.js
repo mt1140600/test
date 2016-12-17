@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateAddlInfo, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
+import * as constants from '../constants';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -32,6 +33,36 @@ class AddInfo extends Component {
     ));
   }
 
+    pushDB = () => {
+      console.log("Storing seller info");
+      var request = new XMLHttpRequest();
+      var url = constants.saveForm;
+      var bodyObj = {
+        establishment_type: this.props.addlInfo.value.typeOfEstablishment,
+        annual_turnover: this.props.addlInfo.value.annualTurnover,
+        no_of_product_sold: this.props.addlInfo.value.numberRangeProducts,
+        other_ecommerce_website: this.props.addlInfo.value.otherWebsitesSoldOn
+      }
+      console.log(url);
+      request.open("POST", url, true); //!!Note if you don't add http:// to the url, it will append the current url to the begining of the string eg. http://localhost:3000
+      request.setRequestHeader("Authorization", localStorage.getItem('token'));
+      request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      request.onload = () => {
+        if(request.status === 200){
+          console.log(request.response);
+          this.props.updateTabValidation(5, true);
+          this.props.actionTabChange(6);
+        }
+        else{
+          alert("Something went wrong");
+          console.log("Something went wrong; Status: "+request.status);
+        }
+      }
+      console.log(JSON.stringify(bodyObj));
+      request.send(JSON.stringify(bodyObj));
+
+    }
+
   storeForm() {
     console.log(this.props.addlInfo.vState);
 
@@ -47,9 +78,7 @@ class AddInfo extends Component {
     }
 
     if(validateSubForm){
-      console.log("Pushing to DB");
-      this.props.updateTabValidation(5, true);
-      this.props.actionTabChange(6);
+      this.pushDB();
     }
     else{
       this.props.updateTabValidation(5, false);

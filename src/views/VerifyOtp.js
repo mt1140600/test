@@ -9,12 +9,12 @@ import * as constants from '../constants';
 class VerifyOtp extends Component {
   constructor(){
     super();
-    this.state = { phoneNo: "", validNo: true, codeSent: false, code: "", validCode: true};
+    this.state = {codeSent: false, code: "", validCode: true};
     this.tokenId = null;
   }
 
   handleChange = (event) => {
-    this.setState({phoneNo: event.target.value});
+    this.props.updateVerifyOtp("phoneNo", event.target.value, validateMobileNumber(event.target.value));
   }
 
   storeNumber = () => {
@@ -34,19 +34,19 @@ class VerifyOtp extends Component {
         console.log("Something went wrong; Status: "+storeNumberRequest.status);
       }
     }
-    console.log("number "+this.state.phoneNo);
-    console.log(JSON.stringify({merchant_phoneno: this.state.phoneNo}));
-    storeNumberRequest.send(JSON.stringify({merchant_phoneno: this.state.phoneNo}));
+    console.log("number "+this.props.verifyOtp.value.phoneNo);
+    console.log(JSON.stringify({merchant_phoneno: this.props.verifyOtp.value.phoneNo}));
+    storeNumberRequest.send(JSON.stringify({merchant_phoneno: this.props.verifyOtp.value.phoneNo}));
   }
 
   sendSMS = () => {
-    if(validateMobileNumber(this.state.phoneNo)){
+    if(validateMobileNumber(this.props.verifyOtp.value.phoneNo)){
       this.setState({validNo: true})
-
+      this.props.updateVerifyOtp("phoneNo", this.props.verifyOtp.value.phoneNo, true);
       this.storeNumber();
 
       var smsRequest = new XMLHttpRequest();
-      var url = constants.requestOtp+this.state.phoneNo;
+      var url = constants.requestOtp+this.props.verifyOtp.value.phoneNo;
       console.log(url);
       smsRequest.open("GET", url, true); //!!Note if you don't add http:// to the url, it will append the current url to the begining of the string eg. http://localhost:3000
       smsRequest.onload = () => {
@@ -86,22 +86,21 @@ class VerifyOtp extends Component {
 
           const responseObj = JSON.parse(verifyOtpRequest.response);
 
-          if(responseObj.verified === true && responseObj.merchant_exists === false){
+          if(responseObj.verified === true){
             console.log("Page validated");
             this.props.updateTabValidation(0, true);
             // this.props.actionTabChange(1);
           }
           else if(responseObj.verified === false){
             console.log("Incorrect Otp");
-          }
-          else if(responseObj.merchant_exists === true){
-            console.log("Mobile number is already registered");
+            this.props.updateTabValidation(0, false);
+            this.setState({validCode: false});
           }
           else{
             console.log("Something went wrong");
+            alert("Something went wrong");
           }
 
-          this.props.updateVerifyOtp("phoneNo", this.state.phoneNo, true);
           console.log(verifyOtpRequest.response);
 
         }
@@ -129,10 +128,10 @@ class VerifyOtp extends Component {
           <p>Enter the mobile number below</p>
           <div className="pt-control-group">
             <p className="pt-button pt-active" style={{cursor:"default"}}>+91 </p>
-            <input type="text" className="pt-input" value={this.state.phoneNo} onChange={this.handleChange}/>
+            <input type="text" className="pt-input" value={this.props.verifyOtp.value.phoneNo} onChange={this.handleChange}/>
             <button className="pt-button" onClick={this.sendSMS}>Send SMS</button>
           </div>
-          {(!this.state.validNo)?<p className="helpText">Enter a valid mobile number</p>:null}
+          {(this.props.verifyOtp.vState.phoneNo === false)?<p className="helpText">Enter a valid mobile number</p>:null}
 
           {
             (!this.state.codeSent)?
@@ -159,8 +158,14 @@ class VerifyOtp extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+    return {
+      verifyOtp: state.verifyOtp
+    }
+}
+
 const mapDispatchToProps= (dispatch) => {
   return bindActionCreators({updateTabValidation, actionTabChange, updateVerifyOtp}, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(VerifyOtp);
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyOtp);

@@ -11,8 +11,9 @@ function actionCreator(actionName){
       type: actionName,
       payload: {
         field: field,
-        vState: vState,
-        value: value
+        value: value,
+        vState: vState
+
         // [`${field}`]: value
       }
     }
