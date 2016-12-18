@@ -10,6 +10,7 @@ import Signup from './views/Signup';
 import ResetPassword from './views/ResetPassword';
 import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
+import Dummy from './components/Dummy';
 
 export default (
   // <Route path="/" component={App}>
@@ -26,5 +27,7 @@ export default (
     <Route path="reset" component={ResetPassword} />
     <Route path="registration" component={AccountSetup}/>
     <Route path="dashboard" component={ProductUpload} />
+    <Route path="dummy" component={Dummy} />
+
   </Route>
 );

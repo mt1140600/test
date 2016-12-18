@@ -91,6 +91,11 @@ h6{
   color: #F55656;
   font-style: italic;
 }
+.successText{
+  text-align: left;
+  color: #66b266;
+  font-style: italic;
+}
 .errorField{
   background-color: #feeeee;
 }
@@ -209,6 +214,9 @@ h6{
 }
 .green{
   color: #7fbf7f;
+}
+.grey{
+  color: #4c4c4c;
 }
 /*
 .pt-tabs.pt-horizontal {

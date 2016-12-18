@@ -1,8 +1,20 @@
 import React, {Component} from 'react';
+// import cloudinary from 'cloudinary';
+
+
+// cloudinary.config({
+//   cloud_name: 'dtvfkbdm8',
+//   api_key: '627676656862973',
+//   api_secret: 'bFVBCjOqOj3dw1_9N5h8HzITR44'
+// });
 
 class LabelledFileUpload extends Component{
+
   handleChange = (event) =>{
       console.log(event.target.value);
+      // cloudinary.uploader.upload(event.target.value, function(result) {
+      //   console.log(result)
+      // });
   }
 
   render(){

@@ -82,8 +82,8 @@ const taxDetails_initialState = {
     PAN:null,
     VAT:null,
     CST:null,
-    certIncorp:false,
-    membICC:false
+    certIncorp:null,
+    membICC:null
   },
 
   value:{
@@ -104,14 +104,16 @@ const paymentDetails_initialState = {
     accHolderName:null,
     accNumber:null,
     IFSC:null,
-    accType:null
+    accType:true,
+    cancCheque: null
   },
 
   value: {
     accHolderName:"",
     accNumber:"",
     IFSC:"",
-    accType:"Savings"
+    accType:"Savings",
+    cancCheque:""
   }
 
 }

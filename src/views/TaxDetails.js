@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
-import LabelledFileUpload from '../components/LabelledFileUpload';
+import LabelledUpload from '../components/LabelledUpload';
 import * as fieldValidations from '../utils/fieldValidations';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateTaxDetails, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
+import * as constants from '../constants';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -19,6 +20,11 @@ class TaxDetails extends Component{
 
   updateInfo(field, value, vState) {
       this.props.updateTaxDetails(field, value, vState);
+  }
+
+  handleClick = () => {
+    cloudinary.openUploadWidget({ cloud_name: 'dtvfkbdm8', upload_preset: 'dgfm0gcv'},
+    function(error, result) { console.log(error, result) });
   }
 
   storeForm() {
@@ -81,13 +87,36 @@ class TaxDetails extends Component{
               CST Number
             </LabelledTextInput>
 
-            <LabelledFileUpload>Certification of Incorporation</LabelledFileUpload>
+            <LabelledUpload
+              value={this.props.taxDetails.value.certIncorp}
+              onChange={this.updateInfo.bind(this,"certIncorp")}
+              validationState={this.props.taxDetails.vState.certIncorp}
+              validate={fieldValidations.noValidation}
+              helpText="Upload a PNG or JPG file"
+              cloudinaryCloudName={constants.cloudinaryCloudName}
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}>
+                Certification of Incorporation
+            </LabelledUpload>
 
-            <LabelledFileUpload>Membership with Indian Chamber of Commerce</LabelledFileUpload>
+            <LabelledUpload
+              value={this.props.taxDetails.value.membICC}
+              onChange={this.updateInfo.bind(this,"membICC")}
+              validationState={this.props.taxDetails.vState.membICC}
+              validate={fieldValidations.noValidation}
+              helpText="Upload a PNG or JPG file"
+              cloudinaryCloudName={constants.cloudinaryCloudName}
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}>
+                Membership with Indian Chamber of Commerce
+            </LabelledUpload>
 
             <br/>
-            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.storeForm}>Continue</Button>
 
+            <Button
+              className="pt-intent-primary"
+              style={{width:"200px",margin:"auto"}}
+              onClick={this.storeForm}>
+              Continue
+            </Button>
 
           </div>
 

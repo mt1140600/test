@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledSelect from '../components/LabelledSelect';
-import LabelledFileUpload from '../components/LabelledFileUpload';
+import LabelledUpload from '../components/LabelledUpload';
 import * as fieldValidations from '../utils/fieldValidations';
+import * as constants from '../constants';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updatePaymentDetails, updateTabValidation} from '../actions/registration';
@@ -44,6 +45,7 @@ class PaymentDetails extends Component {
     if(validateSubForm){
       console.log("Pushing to DB");
       this.props.updateTabValidation(3, true);
+      this.props.actionTabChange(4);
     }
     else{
       this.props.updateTabValidation(3, false);
@@ -96,8 +98,18 @@ class PaymentDetails extends Component {
               Type
             </LabelledSelect>
 
-            <LabelledFileUpload>Cancelled Cheque</LabelledFileUpload>
+            <LabelledUpload
+              value={this.props.paymentDetails.value.cancCheque}
+              onChange={this.updateInfo.bind(this,"cancCheque")}
+              validationState={this.props.paymentDetails.vState.cancCheque}
+              validate={fieldValidations.noValidation}
+              helpText="Upload a PNG or JPG file"
+              cloudinaryCloudName={constants.cloudinaryCloudName}
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}>
+                Cancelled Cheque
+            </LabelledUpload>
             <br/>
+
             <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.storeForm}>Continue</Button>
 
 
