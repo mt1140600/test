@@ -13,6 +13,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateSellerInfo, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
+import {storeSubFormCheck} from '../utils';
+import {pushSubFormToDB} from '../utils';
+import {storeSubForm} from '../utils';
 
 var _ = require('lodash');
 // import Immutable from 'immutable';
@@ -22,14 +25,12 @@ FocusStyleManager.onlyShowFocusOnTabs();
 
 class SellerInfo extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.pincodeToAddress = this.pincodeToAddress.bind(this);
     this.updateInfo = this.updateInfo.bind(this);
     this.updateOperationalHours = this.updateOperationalHours.bind(this);
     this.storeForm = this.storeForm.bind(this);
-    // this.validationState = {storeName: false, pincode: false, add1: false, add2: true,state: false, city: false, wadd1:false, wadd2:true, wpincode:false, wstate:false, wcity:false, category:false, workingDays:true, operationalHours:true };//this is not a state. Just an instance variable because, it's value can be calculated with state
-    // this.state = {storeName:"", pincode:"", add1:"", add2:"",state:"Choose State", city:"", wadd1:"", wadd2:"", wpincode:"",wstate:"Choose State", wcity:"", category:"Choose Primary Category", workingDays: [], operationalHours:["8","am","5","pm"]};
     this.state = { copyAddress: false };
   }
 
@@ -87,11 +88,46 @@ class SellerInfo extends Component {
     this.setState({copyAddress: !this.state.copyAddress});
   }
 
-  pushDB = () => {
-    console.log("Storing seller info");
-    var request = new XMLHttpRequest();
-    var url = constants.saveForm;
-    var bodyObj = {
+  storeForm() {
+
+    // let validateSubForm = storeSubFormCheck(this.props.sellerInfo, this.props.updateSellerInfo);
+    // console.log(validateSubForm);
+    //
+    // if(validateSubForm){
+    //   let mapToDbObj = {
+    //     store_name: this.props.sellerInfo.value.storeName,
+    //     product_category: this.props.sellerInfo.value.category,
+    //     address_pincode:  this.props.sellerInfo.value.pincode,
+    //     address_address_l1: this.props.sellerInfo.value.add1,
+    //     address_address_l2: this.props.sellerInfo.value.add2,
+    //     address_city: this.props.sellerInfo.value.city,
+    //     address_state:  this.props.sellerInfo.value.state,
+    //     warehouse_pincode:  this.props.sellerInfo.value.wpincode,
+    //     warehouse_address_l1: this.props.sellerInfo.value.wadd1,
+    //     warehouse_address_l2: this.props.sellerInfo.value.wadd2,
+    //     warehouse_city: this.props.sellerInfo.value.wcity,
+    //     warehouse_state:  this.props.sellerInfo.value.wstate,
+    //     warehouse_active_days:  this.props.sellerInfo.value.workingDays,
+    //     warehouse_active_hours: this.props.sellerInfo.value.operationalHours
+    //   };
+    //   const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+    //     console.log("successHandler");
+    //     console.log(this.props.updateTabValidation);
+    //     this.props.updateTabValidation(1, true);
+    //     this.props.actionTabChange(2);
+    //   }
+    //   const failureHandler = (response) => {
+    //     console.log("failureHandler");
+    //     console.log(response);
+    //   }
+    //   pushSubFormToDB(constants.saveForm, mapToDbObj, successHandler, failureHandler);
+    // }
+    //
+    // else{
+    //   this.props.updateTabValidation(1, false);
+    // }
+
+    let mapToDbObj = {
       store_name: this.props.sellerInfo.value.storeName,
       product_category: this.props.sellerInfo.value.category,
       address_pincode:  this.props.sellerInfo.value.pincode,
@@ -106,52 +142,20 @@ class SellerInfo extends Component {
       warehouse_state:  this.props.sellerInfo.value.wstate,
       warehouse_active_days:  this.props.sellerInfo.value.workingDays,
       warehouse_active_hours: this.props.sellerInfo.value.operationalHours
+    };
 
-    }
-    console.log(url);
-    request.open("POST", url, true); //!!Note if you don't add http:// to the url, it will append the current url to the begining of the string eg. http://localhost:3000
-    request.setRequestHeader("Authorization", localStorage.getItem('token'));
-    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    request.onload = () => {
-      if(request.status === 200){
-        console.log(request.response);
+      const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+        console.log("successHandler");
+        console.log(this.props.updateTabValidation);
         this.props.updateTabValidation(1, true);
         this.props.actionTabChange(2);
       }
-      else{
-        alert("Something went wrong");
-        console.log("Something went wrong; Status: "+request.status);
+      const failureHandler = (response) => {
+        console.log("failureHandler");
+        console.log(response);
       }
-    }
-    console.log(JSON.stringify(bodyObj));
-    request.send(JSON.stringify(bodyObj));
 
-  }
-
-  storeForm() {
-    console.log(this.props.sellerInfo.vState);
-
-    let validateSubForm = true;
-    for(let key in this.props.sellerInfo.vState){
-      if(this.props.sellerInfo.vState[key] === null){
-        this.props.updateSellerInfo(key, this.props.sellerInfo.value[key], false);
-        validateSubForm = false;
-      }
-      else if(this.props.sellerInfo.vState[key] === false){
-        validateSubForm = false;
-      }
-    }
-
-    if(validateSubForm){
-      this.pushDB();
-    }
-    else{
-      this.props.updateTabValidation(1, false);
-    }
-
-    // const newObj = {...this.state, validateSubForm : validateSubForm};
-    // console.log(JSON.stringify(newObj));
-    // localStorage.setItem("sellerInfo",JSON.stringify(newObj));
+      storeSubForm(this.props.sellerInfo, this.props.updateSellerInfo, mapToDbObj, constants.saveForm, successHandler, failureHandler);
   }
 
   render() {
@@ -330,7 +334,6 @@ class SellerInfo extends Component {
               onClick={this.storeForm}>
               Continue
             </Button>
-
           </div>
 
       </div>

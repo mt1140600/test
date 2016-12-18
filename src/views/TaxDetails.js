@@ -8,6 +8,8 @@ import {bindActionCreators} from 'redux';
 import {updateTaxDetails, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
 import * as constants from '../constants';
+import {storeSubFormCheck} from '../utils';
+import {pushSubFormToDB} from '../utils';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -28,23 +30,28 @@ class TaxDetails extends Component{
   }
 
   storeForm() {
-      console.log(this.props.taxDetails.vState);
 
-      let validateSubForm = true;
-      for(let key in this.props.taxDetails.vState){
-        if(this.props.taxDetails.vState[key] === null){
-          this.props.updateTaxDetails(key, this.props.taxDetails.value[key], false);
-          validateSubForm = false;
-        }
-        else if(this.props.taxDetails.vState[key] === false){
-          validateSubForm = false;
-        }
-      }
+      let validateSubForm = storeSubFormCheck(this.props.taxDetails, this.props.updateTaxDetails);
 
       if(validateSubForm){
-        console.log("Pushing to DB");
-        this.props.updateTabValidation(2, true);
-        this.props.actionTabChange(3);
+        let mapToDbObj = {
+          pan_no: this.props.taxDetails.value.PAN,
+          tin_no: this.props.taxDetails.value.VAT,
+          cst_no: this.props.taxDetails.value.CST,
+          certification_of_incorporation_url: this.props.taxDetails.value.certIncorp,
+          membership_with_icc_url:  this.props.taxDetails.value.membICC
+        }
+        const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+          console.log("successHandler");
+          console.log(this.props.updateTabValidation);
+          this.props.updateTabValidation(2, true);
+          this.props.actionTabChange(3);
+        }
+        const failureHandler = (response) => {
+          console.log("failureHandler");
+          console.log(response);
+        }
+        pushSubFormToDB(constants.saveForm, mapToDbObj, successHandler, failureHandler);
       }
       else{
         this.props.updateTabValidation(2, false);

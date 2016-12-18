@@ -55,6 +55,7 @@ const sellerInfo_initialState = {
     workingDays:true,
     operationalHours:true
   },
+
   value:{
     storeName:"",
     pincode:"",
