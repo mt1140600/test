@@ -8,7 +8,7 @@ export const actionTabChange = (tab) => {
   }
 }
 
-function actionCreator(actionName){
+function actionCreator(actionName){   //bad naming convention. An action is the returned object. The method returning the action is the action creator. So, technically this is actionCreatorCreator
   return (field, value, vState) => {
     return{
       type: actionName,
@@ -41,9 +41,9 @@ export const updateTabValidation = (index, vState) => {
   }
 }
 
-let checkNull = function(dispatch, objField, formField, handler){
+let checkNull = function(dispatch, objField, formField, handler){ //not const because we are binding value of dispatch in fillform.  //dispatch is required to call other actions
   if(objField!==null){
-    dispatch(handler(formField, objField, true));
+    dispatch(handler(formField, objField, true)); //handler is replaced by actual functionName. Example if how javascript treats functions as first class citizens
     return true;
   }
   return false;
@@ -109,7 +109,7 @@ export const fillForm = (obj) =>{
     };
 }
 
-export const loadForm = () => {
+export const loadForm = () => { //actions must just return objects. If we want to do asynchronous operations, we need to use redux-thunk
   console.log("Fetching saved form");
   return function (dispatch){
     return fetch(constants.getForm, {
