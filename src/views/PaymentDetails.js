@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updatePaymentDetails, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
+import {storeSubForm} from '../utils';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -17,7 +18,6 @@ class PaymentDetails extends Component {
   constructor() {
     super();
     this.updateInfo = this.updateInfo.bind(this);
-    this.storeForm = this.storeForm.bind(this);
     // this.validationState = {accHolderName:false, accNumber:false, IFSC:false, accType:true};
     // this.state = {accHolderName:"",accNumber:"",IFSC:"",accType:"Savings"};
   }
@@ -28,28 +28,25 @@ class PaymentDetails extends Component {
       this.props.updatePaymentDetails(field, value, vState);
   }
 
-  storeForm() {
-    console.log(this.props.paymentDetails.vState);
-
-    let validateSubForm = true;
-    for(let key in this.props.paymentDetails.vState){
-      if(this.props.paymentDetails.vState[key] === null){
-        this.props.updatePaymentDetails(key, this.props.paymentDetails.value[key], false);
-        validateSubForm = false;
-      }
-      else if(this.props.paymentDetails.vState[key] === false){
-        validateSubForm = false;
-      }
+  handleContinue = () => {
+    const mapToDbObj = {
+      account_holder_name: this.props.paymentDetails.value.accHolderName,
+      account_number: this.props.paymentDetails.value.accNumber,
+      ifsc_code: this.props.paymentDetails.value.IFSC,
+      account_type: this.props.paymentDetails.value.accType,
+      cancelled_cheque_url: this.props.paymentDetails.value.canCheque
     }
-
-    if(validateSubForm){
-      console.log("Pushing to DB");
+    const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+      console.log("successHandler");
+      console.log(this.props.updateTabValidation);
       this.props.updateTabValidation(3, true);
       this.props.actionTabChange(4);
     }
-    else{
-      this.props.updateTabValidation(3, false);
+    const failureHandler = (response) => {
+      console.log("failureHandler");
+      console.log(response);
     }
+    storeSubForm(this.props.paymentDetails, this.props.updatePaymentDetails, mapToDbObj, constants.saveForm, successHandler, failureHandler);
   }
 
   render() {
@@ -110,7 +107,7 @@ class PaymentDetails extends Component {
             </LabelledUpload>
             <br/>
 
-            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.storeForm}>Continue</Button>
+            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.handleContinue}>Continue</Button>
 
 
           </div>

@@ -30,7 +30,6 @@ class SellerInfo extends Component {
     this.pincodeToAddress = this.pincodeToAddress.bind(this);
     this.updateInfo = this.updateInfo.bind(this);
     this.updateOperationalHours = this.updateOperationalHours.bind(this);
-    this.storeForm = this.storeForm.bind(this);
     this.state = { copyAddress: false };
   }
 
@@ -88,46 +87,9 @@ class SellerInfo extends Component {
     this.setState({copyAddress: !this.state.copyAddress});
   }
 
-  storeForm() {
+  handleContinue = () => {
 
-    // let validateSubForm = storeSubFormCheck(this.props.sellerInfo, this.props.updateSellerInfo);
-    // console.log(validateSubForm);
-    //
-    // if(validateSubForm){
-    //   let mapToDbObj = {
-    //     store_name: this.props.sellerInfo.value.storeName,
-    //     product_category: this.props.sellerInfo.value.category,
-    //     address_pincode:  this.props.sellerInfo.value.pincode,
-    //     address_address_l1: this.props.sellerInfo.value.add1,
-    //     address_address_l2: this.props.sellerInfo.value.add2,
-    //     address_city: this.props.sellerInfo.value.city,
-    //     address_state:  this.props.sellerInfo.value.state,
-    //     warehouse_pincode:  this.props.sellerInfo.value.wpincode,
-    //     warehouse_address_l1: this.props.sellerInfo.value.wadd1,
-    //     warehouse_address_l2: this.props.sellerInfo.value.wadd2,
-    //     warehouse_city: this.props.sellerInfo.value.wcity,
-    //     warehouse_state:  this.props.sellerInfo.value.wstate,
-    //     warehouse_active_days:  this.props.sellerInfo.value.workingDays,
-    //     warehouse_active_hours: this.props.sellerInfo.value.operationalHours
-    //   };
-    //   const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
-    //     console.log("successHandler");
-    //     console.log(this.props.updateTabValidation);
-    //     this.props.updateTabValidation(1, true);
-    //     this.props.actionTabChange(2);
-    //   }
-    //   const failureHandler = (response) => {
-    //     console.log("failureHandler");
-    //     console.log(response);
-    //   }
-    //   pushSubFormToDB(constants.saveForm, mapToDbObj, successHandler, failureHandler);
-    // }
-    //
-    // else{
-    //   this.props.updateTabValidation(1, false);
-    // }
-
-    let mapToDbObj = {
+    const mapToDbObj = {
       store_name: this.props.sellerInfo.value.storeName,
       product_category: this.props.sellerInfo.value.category,
       address_pincode:  this.props.sellerInfo.value.pincode,
@@ -331,7 +293,7 @@ class SellerInfo extends Component {
             <Button
               className="pt-intent-primary"
               style={{width:"200px",margin:"auto"}}
-              onClick={this.storeForm}>
+              onClick={this.handleContinue}>
               Continue
             </Button>
           </div>

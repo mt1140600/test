@@ -10,6 +10,7 @@ import {actionTabChange} from '../actions/registration';
 import * as constants from '../constants';
 import {storeSubFormCheck} from '../utils';
 import {pushSubFormToDB} from '../utils';
+import {storeSubForm} from '../utils';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -17,7 +18,6 @@ class TaxDetails extends Component{
   constructor() {
     super();
     this.updateInfo = this.updateInfo.bind(this);
-    this.storeForm = this.storeForm.bind(this);
   }
 
   updateInfo(field, value, vState) {
@@ -29,34 +29,25 @@ class TaxDetails extends Component{
     function(error, result) { console.log(error, result) });
   }
 
-  storeForm() {
-
-      let validateSubForm = storeSubFormCheck(this.props.taxDetails, this.props.updateTaxDetails);
-
-      if(validateSubForm){
-        let mapToDbObj = {
-          pan_no: this.props.taxDetails.value.PAN,
-          tin_no: this.props.taxDetails.value.VAT,
-          cst_no: this.props.taxDetails.value.CST,
-          certification_of_incorporation_url: this.props.taxDetails.value.certIncorp,
-          membership_with_icc_url:  this.props.taxDetails.value.membICC
-        }
-        const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
-          console.log("successHandler");
-          console.log(this.props.updateTabValidation);
-          this.props.updateTabValidation(2, true);
-          this.props.actionTabChange(3);
-        }
-        const failureHandler = (response) => {
-          console.log("failureHandler");
-          console.log(response);
-        }
-        pushSubFormToDB(constants.saveForm, mapToDbObj, successHandler, failureHandler);
+  handleContinue = () => {
+      const mapToDbObj = {
+        pan_no: this.props.taxDetails.value.PAN,
+        tin_no: this.props.taxDetails.value.VAT,
+        cst_no: this.props.taxDetails.value.CST,
+        certification_of_incorporation_url: this.props.taxDetails.value.certIncorp,
+        membership_with_icc_url:  this.props.taxDetails.value.membICC
       }
-      else{
-        this.props.updateTabValidation(2, false);
+      const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+        console.log("successHandler");
+        console.log(this.props.updateTabValidation);
+        this.props.updateTabValidation(2, true);
+        this.props.actionTabChange(3);
       }
-
+      const failureHandler = (response) => {
+        console.log("failureHandler");
+        console.log(response);
+      }
+      storeSubForm(this.props.taxDetails, this.props.updateTaxDetails, mapToDbObj, constants.saveForm, successHandler, failureHandler);
   }
 
   render() {
@@ -121,7 +112,7 @@ class TaxDetails extends Component{
             <Button
               className="pt-intent-primary"
               style={{width:"200px",margin:"auto"}}
-              onClick={this.storeForm}>
+              onClick={this.handleContinue}>
               Continue
             </Button>
 

@@ -65,15 +65,13 @@ export function pushSubFormToDB(url, body, successHandler, failureHandler){
 }
 
 export function storeSubForm(subFormObj, subFormAction, mapToDbObj, url, successHandler, failureHandler){
+  let validateSubForm = storeSubFormCheck(subFormObj, subFormAction);
+  console.log(validateSubForm);
 
-      let validateSubForm = storeSubFormCheck(subFormObj, subFormAction);
-      console.log(validateSubForm);
-
-      if(validateSubForm){
-        pushSubFormToDB(url, mapToDbObj, successHandler, failureHandler);
-      }
-      else{
-        this.props.updateTabValidation(1, false);
-      }
-
+  if(validateSubForm){
+    pushSubFormToDB(url, mapToDbObj, successHandler, failureHandler);
+  }
+  else{
+    this.props.updateTabValidation(1, false);
+  }
 }

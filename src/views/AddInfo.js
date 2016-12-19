@@ -10,6 +10,7 @@ import {bindActionCreators} from 'redux';
 import {updateAddlInfo, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
 import * as constants from '../constants';
+import {storeSubForm} from '../utils';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -19,7 +20,6 @@ class AddInfo extends Component {
   constructor() {
     super();
     this.alignCheckboxes = this.alignCheckboxes.bind(this);
-    this.storeForm = this.storeForm.bind(this);
   }
 
   updateInfo(field, value, vState) {
@@ -33,56 +33,24 @@ class AddInfo extends Component {
     ));
   }
 
-    pushDB = () => {
-      console.log("Storing seller info");
-      var request = new XMLHttpRequest();
-      var url = constants.saveForm;
-      var bodyObj = {
-        establishment_type: this.props.addlInfo.value.typeOfEstablishment,
-        annual_turnover: this.props.addlInfo.value.annualTurnover,
-        no_of_product_sold: this.props.addlInfo.value.numberRangeProducts,
-        other_ecommerce_website: this.props.addlInfo.value.otherWebsitesSoldOn
-      }
-      console.log(url);
-      request.open("POST", url, true); //!!Note if you don't add http:// to the url, it will append the current url to the begining of the string eg. http://localhost:3000
-      request.setRequestHeader("Authorization", localStorage.getItem('token'));
-      request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      request.onload = () => {
-        if(request.status === 200){
-          console.log(request.response);
-          this.props.updateTabValidation(5, true);
-          this.props.actionTabChange(6);
-        }
-        else{
-          alert("Something went wrong");
-          console.log("Something went wrong; Status: "+request.status);
-        }
-      }
-      console.log(JSON.stringify(bodyObj));
-      request.send(JSON.stringify(bodyObj));
-
+  handleContinue = () => {
+    const mapToDbObj = {
+      establishment_type: this.props.addlInfo.value.typeOfEstablishment,
+      annual_turnover: this.props.addlInfo.value.annualTurnover,
+      no_of_product_sold: this.props.addlInfo.value.numberRangeProducts,
+      other_ecommerce_website: this.props.addlInfo.value.otherWebsitesSoldOn
     }
-
-  storeForm() {
-    console.log(this.props.addlInfo.vState);
-
-    let validateSubForm = true;
-    for(let key in this.props.addlInfo.vState){
-      if(this.props.addlInfo.vState[key] === null){
-        this.props.updateAddlInfo(key, this.props.addlInfo.value[key], false);
-        validateSubForm = false;
-      }
-      else if(this.props.addlInfo.vState[key] === false){
-        validateSubForm = false;
-      }
+    const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+      console.log("successHandler");
+      console.log(this.props.updateTabValidation);
+      this.props.updateTabValidation(5, true);
+      this.props.actionTabChange(6);
     }
-
-    if(validateSubForm){
-      this.pushDB();
+    const failureHandler = (response) => {
+      console.log("failureHandler");
+      console.log(response);
     }
-    else{
-      this.props.updateTabValidation(5, false);
-    }
+    storeSubForm(this.props.addlInfo, this.props.updateAddlInfo, mapToDbObj, constants.saveForm, successHandler, failureHandler);
   }
 
   render() {
@@ -151,7 +119,7 @@ class AddInfo extends Component {
             </LabelledTextInput>
             <br/>
 
-            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.storeForm}>Continue</Button>
+            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.handleContinue}>Continue</Button>
 
           </div>
 

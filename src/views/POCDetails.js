@@ -7,6 +7,7 @@ import {bindActionCreators} from 'redux';
 import {updatePOCDetails, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
 import * as constants from '../constants';
+import {storeSubForm} from '../utils';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -15,63 +16,29 @@ class POCDetails extends Component {
   constructor() {
     super();
     this.updateInfo = this.updateInfo.bind(this);
-    this.storeForm = this.storeForm.bind(this);
   }
 
   updateInfo(field, value, vState) {
     this.props.updatePOCDetails(field, value, vState);
   }
 
-
-  pushDB = () => {
-    console.log("Storing seller info");
-    var request = new XMLHttpRequest();
-    var url = constants.saveForm;
-    var bodyObj = {
+  handleContinue = () => {
+    const mapToDbObj = {
       poc_name: this.props.pocDetails.value.POCName,
       poc_phoneno:  this.props.pocDetails.value.POCPhone,
       poc_email:  this.props.pocDetails.value.POCEmail
     }
-    console.log(url);
-    request.open("POST", url, true); //!!Note if you don't add http:// to the url, it will append the current url to the begining of the string eg. http://localhost:3000
-    request.setRequestHeader("Authorization", localStorage.getItem('token'));
-    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    request.onload = () => {
-      if(request.status === 200){
-        console.log(request.response);
-        this.props.updateTabValidation(4, true);
-        this.props.actionTabChange(5);
-      }
-      else{
-        alert("Something went wrong");
-        console.log("Something went wrong; Status: "+request.status);
-      }
+    const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+      console.log("successHandler");
+      console.log(this.props.pocDetails);
+      this.props.updateTabValidation(4, true);
+      this.props.actionTabChange(5);
     }
-    console.log(JSON.stringify(bodyObj));
-    request.send(JSON.stringify(bodyObj));
-
-  }
-
-  storeForm() {
-    console.log(this.props.pocDetails.vState);
-
-    let validateSubForm = true;
-    for(let key in this.props.pocDetails.vState){
-      if(this.props.pocDetails.vState[key] === null){
-        this.props.updatePOCDetails(key, this.props.pocDetails.value[key], false);
-        validateSubForm = false;
-      }
-      else if(this.props.pocDetails.vState[key] === false){
-        validateSubForm = false;
-      }
+    const failureHandler = (response) => {
+      console.log("failureHandler");
+      console.log(response);
     }
-
-    if(validateSubForm){
-      this.pushDB();
-    }
-    else{
-      this.props.updateTabValidation(4, false);
-    }
+    storeSubForm(this.props.pocDetails, this.props.updatePOCDetails, mapToDbObj, constants.saveForm, successHandler, failureHandler);
   }
 
   render() {
@@ -110,7 +77,7 @@ class POCDetails extends Component {
               Email ID <small>(optional)</small>
             </LabelledTextInput>
             <br/>
-            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.storeForm}>Continue</Button>
+            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.handleContinue}>Continue</Button>
 
           </div>
 
