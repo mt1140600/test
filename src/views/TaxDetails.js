@@ -34,7 +34,7 @@ class TaxDetails extends Component{
       this.setState({showSpinner: true});
       const mapToDbObj = {
         pan_no: this.props.taxDetails.value.PAN,
-        tin_no: this.props.taxDetails.value.VAT,
+        vat_no: this.props.taxDetails.value.VAT,
         cst_no: this.props.taxDetails.value.CST,
         certification_of_incorporation_url: this.props.taxDetails.value.certIncorp,
         membership_with_icc_url:  this.props.taxDetails.value.membICC

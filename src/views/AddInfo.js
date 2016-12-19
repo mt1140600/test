@@ -40,7 +40,8 @@ class AddInfo extends Component {
       establishment_type: this.props.addlInfo.value.typeOfEstablishment,
       annual_turnover: this.props.addlInfo.value.annualTurnover,
       no_of_product_sold: this.props.addlInfo.value.numberRangeProducts,
-      other_ecommerce_website: this.props.addlInfo.value.otherWebsitesSoldOn
+      other_ecommerce_website: this.props.addlInfo.value.otherWebsitesSoldOn,
+      other_ecommerce_website_text: this.props.addlInfo.value.otherWebsitesSoldOnText
     }
     const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
       console.log("successHandler");

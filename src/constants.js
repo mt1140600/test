@@ -15,7 +15,7 @@ export const requestOtp = `${url}/api/phone/request_otp/`;
 export const requestOtpAgain = `${url}/api/phone/request_otp_again`;
 export const verifyOtp = `${url}/api/merchant/phone/verify`;
 export const saveForm = `${url}/api/merchant/update`;
-
+export const getForm = `${url}/api/merchant/info`;
 
 export const cloudinaryCloudName = "dtvfkbdm8";
 export const cloudinaryImageUploadPreset = "dgfm0gcv";

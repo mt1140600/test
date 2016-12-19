@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {Tabs, TabList, Tab, TabPanel} from "@blueprintjs/core";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-
+import { checkHttpStatus, parseJSON } from '../utils';
+import * as constants from '../constants';
 import VerifyOtp from '../views/VerifyOtp';
 import SellerInfo from '../views/SellerInfo';
 import TaxDetails from '../views/TaxDetails';
@@ -10,7 +11,7 @@ import PaymentDetails from '../views/PaymentDetails';
 import POCDetails from '../views/POCDetails';
 import AddInfo from '../views/AddInfo';
 import TnC from '../views/TnC';
-import {actionTabChange} from '../actions/registration';
+import {actionTabChange, loadForm} from '../actions/registration';
 
 const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Terms & Conditions"];
 const tabPanels = [     VerifyOtp,            SellerInfo,          TaxDetails,    PaymentDetails,       POCDetails,            AddInfo,                    TnC];
@@ -36,10 +37,11 @@ class TabLayout extends Component {
     );
   }
 
-  // componentDidMount(){  //hack to fix tab line  //not required now. Problem was arising because we were requiring css in index.js.  Now we are linking css from html. The Tab component requires css to be loaded prior to it for proper functioning
-  //   console.log("Component is mounting");
-  //   setTimeout(this.props.actionTabChange.bind(null,0),100);
-  // }
+  componentDidMount(){
+    // console.log("Component is mounting");    //hack to fix tab line  //not required now. Problem was arising because we were requiring css in index.js.  Now we are linking css from html. The Tab component requires css to be loaded prior to it for proper functioning
+    // setTimeout(this.props.actionTabChange.bind(null,0),100);
+    this.props.loadForm();
+  }
 
   handleTabChange = (selectedTab, prevTab) => {
     this.props.actionTabChange(selectedTab);
@@ -65,7 +67,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({actionTabChange: actionTabChange}, dispatch);
+  return bindActionCreators({actionTabChange: actionTabChange, loadForm: loadForm}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TabLayout);
