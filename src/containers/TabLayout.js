@@ -35,6 +35,12 @@ class TabLayout extends Component {
       </TabPanel>
     );
   }
+
+  // componentDidMount(){  //hack to fix tab line  //not required now. Problem was arising because we were requiring css in index.js.  Now we are linking css from html. The Tab component requires css to be loaded prior to it for proper functioning
+  //   console.log("Component is mounting");
+  //   setTimeout(this.props.actionTabChange.bind(null,0),100);
+  // }
+
   handleTabChange = (selectedTab, prevTab) => {
     this.props.actionTabChange(selectedTab);
   }
