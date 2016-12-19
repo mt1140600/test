@@ -38,7 +38,7 @@ class POCDetails extends Component {
       console.log("failureHandler");
       console.log(response);
     }
-    storeSubForm(this.props.pocDetails, this.props.updatePOCDetails, mapToDbObj, constants.saveForm, successHandler, failureHandler);
+    storeSubForm(this.props.pocDetails, this.props.updatePOCDetails, this.props.updateTabValidation.bind(null, 4, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
   }
 
   render() {

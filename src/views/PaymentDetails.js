@@ -46,7 +46,7 @@ class PaymentDetails extends Component {
       console.log("failureHandler");
       console.log(response);
     }
-    storeSubForm(this.props.paymentDetails, this.props.updatePaymentDetails, mapToDbObj, constants.saveForm, successHandler, failureHandler);
+    storeSubForm(this.props.paymentDetails, this.props.updatePaymentDetails, this.props.updateTabValidation.bind(null, 3, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
   }
 
   render() {

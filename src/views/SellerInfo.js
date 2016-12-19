@@ -117,7 +117,7 @@ class SellerInfo extends Component {
         console.log(response);
       }
 
-      storeSubForm(this.props.sellerInfo, this.props.updateSellerInfo, mapToDbObj, constants.saveForm, successHandler, failureHandler);
+      storeSubForm(this.props.sellerInfo, this.props.updateSellerInfo, this.props.updateTabValidation.bind(null, 1, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
   }
 
   render() {

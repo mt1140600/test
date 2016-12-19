@@ -64,14 +64,14 @@ export function pushSubFormToDB(url, body, successHandler, failureHandler){
   .catch(failureHandler)
 }
 
-export function storeSubForm(subFormObj, subFormAction, mapToDbObj, url, successHandler, failureHandler){
-  let validateSubForm = storeSubFormCheck(subFormObj, subFormAction);
+export function storeSubForm(subFormObj, subFormCheckSuccessAction, subFormCheckFailureAction, mapToDbObj, url, successHandler, failureHandler){
+  let validateSubForm = storeSubFormCheck(subFormObj, subFormCheckSuccessAction);
   console.log(validateSubForm);
 
   if(validateSubForm){
     pushSubFormToDB(url, mapToDbObj, successHandler, failureHandler);
   }
   else{
-    this.props.updateTabValidation(1, false);
+    subFormCheckFailureAction();
   }
 }
