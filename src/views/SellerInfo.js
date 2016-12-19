@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, FocusStyleManager } from "@blueprintjs/core";
+import { Button, FocusStyleManager, Spinner } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledSelect from '../components/LabelledSelect';
 import LabelledCheckbox from '../components/LabelledCheckbox';
@@ -30,7 +30,7 @@ class SellerInfo extends Component {
     this.pincodeToAddress = this.pincodeToAddress.bind(this);
     this.updateInfo = this.updateInfo.bind(this);
     this.updateOperationalHours = this.updateOperationalHours.bind(this);
-    this.state = { copyAddress: false };
+    this.state = { copyAddress: false, showSpinner: false };
   }
 
   updateInfo(field, value, vState) {
@@ -88,7 +88,7 @@ class SellerInfo extends Component {
   }
 
   handleContinue = () => {
-
+    this.setState({showSpinner: true});
     const mapToDbObj = {
       store_name: this.props.sellerInfo.value.storeName,
       product_category: this.props.sellerInfo.value.category,
@@ -109,10 +109,12 @@ class SellerInfo extends Component {
       const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
         console.log("successHandler");
         console.log(this.props.updateTabValidation);
+        this.setState({showSpinner: false});
         this.props.updateTabValidation(1, true);
         this.props.actionTabChange(2);
       }
       const failureHandler = (response) => {
+        this.setState({showSpinner: false});
         console.log("failureHandler");
         console.log(response);
       }
@@ -296,6 +298,9 @@ class SellerInfo extends Component {
               onClick={this.handleContinue}>
               Continue
             </Button>
+
+            {(this.state.showSpinner)?<div style={{margin: "auto", marginTop:"10px"}}><Spinner className="pt-small"/></div>:null}
+
           </div>
 
       </div>

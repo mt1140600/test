@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, FocusStyleManager } from "@blueprintjs/core";
+import { Button, FocusStyleManager, Spinner } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import * as fieldValidations from '../utils/fieldValidations';
 import {connect} from 'react-redux';
@@ -16,6 +16,7 @@ class POCDetails extends Component {
   constructor() {
     super();
     this.updateInfo = this.updateInfo.bind(this);
+    this.state={showSpinner: false};
   }
 
   updateInfo(field, value, vState) {
@@ -23,6 +24,7 @@ class POCDetails extends Component {
   }
 
   handleContinue = () => {
+    this.setState({showSpinner: true});
     const mapToDbObj = {
       poc_name: this.props.pocDetails.value.POCName,
       poc_phoneno:  this.props.pocDetails.value.POCPhone,
@@ -31,10 +33,12 @@ class POCDetails extends Component {
     const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
       console.log("successHandler");
       console.log(this.props.pocDetails);
+      this.setState({showSpinner: false});
       this.props.updateTabValidation(4, true);
       this.props.actionTabChange(5);
     }
     const failureHandler = (response) => {
+      this.setState({showSpinner: false});
       console.log("failureHandler");
       console.log(response);
     }
@@ -79,6 +83,7 @@ class POCDetails extends Component {
             <br/>
             <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.handleContinue}>Continue</Button>
 
+            {(this.state.showSpinner)?<div style={{margin: "auto", marginTop:"10px"}}><Spinner className="pt-small"/></div>:null}
           </div>
 
         </div>

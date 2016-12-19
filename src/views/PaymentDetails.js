@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, FocusStyleManager } from "@blueprintjs/core";
+import { Button, FocusStyleManager, Spinner } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledSelect from '../components/LabelledSelect';
 import LabelledUpload from '../components/LabelledUpload';
@@ -18,6 +18,7 @@ class PaymentDetails extends Component {
   constructor() {
     super();
     this.updateInfo = this.updateInfo.bind(this);
+    this.state={showSpinner: false};
     // this.validationState = {accHolderName:false, accNumber:false, IFSC:false, accType:true};
     // this.state = {accHolderName:"",accNumber:"",IFSC:"",accType:"Savings"};
   }
@@ -29,6 +30,7 @@ class PaymentDetails extends Component {
   }
 
   handleContinue = () => {
+    this.setState({showSpinner: true});
     const mapToDbObj = {
       account_holder_name: this.props.paymentDetails.value.accHolderName,
       account_number: this.props.paymentDetails.value.accNumber,
@@ -39,10 +41,12 @@ class PaymentDetails extends Component {
     const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
       console.log("successHandler");
       console.log(this.props.updateTabValidation);
+      this.setState({showSpinner: false});
       this.props.updateTabValidation(3, true);
       this.props.actionTabChange(4);
     }
     const failureHandler = (response) => {
+      this.setState({showSpinner: false});
       console.log("failureHandler");
       console.log(response);
     }
@@ -109,6 +113,7 @@ class PaymentDetails extends Component {
 
             <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.handleContinue}>Continue</Button>
 
+            {(this.state.showSpinner)?<div style={{margin: "auto", marginTop:"10px"}}><Spinner className="pt-small"/></div>:null}
 
           </div>
 

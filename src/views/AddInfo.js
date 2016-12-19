@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Button, FocusStyleManager } from "@blueprintjs/core";
+import { Button, FocusStyleManager, Spinner } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledCheckbox from '../components/LabelledCheckbox';
 import LabelledSelect from '../components/LabelledSelect';
@@ -20,6 +20,7 @@ class AddInfo extends Component {
   constructor() {
     super();
     this.alignCheckboxes = this.alignCheckboxes.bind(this);
+    this.state={showSpinner: false};
   }
 
   updateInfo(field, value, vState) {
@@ -34,6 +35,7 @@ class AddInfo extends Component {
   }
 
   handleContinue = () => {
+    this.setState({showSpinner: true});
     const mapToDbObj = {
       establishment_type: this.props.addlInfo.value.typeOfEstablishment,
       annual_turnover: this.props.addlInfo.value.annualTurnover,
@@ -43,10 +45,12 @@ class AddInfo extends Component {
     const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
       console.log("successHandler");
       console.log(this.props.updateTabValidation);
+      this.setState({showSpinner: false});
       this.props.updateTabValidation(5, true);
       this.props.actionTabChange(6);
     }
     const failureHandler = (response) => {
+      this.setState({showSpinner: false});
       console.log("failureHandler");
       console.log(response);
     }
