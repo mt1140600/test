@@ -12,9 +12,12 @@ class AccountSetup extends Component{
     return(
       <div>
         <Header/>
-        {ViewNameBar("Account Settings")}
-        <ProgressBar/>
-        <TabLayout/>
+        <div style={{marginTop: 50}}>
+          {ViewNameBar("Account Settings")}
+          <ProgressBar/>
+          <TabLayout/>
+        </div>
+
       </div>
     );
   }

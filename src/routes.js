@@ -11,6 +11,7 @@ import ResetPassword from './views/ResetPassword';
 import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
 import Dummy from './components/Dummy';
+import Verification from './views/Verification';
 
 export default (
   // <Route path="/" component={App}>
@@ -28,6 +29,6 @@ export default (
     <Route path="registration" component={AccountSetup}/>
     <Route path="dashboard" component={ProductUpload} />
     <Route path="dummy" component={Dummy} />
-
+    <Route path="verification" component={Verification} />
   </Route>
 );

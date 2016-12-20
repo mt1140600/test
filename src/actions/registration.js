@@ -55,6 +55,10 @@ export const fillForm = (obj) =>{
     return (dispatch) => {
       checkNull = checkNull.bind(null, dispatch);
       // (obj.store_name!==null)?dispatch(updateSellerInfo("storeName", obj.store_name, null)):null;
+      if(checkNull(obj.merchant_phoneno, "phoneNo", updateVerifyOtp)){
+        dispatch(updateTabValidation(0, true)); 
+      }
+
       if(checkNull(obj.store_name, "storeName", updateSellerInfo)){
         dispatch(updateTabValidation(1, true));  //Setting Tab validation to true under the assumption that, if one field is filled in the subform, all fields must be filled in the subForm as we cannot save the subForm otherwise from the frontend
       }
@@ -88,7 +92,7 @@ export const fillForm = (obj) =>{
       checkNull(obj.account_number, "accNumber", updatePaymentDetails);
       checkNull(obj.ifsc_code, "IFSC", updatePaymentDetails);
       checkNull(obj.account_type, "accType", updatePaymentDetails);
-      checkNull(obj.cancelled_cheque_url, "canCheque", updatePaymentDetails);
+      checkNull(obj.cancelled_cheque_url, "cancCheque", updatePaymentDetails);
 
 
       if(checkNull(obj.poc_name, "POCName", updatePOCDetails)){

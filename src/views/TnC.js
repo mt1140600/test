@@ -4,6 +4,7 @@ import Callout from '../components/Callout';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateTabValidation} from '../actions/registration';
+import {push} from 'react-router-redux';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -17,9 +18,11 @@ class TnC extends Component {
 
   submitForm() {
     // let formObj = null;
+    this.props.updateTabValidation(6, true);  //Line 1.   Just like setState in react, state change is redux store also get pooled (not synch, not immediately done).  Therefore, this action's effect is not seen. Thus, excluding index 6 in Line2
     let formValidated = true;
     this.props.tabValidation.map((item,index)=>{
-      if(item === null){
+      if(item === null && index!==6){  // Line 2.   index 6 is TnC. The updateTabValidation actions are pooled together with
+        console.log("vals",this.props.tabValidation);
         this.props.updateTabValidation(index, false);
         formValidated = false;
       }
@@ -28,7 +31,9 @@ class TnC extends Component {
       }
     })
     this.setState({ showCallout: !formValidated });
-
+    if(formValidated){
+      this.props.dispatch(push("/verification"));
+    }
   }
 
   render() {
@@ -59,7 +64,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({updateTabValidation}, dispatch);
+  return bindActionCreators({updateTabValidation, dispatch}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TnC);

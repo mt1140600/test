@@ -73,7 +73,7 @@ class VerifyOtp extends Component {
 
   checkCode = () => {
     if(this.state.code.length === 6){// check if code matches
-
+      this.setState({validCode: true}); //resetting state
       var verifyOtpRequest = new XMLHttpRequest();
       var url = constants.verifyOtp;
       var params = `token_id=${this.tokenId}&otp=${this.state.code}`;
@@ -89,7 +89,7 @@ class VerifyOtp extends Component {
           if(responseObj.verified === true){
             console.log("Page validated");
             this.props.updateTabValidation(0, true);
-            // this.props.actionTabChange(1);
+            this.props.actionTabChange(1);
           }
           else if(responseObj.verified === false){
             console.log("Incorrect Otp");

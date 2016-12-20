@@ -37,9 +37,8 @@ class TabLayout extends Component {
     );
   }
 
-  componentDidMount(){
-    // console.log("Component is mounting");    //hack to fix tab line  //not required now. Problem was arising because we were requiring css in index.js.  Now we are linking css from html. The Tab component requires css to be loaded prior to it for proper functioning
-    // setTimeout(this.props.actionTabChange.bind(null,0),100);
+  componentWillMount(){
+    // setTimeout(this.props.actionTabChange.bind(null,0),100); //hack to fix tab line. Not required now. Problem was arising because we were requiring css in index.js.  Now we are linking css from html. The Tab component requires css to be loaded prior to it for proper functioning
     this.props.loadForm();
   }
 
@@ -49,7 +48,7 @@ class TabLayout extends Component {
   render() {
     console.log("In TabLayout render");
     return(
-      <Tabs className="tabs" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
+      <Tabs className="tabs tabs75" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
         <TabList className="pt-large">
           {tabs.map(this.renderTabs)}
         </TabList>
@@ -67,7 +66,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({actionTabChange: actionTabChange, loadForm: loadForm}, dispatch);
+  return bindActionCreators({actionTabChange, loadForm}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TabLayout);

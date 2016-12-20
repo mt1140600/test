@@ -83,6 +83,11 @@ h6{
   overflow: scroll;
   position: relative;
 }
+
+.tabs.tabs75{
+  height: 75vh;
+}
+
 #progressBar{
   margin: 20px 40px 20px 40px;
 }
