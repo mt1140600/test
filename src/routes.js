@@ -10,7 +10,7 @@ import Signup from './views/Signup';
 import ResetPassword from './views/ResetPassword';
 import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
-import ChatWidget from './components/ChatWidget';
+import ChatWidget from './containers/ChatWidget';
 import Sample from './components/Sample';
 import Dummy from './components/Dummy';
 import Verification from './views/Verification';
