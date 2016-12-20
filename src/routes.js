@@ -17,6 +17,6 @@ export default (
     <Route path="signup" component={UserIsNotAuthenticated(Signup)} />
     <Route path="reset" component={UserIsNotAuthenticated(ResetPassword)} />
     <Route path="registration" component={UserIsAuthenticated(ProductUpload)}/>
-    <Route path="dashboard" component={UserIsAuthenticated(ProductUpload)} />
+    <Route path="dashboard" component={ProductUpload} />
   </Route>
 );

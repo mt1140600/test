@@ -30,7 +30,7 @@ class LabelledSelect extends Component{
     return(
       <label className="pt-label pt-inline" onFocus={this.handleClick}>
         {this.props.children}
-        <div className="pt-select" style={{width:"200px", marginRight:"auto", float:"right"}}>
+        <div className="pt-select" style={{width:"200px", marginRight:"auto"}}>
           <select
             value={this.props.value}
             onChange={this.handleChange}>

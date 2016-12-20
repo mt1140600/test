@@ -41,7 +41,7 @@ class UploadProduct extends Component{
   render(){
     return(
       <div>
-        <div className="tabs" style={{display:"flex",flexDirection:"column", alignItems:"center"}}>
+        <div className="tabs" style={{display:"flex",flexDirection:"column", alignItems:"left"}}>
           <div>
             <LabelledSelect
               options={productCategories}
@@ -66,8 +66,6 @@ class UploadProduct extends Component{
               helpText={null}>
               Sub Category
             </LabelledTextInput>
-            <br/>
-
             <LabelledTextInput
 
               onChange={this.onChange}
@@ -76,8 +74,6 @@ class UploadProduct extends Component{
               helpText={null}>
               Brand
             </LabelledTextInput>
-            <br/>
-
             <LabelledTextInput
 
               onChange={this.onChange}
@@ -86,62 +82,44 @@ class UploadProduct extends Component{
               helpText={null}>
               Company
             </LabelledTextInput>
-            <br/>
-
             <LabelledTextInput
-
               onChange={this.onChange}
               validationState={true}
               validate={fieldValidations.noValidation}
               helpText={null}>
               Model
             </LabelledTextInput>
-            <br/>
             <LabelledTextInput
-
               onChange={this.onChange}
               validationState={true}
               validate={fieldValidations.noValidation}
               helpText={null}>
               MRP
             </LabelledTextInput>
-            <br/>
-
             <LabelledTextInput
-
               onChange={this.onChange}
               validationState={true}
               validate={fieldValidations.noValidation}
               helpText={null}>
               Selling Price
             </LabelledTextInput>
-            <br/>
-
             <LabelledTextInput
-
               onChange={this.onChange}
               validationState={true}
               validate={fieldValidations.noValidation}
               helpText={null}>
               Minimum Order Quantity
             </LabelledTextInput>
-            <br/>
-
-
             <LabelledTextInput
-
               onChange={this.onChange}
               validationState={true}
               validate={fieldValidations.noValidation}
               helpText={null}>
               Warranty
             </LabelledTextInput>
-            <br/>
-
             <LabelledFileUpload>Image</LabelledFileUpload>
             <a href=""><thin></thin>Click here to add image url from other sites</a>
         </div>
-        <br/>
         <br/>
         <Button style={{width:"200px"}}>Upload CSV of products</Button>
         <br/>
