@@ -9,9 +9,27 @@ export function validateMandatoryString(value){ //also doubles up for checking i
   else return false;
 }
 
+// export function validateOneOfMultiple(arr, value){ //takes multiple validation functions as input, returns true if it passes any one validation function
+//   //Note this function fails if any validation function requires more than just value as parameter
+//   arr.map()
+// }
+
 export function validateMobileNumber(value){
   if( typeof(Number(value))==="number" && value.length === 10) return true;
   else return false;
+}
+
+export function validateEmail(value){
+  let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return pattern.test(value);
+}
+
+export function validateOptionalEmail(value){
+  if(value === "") return true;
+  else{
+    let pattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return pattern.test(value);
+  }
 }
 
 export function validatePincode(value){

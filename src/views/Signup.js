@@ -76,7 +76,7 @@ class Signup extends Component {
     return(
       <div className="container">
 
-        <div className="col" style={{textAlign:"center"}}>
+        <div className="col" style={{textAlign:"center", paddingTop:"20px", minWidth:"300px",}}>
 
           <img src = {logo} style={{width:"100px",height:"100px",margin:"auto"}} />
           <br/>
@@ -127,8 +127,8 @@ class Signup extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ 
-  todos: state.user 
+const mapStateToProps = (state) => ({
+  todos: state.userData
 });
 
 const mapDispatchToProps = (dispatch) => ({

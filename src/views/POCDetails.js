@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
-import { Button, FocusStyleManager } from "@blueprintjs/core";
+import { Button, FocusStyleManager, Spinner } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import * as fieldValidations from '../utils/fieldValidations';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {updatePOCDetails, updateTabValidation} from '../actions/registration';
+import {actionTabChange} from '../actions/registration';
+import * as constants from '../constants';
+import {storeSubForm} from '../utils';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -10,25 +16,33 @@ class POCDetails extends Component {
   constructor() {
     super();
     this.updateInfo = this.updateInfo.bind(this);
-    this.validationState = {POCName:true, POCPhone:true, POCEmail:true};
-    this.storeForm = this.storeForm.bind(this);
-    this.state = {POCName:"",POCPhone:"",POCEmail:""};
+    this.state={showSpinner: false};
   }
 
   updateInfo(field, value, vState) {
-      this.validationState = Object.assign({},this.validationState,{[`${field}`]:vState});
-      this.setState({[`${field}`]:value});
+    this.props.updatePOCDetails(field, value, vState);
   }
 
-  storeForm() {
-    let validateSubForm = true;
-    for(let key in this.validationState) {
-      if(this.validationState[key] === false)
-        validateSubForm = false;
+  handleContinue = () => {
+    this.setState({showSpinner: true});
+    const mapToDbObj = {
+      poc_name: this.props.pocDetails.value.POCName,
+      poc_phoneno:  this.props.pocDetails.value.POCPhone,
+      poc_email:  this.props.pocDetails.value.POCEmail
     }
-    const newObj = {...this.state, validateSubForm : validateSubForm};
-    console.log(JSON.stringify(newObj));
-    localStorage.setItem("POCDetails",JSON.stringify(newObj));
+    const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+      console.log("successHandler");
+      console.log(this.props.pocDetails);
+      this.setState({showSpinner: false});
+      this.props.updateTabValidation(4, true);
+      this.props.actionTabChange(5);
+    }
+    const failureHandler = (response) => {
+      this.setState({showSpinner: false});
+      console.log("failureHandler");
+      console.log(response);
+    }
+    storeSubForm(this.props.pocDetails, this.props.updatePOCDetails, this.props.updateTabValidation.bind(null, 4, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
   }
 
   render() {
@@ -41,34 +55,35 @@ class POCDetails extends Component {
             <br/>
 
             <LabelledTextInput
-              value={this.state.POCName}
+              value={this.props.pocDetails.value.POCName}
               onChange={this.updateInfo.bind(this,"POCName")}
-              validationState={this.validationState.POCName}
+              validationState={this.props.pocDetails.vState.POCName}
               validate={fieldValidations.noValidation}
               helpText={null}>
               Name <small>(optional)</small>
             </LabelledTextInput>
 
             <LabelledTextInput
-              value={this.state.POCPhone}
+              value={this.props.pocDetails.value.POCPhone}
               onChange={this.updateInfo.bind(this,"POCPhone")}
-              validationState={this.validationState.POCPhone}
+              validationState={this.props.pocDetails.vState.POCPhone}
               validate={fieldValidations.noValidation}
               helpText={"Enter a valid phone number"}>
               Phone Number <small>(optional)</small>
             </LabelledTextInput>
 
             <LabelledTextInput
-              value={this.state.POCEmail}
+              value={this.props.pocDetails.value.POCEmail}
               onChange={this.updateInfo.bind(this,"POCEmail")}
-              validationState={this.validationState.POCEmail}
-              validate={fieldValidations.noValidation}
+              validationState={this.props.pocDetails.vState.POCEmail}
+              validate={fieldValidations.validateOptionalEmail}
               helpText={"Enter a valid email ID"}>
               Email ID <small>(optional)</small>
             </LabelledTextInput>
             <br/>
-            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.storeForm}>Continue</Button>
+            <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.handleContinue}>Continue</Button>
 
+            {(this.state.showSpinner)?<div style={{margin: "auto", marginTop:"10px"}}><Spinner className="pt-small"/></div>:null}
           </div>
 
         </div>
@@ -76,4 +91,14 @@ class POCDetails extends Component {
   }
 }
 
-export default POCDetails;
+const mapStateToProps = (state) => {
+    return {
+      pocDetails: state.pocDetails
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ updatePOCDetails, updateTabValidation, actionTabChange }, dispatch );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(POCDetails);

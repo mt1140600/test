@@ -9,14 +9,14 @@ const logo = require('../images/prokure_logo.png');
 FocusStyleManager.isActive();
 
 class Login extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
       showCallout: false,
-      calloutText:"" 
+      calloutText:""
     };
   }
 
@@ -48,14 +48,14 @@ class Login extends Component {
         this.props.actions.loginUser(this.state.email,this.state.password);
       }
     }
-    
+
   }
 
   render() {
     return(
       <div className="container">
 
-        <div className="col" style={{textAlign:"center", minWidth:"300px"}}>
+        <div className="col" style={{textAlign:"center", minWidth:"300px", paddingTop:"20px"}}>
 
           <img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} />
           <br/>
@@ -63,7 +63,7 @@ class Login extends Component {
           <br/>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Email" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
+              <input type="text" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
             </div>
             <div className="pt-input-group pt-large" >
               <input type="password" className="pt-input" placeholder="Password" value={this.state.password} onChange={this.handleFieldUpdate.bind(this, "password")} />
@@ -86,8 +86,8 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ 
-  todos: state.user 
+const mapStateToProps = (state) => ({
+  todos: state.userData
 });
 
 const mapDispatchToProps = (dispatch) => ({
