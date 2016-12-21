@@ -11,6 +11,7 @@ import * as constants from '../constants';
 import {storeSubFormCheck} from '../utils';
 import {pushSubFormToDB} from '../utils';
 import {storeSubForm} from '../utils';
+import {cloudinaryCloudName, cloudinaryImageUploadPreset} from '../constants';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -26,7 +27,7 @@ class TaxDetails extends Component{
   }
 
   handleClick = () => {
-    cloudinary.openUploadWidget({ cloud_name: 'dtvfkbdm8', upload_preset: 'dgfm0gcv'},
+    cloudinary.openUploadWidget({ cloud_name: cloudinaryCloudName, upload_preset: cloudinaryImageUploadPreset},
     function(error, result) { console.log(error, result) });
   }
 

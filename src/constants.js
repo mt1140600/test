@@ -18,4 +18,6 @@ export const saveForm = `${url}/api/merchant/update`;
 export const getForm = `${url}/api/merchant/info`;
 
 export const cloudinaryCloudName = "dtvfkbdm8";
+
+export const cloudinaryChatUploadPreset = "iy8sgymd";
 export const cloudinaryImageUploadPreset = "dgfm0gcv";

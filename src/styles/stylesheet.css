@@ -235,19 +235,58 @@ h6{
   border-color: #106ba3;
 }
 
+#chatNotification{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+}
+
 #chatBox{
   width: 30vw;
   max-width: 400px;
   min-width: 300px;
-  height: 60vh;
+  height: 500px;
   padding: 20px;
+  /*padding-right: 11px;*/
   border-radius: 5px;
   position: fixed;
   bottom: 90px;
   right: 20px;
-
   border: 2px solid white;
   box-shadow: 0 0 24px rgba(0,0,0,.15);
+}
+
+#chatMessagesContainer{
+  height: 450px;
+  overflow-y: scroll;
+}
+
+#chatMessagesContainer::-webkit-scrollbar {
+    /*-webkit-appearance: none;*/
+}
+
+#chatMessagesContainer::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+#chatMessagesContainer::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+#chatMessagesContainer::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+
+#chatMessagesContainer::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 8px;
 }
 
 .chatMessageWrapper.messageUser{
@@ -264,16 +303,18 @@ h6{
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 5px;
+  max-width: 100%;
+  word-wrap: break-word;
 }
 
 .chatMessage.messageUser{
-  background-color: yellow;
-  margin-left: 20px;
+  background-color: #a3e1cc;
+  margin-left: 40px;
 }
 
 .chatMessage.messageAdmin{
-  background-color: white;
-  margin-right: 20px;
+  background-color: #c0d6e4;
+  margin-right: 40px;
 }
 
 .example-enter {
