@@ -70,8 +70,10 @@ export function storeSubForm(subFormObj, subFormCheckSuccessAction, subFormCheck
 
   if(validateSubForm){
     pushSubFormToDB(url, mapToDbObj, successHandler, failureHandler);
+    return true;
   }
   else{
     subFormCheckFailureAction();
+    return false;
   }
 }

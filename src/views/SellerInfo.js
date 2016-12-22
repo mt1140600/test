@@ -119,7 +119,9 @@ class SellerInfo extends Component {
         console.log(response);
       }
 
-      storeSubForm(this.props.sellerInfo, this.props.updateSellerInfo, this.props.updateTabValidation.bind(null, 1, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+      const subFormValid = storeSubForm(this.props.sellerInfo, this.props.updateSellerInfo, this.props.updateTabValidation.bind(null, 1, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+
+      if(!subFormValid) this.setState({showSpinner: false});
   }
 
   render() {

@@ -55,7 +55,9 @@ class AddInfo extends Component {
       console.log("failureHandler");
       console.log(response);
     }
-    storeSubForm(this.props.addlInfo, this.props.updateAddlInfo, this.props.updateTabValidation.bind(null, 5, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+    const subFormValid = storeSubForm(this.props.addlInfo, this.props.updateAddlInfo, this.props.updateTabValidation.bind(null, 5, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+
+    if(!subFormValid) this.setState({showSpinner: false});
   }
 
   render() {

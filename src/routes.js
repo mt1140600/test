@@ -18,7 +18,8 @@ export default (
   //   <IndexRoute component={UserIsNotAuthenticated(Login)}/>
   //   <Route path="signup" component={UserIsNotAuthenticated(Signup)} />
   //   <Route path="reset" component={UserIsNotAuthenticated(ResetPassword)} />
-  //   <Route path="registration" component={UserIsAuthenticated(ProductUpload)}/>
+  //   <Route path="registration" component={UserIsAuthenticated(AccountSetup)}/>
+  //   <Route path="verification" component={UserIsAuthenticated(Verification)} />
   //   <Route path="dashboard" component={UserIsAuthenticated(ProductUpload)} />
   // </Route>
 

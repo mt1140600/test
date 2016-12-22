@@ -56,7 +56,7 @@ export const fillForm = (obj) =>{
       checkNull = checkNull.bind(null, dispatch);
       // (obj.store_name!==null)?dispatch(updateSellerInfo("storeName", obj.store_name, null)):null;
       if(checkNull(obj.merchant_phoneno, "phoneNo", updateVerifyOtp)){
-        dispatch(updateTabValidation(0, true)); 
+        dispatch(updateTabValidation(0, true));
       }
 
       if(checkNull(obj.store_name, "storeName", updateSellerInfo)){
