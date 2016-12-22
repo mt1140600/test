@@ -35,7 +35,7 @@ export default (
   //   <Route path="registration" component={AccountSetup}/>
   //   <Route path="verification" component={Verification} />
   //   <Route path="dashboard" component={ProductUpload} />
-
+  //   <Route path="reset2" component={ResetPassword2} />
   //   <Route path="dummy" component={Dummy} />
   // </Route>
 );
