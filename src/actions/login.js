@@ -1,5 +1,5 @@
 import { checkHttpStatus, parseJSON } from '../utils';
-import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE } from '../constant';
+import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED } from '../constant';
 import {push} from 'react-router-redux';
 import * as config from '../config';
 import {forgotPassword} from "../constants";
@@ -53,6 +53,7 @@ export const loginUser = (email, password, redirect="/registration") => {
       console.log(response);
       dispatch(loginUserSuccess(response));
       if(response.merchant.registration_complete === true)  redirect = "/verification";
+      if(response.merchant.email_verified === false)  redirect = "/verifyEmail";
       dispatch(push(redirect));
     })
     .catch(error => {
@@ -78,9 +79,15 @@ export const signupUser = (userData, redirect="/verifyEmail") => {
     .then(response => {
       console.log(response);
       dispatch(push(redirect));
+      dispatch({
+        type: SIGNUP_SUCCESS
+      });
     })
     .catch(error => {
         console.log(error);
+        dispatch({
+          type: SIGNUP_FAILED
+        });
     });
   };
 };

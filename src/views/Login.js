@@ -45,10 +45,14 @@ class Login extends Component {
         this.setState({showCallout:true, calloutText:"Please enter valid email"});
       } else {
         this.setState({showCallout:false});
-        this.props.actions.loginUser(this.state.email,this.state.password);
+        this.props.actions.loginUser(this.state.email, this.state.password);
       }
     }
 
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({showCallout: nextProps.userData.showCallout, calloutText: nextProps.userData.calloutText});
   }
 
   render() {
@@ -63,7 +67,7 @@ class Login extends Component {
           <br/>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
+              <input type="email" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
             </div>
             <div className="pt-input-group pt-large" >
               <input type="password" className="pt-input" placeholder="Password" value={this.state.password} onChange={this.handleFieldUpdate.bind(this, "password")} />
@@ -87,7 +91,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  todos: state.userData
+  userData: state.userData
 });
 
 const mapDispatchToProps = (dispatch) => ({

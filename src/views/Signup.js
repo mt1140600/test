@@ -34,6 +34,10 @@ class Signup extends Component {
     this.props.dispatch(push("/"));
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({calloutText: nextProps.userData.calloutText, showCallout: nextProps.userData.showCallout});
+  }
+
   handleSignupClick = () => {
     if (this.state.username == '' || this.state.business_name == '' || this.state.email == '' || this.state.password == '' || this.state.password_match == '' || this.state.reCaptchaResponse == '') {
       this.setState({showCallout:true, calloutText:"Please fill all the fields"});
@@ -128,7 +132,7 @@ class Signup extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  todos: state.userData
+  userData: state.userData
 });
 
 const mapDispatchToProps = (dispatch) => ({

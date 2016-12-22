@@ -5,8 +5,7 @@ import {browserHistory} from 'react-router';
 const handleLogout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('user_id');
-  const path = '/';
-  browserHistory.push(path);
+  browserHistory.push("/");
 }
 
 export default function HeaderButtons(){
