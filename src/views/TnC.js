@@ -5,6 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateTabValidation} from '../actions/registration';
 import {push} from 'react-router-redux';
+import {pushSubFormToDB} from '../utils';
+import * as constants from '../constants';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -13,13 +15,16 @@ class TnC extends Component {
     super();
     this.submitForm = this.submitForm.bind(this);
     this.tabs = ["sellerInfo","taxDetails","paymentDetails","POCDetails","addInfo"];
-    this.state = { showCallout: null };
+    this.state = { showCallout: null, showSpinner: false };
   }
 
   submitForm() {
     // let formObj = null;
+    this.setState({showSpinner: true});
     this.props.updateTabValidation(6, true);  //Line 1.   Just like setState in react, state change is redux store also get pooled (not synch, not immediately done).  Therefore, this action's effect is not seen. Thus, excluding index 6 in Line2
+
     let formValidated = true;
+
     this.props.tabValidation.map((item,index)=>{
       if(item === null && index!==6){  // Line 2.   index 6 is TnC. The updateTabValidation actions are pooled together with
         console.log("vals",this.props.tabValidation);
@@ -28,12 +33,27 @@ class TnC extends Component {
       }
       else if(item === false){
         formValidated = false;
+        this.setState({showSpinner: false});
       }
     })
+
     this.setState({ showCallout: !formValidated });
-    if(formValidated){
+
+    const successHandler = () => {
+      // this.setState({showSpinner: false});  Commenting this out because dispatch to /verfication unmounts this component and we cant set state of unmounted component
       this.props.dispatch(push("/verification"));
     }
+
+    const failureHandler = () => {
+      this.setState({showSpinner: false});
+      console.log("Failed to write to DB (TnC)");
+    }
+
+    if(formValidated){ //Check if previous 6 tabs are valid
+      const bodyObj = { registration_complete: true };
+      pushSubFormToDB(constants.saveForm, bodyObj, successHandler, failureHandler);
+    }
+
   }
 
   render() {
@@ -50,6 +70,7 @@ class TnC extends Component {
             <Callout text={"Please complete previous steps"} visible={ visibility }/>
             <br/>
             <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.submitForm}>I Accept</Button>
+            {(this.state.showSpinner)?<div style={{margin: "auto", marginTop:"10px"}}><Spinner className="pt-small"/></div>:null}
           </div>
 
         </div>

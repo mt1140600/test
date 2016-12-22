@@ -31,7 +31,6 @@ export const updateAddlInfo = actionCreator("Update Addl Info");
 export const updateVerifyOtp = actionCreator("Update Verify OTP");
 
 export const updateTabValidation = (index, vState) => {
-  console.log("inside function");
   return {
     type: "Set Tab Validation",
     payload: {

@@ -46,7 +46,6 @@ class TabLayout extends Component {
     this.props.actionTabChange(selectedTab);
   }
   render() {
-    console.log("In TabLayout render");
     return(
       <Tabs className="tabs tabs75" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
         <TabList className="pt-large">

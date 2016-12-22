@@ -50,6 +50,7 @@ export const loginUser = (email, password, redirect="/registration") => {
     .then(response => {
       console.log(response);
       dispatch(loginUserSuccess(response));
+      if(response.merchant.registration_complete === true)  redirect = "/verification";
       dispatch(push(redirect));
     })
     .catch(error => {
