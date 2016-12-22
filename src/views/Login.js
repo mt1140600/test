@@ -59,7 +59,7 @@ class Login extends Component {
 
           <img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} />
           <br/>
-          <h2 className="pt-intent-primary item">Prokure</h2>
+          <h2 className="pt-intent-primary companyName item">Prokure</h2>
           <br/>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >

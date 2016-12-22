@@ -80,7 +80,7 @@ class Signup extends Component {
 
           <img src = {logo} style={{width:"100px",height:"100px",margin:"auto"}} />
           <br/>
-          <h2 className="pt-intent-primary item">Prokure</h2>
+          <h2 className="pt-intent-primary item companyName">Prokure</h2>
           <br/>
           <p style={{color:"grey"}}>Sign up and start selling on our platform now!</p>
           <div className="pt-control-group pt-vertical item">

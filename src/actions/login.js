@@ -60,7 +60,7 @@ export const loginUser = (email, password, redirect="/registration") => {
 };
 
 
-export const signupUser = (userData, redirect="/") => {
+export const signupUser = (userData, redirect="/verifyEmail") => {
   return function (dispatch) {
     // dispatch(loginUserRequest());
     return fetch(config.apiURL + '/api/merchant/signup', {
@@ -75,12 +75,10 @@ export const signupUser = (userData, redirect="/") => {
     .then(parseJSON)
     .then(response => {
       console.log(response);
-      // dispatch(loginUserSuccess(response));
-      // dispatch(push(redirect));
+      dispatch(push(redirect));
     })
     .catch(error => {
         console.log(error);
-        // dispatch(loginUserFailure(error));
     });
   };
 };

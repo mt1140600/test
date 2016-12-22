@@ -10,7 +10,11 @@ export default class VerifyEmail extends Component{
   waitAndRedirect = () => {
     console.log("Will be redirected in 6 seconds");
     setTimeout(
-      () => {browserHistory.push("/");},
+      () => {
+        localStorage.removeItem("user_id");
+        localStorage.removeItem("token");
+        browserHistory.push("/");
+      },
       6000
     );
   }
@@ -24,7 +28,7 @@ export default class VerifyEmail extends Component{
           {ViewNameBar("Account Settings")}
           <div className="tabs col" style={{ fontSize: "x-large", fontWeight: 100, justifyContent: "space-around"}}>
             <span style={{textAlign: "center"}}>
-              An Email has been sent to your registered EmailId. <br/>
+              An Email has been sent to your registered Email Id. <br/>
               Please verify to proceed.
             </span>
             {this.waitAndRedirect()}
