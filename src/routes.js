@@ -12,6 +12,7 @@ import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
 import Dummy from './components/Dummy';
 import Verification from './views/Verification';
+import VerifyEmail from './views/VerifyEmail';
 
 export default (
   // <Route path="/" component={App}>
@@ -31,5 +32,6 @@ export default (
     <Route path="dashboard" component={ProductUpload} />
     <Route path="dummy" component={Dummy} />
     <Route path="verification" component={Verification} />
+    <Route path="verifyEmail" component={VerifyEmail} />
   </Route>
 );
