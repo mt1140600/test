@@ -2,6 +2,8 @@ import { checkHttpStatus, parseJSON } from '../utils';
 import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE } from '../constant';
 import {push} from 'react-router-redux';
 import * as config from '../config';
+import {forgotPassword} from "../constants";
+import {newPasswordUrl} from "../constants";
 
 const loginUserRequest = () => {
   return {
@@ -82,3 +84,46 @@ export const signupUser = (userData, redirect="/verifyEmail") => {
     });
   };
 };
+
+export const handleReset = (email, redirect="/verifyEmail") => {
+  return function(dispatch){
+    return fetch(forgotPassword + email, {
+      method: 'get',
+      headers: {
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      }
+    })
+    .then(checkHttpStatus)
+    .then(parseJSON)
+    .then(response => {
+      console.log(response);
+      dispatch(push(redirect));
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+}
+
+export const handleNewPassword = (password, token, redirect="/") => {
+  return function(dispatch){
+    return fetch(newPasswordUrl + token , {
+      method: 'post',
+      headers: {
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({new_password: password})
+    })
+    .then(checkHttpStatus)
+    .then(parseJSON)
+    .then(response => {
+      console.log(response);
+      dispatch(push(redirect));
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+}
