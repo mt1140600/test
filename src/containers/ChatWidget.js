@@ -139,7 +139,7 @@ class ChatWidget extends Component{
 
   constructor(){
     super();
-    this.state = {active: false, messages:[], newMessage: "", countUnread: 0};
+    this.state = {active: false, messages:{}, newMessage: "", countUnread: 0};
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");  //inital date set to 13/05/2014 just like that
   }
 
@@ -149,8 +149,6 @@ class ChatWidget extends Component{
       const currentMessages = snapshot.val();
 
       if (this.state.active === false){
-        console.log(Object.keys(currentMessages).length);
-        console.log(Object.keys(this.state.messages).length);
         this.setState({countUnread: Object.keys(currentMessages).length - Object.keys(this.state.messages).length});
       }
 
