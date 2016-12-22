@@ -7,7 +7,7 @@ export const pathGeocode = "http://maps.googleapis.com/maps/api/geocode/json?add
 export const reCaptchaSiteKey = "6Lf8BA4UAAAAAO09u8gvITIdIij2mGGVcdfIwLDB";
 export const reCaptchaSecretKey = "6Lf8BA4UAAAAAP22CL02OVXJnlr3xoxZSEs4qIRA";
 
-const url = "http://dev.adminapi.prokure.it";
+export const url = "http://dev.adminapi.prokure.it";
 // const url = "http://192.168.0.106:3000";
 
 export const pincodeToAddress = `${url}/api/bank_address?pincode=`;

@@ -1,9 +1,7 @@
 import { checkHttpStatus, parseJSON } from '../utils';
 import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED } from '../constant';
 import {push} from 'react-router-redux';
-import * as config from '../config';
-import {forgotPassword} from "../constants";
-import {newPasswordUrl} from "../constants";
+import {forgotPassword, newPasswordUrl, url} from "../constants";
 
 const loginUserRequest = () => {
   return {
@@ -40,7 +38,7 @@ const loginUserFailure = (error) => {
 export const loginUser = (email, password, redirect="/registration") => {
   return function (dispatch) {
     dispatch(loginUserRequest());
-    return fetch(config.apiURL + '/api/merchant/login', {
+    return fetch(url + '/api/merchant/login', {
       method: 'post',
       headers: {
           'Accept': 'application/json',
@@ -66,7 +64,7 @@ export const loginUser = (email, password, redirect="/registration") => {
 export const signupUser = (userData, redirect="/verifyEmail") => {
   return function (dispatch) {
     // dispatch(loginUserRequest());
-    return fetch(config.apiURL + '/api/merchant/signup', {
+    return fetch(url + '/api/merchant/signup', {
       method:'post',
       headers:{
         'Accept':'application/json',
