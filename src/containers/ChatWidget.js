@@ -7,6 +7,7 @@ require('velocity-animate');
 require('velocity-animate/velocity.ui');
 import { FocusStyleManager } from "@blueprintjs/core";
 import {cloudinaryCloudName, cloudinaryChatUploadPreset} from '../constants';
+import moment from 'moment';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -31,14 +32,11 @@ class ChatMessage extends Component{
   }
 
   componentDidMount(){
-    console.log("In component did mount");
-    console.log(this.props.children);
       const messageObj = Object.assign({}, this.props);
       this.setState({ messageType: this.checkMessageType(messageObj.children) });
 
       const chatMessagesContainer = document.getElementById("chatMessagesContainer");
       chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; //Note this alone might not scroll all the way down if there are any image messages. Since these images are loaed asynchronously, their height is not properly accounted for. Thus we need a hack to fix this.  //We are triggering props in InputArea as a hack
-      console.log(chatMessagesContainer.scrollHeight);
   }
 
   componentDidUpdate(){
@@ -49,14 +47,15 @@ class ChatMessage extends Component{
   componentWillReceiveProps(){
     const chatMessagesContainer = document.getElementById("chatMessagesContainer");
     chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-    console.log(chatMessagesContainer.scrollHeight);
   }
 
   imageLoaded = () =>{ //Callback to scroll all the way down after images are loaded. But, after first load (images are cached?) the problem persists. Therefore, we are triggering props in InputArea as a hack
-      console.log("image has been loaded");
       const chatMessagesContainer = document.getElementById("chatMessagesContainer");
       chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-      console.log(chatMessagesContainer.scrollHeight);
+  }
+
+  getTime = () => {
+    return moment(this.props.timestamp).format("hh:mm a");
   }
 
   render(){
@@ -69,6 +68,7 @@ class ChatMessage extends Component{
               : (this.state.messageType === "link")?
                   <a href={this.props.children} target="_blank">{this.props.children}</a>
                   : this.props.children}
+            <div style={{textAlign: "right", fontSize: 10, color: "grey", fontStyle: "italic", paddingTop: 5}}>{this.getTime()}</div>
         </div>
       </div>
     );
@@ -102,8 +102,6 @@ class InputArea extends Component{
     (error, result) => {
        console.log(error, result);
        if(error === null){
-         console.log("ahkqjwkjfen");
-         console.log(result[0]);
           console.log(result[0].secure_url);
           this.props.onChange(result[0].secure_url);
           this.props.onSend();
@@ -115,11 +113,15 @@ class InputArea extends Component{
     );
   }
 
+  handleEnter = (event) => {
+      if(event.keyCode === 13) this.handleClick();
+  }
+
   render(){
     return(
       <div style={{position:"absolute", left: 0, bottom: 0, width: "100%", backgroundColor: "white", paddingTop: 2}}>
         <button className="pt-button pt-icon-folder-open" onClick={this.handleUpload} style={{width:"15%"}}></button>
-        <input className="pt-input" style={{width: "65%"}} onChange={this.handleChange} value={this.props.value}></input>
+        <input className="pt-input" style={{width: "65%"}} onChange={this.handleChange} onKeyDown={this.handleEnter} value={this.props.value}></input>
         <button className="pt-button pt-intent-primary" style={{width: "20%"}} onClick={this.handleClick}>Send</button>
       </div>
     );
@@ -137,28 +139,61 @@ class ChatWidget extends Component{
 
   constructor(){
     super();
-    this.state = {active: false, messages:[], newMessage: ""};
+    this.state = {active: false, messages:[], newMessage: "", countUnread: 0};
+    this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");  //inital date set to 13/05/2014 just like that
   }
 
   componentDidMount(){
+    this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");
     firebase.database().ref('messages/').on('value', (snapshot) => {
       const currentMessages = snapshot.val();
+
+      if (this.state.active === false){
+        console.log(Object.keys(currentMessages).length);
+        console.log(Object.keys(this.state.messages).length);
+        this.setState({countUnread: Object.keys(currentMessages).length - Object.keys(this.state.messages).length});
+      }
+
       if (currentMessages != null){
         this.setState({messages: currentMessages});
-        console.log(currentMessages);
       }
+
     })
   }
 
+  componentWillUpdate(){
+    this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");
+    if(this.state.active == false){
+      console.log("new message");
+    }
+  }
+
+  componentWillReceiveProps(){
+
+  }
+
+  renderDateDiv = (timestamp) => {
+    const messageDate = moment(timestamp).format("DD MMM YYYY");
+    if(moment(messageDate).isAfter(this.currentDateDiv, 'day')){
+      this.currentDateDiv = messageDate;
+      return(
+        <div key={messageDate} style={{textAlign: "center", color: "grey", fontStyle: "italic", marginBottom: 10, fontSize: 10}}>
+          {messageDate}
+        </div>
+      );
+    }
+    else return null;
+  }
+
   renderMessages = () => {
-    console.log("rendering messages");
     let messages = [];
     for(let key in this.state.messages){
-      console.log(this.state.messages[key]);
       messages.push (
+            this.renderDateDiv(this.state.messages[key].id),
             <ChatMessage
               key = {this.state.messages[key].id}
-              from = {this.state.messages[key].from}>
+              from = {this.state.messages[key].from}
+              timestamp = {this.state.messages[key].id}>
               {this.state.messages[key].message}
             </ChatMessage>
       );
@@ -175,7 +210,7 @@ class ChatWidget extends Component{
   }
 
   commitNewMessage = () => {
-    if(this.state.newMessage.trim() !== ""){
+    if(this.state.newMessage !== "" || this.state.newMessage.trim() !== ""){ //adding first part to get rid of warning
 
       const newMessage = {
         id: this.generateId(),
@@ -190,8 +225,9 @@ class ChatWidget extends Component{
   render(){
     return(
       <div>
-        <div id = "chatWidget" onClick={()=>{console.log(this.state.active);this.setState({active: !this.state.active})}}>
-          <div id = "chatNotification">2</div>
+        <div id = "chatWidget"
+          onClick= { () => { this.setState({active: !this.state.active, countUnread: 0}); this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");} }>
+          {(this.state.countUnread > 0)?<div id = "chatNotification">{this.state.countUnread}</div>: null}
           <span className="pt-icon-large pt-icon-chat" style={{color:"white"}}></span>
         </div>
         {this.state.active?
