@@ -1,5 +1,5 @@
 import { checkHttpStatus, parseJSON } from '../utils';
-import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED } from '../constant';
+import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST } from '../constant';
 import {push} from 'react-router-redux';
 import {forgotPassword, newPasswordUrl, url} from "../constants";
 
@@ -60,10 +60,15 @@ export const loginUser = (email, password, redirect="/registration") => {
   };
 };
 
+const signupUserRequest = () => {
+  return {
+    type: SIGNUP_REQUEST
+  };
+};
 
 export const signupUser = (userData, redirect="/verifyEmail") => {
   return function (dispatch) {
-    // dispatch(loginUserRequest());
+    dispatch(signupUserRequest());
     return fetch(url + '/api/merchant/signup', {
       method:'post',
       headers:{

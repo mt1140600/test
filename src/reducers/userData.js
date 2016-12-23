@@ -1,6 +1,6 @@
 import {createReducer} from '../utils';
 import { Map } from 'immutable';
-import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_USER, SIGNUP_SUCCESS, SIGNUP_FAILED} from '../constant';
+import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_USER, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST} from '../constant';
 
 const initialState = Map({
     token: null,
@@ -18,8 +18,9 @@ export default createReducer(initialState, {
           user: false,
           isAuthenticated: true,
           isAuthenticating: false,
-          calloutText: '',
-          showCallout:false
+          calloutText: 'Logging in',
+          showCallout:true,
+          intent: "pt-intent-primary"
         };
     },
     [LOGIN_USER_SUCCESS]: (state, payload) => {
@@ -39,7 +40,8 @@ export default createReducer(initialState, {
           isAuthenticated: false,
           isAuthenticating: false,
           calloutText: 'Incorrect Login Credentials',
-          showCallout: true
+          showCallout: true,
+          intent: "pt-intent-danger"
         };
     },
     [LOGOUT_USER]: (state, payload) => {
@@ -48,6 +50,17 @@ export default createReducer(initialState, {
     [SIGNUP_SUCCESS]: (state, payload = null) => {
       return state;
     },
+    [SIGNUP_REQUEST]: (state, payload = null) => {
+      return{
+        token: null,
+        user: false,
+        isAuthenticated: false,
+        isAuthenticating: false,
+        calloutText: 'Signing up',
+        showCallout: true,
+        intent: "pt-intent-primary"
+      }
+    },
     [SIGNUP_FAILED]: (state, payload = null) => {
       return{
         token: null,
@@ -55,7 +68,8 @@ export default createReducer(initialState, {
         isAuthenticated: false,
         isAuthenticating: false,
         calloutText: 'Email already exists',
-        showCallout: true
+        showCallout: true,
+        intent: "pt-intent-danger"
       }
     }
 });

@@ -21,6 +21,7 @@ class Signup extends Component {
       password_match:'',
       showCallout: false,
       calloutText:"",
+      intent:"pt-intent-danger",
       reCaptchaResponse:""
     };
   }
@@ -35,7 +36,7 @@ class Signup extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({calloutText: nextProps.userData.calloutText, showCallout: nextProps.userData.showCallout});
+    this.setState({calloutText: nextProps.userData.calloutText, showCallout: nextProps.userData.showCallout, intent: nextProps.userData.intent});
   }
 
   handleSignupClick = () => {
@@ -117,7 +118,7 @@ class Signup extends Component {
           />
           <br/>
           <Button onClick={this.handleSignupClick} className="pt-intent-primary pt-button-height-large item">Sign up</Button>
-          <Callout text={this.state.calloutText} visible={this.state.showCallout} />
+          <Callout text={this.state.calloutText} visible={this.state.showCallout} intent={this.state.intent}/>
           <br/>
           <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Already have an account?</span>
           <Button onClick={this.handleLoginClick}  className="pt-intent-warning item">Log in</Button>
