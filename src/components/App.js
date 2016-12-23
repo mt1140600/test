@@ -15,7 +15,8 @@ class App extends React.Component {
         <FloatingNotification
           message = {this.props.floatingNotification.message}
           visible= {this.props.floatingNotification.active}
-          intent ={this.props.floatingNotification.intent}/>
+          intent ={this.props.floatingNotification.intent}
+          duration = {this.props.floatingNotification.duration}/>
       </div>
     );
   }

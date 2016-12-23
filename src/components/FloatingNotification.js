@@ -2,18 +2,17 @@ import React, {Component} from 'react';
 import Callout from '../components/Callout';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import * as actionCreators from '../actions/generic';
+import * as genericActionCreator from '../actions/generic';
 
 class FloatingNotification extends Component{
 
-  hide = () => {
-      //call action to hide 
-  }
-
   componentWillReceiveProps(nextProps){
-      if(nextProps.visible === true){
-        setTimeout(this.hide, 3000);
-      }
+    if(nextProps.visible === true){
+      setTimeout(() => {
+        // console.log("Hiding floating notification");
+        this.props.genericActions.hideFloatingNotification();
+      }, nextProps.duration);
+    }
   }
 
   render(){
@@ -30,29 +29,18 @@ class FloatingNotification extends Component{
 
 }
 
-// FloatingNotification.propTypes = {
-//   message: React.PropTypes.string,
-//   intent: React.PropTypes.string,
-//   duration: React.PropTypes.number
-// }
-//
-// FloatingNotification.defaultProps = {
-//   duration: 3000,
-//   intent: "pt-intent-danger"
-// }
+FloatingNotification.propTypes = {
+  message: React.PropTypes.string,
+  intent: React.PropTypes.string,
+  duration: React.PropTypes.number,
+  visible: React.PropTypes.bool
+}
 
-// const mapStateToProps = (state) => ({
-//   floatingNotification: state.floatingNotification
-// })
-//
-//
-// const mapDispatchToProps = (dispatch) => {
-//   return{
-//     actions : bindActionCreators(actionCreators, dispatch),
-//     dispatch
-//   }
-// }
+const mapDispatchToProps = (dispatch) => {
+  return{
+    genericActions: bindActionCreators(genericActionCreator, dispatch),
+    dispatch
+  }
+}
 
-// export default connect(mapStateToProps, mapDispatchToProps)(FloatingNotification);
-
-export default FloatingNotification;
+export default connect(null, mapDispatchToProps)(FloatingNotification);

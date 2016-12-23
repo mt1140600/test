@@ -1,9 +1,9 @@
 import {SHOW_FLOATING_NOTIFICATION, HIDE_FLOATING_NOTIFICATION} from '../constant';
 
 const floatingNotification_initialState = {
-  message:  "Sample Notification",
-  intent: "pt-intent-success",
-  active: true,
+  message:  "",
+  intent: "",
+  active: false,
   duration: 0
 }
 

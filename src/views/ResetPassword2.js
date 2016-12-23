@@ -4,6 +4,7 @@ import {push} from 'react-router-redux';
 import {browserHistory} from 'react-router';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/login';
+import * as genericActionCreator from '../actions/generic';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import Callout from '../components/Callout';
 import {forgotPassword} from "../constants";
@@ -44,6 +45,7 @@ class ResetPassword2 extends Component {
       this.setState({showCallout:true, calloutText:"Passwords did not match"});
     else {
       this.setState({showCallout:false});
+      this.props.genericActions.showFloatingNotification("New password has been set", "pt-intent-success", 1000);
       this.props.actions.handleNewPassword(this.state.newPassword, this.getToken());
     }
   }
@@ -85,6 +87,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   actions : bindActionCreators(actionCreators, dispatch),
+  genericActions: bindActionCreators(genericActionCreator, dispatch),
   dispatch
 });
 
