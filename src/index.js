@@ -5,8 +5,6 @@ import { Router, browserHistory } from 'react-router';
 import routes from './routes';
 import configureStore from './store/configureStore';
 require('./favicon.ico');
-require('@blueprintjs/core/dist/blueprint.css');
-require('./styles/stylesheet.css');
 import { syncHistoryWithStore } from 'react-router-redux';
 // import Perf from 'react-addons-perf';
 // window.Perf = Perf;

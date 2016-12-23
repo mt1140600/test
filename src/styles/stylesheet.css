@@ -83,12 +83,22 @@ h6{
   overflow: scroll;
   position: relative;
 }
+
+.tabs.tabs75{
+  height: 75vh;
+}
+
 #progressBar{
   margin: 20px 40px 20px 40px;
 }
 .helpText{
   text-align: left;
   color: #F55656;
+  font-style: italic;
+}
+.successText{
+  text-align: left;
+  color: #66b266;
   font-style: italic;
 }
 .errorField{
@@ -203,6 +213,15 @@ h6{
 
 #react-paginate .break a {
     cursor: default;
+}
+.red{
+  color: #ff4c4c;
+}
+.green{
+  color: #7fbf7f;
+}
+.grey{
+  color: #4c4c4c;
 }
 /*
 .pt-tabs.pt-horizontal {

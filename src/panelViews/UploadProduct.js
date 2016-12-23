@@ -5,8 +5,23 @@ import LabelledTextInput from "../components/LabelledTextInput";
 import LabelledFileUpload from "../components/LabelledFileUpload";
 import * as fieldValidations from "../utils/fieldValidations";
 import {Button} from "@blueprintjs/core";
+import {Table, Column, Cell} from "@blueprintjs/table"
 import {productCategories} from '../constants';
 import moment from "moment";
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as productUploadActions from '../actions/productUpload';
+
+export class TableDollarExample extends Component{
+    render() {
+        const renderCell = (rowIndex: number) => <Cell>{`$${(rowIndex * 10).toFixed(2)}`}</Cell>;
+        return (
+            <Table numRows={10}>
+                <Column name="Dollars" renderCell={renderCell}/>
+            </Table>
+        );
+    }
+}
 
 class UploadProduct extends Component{
 
@@ -15,6 +30,11 @@ class UploadProduct extends Component{
     this.tableHeaders = ["Sub Category", "Brand", "Company", "Model", "MRP", "Selling Price", "MOQ", "Warranty", "Image"];
     this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]]
   }
+
+  componentWillMount() {
+    this.props.getKeyValueData('categories');
+  }
+
 
   onChange = () =>{
     return null;
@@ -35,31 +55,28 @@ class UploadProduct extends Component{
       </div>
     );
   }
-  // <div>
-  //   {moment().format("DD-MM-YYYY")}
-  // </div>
-  render(){
+
+  render() {
+    console.log(this.props.productUploadData);
     return(
       <div>
         <div className="tabs" style={{display:"flex",flexDirection:"column", alignItems:"left"}}>
           <div>
             <LabelledSelect
               options={productCategories}
-
               validationState={true}
               validate={fieldValidations.noValidation}
+              style={{"float":"none"}}
               helpText={"Choose a valid state"}>
-              Choose a category:
+              Choose a category: 
             </LabelledSelect>
 
           </div>
           <br/>
           <div>Please fill in the common attributes of the product to be uploaded</div>
           <br/>
-          <br/>
           <div style={{maxWidth:"500px"}}>
             <LabelledTextInput
-
               onChange={this.onChange}
               validationState={true}
               validate={fieldValidations.noValidation}
@@ -67,7 +84,6 @@ class UploadProduct extends Component{
               Sub Category
             </LabelledTextInput>
             <LabelledTextInput
-
               onChange={this.onChange}
               validationState={true}
               validate={fieldValidations.noValidation}
@@ -75,7 +91,6 @@ class UploadProduct extends Component{
               Brand
             </LabelledTextInput>
             <LabelledTextInput
-
               onChange={this.onChange}
               validationState={true}
               validate={fieldValidations.noValidation}
@@ -124,19 +139,25 @@ class UploadProduct extends Component{
         <Button style={{width:"200px"}}>Upload CSV of products</Button>
         <br/>
 
-        <div style={{display:"flex", flexWrap:"wrap"}}>
-          {this.tableHeaders.map(this.renderTableHeader)}
-          {this.sampleCSV.map(
-            (item,index) => {
-              return item.map(this.renderTableRow);
-            }
-          )}
-        </div>
+        <TableDollarExample />
+
       </div>
+
     </div>
     );
   }
 
 }
 
-export default UploadProduct;
+const mapStateToProps = (state) => {
+  return{
+    productUploadData : state.productUploadData.toJS()
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(productUploadActions, dispatch);
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadProduct);

@@ -7,17 +7,18 @@ class LabelledSelect extends Component{
     this.renderOption = this.renderOption.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.state = {clicked: false};
   }
 
   renderOption(item, index){
     return(
-      <option key={index} value={item}>{item}</option>
+      <option key={index} value={item[this.props.displayKey]}>{item[this.props.displayKey]}</option>
     );
   }
 
-  handleClick(){
-    this.setState({clicked: true});
+  handleClick() {
+    if (this.props.validationState === null) {
+      this.props.onChange(this.props.value,false);
+    }
   }
 
   handleChange(event){
@@ -26,18 +27,17 @@ class LabelledSelect extends Component{
   }
 
   render(){
-    let errorField = !this.props.validationState && this.state.clicked;
     return(
       <label className="pt-label pt-inline" onFocus={this.handleClick}>
         {this.props.children}
-        <div className="pt-select" style={{width:"200px", marginRight:"auto"}}>
+        <div className="pt-select" style={Object.assign({width:"200px", marginRight:"auto", float:"right"},this.props.style)}>
           <select
             value={this.props.value}
             onChange={this.handleChange}>
             {this.props.options.map(this.renderOption)}
           </select>
         </div>
-        {(errorField)?<div className="helpText" >{this.props.helpText}</div>:null}
+        {(this.props.validationState === false) ? <div className="helpText" >{this.props.helpText}</div> : null}
       </label>
     );
   }
@@ -45,12 +45,14 @@ class LabelledSelect extends Component{
 
 LabelledSelect.propTypes = {
   children: React.PropTypes.string,
-  options: React.PropTypes.array,
+  options: React.PropTypes.array || React.PropTypes.object,
   value: React.PropTypes.string,
   onChange: React.PropTypes.func,
   validationState: React.PropTypes.bool,
   validate: React.PropTypes.func,
   helpText: React.PropTypes.string,
+  style: React.PropTypes.object,
+  displayKey:React.PropTypes.string
 };
 
-export default LabelledSelect;
+export default LabelledSelect; 
