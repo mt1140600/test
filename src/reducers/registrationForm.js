@@ -2,7 +2,7 @@ export const tabReducer = (state = 0, action) => {
   switch(action.type){
     case "Set Registration Tab":
       return action.value;
-    break;
+    // break;
 
     default:
       return state;
@@ -17,11 +17,11 @@ function createReducer(initialState, actionName){
         const vStateObj = Object.assign({}, state.vState, {[`${action.payload.field}`]: action.payload.vState});
         const valueObj = Object.assign({}, state.value, {[`${action.payload.field}`]: action.payload.value});
         return {vState: vStateObj, value: valueObj};
-      break;
+      // break;
 
       default:
         return state;
-      break;
+      // break;
     }
   }
 
@@ -178,9 +178,9 @@ export const tabValidation = (state = tabValidation_initialState, action) => {
     case "Set Tab Validation":
       newState[action.payload.index] = action.payload.vState;
       return newState;
-    break;
+    // break;
     default:
       return newState;
-    break;
+    // break;
   }
 }

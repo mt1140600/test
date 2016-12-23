@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/login';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import Callout from '../components/Callout';
-import {forgotPassword} from "../constants";
 const logo = require('../images/prokure_logo.png');
 
 

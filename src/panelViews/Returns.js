@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {Tabs, TabList, Tab, TabPanel} from "@blueprintjs/core";
-
-import PanelHeader from "../components/PanelHeader";
 import ReturnsReturns from "./ReturnsReturns";
 import Replacements from "./ReturnsReplacements";
 

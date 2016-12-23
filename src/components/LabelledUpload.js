@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Popover, PopoverInteractionKind, Position,} from "@blueprintjs/core";
 import ImageThumbnail from "../components/ImageThumbnail";
+/* global cloudinary*/
 
 class LabelledUpload extends Component{
 

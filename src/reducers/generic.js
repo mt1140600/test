@@ -12,11 +12,11 @@ const floatingNotification = (state = floatingNotification_initialState, action)
   switch(action.type){
       case SHOW_FLOATING_NOTIFICATION:
         return Object.assign({}, action.payload, { active: true });
-      break;
+      // break;
 
       case HIDE_FLOATING_NOTIFICATION:
         return floatingNotification_initialState;
-      break;
+      // break;
 
       default:
         return state;

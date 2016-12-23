@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Header from '../components/Header';
 import HeaderButtons from '../components/HeaderButtons';
 import ViewNameBar from '../components/ViewNameBar';
-import {push} from 'react-router';
 import {browserHistory} from 'react-router';
 
 export default class VerifyEmail extends Component{

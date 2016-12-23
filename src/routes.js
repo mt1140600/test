@@ -1,9 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import { UserIsAuthenticated, UserIsNotAuthenticated } from './utils/authWrappers.js'
-
-
-import TabLayout from './containers/TabLayout';
 import AccountSetup from './containers/AccountSetup';
 import App from './components/App';
 import Signup from './views/Signup';
@@ -11,7 +8,6 @@ import ResetPassword from './views/ResetPassword';
 import ResetPassword2 from './views/ResetPassword2';
 import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
-import Dummy from './components/Dummy';
 import Verification from './views/Verification';
 import VerifyEmail from './views/VerifyEmail';
 

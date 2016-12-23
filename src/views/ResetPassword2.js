@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
-import {browserHistory} from 'react-router';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/login';
 import * as genericActionCreator from '../actions/generic';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import Callout from '../components/Callout';
-import {forgotPassword} from "../constants";
 const logo = require('../images/prokure_logo.png');
 
 

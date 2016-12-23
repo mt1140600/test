@@ -1,7 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Link, IndexLink } from 'react-router';
 import FloatingNotification from './FloatingNotification';
-import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 
 // This is a class-based component because the current

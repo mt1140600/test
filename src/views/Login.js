@@ -6,7 +6,6 @@ import * as actionCreators from '../actions/login';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import Callout from '../components/Callout';
 const logo = require('../images/prokure_logo.png');
-import { Map } from 'immutable';
 
 FocusStyleManager.isActive();
 
