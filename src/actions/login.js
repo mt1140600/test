@@ -1,7 +1,7 @@
 import { checkHttpStatus, parseJSON } from '../utils';
-import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE } from '../constant';
+import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED } from '../constant';
 import {push} from 'react-router-redux';
-import * as config from '../config';
+import {forgotPassword, newPasswordUrl, url} from "../constants";
 
 const loginUserRequest = () => {
   return {
@@ -10,8 +10,8 @@ const loginUserRequest = () => {
 };
 
 const loginUserSuccess = (response) => {
-  localStorage.setItem('token', response.value);
-  localStorage.setItem('user_id', response.userId);
+  localStorage.setItem('token', response.token);
+  localStorage.setItem('user_id', response.merchant._id);
   return {
     type: LOGIN_USER_SUCCESS,
     payload: {
@@ -21,6 +21,7 @@ const loginUserSuccess = (response) => {
 };
 
 const loginUserFailure = (error) => {
+  console.log("failure");
   localStorage.removeItem('token');
   localStorage.removeItem('user_id');
   return {
@@ -34,10 +35,10 @@ const loginUserFailure = (error) => {
 
 
 
-export const loginUser = (email, password, redirect="/") => {
+export const loginUser = (email, password, redirect="/registration") => {
   return function (dispatch) {
     dispatch(loginUserRequest());
-    return fetch(config.apiURL + '/api/merchant/signup', {
+    return fetch(url + '/api/merchant/login', {
       method: 'post',
       headers: {
           'Accept': 'application/json',
@@ -49,6 +50,8 @@ export const loginUser = (email, password, redirect="/") => {
     .then(response => {
       console.log(response);
       dispatch(loginUserSuccess(response));
+      if(response.merchant.registration_complete === true)  redirect = "/verification";
+      if(response.merchant.email_verified === false)  redirect = "/verifyEmail";
       dispatch(push(redirect));
     })
     .catch(error => {
@@ -58,10 +61,10 @@ export const loginUser = (email, password, redirect="/") => {
 };
 
 
-export const signupUser = (userData, redirect="/") => {
+export const signupUser = (userData, redirect="/verifyEmail") => {
   return function (dispatch) {
     // dispatch(loginUserRequest());
-    return fetch("http://localhost:3000" + '/api/merchant/signup', {
+    return fetch(url + '/api/merchant/signup', {
       method:'post',
       headers:{
         'Accept':'application/json',
@@ -73,12 +76,59 @@ export const signupUser = (userData, redirect="/") => {
     .then(parseJSON)
     .then(response => {
       console.log(response);
-      // dispatch(loginUserSuccess(response));
-      // dispatch(push(redirect));
+      dispatch(push(redirect));
+      dispatch({
+        type: SIGNUP_SUCCESS
+      });
     })
     .catch(error => {
         console.log(error);
-        // dispatch(loginUserFailure(error));
+        dispatch({
+          type: SIGNUP_FAILED
+        });
     });
   };
 };
+
+export const handleReset = (email, redirect="/verifyEmail") => {
+  return function(dispatch){
+    return fetch(forgotPassword + email, {
+      method: 'get',
+      headers: {
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      }
+    })
+    .then(checkHttpStatus)
+    .then(parseJSON)
+    .then(response => {
+      console.log(response);
+      dispatch(push(redirect));
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+}
+
+export const handleNewPassword = (password, token, redirect="/") => {
+  return function(dispatch){
+    return fetch(newPasswordUrl + token , {
+      method: 'post',
+      headers: {
+        'Accept':'application/json',
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({new_password: password})
+    })
+    .then(checkHttpStatus)
+    .then(parseJSON)
+    .then(response => {
+      console.log(response);
+      dispatch(push(redirect));
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+}

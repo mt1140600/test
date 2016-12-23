@@ -34,6 +34,10 @@ class Signup extends Component {
     this.props.dispatch(push("/"));
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({calloutText: nextProps.userData.calloutText, showCallout: nextProps.userData.showCallout});
+  }
+
   handleSignupClick = () => {
     if (this.state.username == '' || this.state.business_name == '' || this.state.email == '' || this.state.password == '' || this.state.password_match == '' || this.state.reCaptchaResponse == '') {
       this.setState({showCallout:true, calloutText:"Please fill all the fields"});
@@ -80,7 +84,7 @@ class Signup extends Component {
 
           <img src = {logo} style={{width:"100px",height:"100px",margin:"auto"}} />
           <br/>
-          <h2 className="pt-intent-primary item">Prokure</h2>
+          <h2 className="pt-intent-primary item companyName">Prokure</h2>
           <br/>
           <p style={{color:"grey"}}>Sign up and start selling on our platform now!</p>
           <div className="pt-control-group pt-vertical item">
@@ -127,8 +131,8 @@ class Signup extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ 
-  todos: state.userData
+const mapStateToProps = (state) => ({
+  userData: state.userData
 });
 
 const mapDispatchToProps = (dispatch) => ({

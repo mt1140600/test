@@ -9,14 +9,14 @@ const logo = require('../images/prokure_logo.png');
 FocusStyleManager.isActive();
 
 class Login extends Component {
-  
+
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
       showCallout: false,
-      calloutText:"" 
+      calloutText:""
     };
   }
 
@@ -45,10 +45,14 @@ class Login extends Component {
         this.setState({showCallout:true, calloutText:"Please enter valid email"});
       } else {
         this.setState({showCallout:false});
-        this.props.actions.loginUser(this.state.email,this.state.password);
+        this.props.actions.loginUser(this.state.email, this.state.password);
       }
     }
-    
+
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({showCallout: nextProps.userData.showCallout, calloutText: nextProps.userData.calloutText});
   }
 
   render() {
@@ -59,11 +63,11 @@ class Login extends Component {
 
           <img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} />
           <br/>
-          <h2 className="pt-intent-primary item">Prokure</h2>
+          <h2 className="pt-intent-primary companyName item">Prokure</h2>
           <br/>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Email" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
+              <input type="email" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
             </div>
             <div className="pt-input-group pt-large" >
               <input type="password" className="pt-input" placeholder="Password" value={this.state.password} onChange={this.handleFieldUpdate.bind(this, "password")} />
@@ -86,8 +90,8 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ 
-  todos: state.userData 
+const mapStateToProps = (state) => ({
+  userData: state.userData
 });
 
 const mapDispatchToProps = (dispatch) => ({
