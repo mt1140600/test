@@ -37,7 +37,7 @@ class Signup extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({calloutText: nextProps.userData.calloutText, showCallout: nextProps.userData.showCallout, intent: nextProps.userData.intent});
+    this.setState({calloutText: nextProps.userData.calloutText, showCallout: nextProps.userData.showCallout, intent: nextProps.userData.intent, buttonDisabled: nextProps.userData.buttonDisabled});
   }
 
   handleSignupClick = () => {
@@ -59,7 +59,7 @@ class Signup extends Component {
           password:this.state.password,
           reCaptchaResponse:this.state.reCaptchaResponse
         });
-        this.recaptchaInstance.reset(); 
+        this.recaptchaInstance.reset();
       }
     }
   }
