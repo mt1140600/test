@@ -76,6 +76,10 @@ class Signup extends Component {
     this.setState({[`${field}`]:event.target.value});
   }
 
+  handleEnter = (event) =>{
+    if(event.keyCode == 13) this.handleSignupClick();
+  }
+
   render() {
 
     return(
@@ -105,7 +109,7 @@ class Signup extends Component {
               <input type="password" className="pt-input" placeholder="Password" />
             </div>
             <div className="pt-input-group pt-large" >
-              <input type="password" className="pt-input" placeholder="Confirm Password" value={this.state.password_match} onChange={this.handleFieldUpdate.bind(this, "password_match")}  />
+              <input type="password" className="pt-input" placeholder="Confirm Password" value={this.state.password_match} onChange={this.handleFieldUpdate.bind(this, "password_match")} onKeyUp={this.handleEnter}/>
             </div>
           </div>
           <br/>

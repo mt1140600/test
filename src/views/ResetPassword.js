@@ -49,6 +49,10 @@ class ResetPassword extends Component {
 
   }
 
+  handleEnter = (event) =>{
+    if(event.keyCode == 13) this.handleReset();
+  }
+
   render() {
     return(
       <div className="container">
@@ -63,7 +67,7 @@ class ResetPassword extends Component {
           <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Input your email to reset your password</span>
 
             <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Email" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
+              <input type="text" className="pt-input" placeholder="Email" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} onKeyUp={this.handleEnter} />
             </div>
           </div>
           <br/>

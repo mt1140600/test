@@ -8,14 +8,14 @@ import {browserHistory} from 'react-router';
 export default class VerifyEmail extends Component{
 
   waitAndRedirect = () => {
-    console.log("Will be redirected in 6 seconds");
+    console.log("Will be redirected in 4 seconds");
     setTimeout(
       () => {
         localStorage.removeItem("user_id");
         localStorage.removeItem("token");
         browserHistory.push("/");
       },
-      6000
+      4000
     );
   }
 

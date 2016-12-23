@@ -50,6 +50,10 @@ class ResetPassword2 extends Component {
     }
   }
 
+  handleEnter = (event) =>{
+    if(event.keyCode == 13) this.setPassword();
+  }
+
   render() {
     return(
       <div className="container">
@@ -65,7 +69,7 @@ class ResetPassword2 extends Component {
               <input type="password" className="pt-input" placeholder="New Password" value={this.state.newPassword} onChange={this.handleFieldUpdate.bind(this, "newPassword")} />
             </div>
             <div className="pt-input-group pt-large" >
-              <input type="password" className="pt-input" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleFieldUpdate.bind(this, "confirmPassword")} />
+              <input type="password" className="pt-input" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleFieldUpdate.bind(this, "confirmPassword")} onKeyUp={this.handleEnter}/>
             </div>
           </div>
           <br/>

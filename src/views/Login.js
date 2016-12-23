@@ -52,6 +52,10 @@ class Login extends Component {
 
   }
 
+  handleEnter = (event) =>{
+    if(event.keyCode == 13) this.handleLogin();
+  }
+
   componentWillReceiveProps(nextProps){
     this.setState({showCallout: nextProps.userData.showCallout, calloutText: nextProps.userData.calloutText, intent: nextProps.userData.intent});
   }
@@ -71,7 +75,7 @@ class Login extends Component {
               <input type="email" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
             </div>
             <div className="pt-input-group pt-large" >
-              <input type="password" className="pt-input" placeholder="Password" value={this.state.password} onChange={this.handleFieldUpdate.bind(this, "password")} />
+              <input type="password" className="pt-input" placeholder="Password" value={this.state.password} onChange={this.handleFieldUpdate.bind(this, "password")} onKeyUp={this.handleEnter}/>
             </div>
           </div>
           <br/>
