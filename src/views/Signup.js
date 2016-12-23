@@ -52,7 +52,6 @@ class Signup extends Component {
         this.setState({showCallout:true, calloutText:"Password should be 4 - 15 character"});
       } else {
         this.setState({showCallout:false});
-        console.log("lalala"+this.state.email);
         this.props.actions.signupUser({
           username:this.state.username,
           business_name:this.state.business_name,
@@ -60,6 +59,7 @@ class Signup extends Component {
           password:this.state.password,
           reCaptchaResponse:this.state.reCaptchaResponse
         });
+        this.recaptchaInstance.reset(); 
       }
     }
   }
@@ -121,6 +121,7 @@ class Signup extends Component {
             verifyCallback={this.verifyCallback}
             onloadCallback={this.callback}
             expiredCallback={this.expiredCallback}
+            ref={e => this.recaptchaInstance = e}
           />
           <br/>
           <Button onClick={this.handleSignupClick} className={"pt-intent-primary pt-button-height-large item " + buttonClass} disabled={this.state.buttonDisabled}>Sign up</Button>
