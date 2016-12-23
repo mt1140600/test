@@ -21,7 +21,8 @@ class ResetPassword2 extends Component {
       newPassword: '',
       confirmPassword: '',
       showCallout: false,
-      calloutText:""
+      calloutText:"",
+      showFloatingNotification: false
     };
   }
 
@@ -45,9 +46,13 @@ class ResetPassword2 extends Component {
       this.setState({showCallout:true, calloutText:"Passwords did not match"});
     else {
       this.setState({showCallout:false});
-      this.props.genericActions.showFloatingNotification("New password has been set", "pt-intent-success", 1000);
+      (this.state.showFloatingNotification)?this.props.genericActions.showFloatingNotification("New password has been set", "pt-intent-success", 1000):null;
       this.props.actions.handleNewPassword(this.state.newPassword, this.getToken());
     }
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({showCallout: nextProps.userData.showCallout, calloutText: nextProps.userData.calloutText, showFloatingNotification: nextProps.userData.showFloatingNotification});
   }
 
   handleEnter = (event) =>{
@@ -86,7 +91,7 @@ class ResetPassword2 extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  todos: state.user
+  userData: state.userData
 });
 
 const mapDispatchToProps = (dispatch) => ({

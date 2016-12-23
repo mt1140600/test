@@ -1,7 +1,8 @@
 import { checkHttpStatus, parseJSON } from '../utils';
-import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST } from '../constant';
+import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST, RESET_PASSWORD_FAILED, RESET_PASSWORD_SUCCESS } from '../constant';
 import {push} from 'react-router-redux';
 import {forgotPassword, newPasswordUrl, url} from "../constants";
+import {showFloatingNotification} from './generic';
 
 const loginUserRequest = () => {
   return {
@@ -130,10 +131,17 @@ export const handleNewPassword = (password, token, redirect="/") => {
     .then(parseJSON)
     .then(response => {
       console.log(response);
+      dispatch({
+        type: RESET_PASSWORD_SUCCESS
+      })
+      dispatch(showFloatingNotification("New password set", "pt-intent-success", 3000))
       dispatch(push(redirect));
     })
     .catch(error => {
       console.log(error);
+      dispatch({
+        type: RESET_PASSWORD_FAILED
+      })
     });
   }
 }

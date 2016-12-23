@@ -53,6 +53,10 @@ class ResetPassword extends Component {
     if(event.keyCode == 13) this.handleReset();
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({showCallout: nextProps.userData.showCallout, calloutText: nextProps.userData.calloutText});
+  }
+
   render() {
     return(
       <div className="container">
@@ -87,7 +91,7 @@ class ResetPassword extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  todos: state.user
+  userData: state.userData
 });
 
 const mapDispatchToProps = (dispatch) => ({
