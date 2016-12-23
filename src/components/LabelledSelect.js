@@ -9,9 +9,15 @@ class LabelledSelect extends Component{
     this.handleChange = this.handleChange.bind(this);
   }
 
-  renderOption(item, index){
-    return(
-      <option key={index} value={item[this.props.displayKey]}>{item[this.props.displayKey]}</option>
+  mapObject = (options) => {
+    return Object.keys(options).map((key, index) => {
+        return this.renderOption(options[key][this.props.displayKey], index);
+    });
+  }
+
+  renderOption(item, index) {
+    return (
+      <option key={index} value={item}>{item}</option>
     );
   }
 
@@ -26,7 +32,13 @@ class LabelledSelect extends Component{
     this.props.onChange(event.target.value,vState);
   }
 
-  render(){
+  render() {
+    let option_type = 'array';
+    let options = this.props.options || [];
+
+    if (this.props.options !== null && typeof this.props.options === 'object' && this.props.options.constructor !== Array) {
+      option_type = 'object';
+    }
     return(
       <label className="pt-label pt-inline" onFocus={this.handleClick}>
         {this.props.children}
@@ -34,7 +46,8 @@ class LabelledSelect extends Component{
           <select
             value={this.props.value}
             onChange={this.handleChange}>
-            {this.props.options.map(this.renderOption)}
+
+            {(option_type === 'array') ? options.map(this.renderOption) : this.mapObject(options)}
           </select>
         </div>
         {(this.props.validationState === false) ? <div className="helpText" >{this.props.helpText}</div> : null}
@@ -45,7 +58,7 @@ class LabelledSelect extends Component{
 
 LabelledSelect.propTypes = {
   children: React.PropTypes.string,
-  options: React.PropTypes.array || React.PropTypes.object,
+  options: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.array]),
   value: React.PropTypes.string,
   onChange: React.PropTypes.func,
   validationState: React.PropTypes.bool,

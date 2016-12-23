@@ -57,13 +57,14 @@ class UploadProduct extends Component{
   }
 
   render() {
-    console.log(this.props.productUploadData);
+    console.log(this.props.productUploadData.keyValue.categories);
     return(
       <div>
         <div className="tabs" style={{display:"flex",flexDirection:"column", alignItems:"left"}}>
           <div>
             <LabelledSelect
-              options={productCategories}
+              options={this.props.productUploadData.keyValue.categories}
+              displayKey={"name"}
               validationState={true}
               validate={fieldValidations.noValidation}
               style={{"float":"none"}}
