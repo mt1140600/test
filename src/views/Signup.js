@@ -22,7 +22,8 @@ class Signup extends Component {
       showCallout: false,
       calloutText:"",
       intent:"pt-intent-danger",
-      reCaptchaResponse:""
+      reCaptchaResponse:"",
+      buttonDisabled: false
     };
   }
 
@@ -51,6 +52,7 @@ class Signup extends Component {
         this.setState({showCallout:true, calloutText:"Password should be 4 - 15 character"});
       } else {
         this.setState({showCallout:false});
+        console.log("lalala"+this.state.email);
         this.props.actions.signupUser({
           username:this.state.username,
           business_name:this.state.business_name,
@@ -81,7 +83,7 @@ class Signup extends Component {
   }
 
   render() {
-
+    let buttonClass = (this.state.buttonDisabled)?"pt-disabled":"";
     return(
       <div className="container">
 
@@ -121,7 +123,7 @@ class Signup extends Component {
             expiredCallback={this.expiredCallback}
           />
           <br/>
-          <Button onClick={this.handleSignupClick} className="pt-intent-primary pt-button-height-large item">Sign up</Button>
+          <Button onClick={this.handleSignupClick} className={"pt-intent-primary pt-button-height-large item " + buttonClass} disabled={this.state.buttonDisabled}>Sign up</Button>
           <Callout text={this.state.calloutText} visible={this.state.showCallout} intent={this.state.intent}/>
           <br/>
           <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Already have an account?</span>

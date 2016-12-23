@@ -8,7 +8,9 @@ const initialState = Map({
     isAuthenticated: false,
     isAuthenticating: false,
     calloutText: '',
-    showCallout:false
+    showCallout:false,
+    intent: "pt-intent-danger",
+    buttonDisabled: false
 });
 
 export default createReducer(initialState, {
@@ -20,7 +22,8 @@ export default createReducer(initialState, {
           isAuthenticating: false,
           calloutText: 'Logging in',
           showCallout:true,
-          intent: "pt-intent-primary"
+          intent: "pt-intent-primary",
+          buttonDisabled: true
         };
     },
     [LOGIN_USER_SUCCESS]: (state, payload) => {
@@ -29,7 +32,8 @@ export default createReducer(initialState, {
           user: payload.response.merchant._id,
           isAuthenticated: true,
           calloutText: '',
-          showCallout: false
+          showCallout: false,
+          buttonDisabled: false
         };
 
     },
@@ -41,7 +45,8 @@ export default createReducer(initialState, {
           isAuthenticating: false,
           calloutText: 'Incorrect Login Credentials',
           showCallout: true,
-          intent: "pt-intent-danger"
+          intent: "pt-intent-danger",
+          buttonDisabled: false
         };
     },
     [LOGOUT_USER]: (state, payload) => {
@@ -58,7 +63,8 @@ export default createReducer(initialState, {
         isAuthenticating: false,
         calloutText: 'Signing up',
         showCallout: true,
-        intent: "pt-intent-primary"
+        intent: "pt-intent-primary",
+        buttonDisabled: true
       }
     },
     [SIGNUP_FAILED]: (state, payload = null) => {
@@ -69,7 +75,8 @@ export default createReducer(initialState, {
         isAuthenticating: false,
         calloutText: 'Email already exists',
         showCallout: true,
-        intent: "pt-intent-danger"
+        intent: "pt-intent-danger",
+        buttonDisabled: false
       }
     }
 });

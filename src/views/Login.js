@@ -17,7 +17,8 @@ class Login extends Component {
       password: '',
       showCallout: false,
       calloutText: "",
-      intent: "pt-intent-danger"
+      intent: "pt-intent-danger",
+      buttonDisabled: false
     };
   }
 
@@ -57,10 +58,11 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({showCallout: nextProps.userData.showCallout, calloutText: nextProps.userData.calloutText, intent: nextProps.userData.intent});
+    this.setState({showCallout: nextProps.userData.showCallout, calloutText: nextProps.userData.calloutText, intent: nextProps.userData.intent, buttonDisabled: nextProps.userData.buttonDisabled});
   }
 
   render() {
+    let buttonClass = (this.state.buttonDisabled)?"pt-disabled":"";
     return(
       <div className="container">
 
@@ -79,7 +81,7 @@ class Login extends Component {
             </div>
           </div>
           <br/>
-          <Button className="pt-intent-primary pt-button-height-large item" onClick={this.handleLogin} >Log in</Button>
+          <Button className={"pt-intent-primary pt-button-height-large item " + buttonClass} onClick={this.handleLogin} disabled={this.state.buttonDisabled}>Log in</Button>
           <Callout text={this.state.calloutText} visible={this.state.showCallout} intent={this.state.intent} />
           <br/>
           <a onClick={this.handleResetPassword} className="item pt-text-muted" style={{color:"#5c7080"}}>Forgot Password?</a>
