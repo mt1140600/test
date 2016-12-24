@@ -23,7 +23,7 @@ class Callout extends Component {
   render () {
     if (this.state.visible) {
       return (
-        <div className={"pt-callout " +this.props.intent } style={{marginTop:'10px', textAlign: "center"}}>
+        <div className={"pt-callout " +this.props.intent } style={{marginTop:'10px', textAlign: "center", height: 30, lineHeight: "10px", color: "#706f6f"}}>
           {this.props.text}
           <span onClick={this.handleCloseClick} style={{float:'right'}} className="pt-icon-cross"/>
         </div>

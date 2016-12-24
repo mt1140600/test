@@ -69,7 +69,7 @@ class Login extends Component {
 
         <div className="col" style={{textAlign:"center", minWidth:"300px", paddingTop:"20px"}}>
 
-          <img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} />
+          <a href="/"><img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} /></a>
           <br/>
           <h2 className="pt-intent-primary companyName item">Prokure</h2>
           <br/>

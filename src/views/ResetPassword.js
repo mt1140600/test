@@ -62,7 +62,7 @@ class ResetPassword extends Component {
 
         <div className="col" style={{textAlign:"center", minWidth:"300px", paddingTop:"20px"}}>
 
-          <img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} />
+          <a href="/"><img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} /></a>
           <br/>
           <h2 className="pt-intent-primary item companyName">Prokure</h2>
           <br/>
@@ -70,14 +70,13 @@ class ResetPassword extends Component {
           <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Input your email to reset your password</span>
 
             <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Email" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} onKeyUp={this.handleEnter} />
+              <input type="text" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} onKeyUp={this.handleEnter} />
             </div>
           </div>
           <br/>
           <Button className="pt-intent-primary pt-button-height-large item" onClick={this.handleReset} >Send</Button>
           <Callout text={this.state.calloutText} visible={this.state.showCallout} />
           <br/>
-          <br/ >
           <Button onClick={this.goBack} className="pt-intent-warning item">Go Back</Button>
           <br/>
           <p style={{marginTop:"15px", fontSize:"12px"}} className="item pt-text-muted">© 2016 Cerise Internet Technologies Pvt. Ltd.</p>
