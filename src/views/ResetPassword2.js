@@ -64,7 +64,6 @@ class ResetPassword2 extends Component {
         <div className="col" style={{textAlign:"center", minWidth:"300px", paddingTop:"20px"}}>
 
           <a href="/"><img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} /></a>
-          <br/>
           <h2 className="pt-intent-primary item companyName">Prokure</h2>
           <br/>
           <div className="pt-control-group pt-vertical item">
