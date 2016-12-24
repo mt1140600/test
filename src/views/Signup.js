@@ -7,7 +7,8 @@ import { Button, FocusStyleManager } from "@blueprintjs/core";
 import Callout from '../components/Callout';
 import {reCaptchaSiteKey} from '../constants';
 import  Recaptcha  from 'react-recaptcha';
-const logo = require('../images/prokure_logo.png');
+import Logo from '../components/Logo';
+
 FocusStyleManager.onlyShowFocusOnTabs();
 class Signup extends Component {
 
@@ -89,10 +90,7 @@ class Signup extends Component {
 
         <div className="col" style={{textAlign:"center", paddingTop:"20px", minWidth:"300px",}}>
 
-          <a href="/" style={{textDecoration: "none"}}>
-            <img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} />
-            <h2 className="pt-intent-primary item companyName">Prokure</h2>
-          </a>
+          <Logo/>
           <br/>
           <p style={{color:"grey"}}>Sign up and start selling on our platform now!</p>
           <div className="pt-control-group pt-vertical item">

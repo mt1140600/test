@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/login';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import Callout from '../components/Callout';
-const logo = require('../images/prokure_logo.png');
+import Logo from '../components/Logo';
 
 FocusStyleManager.isActive();
 
@@ -62,6 +62,10 @@ class Login extends Component {
     this.setState({showCallout: nextProps.userData.showCallout, calloutText: nextProps.userData.calloutText, intent: nextProps.userData.intent, buttonDisabled: nextProps.userData.buttonDisabled});
   }
 
+  goHome = () => {
+    console.log("haha");
+  }
+
   render() {
     let buttonClass = (this.state.buttonDisabled)?"pt-disabled":"";
     return(
@@ -69,10 +73,7 @@ class Login extends Component {
 
         <div className="col" style={{textAlign:"center", minWidth:"300px", paddingTop:"20px"}}>
 
-          <a href="/" style={{textDecoration: "none"}}>
-            <img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} />
-            <h2 className="pt-intent-primary item companyName">Prokure</h2>
-          </a>
+          <Logo/>
           <br/>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
