@@ -89,8 +89,10 @@ class Signup extends Component {
 
         <div className="col" style={{textAlign:"center", paddingTop:"20px", minWidth:"300px",}}>
 
-          <a href="/"><img src = {logo} style={{width:"100px",height:"100px",margin:"auto"}} /></a>
-          <h2 className="pt-intent-primary item companyName">Prokure</h2>
+          <a href="/" style={{textDecoration: "none"}}>
+            <img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} />
+            <h2 className="pt-intent-primary item companyName">Prokure</h2>
+          </a>
           <br/>
           <p style={{color:"grey"}}>Sign up and start selling on our platform now!</p>
           <div className="pt-control-group pt-vertical item">
