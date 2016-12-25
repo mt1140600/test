@@ -5,15 +5,15 @@ export const UserIsAuthenticated = UserAuthWrapper({
   authSelector: state => state.userData,
   redirectAction: routerActions.replace,
   failureRedirectPath: '/',
-  predicate: userData => (typeof(userData.user) !== "undefined") && (userData.user !== false), 
+  predicate: userData => (typeof(userData.user) !== "undefined") && (userData.user !== false),
   wrapperDisplayName: 'UserIsAuthenticated',
-  allowRedirectBack: false
+  allowRedirectBack: true
 });
 
 export const UserIsNotAuthenticated = UserAuthWrapper({
   authSelector: state => state.userData,
   redirectAction: routerActions.replace,
-  failureRedirectPath: '/registration',
+  failureRedirectPath: userData => (userData.registration_complete === true)?'/verification':'/registration',
   predicate: userData => typeof(userData.user) === "undefined" || userData.user === false,
   wrapperDisplayName: 'UserIsNotAuthenticated',
   allowRedirectBack: false

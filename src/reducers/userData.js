@@ -30,6 +30,7 @@ export default createReducer(initialState, {
         return {
           token: payload.response.token,
           user: payload.response.merchant._id,
+          registration_complete: payload.response.merchant.registration_complete,
           isAuthenticated: true,
           calloutText: '',
           showCallout: false,
