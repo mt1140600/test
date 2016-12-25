@@ -51,8 +51,8 @@ export const loginUser = (email, password, redirect="/registration") => {
     .then(response => {
       console.log(response);
       dispatch(loginUserSuccess(response));
-      if(response.merchant.registration_complete === true) redirect = "/verification";
-      if(response.merchant.email_verified === false) redirect = "/verifyEmail";
+      if(response.merchant.registration_complete === true) redirect = "/verification";  //technically, this line is not require cuz when we update userData, the authWrapper willhandle the routing
+      if(response.merchant.email_verified === false) redirect = "/verifyEmail"; //this is required as we have not specified an auth =Wrapper for it
       dispatch(push(redirect));
     })
     .catch(error => {
