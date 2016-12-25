@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Header from '../components/Header';
 import HeaderButtons from '../components/HeaderButtons';
 import ViewNameBar from '../components/ViewNameBar';
-import {browserHistory} from 'react-router';
 import {connect} from 'react-redux';
 import{bindActionCreators} from 'redux';
 import {handleLogout} from "../actions/login";

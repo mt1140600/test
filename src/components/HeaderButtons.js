@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Button} from "@blueprintjs/core";
-import {browserHistory} from 'react-router';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {handleLogout} from '../actions/login';

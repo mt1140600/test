@@ -38,7 +38,7 @@ const loginUserSuccess = (response) => {
 };
 
 const loginUserFailure = (error) => {
-  console.log("failure");
+  console.log(error);
   localStorage.removeItem('token');
   localStorage.removeItem('user_id');
   return {
