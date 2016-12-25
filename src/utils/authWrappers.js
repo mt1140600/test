@@ -19,6 +19,15 @@ export const UserIsNotAuthenticated = UserAuthWrapper({
   allowRedirectBack: false
 });
 
+export const UserIsEmailVerified = UserAuthWrapper({
+  authSelector: state => state.userData,
+  redirectAction: routerActions.replace,
+  failureRedirectPath: "/verifyEmail",
+  predicate: userData => userData.email_verified,
+  wrapperDisplayName: 'UserIsNotAuthenticated',
+  allowRedirectBack: false
+});
+
 export const VisibleOnlyAdmin = UserAuthWrapper({
   authSelector: state => state.userData,
   wrapperDisplayName: 'VisibleOnlyAdmin',

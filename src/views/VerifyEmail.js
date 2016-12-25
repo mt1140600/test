@@ -3,17 +3,16 @@ import Header from '../components/Header';
 import HeaderButtons from '../components/HeaderButtons';
 import ViewNameBar from '../components/ViewNameBar';
 import {browserHistory} from 'react-router';
+import {connect} from 'react-redux';
+import{bindActionCreators} from 'redux';
+import {handleLogout} from "../actions/login";
 
-export default class VerifyEmail extends Component{
+class VerifyEmail extends Component{
 
   waitAndRedirect = () => {
     console.log("Will be redirected in 4 seconds");
     setTimeout(
-      () => {
-        localStorage.removeItem("user_id");
-        localStorage.removeItem("token");
-        browserHistory.push("/");
-      },
+      this.props.handleLogout,
       4000
     );
   }
@@ -37,3 +36,9 @@ export default class VerifyEmail extends Component{
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({handleLogout},dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(VerifyEmail);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import { UserIsAuthenticated, UserIsNotAuthenticated } from './utils/authWrappers.js'
+import { UserIsAuthenticated, UserIsNotAuthenticated, UserIsEmailVerified } from './utils/authWrappers.js'
 import AccountSetup from './containers/AccountSetup';
 import App from './components/App';
 import Signup from './views/Signup';
@@ -18,9 +18,9 @@ export default (
     <Route path="verifyEmail" component={VerifyEmail} />
     <Route path="reset" component={UserIsNotAuthenticated(ResetPassword)} />
     <Route path="reset2" component={UserIsNotAuthenticated(ResetPassword2)} />
-    <Route path="registration" component={UserIsAuthenticated(AccountSetup)}/>
-    <Route path="verification" component={UserIsAuthenticated(Verification)} />
-    <Route path="dashboard" component={UserIsAuthenticated(ProductUpload)} />
+    <Route path="registration" component={UserIsAuthenticated(UserIsEmailVerified(AccountSetup))}/>
+    <Route path="verification" component={UserIsAuthenticated(UserIsEmailVerified(Verification))} />
+    <Route path="dashboard" component={UserIsAuthenticated(UserIsEmailVerified(ProductUpload))} />
   </Route>
 
   // <Route path="/" component={App}>
