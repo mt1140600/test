@@ -10,6 +10,8 @@ import {handleLogout} from "../actions/login";
 class VerifyEmail extends Component{
 
   waitAndRedirect = () => {
+    localStorage.removeItem('token'); //These 2 are required because the logout action takes places only after 4 seconds.the user can change url to /registration before those 4 seconds and he will break the system
+    localStorage.removeItem('user_id');
     console.log("Will be redirected in 4 seconds");
     setTimeout(
       this.props.handleLogout,

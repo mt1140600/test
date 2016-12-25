@@ -23,8 +23,8 @@ export const UserIsEmailVerified = UserAuthWrapper({
   authSelector: state => state.userData,
   redirectAction: routerActions.replace,
   failureRedirectPath: "/verifyEmail",
-  predicate: userData => userData.email_verified,
-  wrapperDisplayName: 'UserIsNotAuthenticated',
+  predicate: userData => {console.log("is email verified? "+userData.email_verified); return userData.email_verified},
+  wrapperDisplayName: 'UserIsEmailVerified',
   allowRedirectBack: false
 });
 

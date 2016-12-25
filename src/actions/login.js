@@ -6,17 +6,33 @@ import {showFloatingNotification} from './generic';
 
 const loginUserRequest = () => {
   return {
-    type: LOGIN_USER_REQUEST
+    type: LOGIN_USER_REQUEST,
+    payload:{
+      isAuthenticating: true,
+      showCallout: true,
+      calloutText: "Logging in",
+      intent: "pt-intent-primary",
+      buttonDisabled: true
+    }
   };
 };
 
 const loginUserSuccess = (response) => {
   localStorage.setItem('token', response.token);
   localStorage.setItem('user_id', response.merchant._id);
+  localStorage.setItem('email_verified', response.merchant.email_verified);
+  localStorage.setItem('registration_complete', response.merchant.registration_complete);
   return {
     type: LOGIN_USER_SUCCESS,
     payload: {
-      response: response
+      token: response.token,
+      user: response.merchant._id,
+      email_verified: response.merchant.email_verified,
+      registration_complete: response.merchant.registration_complete,
+      isAuthenticating: false,
+      isAuthenticated: true,
+      showCallout: false,
+      buttonDisabled: false
     }
   };
 };
@@ -28,8 +44,11 @@ const loginUserFailure = (error) => {
   return {
     type: LOGIN_USER_FAILURE,
     payload: {
-      status: error.response.status,
-      statusText: error.response.statusText
+      isAuthenticating: false,
+      calloutText: 'Incorrect Login Credentials',
+      showCallout: true,
+      intent: "pt-intent-danger",
+      buttonDisabled: false
     }
   };
 };
@@ -61,15 +80,42 @@ export const loginUser = (email, password, redirect="/registration") => {
   };
 };
 
-const signupUserRequest = () => {
+const signupRequest = () => {
   return {
-    type: SIGNUP_REQUEST
+    type: SIGNUP_REQUEST,
+    payload: {
+      calloutText: 'Signing up',
+      showCallout: true,
+      intent: "pt-intent-primary",
+      buttonDisabled: true
+    }
   };
+};
+
+const signupSuccess = () => {
+    return{
+      type: SIGNUP_SUCCESS,
+      payload:{
+        showCallout: false
+      }
+    };
+};
+
+const signupFailed = () => {
+    return{
+      type: SIGNUP_FAILED,
+      payload:{
+        calloutText: 'Email already exists',
+        showCallout: true,
+        intent: "pt-intent-danger",
+        buttonDisabled: false
+      }
+    };
 };
 
 export const signupUser = (userData, redirect="/verifyEmail") => {
   return function (dispatch) {
-    dispatch(signupUserRequest());
+    dispatch(signupRequest());
     return fetch(url + '/api/merchant/signup', {
       method:'post',
       headers:{
@@ -83,15 +129,11 @@ export const signupUser = (userData, redirect="/verifyEmail") => {
     .then(response => {
       console.log(response);
       dispatch(push(redirect));
-      dispatch({
-        type: SIGNUP_SUCCESS
-      });
+      dispatch(signupSuccess());
     })
     .catch(error => {
         console.log(error);
-        dispatch({
-          type: SIGNUP_FAILED
-        });
+        dispatch(signupFailed());
     });
   };
 };
@@ -117,6 +159,29 @@ export const handleReset = (email, redirect="/verifyEmail") => {
   }
 }
 
+const resetPasswordSuccess = () => {
+    return{
+      type: RESET_PASSWORD_SUCCESS,
+      payload: {
+        showCallout: false,
+        buttonDisabled: false,
+        showFloatingNotification: true
+      }
+    }
+}
+
+const resetPasswordFailed = () => {
+  return{
+    type: RESET_PASSWORD_FAILED,
+    payload:{
+      calloutText: 'Invalid request',
+      showCallout: true,
+      intent: "pt-intent-danger",
+      buttonDisabled: false,
+    }
+  }
+}
+
 export const handleNewPassword = (password, token, redirect="/") => {
   return function(dispatch){
     return fetch(newPasswordUrl + token , {
@@ -131,28 +196,34 @@ export const handleNewPassword = (password, token, redirect="/") => {
     .then(parseJSON)
     .then(response => {
       console.log(response);
-      dispatch({
-        type: RESET_PASSWORD_SUCCESS
-      })
+      dispatch(resetPasswordSuccess());
       dispatch(showFloatingNotification("New password set", "pt-intent-success", 3000))
       dispatch(push(redirect));
     })
     .catch(error => {
       console.log(error);
-      dispatch({
-        type: RESET_PASSWORD_FAILED
-      })
+      dispatch(resetPasswordFailed());
     });
   }
 }
 
+export const logout = () => {
+  return({
+      type: LOGOUT,
+      payload: {
+        token: null,
+        user: false,
+        isAuthenticated: false
+      }
+  });
+}
 export const handleLogout = () => {
   return function(dispatch){
     localStorage.removeItem('token');
     localStorage.removeItem('user_id');
-    dispatch({
-      type: LOGOUT
-    });
+    localStorage.removeItem('email_verified');
+    localStorage.removeItem('registration_complete');
+    dispatch(logout());
     dispatch(push("/"));
   }
 }
@@ -164,7 +235,9 @@ export const restoreLogin = () => {
     type: RESTORE_LOGIN,
     payload: {
       user: localStorage.getItem('user_id'),
-      token: localStorage.getItem('token')
+      token: localStorage.getItem('token'),
+      email_verified: localStorage.getItem('email_verified'),
+      registration_complete: localStorage.getItem('registration_complete')
     }
   }
 }
