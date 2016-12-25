@@ -4,7 +4,7 @@ import { routerActions } from 'react-router-redux';
 export const UserIsAuthenticated = UserAuthWrapper({
   authSelector: state => state.userData,
   redirectAction: routerActions.replace,
-  failureRedirectPath: '/',
+  // failureRedirectPath: '/',
   predicate: userData => userData.user,
   wrapperDisplayName: 'UserIsAuthenticated'
 });

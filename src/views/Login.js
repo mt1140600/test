@@ -75,14 +75,16 @@ class Login extends Component {
 
           <Logo/>
           <br/>
+          <form>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
-              <input type="email" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
+              <input type="text" name="email" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
             </div>
             <div className="pt-input-group pt-large" >
               <input type="password" className="pt-input" placeholder="Password" value={this.state.password} onChange={this.handleFieldUpdate.bind(this, "password")} onKeyUp={this.handleEnter}/>
             </div>
           </div>
+        </form>
           <br/>
           <Button className={"pt-intent-primary pt-button-height-large item " + buttonClass} onClick={this.handleLogin} disabled={this.state.buttonDisabled}>Log in</Button>
           <Callout text={this.state.calloutText} visible={this.state.showCallout} intent={this.state.intent} />

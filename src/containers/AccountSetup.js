@@ -6,9 +6,6 @@ import HeaderButtons from '../components/HeaderButtons';
 import ProgressBar from '../components/ProgressBar';
 
 class AccountSetup extends Component{
-  constructor() {
-    super();
-  }
   render() {
     return(
       <div>

@@ -1,5 +1,5 @@
 import { checkHttpStatus, parseJSON } from '../utils';
-import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST, RESET_PASSWORD_FAILED, RESET_PASSWORD_SUCCESS } from '../constant';
+import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST, RESET_PASSWORD_FAILED, RESET_PASSWORD_SUCCESS, LOGOUT } from '../constant';
 import {push} from 'react-router-redux';
 import {forgotPassword, newPasswordUrl, url} from "../constants";
 import {showFloatingNotification} from './generic';
@@ -51,8 +51,8 @@ export const loginUser = (email, password, redirect="/registration") => {
     .then(response => {
       console.log(response);
       dispatch(loginUserSuccess(response));
-      if(response.merchant.registration_complete === true)  redirect = "/verification";
-      if(response.merchant.email_verified === false)  redirect = "/verifyEmail";
+      if(response.merchant.registration_complete === true) redirect = "/verification";
+      if(response.merchant.email_verified === false) redirect = "/verifyEmail";
       dispatch(push(redirect));
     })
     .catch(error => {
@@ -143,5 +143,16 @@ export const handleNewPassword = (password, token, redirect="/") => {
         type: RESET_PASSWORD_FAILED
       })
     });
+  }
+}
+
+export const handleLogout = () => {
+  return function(dispatch){
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
+    dispatch(push("/"));
+    return {
+      type: LOGOUT
+    }
   }
 }
