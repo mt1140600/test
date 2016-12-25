@@ -1,6 +1,6 @@
 import {createReducer} from '../utils';
 import { Map } from 'immutable';
-import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_USER, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILED, LOGOUT} from '../constant';
+import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_USER, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILED, LOGOUT, RESTORE_LOGIN} from '../constant';
 
 const initialState = Map({
     token: null,
@@ -115,6 +115,12 @@ export default createReducer(initialState, {
         showCallout:false,
         intent: "pt-intent-danger",
         buttonDisabled: false
+      }
+    },
+    [RESTORE_LOGIN]: (state, payload) => {
+      return{
+        token: payload.token,
+        user: payload.user
       }
     }
 });

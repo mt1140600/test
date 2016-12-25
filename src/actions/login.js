@@ -1,5 +1,5 @@
 import { checkHttpStatus, parseJSON } from '../utils';
-import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST, RESET_PASSWORD_FAILED, RESET_PASSWORD_SUCCESS, LOGOUT } from '../constant';
+import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST, RESET_PASSWORD_FAILED, RESET_PASSWORD_SUCCESS, LOGOUT, RESTORE_LOGIN } from '../constant';
 import {push} from 'react-router-redux';
 import {forgotPassword, newPasswordUrl, url} from "../constants";
 import {showFloatingNotification} from './generic';
@@ -150,9 +150,21 @@ export const handleLogout = () => {
   return function(dispatch){
     localStorage.removeItem('token');
     localStorage.removeItem('user_id');
-    dispatch(push("/"));
-    return {
+    dispatch({
       type: LOGOUT
+    });
+    dispatch(push("/"));
+  }
+}
+
+
+export const restoreLogin = () => {
+  console.log("Restoring Login");
+  return{
+    type: RESTORE_LOGIN,
+    payload: {
+      user: localStorage.getItem('user_id'),
+      token: localStorage.getItem('token')
     }
   }
 }
