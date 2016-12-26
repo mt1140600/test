@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/login';
+import * as genericActionCreator from '../actions/generic';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import Callout from '../components/Callout';
 import Logo from '../components/Logo';
@@ -58,6 +59,13 @@ class Login extends Component {
     if(event.keyCode == 13) this.handleLogin();
   }
 
+  componentWillMount(){
+    const current_location = window.location.href;
+    if( typeof(current_location.split("email_verified=")[1]) !== "undefined" ){ //email was verified
+      this.props.genericActions.showFloatingNotification("Email has been verified", "pt-intent-success", 2000);
+    }
+  }
+
   componentWillReceiveProps(nextProps){
     this.setState({showCallout: nextProps.userData.showCallout, calloutText: nextProps.userData.calloutText, intent: nextProps.userData.intent, buttonDisabled: nextProps.userData.buttonDisabled});
   }
@@ -108,6 +116,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   actions : bindActionCreators(actionCreators,  dispatch),
+  genericActions: bindActionCreators(genericActionCreator, dispatch),
   dispatch
 });
 
