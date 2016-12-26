@@ -98,7 +98,8 @@ class TaxDetails extends Component{
               validate={fieldValidations.noValidation}
               helpText="Upload a PNG or JPG file"
               cloudinaryCloudName={constants.cloudinaryCloudName}
-              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}>
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
+              cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
                 Certification of Incorporation
             </LabelledUpload>
 
@@ -109,7 +110,8 @@ class TaxDetails extends Component{
               validate={fieldValidations.noValidation}
               helpText="Upload a PNG or JPG file"
               cloudinaryCloudName={constants.cloudinaryCloudName}
-              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}>
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
+              cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
                 Membership with Indian Chamber of Commerce
             </LabelledUpload>
 

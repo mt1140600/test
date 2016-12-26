@@ -21,3 +21,4 @@ export const newPasswordUrl = `${url}/api/merchant/reset_password?token=`;
 
 export const cloudinaryCloudName = "dtvfkbdm8";
 export const cloudinaryImageUploadPreset = "dgfm0gcv";
+export const cloduinaryMerchantInfoFolder = "MerchantInfo";

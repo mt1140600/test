@@ -107,7 +107,8 @@ class PaymentDetails extends Component {
               validate={fieldValidations.noValidation}
               helpText="Upload a PNG or JPG file"
               cloudinaryCloudName={constants.cloudinaryCloudName}
-              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}>
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
+              cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
                 Cancelled Cheque
             </LabelledUpload>
             <br/>
