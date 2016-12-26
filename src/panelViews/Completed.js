@@ -1,12 +1,6 @@
 import React, {Component} from 'react';
-import PanelHeader from "../components/PanelHeader";
 import DatePicker from "react-datepicker";
-import moment from "moment";
 import ReactPaginate from 'react-paginate';
-import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
-import OrderBy from "../components/OrderBy";
-import PlainSelect from '../components/PlainSelect';
-import CheckboxWrapper from '../components/CheckboxWrapper';
 import TableHeaders from '../components/TableHeaders'
 
 require('react-datepicker/dist/react-datepicker.css');

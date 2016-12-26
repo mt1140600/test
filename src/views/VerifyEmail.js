@@ -2,20 +2,19 @@ import React, {Component} from 'react';
 import Header from '../components/Header';
 import HeaderButtons from '../components/HeaderButtons';
 import ViewNameBar from '../components/ViewNameBar';
-import {push} from 'react-router';
-import {browserHistory} from 'react-router';
+import {connect} from 'react-redux';
+import{bindActionCreators} from 'redux';
+import {handleLogout} from "../actions/login";
 
-export default class VerifyEmail extends Component{
+class VerifyEmail extends Component{
 
   waitAndRedirect = () => {
-    console.log("Will be redirected in 6 seconds");
+    localStorage.removeItem('token'); //These 2 are required because the logout action takes places only after 4 seconds.the user can change url to /registration before those 4 seconds and he will break the system
+    localStorage.removeItem('user_id');
+    console.log("Will be redirected in 4 seconds");
     setTimeout(
-      () => {
-        localStorage.removeItem("user_id");
-        localStorage.removeItem("token");
-        browserHistory.push("/");
-      },
-      6000
+      this.props.handleLogout,
+      4000
     );
   }
 
@@ -38,3 +37,9 @@ export default class VerifyEmail extends Component{
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({handleLogout},dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(VerifyEmail);

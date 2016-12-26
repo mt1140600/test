@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {push} from 'react-router-redux';
-import {browserHistory} from 'react-router';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from '../actions/login';
+import * as genericActionCreator from '../actions/generic';
 import { Button, FocusStyleManager } from "@blueprintjs/core";
 import Callout from '../components/Callout';
-import {forgotPassword} from "../constants";
-const logo = require('../images/prokure_logo.png');
+import Logo from '../components/Logo';
 
 
 FocusStyleManager.isActive();
@@ -20,7 +19,8 @@ class ResetPassword2 extends Component {
       newPassword: '',
       confirmPassword: '',
       showCallout: false,
-      calloutText:""
+      calloutText:"",
+      showFloatingNotification: false
     };
   }
 
@@ -44,8 +44,17 @@ class ResetPassword2 extends Component {
       this.setState({showCallout:true, calloutText:"Passwords did not match"});
     else {
       this.setState({showCallout:false});
+      (this.state.showFloatingNotification)?this.props.genericActions.showFloatingNotification("New password has been set", "pt-intent-success", 1000):null;
       this.props.actions.handleNewPassword(this.state.newPassword, this.getToken());
     }
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({showCallout: nextProps.userData.showCallout, calloutText: nextProps.userData.calloutText, showFloatingNotification: nextProps.userData.showFloatingNotification});
+  }
+
+  handleEnter = (event) =>{
+    if(event.keyCode == 13) this.setPassword();
   }
 
   render() {
@@ -54,16 +63,15 @@ class ResetPassword2 extends Component {
 
         <div className="col" style={{textAlign:"center", minWidth:"300px", paddingTop:"20px"}}>
 
-          <img src={logo} style={{width:"100px",height:"100px",margin:"auto"}} />
-          <br/>
-          <h2 className="pt-intent-primary item companyName">Prokure</h2>
+          <Logo/>
+
           <br/>
           <div className="pt-control-group pt-vertical item">
             <div className="pt-input-group pt-large " >
               <input type="password" className="pt-input" placeholder="New Password" value={this.state.newPassword} onChange={this.handleFieldUpdate.bind(this, "newPassword")} />
             </div>
             <div className="pt-input-group pt-large" >
-              <input type="password" className="pt-input" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleFieldUpdate.bind(this, "confirmPassword")} />
+              <input type="password" className="pt-input" placeholder="Confirm Password" value={this.state.confirmPassword} onChange={this.handleFieldUpdate.bind(this, "confirmPassword")} onKeyUp={this.handleEnter}/>
             </div>
           </div>
           <br/>
@@ -80,11 +88,12 @@ class ResetPassword2 extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  todos: state.user
+  userData: state.userData
 });
 
 const mapDispatchToProps = (dispatch) => ({
   actions : bindActionCreators(actionCreators, dispatch),
+  genericActions: bindActionCreators(genericActionCreator, dispatch),
   dispatch
 });
 

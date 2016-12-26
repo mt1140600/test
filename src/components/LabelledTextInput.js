@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Tooltip} from "@blueprintjs/core";
 
 class LabelledTextInput extends Component{
 

@@ -9,7 +9,7 @@ export default class OrderBy extends Component{
 
   handleClick = () => {
     (this.state.active === 1)? this.setState({active: 2}) : this.setState({active: 1});
-    this.props.handleChange(value);
+    // this.props.handleChange();
   }
 
   componentWillReceiveProps(nextProps){

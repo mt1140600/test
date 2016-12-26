@@ -5,8 +5,6 @@ import LabelledSelect from '../components/LabelledSelect';
 import {productCategories} from '../constants';
 import * as fieldValidations from '../utils/fieldValidations';
 import ReactPaginate from 'react-paginate';
-import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
-import OrderBy from "../components/OrderBy";
 import TableHeaders from '../components/TableHeaders'
 
 

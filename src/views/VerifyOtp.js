@@ -39,6 +39,14 @@ class VerifyOtp extends Component {
     storeNumberRequest.send(JSON.stringify({merchant_phoneno: this.props.verifyOtp.value.phoneNo}));
   }
 
+  handleSMSEnter = (event) => {
+    if(event.keyCode === 13) this.sendSMS();
+  }
+
+  handleVerifyEnter = (event) => {
+    if(event.keyCode === 13) this.checkCode();
+  }
+
   sendSMS = () => {
     if(validateMobileNumber(this.props.verifyOtp.value.phoneNo)){
       this.setState({validNo: true})
@@ -70,6 +78,7 @@ class VerifyOtp extends Component {
   handleCodeChange = (event) => {
       this.setState({code: event.target.value});
   }
+
 
   checkCode = () => {
     if(this.state.code.length === 6){// check if code matches
@@ -128,7 +137,7 @@ class VerifyOtp extends Component {
           <p>Enter the mobile number below</p>
           <div className="pt-control-group">
             <p className="pt-button pt-active" style={{cursor:"default"}}>+91 </p>
-            <input type="text" className="pt-input" value={this.props.verifyOtp.value.phoneNo} onChange={this.handleChange}/>
+            <input type="text" className="pt-input" value={this.props.verifyOtp.value.phoneNo} onChange={this.handleChange} onKeyUp={this.handleSMSEnter}/>
             <button className="pt-button" onClick={this.sendSMS}>Send SMS</button>
           </div>
           {(this.props.verifyOtp.vState.phoneNo === false)?<p className="helpText">Enter a valid mobile number</p>:null}
@@ -145,7 +154,7 @@ class VerifyOtp extends Component {
               <br/>
               <p><small>Enter it below to verify your number</small></p>
               <div className="pt-control-group">
-                <input type="text" className="pt-input" value={this.state.code} onChange={this.handleCodeChange}/>
+                <input type="text" className="pt-input" value={this.state.code} onChange={this.handleCodeChange} onKeyUp={this.handleVerifyEnter}/>
                 <button className="pt-button pt-intent-primary" onClick={this.checkCode}>Verify</button>
               </div>
               {(!this.state.validCode)?<p className="helpText">Incorrect Code</p>:null}

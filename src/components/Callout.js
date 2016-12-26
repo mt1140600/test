@@ -12,6 +12,9 @@ class Callout extends Component {
     this.setState({visible:nextProps.visible});
   }
 
+  componentWillMount(){
+    this.setState({visible: this.props.visible})
+  }
 
   handleCloseClick = () => {
     this.setState({visible:false});
@@ -20,7 +23,7 @@ class Callout extends Component {
   render () {
     if (this.state.visible) {
       return (
-        <div className="pt-callout pt-intent-danger" style={{marginTop:'10px', color: '#a94442'}}>
+        <div className={"pt-callout " +this.props.intent } style={{marginTop:'10px', textAlign: "center", height: 30, lineHeight: "10px", color: "#706f6f"}}>
           {this.props.text}
           <span onClick={this.handleCloseClick} style={{float:'right'}} className="pt-icon-cross"/>
         </div>
@@ -34,7 +37,12 @@ class Callout extends Component {
 
 Callout.propTypes = {
   visible: React.PropTypes.bool,
-  text: React.PropTypes.string
+  text: React.PropTypes.string,
+  intent: React.PropTypes.string
 };
+
+Callout.defaultProps = {
+    intent: "pt-intent-danger"
+}
 
 export default Callout;

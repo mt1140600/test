@@ -7,7 +7,8 @@ import { Button, FocusStyleManager } from "@blueprintjs/core";
 import Callout from '../components/Callout';
 import {reCaptchaSiteKey} from '../constants';
 import  Recaptcha  from 'react-recaptcha';
-const logo = require('../images/prokure_logo.png');
+import Logo from '../components/Logo';
+
 FocusStyleManager.onlyShowFocusOnTabs();
 class Signup extends Component {
 
@@ -21,7 +22,9 @@ class Signup extends Component {
       password_match:'',
       showCallout: false,
       calloutText:"",
-      reCaptchaResponse:""
+      intent:"pt-intent-danger",
+      reCaptchaResponse:"",
+      buttonDisabled: false
     };
   }
 
@@ -35,7 +38,7 @@ class Signup extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({calloutText: nextProps.userData.calloutText, showCallout: nextProps.userData.showCallout});
+    this.setState({calloutText: nextProps.userData.calloutText, showCallout: nextProps.userData.showCallout, intent: nextProps.userData.intent, buttonDisabled: nextProps.userData.buttonDisabled});
   }
 
   handleSignupClick = () => {
@@ -57,6 +60,7 @@ class Signup extends Component {
           password:this.state.password,
           reCaptchaResponse:this.state.reCaptchaResponse
         });
+        this.recaptchaInstance.reset();
       }
     }
   }
@@ -75,16 +79,18 @@ class Signup extends Component {
     this.setState({[`${field}`]:event.target.value});
   }
 
-  render() {
+  handleEnter = (event) =>{
+    if(event.keyCode == 13) this.handleSignupClick();
+  }
 
+  render() {
+    let buttonClass = (this.state.buttonDisabled)?"pt-disabled":"";
     return(
       <div className="container">
 
         <div className="col" style={{textAlign:"center", paddingTop:"20px", minWidth:"300px",}}>
 
-          <img src = {logo} style={{width:"100px",height:"100px",margin:"auto"}} />
-          <br/>
-          <h2 className="pt-intent-primary item companyName">Prokure</h2>
+          <Logo/>
           <br/>
           <p style={{color:"grey"}}>Sign up and start selling on our platform now!</p>
           <div className="pt-control-group pt-vertical item">
@@ -104,7 +110,7 @@ class Signup extends Component {
               <input type="password" className="pt-input" placeholder="Password" />
             </div>
             <div className="pt-input-group pt-large" >
-              <input type="password" className="pt-input" placeholder="Confirm Password" value={this.state.password_match} onChange={this.handleFieldUpdate.bind(this, "password_match")}  />
+              <input type="password" className="pt-input" placeholder="Confirm Password" value={this.state.password_match} onChange={this.handleFieldUpdate.bind(this, "password_match")} onKeyUp={this.handleEnter}/>
             </div>
           </div>
           <br/>
@@ -114,10 +120,11 @@ class Signup extends Component {
             verifyCallback={this.verifyCallback}
             onloadCallback={this.callback}
             expiredCallback={this.expiredCallback}
+            ref={e => this.recaptchaInstance = e}
           />
           <br/>
-          <Button onClick={this.handleSignupClick} className="pt-intent-primary pt-button-height-large item">Sign up</Button>
-          <Callout text={this.state.calloutText} visible={this.state.showCallout} />
+          <Button onClick={this.handleSignupClick} className={"pt-intent-primary pt-button-height-large item " + buttonClass} disabled={this.state.buttonDisabled}>Sign up</Button>
+          <Callout text={this.state.calloutText} visible={this.state.showCallout} intent={this.state.intent}/>
           <br/>
           <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Already have an account?</span>
           <Button onClick={this.handleLoginClick}  className="pt-intent-warning item">Log in</Button>
