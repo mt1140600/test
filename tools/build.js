@@ -31,5 +31,9 @@ webpack(config).run((error, stats) => {
   // if we got this far, the build succeeded.
   console.log(chalkSuccess('Your app is compiled in production mode in /dist. It\'s ready to roll!'));
 
+  // let CopyWebpackPlugin = require('copy-webpack-plugin');
+  // new CopyWebpackPlugin([{from: "./src/styles/stylesheet.css", to:"./dist/styles/stylesheet.css"}]);
+  // console.log("Copied file");
+
   return 0;
 });
