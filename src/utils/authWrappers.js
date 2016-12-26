@@ -13,7 +13,7 @@ export const UserIsAuthenticated = UserAuthWrapper({
 export const UserIsNotAuthenticated = UserAuthWrapper({
   authSelector: state => state.userData,
   redirectAction: routerActions.replace,
-  failureRedirectPath: state => (state.userData.registration_complete === true)?'/verification':'/registration',
+  failureRedirectPath: state => (state.userData.registration_complete === true ?'/verification':'/registration'),
   predicate: userData => typeof(userData.user) === "undefined" || userData.user === false,
   wrapperDisplayName: 'UserIsNotAuthenticated',
   allowRedirectBack: false
@@ -23,7 +23,7 @@ export const UserIsEmailVerified = UserAuthWrapper({
   authSelector: state => state.userData,
   redirectAction: routerActions.replace,
   failureRedirectPath: "/verifyEmail",
-  predicate: userData => {console.log("is email verified? "+userData.email_verified); return userData.email_verified},
+  predicate: userData => {return userData.email_verified},
   wrapperDisplayName: 'UserIsEmailVerified',
   allowRedirectBack: false
 });

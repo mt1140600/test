@@ -234,10 +234,10 @@ export const restoreLogin = () => {
   return{
     type: RESTORE_LOGIN,
     payload: {
-      user: localStorage.getItem('user_id'),
+      user: localStorage.getItem('user_id') === 'false'? false: localStorage.getItem('user_id'),
       token: localStorage.getItem('token'),
-      email_verified: localStorage.getItem('email_verified'),
-      registration_complete: localStorage.getItem('registration_complete')
+      email_verified: localStorage.getItem('email_verified') === 'false'? false: true,
+      registration_complete: localStorage.getItem('registration_complete') === 'false'? false: true
     }
   }
 }
