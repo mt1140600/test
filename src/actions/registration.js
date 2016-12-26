@@ -1,5 +1,6 @@
 import * as constants from '../constants';
 import { checkHttpStatus, parseJSON } from '../utils';
+import 'whatwg-fetch';
 
 export const actionTabChange = (tab) => {
     return {

@@ -3,6 +3,7 @@ import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCE
 import {push} from 'react-router-redux';
 import {forgotPassword, newPasswordUrl, url} from "../constants";
 import {showFloatingNotification} from './generic';
+import 'whatwg-fetch';
 
 const loginUserRequest = () => {
   return {
