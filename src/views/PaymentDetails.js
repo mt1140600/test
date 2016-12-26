@@ -105,7 +105,7 @@ class PaymentDetails extends Component {
               onChange={this.updateInfo.bind(this,"cancCheque")}
               validationState={this.props.paymentDetails.vState.cancCheque}
               validate={fieldValidations.noValidation}
-              helpText="Upload a PNG or JPG file"
+              helpText="Upload a PNG, JPG, BMP or PDF file"
               cloudinaryCloudName={constants.cloudinaryCloudName}
               cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
               cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>

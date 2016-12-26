@@ -96,7 +96,7 @@ class TaxDetails extends Component{
               onChange={this.updateInfo.bind(this,"certIncorp")}
               validationState={this.props.taxDetails.vState.certIncorp}
               validate={fieldValidations.noValidation}
-              helpText="Upload a PNG or JPG file"
+              helpText="Upload a PNG, JPG, BMP or PDF file"
               cloudinaryCloudName={constants.cloudinaryCloudName}
               cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
               cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
@@ -108,7 +108,7 @@ class TaxDetails extends Component{
               onChange={this.updateInfo.bind(this,"membICC")}
               validationState={this.props.taxDetails.vState.membICC}
               validate={fieldValidations.noValidation}
-              helpText="Upload a PNG or JPG file"
+              helpText="Upload a PNG, JPG, BMP or PDF file"
               cloudinaryCloudName={constants.cloudinaryCloudName}
               cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
               cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>

@@ -19,6 +19,6 @@ export const getForm = `${url}/api/merchant/info`;
 export const forgotPassword = `${url}/api/merchant/reset_password_request?merchantEmail=`;
 export const newPasswordUrl = `${url}/api/merchant/reset_password?token=`;
 
-export const cloudinaryCloudName = "dtvfkbdm8";
-export const cloudinaryImageUploadPreset = "dgfm0gcv";
+export const cloudinaryCloudName = "prokure";
+export const cloudinaryImageUploadPreset = "ahibedth";
 export const cloduinaryMerchantInfoFolder = "MerchantInfo";
