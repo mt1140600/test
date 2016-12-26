@@ -224,7 +224,7 @@ export const handleLogout = () => {
     localStorage.removeItem('email_verified');
     localStorage.removeItem('registration_complete');
     dispatch(logout());
-    dispatch(push("/"));
+    window.location.href ="/";
   }
 }
 
