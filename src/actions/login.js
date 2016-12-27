@@ -102,11 +102,16 @@ const signupSuccess = () => {
     };
 };
 
-const signupFailed = () => {
+const signupFailed = (error) => {
+    let calloutText = "Recaptcha failure";
+    console.log("insdie signup faied "+ error.message);
+    if(error.message.indexOf("Conflict") >= 0){;
+      calloutText = "Email already exists"
+    }
     return{
       type: SIGNUP_FAILED,
       payload:{
-        calloutText: 'Email already exists',
+        calloutText: calloutText,
         showCallout: true,
         intent: "pt-intent-danger",
         buttonDisabled: false
@@ -134,7 +139,7 @@ export const signupUser = (userData, redirect="/verifyEmail") => {
     })
     .catch(error => {
         console.log(error);
-        dispatch(signupFailed());
+        dispatch(signupFailed(error));
     });
   };
 };

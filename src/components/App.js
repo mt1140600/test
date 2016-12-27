@@ -17,7 +17,7 @@ class App extends React.Component {
   }
 
   render() {
-    console.log("process environmanet = "+ process.env.NODE_ENV);
+    console.log("process environment = "+ process.env.NODE_ENV);
     return (
       <div>
         {this.props.children}

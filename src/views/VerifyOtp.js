@@ -3,13 +3,14 @@ import {validateMobileNumber} from '../utils/fieldValidations';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {actionTabChange, updateTabValidation, updateVerifyOtp} from '../actions/registration';
+import {showFloatingNotification} from '../actions/generic';
 import * as constants from '../constants';
-
+import { checkHttpStatus, parseJSON } from '../utils';
 
 class VerifyOtp extends Component {
   constructor(){
     super();
-    this.state = {codeSent: false, code: "", validCode: true};
+    this.state = {codeSent: false, code: "", validCode: true, otpTimeout: false};
     this.tokenId = null;
   }
 
@@ -61,6 +62,8 @@ class VerifyOtp extends Component {
         if(smsRequest.status === 200){
           console.log(smsRequest.response);
           this.setState({codeSent: true});
+          this.setState({otpTimeout: false});
+          setTimeout(()=>{this.setState({otpTimeout: true})}, 20000)
           const responseObj = JSON.parse(smsRequest.response);
           this.tokenId = responseObj.token_id;
         }
@@ -79,6 +82,25 @@ class VerifyOtp extends Component {
       this.setState({code: event.target.value});
   }
 
+  resendSMS =() => {
+    const url = constants.requestOtpAgain + "/" + this.tokenId;
+    console.log("Sending request to "+ url);
+    fetch(url, {
+      method: 'get',
+      headers: {
+          'Accept': 'application/json'
+      }
+    })
+    .then(checkHttpStatus)
+    .then(parseJSON)
+    .then(response => {
+      console.log("response");
+      this.props.showFloatingNotification("Code has been resent", "pt-intent-success", 2000);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
 
   checkCode = () => {
     if(this.state.code.length === 6){// check if code matches
@@ -145,20 +167,29 @@ class VerifyOtp extends Component {
           {
             (!this.state.codeSent)?
             <div>
-              <p><small>We will send a verification code to this number</small></p>
+              <p>We will send a verification code to this number</p>
               <br/>
             </div>
               :
             <div>
-              <p><small>We have sent a code to the number mentioned above</small></p>
+              <p>A code has been sent to the above number</p>
               <br/>
-              <p><small>Enter it below to verify your number</small></p>
+              <p>Enter it below to verify your number</p>
               <div className="pt-control-group">
                 <input type="text" className="pt-input" value={this.state.code} onChange={this.handleCodeChange} onKeyUp={this.handleVerifyEnter}/>
                 <button className="pt-button pt-intent-primary" onClick={this.checkCode}>Verify</button>
               </div>
               {(!this.state.validCode)?<p className="helpText">Incorrect Code</p>:null}
             </div>
+          }
+
+          {
+            (this.state.otpTimeout)?
+            <div>
+              <br/>
+              <a onClick={this.resendSMS}> Resend SMS? </a>
+            </div>
+            :null
           }
         </div>
 
@@ -174,7 +205,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps= (dispatch) => {
-  return bindActionCreators({updateTabValidation, actionTabChange, updateVerifyOtp}, dispatch);
+  return bindActionCreators({updateTabValidation, actionTabChange, updateVerifyOtp, showFloatingNotification}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyOtp);
