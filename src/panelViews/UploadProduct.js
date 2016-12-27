@@ -27,6 +27,7 @@ class UploadProduct extends Component{
 
   constructor(){
     super();
+    this.state = {vStateCategory:true};
     this.tableHeaders = ["Sub Category", "Brand", "Company", "Model", "MRP", "Selling Price", "MOQ", "Warranty", "Image"];
     this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]]
   }
@@ -37,8 +38,9 @@ class UploadProduct extends Component{
 
 
   onChange = (value, vState) => {
-    console.log(value);
-    console.log(vState);
+    this.setState({vStateCategory:vState});
+    this.props.getKeyValueData(value);
+
     return null;
   }
 
@@ -59,6 +61,7 @@ class UploadProduct extends Component{
   }
 
   render() {
+    console.log(this.props.productUploadData);
     let categories = this.props.productUploadData.keyValue.categories;
     if (categories) {
       categories["0"]={name:"Choose Category",ref:"Choose Category"};
@@ -71,10 +74,10 @@ class UploadProduct extends Component{
               options={categories}
               displayKey={"name"}
               responseKey={"ref"}
-              validationState={true}
+              validationState={this.state.vStateCategory}
               validate={fieldValidations.validateSelect.bind(null,"Choose Category")}
               style={{"float":"none"}}
-              helpText={"Choose a valid state"}
+              helpText={"No category selected."}
               onChange={this.onChange}>
               Choose a category:
             </LabelledSelect>

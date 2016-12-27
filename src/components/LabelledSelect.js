@@ -11,7 +11,6 @@ class LabelledSelect extends Component{
 
   mapObject = (options) => {
     let {displayKey, responseKey} = this.props;
-    console.log(options);
     return Object.keys(options).sort().map((key, index) => {
         return this.renderOption(options[key][displayKey], index, options[key][responseKey]);
     });
