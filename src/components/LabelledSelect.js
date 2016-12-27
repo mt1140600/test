@@ -10,24 +10,29 @@ class LabelledSelect extends Component{
   }
 
   mapObject = (options) => {
-    return Object.keys(options).map((key, index) => {
-        return this.renderOption(options[key][this.props.displayKey], index);
+    let {displayKey, responseKey} = this.props;
+    console.log(options);
+    return Object.keys(options).sort().map((key, index) => {
+        return this.renderOption(options[key][displayKey], index, options[key][responseKey]);
     });
   }
 
-  renderOption(item, index) {
+
+
+  renderOption(item, index, response = null) {
     return (
-      <option key={index} value={item}>{item}</option>
+      <option key={index} value={(!response) ? item : response}>{item}</option>
     );
   }
 
   handleClick() {
     if (this.props.validationState === null) {
+
       this.props.onChange(this.props.value,false);
     }
   }
 
-  handleChange(event){
+  handleChange(event) {
     let vState = this.props.validate(event.target.value);
     this.props.onChange(event.target.value,vState);
   }
@@ -43,10 +48,7 @@ class LabelledSelect extends Component{
       <label className="pt-label pt-inline" onFocus={this.handleClick}>
         {this.props.children}
         <div className="pt-select" style={Object.assign({width:"200px", marginRight:"auto", float:"right"},this.props.style)}>
-          <select
-            value={this.props.value}
-            onChange={this.handleChange}>
-
+          <select value={this.props.value} onChange={this.handleChange}>
             {(option_type === 'array') ? options.map(this.renderOption) : this.mapObject(options)}
           </select>
         </div>
@@ -65,7 +67,8 @@ LabelledSelect.propTypes = {
   validate: React.PropTypes.func,
   helpText: React.PropTypes.string,
   style: React.PropTypes.object,
-  displayKey:React.PropTypes.string
+  displayKey:React.PropTypes.string,
+  responseKey:React.PropTypes.string
 };
 
-export default LabelledSelect; 
+export default LabelledSelect;

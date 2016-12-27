@@ -36,7 +36,9 @@ class UploadProduct extends Component{
   }
 
 
-  onChange = () =>{
+  onChange = (value, vState) => {
+    console.log(value);
+    console.log(vState);
     return null;
   }
 
@@ -57,19 +59,24 @@ class UploadProduct extends Component{
   }
 
   render() {
-    console.log(this.props.productUploadData.keyValue.categories);
+    let categories = this.props.productUploadData.keyValue.categories;
+    if (categories) {
+      categories["0"]={name:"Choose Category",ref:"Choose Category"};
+    }
     return(
       <div>
         <div className="tabs" style={{display:"flex",flexDirection:"column", alignItems:"left"}}>
           <div>
             <LabelledSelect
-              options={this.props.productUploadData.keyValue.categories}
+              options={categories}
               displayKey={"name"}
+              responseKey={"ref"}
               validationState={true}
-              validate={fieldValidations.noValidation}
+              validate={fieldValidations.validateSelect.bind(null,"Choose Category")}
               style={{"float":"none"}}
-              helpText={"Choose a valid state"}>
-              Choose a category: 
+              helpText={"Choose a valid state"}
+              onChange={this.onChange}>
+              Choose a category:
             </LabelledSelect>
 
           </div>
