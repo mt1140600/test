@@ -63,11 +63,11 @@ class TnC extends Component {
     return(
       <div className="container">
 
-          <div className="" style={{width:"1000px"}}>
+          <div className="col" style={{width:"1000px"}}>
 
             <h2> Terms &amp; Conditions </h2>
             <br/>
-            <pre style={{ height:"60vh", width:"1000px", overflowY: "scroll"}}><code>
+            <pre style={{ height:"55vh", width:"1000px", overflowY: "scroll"}}><code>
 
                             {/*   General Terms
                     THIS AGREEMENT CONTAINS THE TERMS AND CONDITIONS THAT GOVERN YOUR ACCESS TO AND USE OF THE SERVICES THROUGH A PARTICULAR ACCOUNT OR ACCOUNTS AND IS AN AGREEMENT BETWEEN YOU OR THE BUSINESS YOU REPRESENT ("YOU") AND Cerise Internet Technologies Private Limited. BY REGISTERING FOR OR USING THE SERVICES, YOU (ON BEHALF OF YOURSELF OR THE BUSINESS YOU REPRESENT) AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT, INCLUDING THE SERVICE TERMS AND PROGRAMME POLICIES FOR EACH SERVICE YOU REGISTER FOR OR USE IN CONNECTION WITH THE Prokure SITE.
