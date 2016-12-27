@@ -3,6 +3,7 @@ import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, SIGNUP_SUCCE
 import {push} from 'react-router-redux';
 import {forgotPassword, newPasswordUrl, url} from "../constants";
 import {showFloatingNotification} from './generic';
+import 'whatwg-fetch';
 
 const loginUserRequest = () => {
   return {
@@ -101,11 +102,16 @@ const signupSuccess = () => {
     };
 };
 
-const signupFailed = () => {
+const signupFailed = (error) => {
+    let calloutText = "Recaptcha failure";
+    console.log("insdie signup faied "+ error.message);
+    if(error.message.indexOf("Conflict") >= 0){;
+      calloutText = "Email already exists"
+    }
     return{
       type: SIGNUP_FAILED,
       payload:{
-        calloutText: 'Email already exists',
+        calloutText: calloutText,
         showCallout: true,
         intent: "pt-intent-danger",
         buttonDisabled: false
@@ -133,7 +139,7 @@ export const signupUser = (userData, redirect="/verifyEmail") => {
     })
     .catch(error => {
         console.log(error);
-        dispatch(signupFailed());
+        dispatch(signupFailed(error));
     });
   };
 };

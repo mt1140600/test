@@ -44,7 +44,7 @@ class ResetPassword2 extends Component {
       this.setState({showCallout:true, calloutText:"Passwords did not match"});
     else {
       this.setState({showCallout:false});
-      (this.state.showFloatingNotification)?this.props.genericActions.showFloatingNotification("New password has been set", "pt-intent-success", 1000):null;
+      (this.state.showFloatingNotification)?this.props.genericActions.showFloatingNotification("New password has been set", "pt-intent-success", 2000):null;
       this.props.actions.handleNewPassword(this.state.newPassword, this.getToken());
     }
   }
