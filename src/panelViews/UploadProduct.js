@@ -11,6 +11,7 @@ import moment from "moment";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as productUploadActions from '../actions/productUpload';
+import * as _ from 'lodash';
 
 export class TableDollarExample extends Component{
     render() {
@@ -27,7 +28,7 @@ class UploadProduct extends Component{
 
   constructor(){
     super();
-    this.state = {vStateCategory:true};
+    this.state = {vStateCategory:true, categoryKey:null};
     this.tableHeaders = ["Sub Category", "Brand", "Company", "Model", "MRP", "Selling Price", "MOQ", "Warranty", "Image"];
     this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]]
   }
@@ -38,7 +39,7 @@ class UploadProduct extends Component{
 
 
   onChange = (value, vState) => {
-    this.setState({vStateCategory:vState});
+    this.setState({vStateCategory:vState, categoryKey:value});
     this.props.getKeyValueData(value);
 
     return null;
@@ -61,29 +62,46 @@ class UploadProduct extends Component{
   }
 
   render() {
-    console.log(this.props.productUploadData);
     let categories = this.props.productUploadData.keyValue.categories;
     if (categories) {
       categories["0"]={name:"Choose Category",ref:"Choose Category"};
     }
+    let optionalValues = [];
+    let compulsaryValues = [];
+    let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
+    if(categoryData) {
+      _.each(categoryData, (value, key) => {
+          (value.required) ? compulsaryValues.push({key:key, priority:value.priority}) : optionalValues.push({key:key, priority:value.priority});
+      });
+      compulsaryValues = _.sortBy(compulsaryValues,'priority');
+      optionalValues = _.sortBy(optionalValues,'priority');
+    }
     return(
       <div>
         <div className="tabs" style={{display:"flex",flexDirection:"column", alignItems:"left"}}>
-          <div>
-            <LabelledSelect
-              options={categories}
-              displayKey={"name"}
-              responseKey={"ref"}
-              validationState={this.state.vStateCategory}
-              validate={fieldValidations.validateSelect.bind(null,"Choose Category")}
-              style={{"float":"none"}}
-              helpText={"No category selected."}
-              onChange={this.onChange}>
-              Choose a category:
-            </LabelledSelect>
-
-          </div>
+          <LabelledSelect
+            options={categories}
+            displayKey={"name"}
+            responseKey={"ref"}
+            validationState={this.state.vStateCategory}
+            validate={fieldValidations.validateSelect.bind(null,"Choose Category")}
+            style={{"float":"none"}}
+            helpText={"No category selected."}
+            onChange={this.onChange}>
+            Choose a category:
+          </LabelledSelect>
           <br/>
+          {categoryData &&
+            <div style={{fontSize:'14px'}}>
+              <p><span style={{fontWeight:600}}>Required Fields</span> : <span style={{color:'#db3737'}}>{compulsaryValues.map((value, index) => {return (compulsaryValues.length > index + 1) ? (value.key + ", ") : value.key })}</span></p>
+              <p><span style={{fontWeight:600}}>Optional Fields</span> : <span style={{color:'#db3737'}}>{optionalValues.map((value, index) => {return (optionalValues.length > index + 1) ? (value.key + ", ") : value.key })}</span></p>
+            </div>
+
+
+          }
+
+
+
           <div>Please fill in the common attributes of the product to be uploaded</div>
           <br/>
           <div style={{maxWidth:"500px"}}>

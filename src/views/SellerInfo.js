@@ -16,10 +16,7 @@ import {actionTabChange} from '../actions/registration';
 import {storeSubFormCheck} from '../utils';
 import {pushSubFormToDB} from '../utils';
 import {storeSubForm} from '../utils';
-
-var _ = require('lodash');
-// import Immutable from 'immutable';
-// window.Immutable = Immutable;
+import * as _ from 'lodash';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
