@@ -94,7 +94,7 @@ class VerifyOtp extends Component {
     .then(checkHttpStatus)
     .then(parseJSON)
     .then(response => {
-      console.log("response");
+      console.log(response);
       this.props.showFloatingNotification("Code has been resent", "pt-intent-success", 2000);
     })
     .catch(error => {

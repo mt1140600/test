@@ -105,7 +105,7 @@ const signupSuccess = () => {
 const signupFailed = (error) => {
     let calloutText = "Recaptcha failure";
     console.log("insdie signup faied "+ error.message);
-    if(error.message.indexOf("Conflict") >= 0){;
+    if(error.message.indexOf("Conflict") >= 0){
       calloutText = "Email already exists"
     }
     return{
