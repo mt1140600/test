@@ -222,11 +222,16 @@ class ChatWidget extends Component{
     }
   }
 
+  toggleChat = () => {
+    this.setState({active: !this.state.active, countUnread: 0});
+    this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");
+  }
+
   render(){
     return(
       <div>
         <div id = "chatWidget"
-          onClick= { () => { this.setState({active: !this.state.active, countUnread: 0}); this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");} }>
+          onClick= {this.toggleChat}>
           {(this.state.countUnread > 0)?<div id = "chatNotification">{this.state.countUnread}</div>: null}
           <span className="pt-icon-large pt-icon-chat" style={{color:"white"}}></span>
         </div>
@@ -237,6 +242,7 @@ class ChatWidget extends Component{
             <div id="chatHeader">
               {/* <img src={logo} style={{height: 50, width: 50}}/> */}
               <div style={{fontSize: 16}}>How can we help?</div>
+              <button className="pt-button pt-minimal pt-icon-cross" style={{ position:"absolute", top:10, right:10 }} onClick={this.toggleChat}></button>
             </div>
 
             <div id="chatMessagesContainer">

@@ -307,11 +307,13 @@ h6{
 .chatMessageWrapper.messageUser{
   display: flex;
   justify-content: flex-end;
+  margin-left: 20px;
 }
 
 .chatMessageWrapper.messageAdmin{
   display: flex;
   justify-content: flex-start;
+  margin-right: 20px;
 }
 
 .chatMessage{
@@ -325,12 +327,10 @@ h6{
 
 .chatMessage.messageUser{
   background-color: #a3e1cc;
-  margin-left: 40px;
 }
 
 .chatMessage.messageAdmin{
   background-color: #c0d6e4;
-  margin-right: 40px;
 }
 
 .example-enter {
