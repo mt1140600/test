@@ -8,6 +8,7 @@ require('velocity-animate/velocity.ui');
 import { FocusStyleManager } from "@blueprintjs/core";
 import {cloudinaryCloudName, cloudinaryChatUploadPreset} from '../constants';
 import moment from 'moment';
+import logo from '../images/prokure_logo.png';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -119,11 +120,11 @@ class InputArea extends Component{
 
   render(){
     return(
-      <div style={{position:"absolute", left: 0, bottom: 0, width: "100%", backgroundColor: "white", paddingTop: 2}}>
-        <button className="pt-button pt-icon-folder-open" onClick={this.handleUpload} style={{width:"15%"}}></button>
-        <input className="pt-input" style={{width: "65%"}} onChange={this.handleChange} onKeyDown={this.handleEnter} value={this.props.value}></input>
-        <button className="pt-button pt-intent-primary" style={{width: "20%"}} onClick={this.handleClick}>Send</button>
-      </div>
+        <div className="pt-input-group" style={{position:"absolute", left: 0, bottom: 0, width: "100%", backgroundColor:"#f5f5f5", padding: "10px 0 10px 0"}}>
+          <button className="pt-button pt-minimal pt-icon-paperclip" style={{ marginLeft: 10, marginTop: 13 }} onClick={this.handleUpload}></button>
+          <input className="pt-input" style={{paddingLeft: 50,boxShadow: "none", backgroundColor:"#f5f5f5"}} placeholder="Type a message"  value={this.props.value} onChange={this.handleChange} onKeyDown={this.handleEnter}/>
+          <button className="pt-button pt-minimal pt-icon-arrow-right" style={{ marginTop: 13 }} onClick={this.handleClick}></button>
+        </div>
     );
   }
 }
@@ -232,6 +233,11 @@ class ChatWidget extends Component{
         <VelocityTransitionGroup key={1} enter={{animation: "transition.slideUpBigIn", duration: 300}} leave={{animation: ""}} runOnMount >
 
           <div id="chatBox">
+            <div id="chatHeader">
+              {/* <img src={logo} style={{height: 50, width: 50}}/> */}
+              <div style={{fontSize: 16}}>How can we help?</div>
+            </div>
+
             <div id="chatMessagesContainer">
               {this.renderMessages()}
             </div>
