@@ -95,7 +95,8 @@ class InputArea extends Component{
   }
 
   componentDidMount(){
-    setTimeout(this.props.onChange.bind(null), 250); //Hack to scroll to the bottom of the screen to handle images
+    setTimeout(this.props.onChange.bind(null, ""), 250); //Hack to scroll to the bottom of the screen to handle images
+    //Binding empty string because binding null or undefined will throw warning React converting controlled component to uncontrolled
   }
 
   handleUpload = () => {
@@ -140,7 +141,7 @@ class ChatWidget extends Component{
 
   constructor(){
     super();
-    this.state = {active: false, messages:{}, newMessage: "", countUnread: 0};
+    this.state = {active: false, messages:{}, newMessage: "", countUnread: 0}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");  //inital date set to 13/05/2014 just like that
   }
 
