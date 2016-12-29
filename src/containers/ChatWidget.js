@@ -178,7 +178,7 @@ class ChatWidget extends Component{
 
   constructor(){
     super();
-    this.state = {active: false, messages:{}, newMessage: {messageText: "", messageType: "", messageUrl: ""}, countUnread: 0, isCalloutActive: false}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
+    this.state = {active: false, messages:{}, newMessage: {messageText: "", messageType: "", messageUrl: ""}, countUnread: 0, isCalloutActive: false, isDetailsActive: false}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");  //inital date set to 13/05/2014 just like that
     this.lastSeen = 0;
   }
@@ -274,6 +274,10 @@ class ChatWidget extends Component{
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");
   }
 
+  showDetails = () => {
+    this.setState({isDetailsActive: !this.state.isDetailsActive});
+  }
+
   showCallout = () => {
       this.setState({isCalloutActive: true});
       setTimeout(
@@ -282,26 +286,49 @@ class ChatWidget extends Component{
   }
 
   render(){
+    let buttonActiveClass = (this.state.isDetailsActive)?"pt-active ":"";
     return(
       <div>
         <div id = "chatWidget"
           onClick= {this.toggleChat}>
-          {(this.state.countUnread > 0)?<div id = "chatNotification">{this.state.countUnread}</div>: null}
+          {(this.state.countUnread > 0)?<div id = "chatNotification" className="flexRow">{this.state.countUnread}</div>: null}
           <span className="pt-icon-large pt-icon-chat" style={{color:"white"}}></span>
         </div>
         {this.state.active?
         <VelocityTransitionGroup key={1} enter={{animation: "transition.slideUpBigIn", duration: 300}} leave={{animation: ""}} runOnMount >
 
           <div id="chatBox">
-            <div id="chatHeader">
-              <div style={{fontSize: 16}}>How can we help?</div>
-              <button className="pt-button pt-minimal pt-icon-cross" style={{ position:"absolute", top:10, right:10 }} onClick={this.toggleChat}></button>
+            <div id="chatHeader" className="flexRow" style={{justifyContent: "space-between"}}>
+
+              <div id="chatHeaderPicWrapper"> {/* Wrapping the image in a div, because setting a littlborder against a dark image would cause a lot of pixelation so, we reduce border width on img element*/}
+                <img id ="chatHeaderPic" src="https://res.cloudinary.com/dtvfkbdm8/image/upload/v1483014172/gzwmuo4ngp7cjasyjn4k.jpg" />
+              </div>
+
+              <div style={{fontSize: 16}}>Your boy, Mani</div>
+
+              <div style={{marginRight: 10}}>
+                <button className={"pt-button pt-minimal pt-icon-more "+ buttonActiveClass} style={{  top:10, right:50 }} onClick={this.showDetails}></button>
+                <button className="pt-button pt-minimal pt-icon-cross" style={{  top:10, right:10 }} onClick={this.toggleChat}></button>
+              </div>
+
             </div>
 
-              <Callout
-                visible = {this.state.isCalloutActive}
-                text = "File upload failed. Allowed file formats: png, bmp, jpg, pdf"
-                style = {{position: "absolute", backgroundColor: "#ffb2b2", left: 0, marginTop: 0}}/>
+            {
+              (this.state.isDetailsActive)?
+              <div className="flexRow" style={{ textAlign: "center", padding: "0px 10px 10px 10px", backgroundColor: "#f5f5f5", width: "100%", position: "absolute", left: 0, boxShadow: "0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05)"}}>
+                <div style={{color: "grey"}}>
+                  <p>Yes, your boy</p>
+                  <p>+91-9000000000</p>
+                  <p>cma.camelot@gmail.com</p>
+                </div>
+              </div>
+              :null
+            }
+
+            <Callout
+              visible = {this.state.isCalloutActive}
+              text = "File upload failed. Allowed file formats: png, bmp, jpg, pdf"
+              style = {{position: "absolute", backgroundColor: "#ffb2b2", left: 0, width: "100%", fontSize: "smaller"}}/>
 
             <div id="chatMessagesContainer">
               {this.renderMessages()}
