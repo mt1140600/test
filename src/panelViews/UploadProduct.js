@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
+import {Tooltip, Position} from "@blueprintjs/core";
 import PanelHeader from "../components/PanelHeader";
 import LabelledSelect from "../components/LabelledSelect";
+import LabelledCheckboxGroup from "../components/LabelledCheckboxGroup";
 import LabelledTextInput from "../components/LabelledTextInput";
 import LabelledFileUpload from "../components/LabelledFileUpload";
 import * as fieldValidations from "../utils/fieldValidations";
@@ -12,6 +14,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as productUploadActions from '../actions/productUpload';
 import * as _ from 'lodash';
+import Tether from 'tether';
 
 export class TableDollarExample extends Component{
     render() {
@@ -22,6 +25,24 @@ export class TableDollarExample extends Component{
             </Table>
         );
     }
+}
+
+class DataWithPopover extends Component {
+
+  render() {
+    return (
+      <span>
+        {this.props.description ?
+          <Tooltip content={this.props.description} inline={false} position={Position.TOP}>
+            <span style={{textDecoration:'underline'}}>
+              {this.props.value.key}
+            </span>
+          </Tooltip> : this.props.value.key
+        }
+        {(this.props.count > this.props.index + 1) ? (", ") : ""}
+      </span>
+    )
+  }
 }
 
 class UploadProduct extends Component{
@@ -68,13 +89,23 @@ class UploadProduct extends Component{
     }
     let optionalValues = [];
     let compulsaryValues = [];
+    let commonValues = [];
     let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
     if(categoryData) {
       _.each(categoryData, (value, key) => {
           (value.required) ? compulsaryValues.push({key:key, priority:value.priority}) : optionalValues.push({key:key, priority:value.priority});
+          if (value.common) {
+            commonValues.push({key:key, priority:value.priority});
+          }
       });
       compulsaryValues = _.sortBy(compulsaryValues,'priority');
       optionalValues = _.sortBy(optionalValues,'priority');
+      commonValues = _.sortBy(commonValues, 'priority');
+      console.log(commonValues);
+      commonValues = _.map(commonValues,(value, index) => {
+        return value.key;
+      });
+      console.log(commonValues);
     }
     return(
       <div>
@@ -93,79 +124,34 @@ class UploadProduct extends Component{
           <br/>
           {categoryData &&
             <div style={{fontSize:'14px'}}>
-              <p><span style={{fontWeight:600}}>Required Fields</span> : <span style={{color:'#db3737'}}>{compulsaryValues.map((value, index) => {return (compulsaryValues.length > index + 1) ? (value.key + ", ") : value.key })}</span></p>
-              <p><span style={{fontWeight:600}}>Optional Fields</span> : <span style={{color:'#db3737'}}>{optionalValues.map((value, index) => {return (optionalValues.length > index + 1) ? (value.key + ", ") : value.key })}</span></p>
+              <p>
+                <span style={{fontWeight:600}}>Required Fields</span> : <span style={{color:'#db3737'}}>
+                  {compulsaryValues.map((value, index) => {return <DataWithPopover count={compulsaryValues.length} key={index} index={index} value={value} description={categoryData[value.key].description}/>})}
+                </span>
+              </p>
+              <p>
+                <span style={{fontWeight:600}}>Optional Fields</span> : <span style={{color:'#db3737'}}>
+                  {optionalValues.map((value, index) => {return <DataWithPopover count={optionalValues.length} key={index} index={index} value={value} description={categoryData[value.key].description}/>})}
+                </span>
+              </p>
             </div>
-
-
           }
-
-
-
-          <div>Please fill in the common attributes of the product to be uploaded</div>
           <br/>
-          <div style={{maxWidth:"500px"}}>
-            <LabelledTextInput
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Sub Category
-            </LabelledTextInput>
-            <LabelledTextInput
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Brand
-            </LabelledTextInput>
-            <LabelledTextInput
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Company
-            </LabelledTextInput>
-            <LabelledTextInput
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Model
-            </LabelledTextInput>
-            <LabelledTextInput
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              MRP
-            </LabelledTextInput>
-            <LabelledTextInput
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Selling Price
-            </LabelledTextInput>
-            <LabelledTextInput
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Minimum Order Quantity
-            </LabelledTextInput>
-            <LabelledTextInput
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Warranty
-            </LabelledTextInput>
-            <LabelledFileUpload>Image</LabelledFileUpload>
-            <a href=""><thin></thin>Click here to add image url from other sites</a>
-        </div>
+          <h5> Step 1 of 3 </h5>
+          <div>Please select the key-values which are common in all the products</div>
+          <br/>
+          <LabelledCheckboxGroup
+            options={commonValues}
+            groupColumns={3}
+            value={"sdfgsg"}
+            onChange={this.onChange.bind(this,"typeOfEstablishment")}
+            validationState={true}
+            validate={fieldValidations.noValidation}
+            helpText={"Choose atleast one option"}>
+          </LabelledCheckboxGroup>
+
         <br/>
-        <Button style={{width:"200px"}}>Upload CSV of products</Button>
+        <Button style={{width:"200px"}}>Continue</Button>
         <br/>
 
         <TableDollarExample />
