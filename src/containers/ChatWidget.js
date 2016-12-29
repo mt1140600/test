@@ -11,6 +11,7 @@ import moment from 'moment';
 import logo from '../images/prokure_logo.png';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import Callout from '../components/Callout';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -80,7 +81,7 @@ class ChatMessage extends Component{
       default:
         fileFormat = "Link";
     }
-    console.log("file format  is "+ fileFormat);
+
     return(
       <div className={"chatMessageWrapper "+dynamicClassName}>
         <div className={"chatMessage "+dynamicClassName} style={{display: "inline-block"}}>
@@ -120,7 +121,14 @@ class InputArea extends Component{
       this.props.onSend();
   }
 
+
+
   componentDidMount(){
+    console.log('test');
+    console.log("Focusing on textInput");
+    console.log(this.refTextInput);
+    //Can combine the two methods below. Just leaving it to show that you can bind (curry) the method instead of putting it in a callback
+    setTimeout(()=>{this.refTextInput.focus()}, 250); //Hack to focus input on textbox  http://stackoverflow.com/questions/35522220/react-ref-with-focus-doesnt-work-without-settimeout-my-example
     setTimeout(this.props.onChange.bind(null, {messageText: "", messageType: "", messageUrl: ""}), 250); //Hack to scroll to the bottom of the screen to handle images
     //Binding empty string because binding null or undefined will throw warning React converting controlled component to uncontrolled
   }
@@ -136,6 +144,7 @@ class InputArea extends Component{
        }
        else{
          console.log(error);
+         this.props.uploadError();
        }
       }
     );
@@ -149,7 +158,7 @@ class InputArea extends Component{
     return(
         <div className="pt-input-group" style={{position:"absolute", left: 0, bottom: 0, width: "100%", backgroundColor:"#f5f5f5", padding: "10px 0 10px 0"}}>
           <button className="pt-button pt-minimal pt-icon-paperclip" style={{ marginLeft: 10, marginTop: 13 }} onClick={this.handleUpload}></button>
-          <input className="pt-input" style={{paddingLeft: 50,boxShadow: "none", backgroundColor:"#f5f5f5"}} placeholder="Type a message"  value={this.props.newMessage.messageText} onChange={this.handleChange} onKeyDown={this.handleEnter}/>
+          <input ref={(input) => {this.refTextInput = input;}} className="pt-input" style={{paddingLeft: 50,boxShadow: "none", backgroundColor:"#f5f5f5"}} placeholder="Type a message"  value={this.props.newMessage.messageText} onChange={this.handleChange} onKeyDown={this.handleEnter}/>
           <button className="pt-button pt-minimal pt-icon-arrow-right" style={{ marginTop: 13 }} onClick={this.handleClick}></button>
         </div>
     );
@@ -160,7 +169,8 @@ class InputArea extends Component{
 InputArea.propTypes = {
   newMessage: React.PropTypes.object,
   onChange: React.PropTypes.func,
-  onSend: React.PropTypes.func
+  onSend: React.PropTypes.func,
+  uploadError: React.PropTypes.func
 }
 
 
@@ -168,7 +178,7 @@ class ChatWidget extends Component{
 
   constructor(){
     super();
-    this.state = {active: false, messages:{}, newMessage: {messageText: "", messageType: "", messageUrl: ""}, countUnread: 0}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
+    this.state = {active: false, messages:{}, newMessage: {messageText: "", messageType: "", messageUrl: ""}, countUnread: 0, isCalloutActive: false}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");  //inital date set to 13/05/2014 just like that
     this.lastSeen = 0;
   }
@@ -264,6 +274,13 @@ class ChatWidget extends Component{
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");
   }
 
+  showCallout = () => {
+      this.setState({isCalloutActive: true});
+      setTimeout(
+        () => {this.setState({isCalloutActive: false})}, 3000
+      );
+  }
+
   render(){
     return(
       <div>
@@ -281,6 +298,11 @@ class ChatWidget extends Component{
               <button className="pt-button pt-minimal pt-icon-cross" style={{ position:"absolute", top:10, right:10 }} onClick={this.toggleChat}></button>
             </div>
 
+              <Callout
+                visible = {this.state.isCalloutActive}
+                text = "File upload failed. Allowed file formats: png, bmp, jpg, pdf"
+                style = {{position: "absolute", backgroundColor: "#ffb2b2", left: 0, marginTop: 0}}/>
+
             <div id="chatMessagesContainer">
               {this.renderMessages()}
             </div>
@@ -289,6 +311,7 @@ class ChatWidget extends Component{
               newMessage={this.state.newMessage}
               onChange={this.updateNewMessage}
               onSend={this.commitNewMessage}
+              uploadError={this.showCallout}
             />
           </div>
 

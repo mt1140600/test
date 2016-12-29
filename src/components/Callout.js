@@ -20,7 +20,7 @@ class Callout extends Component {
   render () {
     if (this.state.visible) {
       return (
-        <div className="pt-callout pt-intent-danger" style={{marginTop:'10px', color: '#a94442'}}>
+        <div className="pt-callout pt-intent-danger" style={Object.assign({}, {marginTop:'10px', color: '#a94442'}, this.props.style)}>
           {this.props.text}
           <span onClick={this.handleCloseClick} style={{float:'right'}} className="pt-icon-cross"/>
         </div>
@@ -34,7 +34,8 @@ class Callout extends Component {
 
 Callout.propTypes = {
   visible: React.PropTypes.bool,
-  text: React.PropTypes.string
+  text: React.PropTypes.string,
+  style: React.PropTypes.object
 };
 
 export default Callout;
