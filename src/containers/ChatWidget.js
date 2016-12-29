@@ -39,20 +39,14 @@ class ChatMessage extends Component{
       this.state = {messageType: "plain"};
   }
 
-
-  componentDidMount(){
-      const chatMessagesContainer = document.getElementById("chatMessagesContainer");
-      chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; //Note this alone might not scroll all the way down if there are any image messages. Since these images are loaed asynchronously, their height is not properly accounted for. Thus we need a hack to fix this.  //We are triggering props in InputArea as a hack
+  componentWillReceiveProps(){ //To move to bottom of chat when typing
+    const chatMessagesContainer = document.getElementById("chatMessagesContainer");
+    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; //Note this alone might not scroll all the way down if there are any image messages. Since these images are loaed asynchronously, their height is not properly accounted for. Thus we need a hack to fix this.  //We are triggering props in InputArea as a hack
   }
 
-  componentDidUpdate(){
+  componentDidUpdate(){ //To move to bottom of chat after we finish typing or new message is received. componentWillReceiveProps is not enough to move chat to after after we finish typing and press enter because, if even the newProps arrive, the chatMessage is not rendered yet, therefore making the scrollBottom useless
     const chatMessagesContainer = document.getElementById("chatMessagesContainer");
-    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
-  }
-
-  componentWillReceiveProps(){
-    const chatMessagesContainer = document.getElementById("chatMessagesContainer");
-    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight;
+    chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; //Note this alone might not scroll all the way down if there are any image messages. Since these images are loaed asynchronously, their height is not properly accounted for. Thus we need a hack to fix this.  //We are triggering props in InputArea as a hack
   }
 
   imageLoaded = () =>{ //Callback to scroll all the way down after images are loaded. But, after first load (images are cached?) the problem persists. Therefore, we are triggering props in InputArea as a hack
@@ -154,6 +148,11 @@ class InputArea extends Component{
       if(event.keyCode === 13) this.handleClick();
   }
 
+  componentWillUnmount(){
+    let currentTime = new Date().getTime();
+    firebase.database().ref('chatDetails/'+localStorage.getItem('user_id')+"/user").set({lastSeen: currentTime, name: localStorage.getItem("user_name")});
+  }
+
   render(){
     return(
         <div className="pt-input-group" style={{position:"absolute", left: 0, bottom: 0, width: "100%", backgroundColor:"#f5f5f5", padding: "10px 0 10px 0"}}>
@@ -178,13 +177,20 @@ class ChatWidget extends Component{
 
   constructor(){
     super();
-    this.state = {active: false, messages:{}, newMessage: {messageText: "", messageType: "", messageUrl: ""}, countUnread: 0, isCalloutActive: false, isDetailsActive: false}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
+    this.state = {active: false, chatDetails: {}, messages:{}, newMessage: {messageText: "", messageType: "", messageUrl: ""}, countUnread: 0, isCalloutActive: false, isDetailsActive: false}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");  //inital date set to 13/05/2014 just like that
     this.lastSeen = 0;
   }
 
   componentDidMount(){
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");
+    firebase.database().ref('chatDetails/'+localStorage.getItem('user_id')).on('value', (snapshot) => {
+      const chatDetails = snapshot.val();
+      console.log("on load: ", chatDetails);
+      if(chatDetails !== null){
+        this.setState({chatDetails: chatDetails});
+      }
+    })
     firebase.database().ref('chatMessages/'+localStorage.getItem('user_id')).on('value', (snapshot) => {
       const currentMessages = snapshot.val();
       console.log("on load: ", currentMessages);
@@ -194,7 +200,7 @@ class ChatWidget extends Component{
 
       let countUnread  = 0;
       for(let key in currentMessages){
-        if(key > this.lastSeen) countUnread++;
+        if(Number(key) > Number(this.state.chatDetails.user.lastSeen)) countUnread++;
       }
 
       if (this.state.active === false){
@@ -250,7 +256,7 @@ class ChatWidget extends Component{
   }
 
   commitNewMessage = () => {
-    if(this.state.newMessage.messageText !== "" || this.state.newMessage.messageText.trim() !== ""){ //adding first part to get rid of warning
+    if(this.state.newMessage.messageText.trim() !== ""){ 
 
       const newMessage = {
         from: "user",
@@ -262,8 +268,7 @@ class ChatWidget extends Component{
       const commitTime = this.generateId();
       this.lastSeen = commitTime;
       //chatMetadata
-      firebase.database().ref('chatDetails/'+localStorage.getItem('user_id')+"/user_lastSeen").set(commitTime);
-      firebase.database().ref('chatDetails/'+localStorage.getItem('user_id')+"/user_name").set(localStorage.getItem("user_name"));
+      firebase.database().ref('chatDetails/'+localStorage.getItem('user_id')+"/user").set({lastSeen: commitTime, name: localStorage.getItem("user_name")});
       //chatMessages
       firebase.database().ref('chatMessages/'+localStorage.getItem('user_id')+"/"+commitTime).set(newMessage);
     }
@@ -317,9 +322,7 @@ class ChatWidget extends Component{
               (this.state.isDetailsActive)?
               <div className="flexRow" style={{ textAlign: "center", padding: "0px 10px 10px 10px", backgroundColor: "#f5f5f5", width: "100%", position: "absolute", left: 0, boxShadow: "0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05)"}}>
                 <div style={{color: "grey"}}>
-                  <p>Yes, your boy</p>
-                  <p>+91-9000000000</p>
-                  <p>cma.camelot@gmail.com</p>
+
                 </div>
               </div>
               :null
