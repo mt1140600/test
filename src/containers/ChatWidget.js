@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 // var VelocityComponent = require('velocity-react/velocity-component');
 // var VelocityTransitionGroup = require('velocity-react/velocity-transition-group');
 import { VelocityTransitionGroup } from 'velocity-react';
@@ -32,19 +32,27 @@ class FileChatMessage extends Component{
 
 }
 
-class ChatMessage extends Component{
+class ChatMessage extends PureComponent{
 
   constructor(){
       super();
       this.state = {messageType: "plain"};
   }
 
-  componentWillReceiveProps(){ //To move to bottom of chat when typing
+  componentDidMount(){ //Move to bottom of screen on initial render of all messages
     const chatMessagesContainer = document.getElementById("chatMessagesContainer");
     chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; //Note this alone might not scroll all the way down if there are any image messages. Since these images are loaed asynchronously, their height is not properly accounted for. Thus we need a hack to fix this.  //We are triggering props in InputArea as a hack
   }
 
-  componentDidUpdate(){ //To move to bottom of chat after we finish typing or new message is received. componentWillReceiveProps is not enough to move chat to after after we finish typing and press enter because, if even the newProps arrive, the chatMessage is not rendered yet, therefore making the scrollBottom useless
+  // shouldComponentUpdate(nextProps){
+  //   return (this.props !== nextProps);     //This doesn't work. We can't compare objects like this. We need to use shallow compare.
+                                              //So, we need to use import shallowCompare from 'react-addons-shallow-compare'. But this is legacy code. Thus, using PureComponent
+                                              //Implementing this to prevent chat moving to bottom while typing
+  // }
+
+  componentDidUpdate(){ //Move to bottom of screen when new message is received (from yourself or admin)
+                          //Also called when a message is being types as parent component's state changes and this (child) component's lifecycles methods are called
+                          //But since we are using PureComponent instead of Component, it is not called as under the hood, shouldComponentUpdate returns false
     const chatMessagesContainer = document.getElementById("chatMessagesContainer");
     chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; //Note this alone might not scroll all the way down if there are any image messages. Since these images are loaed asynchronously, their height is not properly accounted for. Thus we need a hack to fix this.  //We are triggering props in InputArea as a hack
   }
@@ -177,7 +185,7 @@ class ChatWidget extends Component{
 
   constructor(){
     super();
-    this.state = {active: false, chatDetails: {}, messages:{}, newMessage: {messageText: "", messageType: "", messageUrl: ""}, countUnread: 0, isCalloutActive: false, isDetailsActive: false}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
+    this.state = {active: false, chatDetails: {admin:{name: "Prokure Admin", photo: logo, position:"", phone_no: "", email_id: ""}}, messages:{}, newMessage: {messageText: "", messageType: "", messageUrl: ""}, countUnread: 0, isCalloutActive: false, isDetailsActive: false}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");  //inital date set to 13/05/2014 just like that
     this.lastSeen = 0;
   }
@@ -256,7 +264,7 @@ class ChatWidget extends Component{
   }
 
   commitNewMessage = () => {
-    if(this.state.newMessage.messageText.trim() !== ""){ 
+    if(this.state.newMessage.messageText.trim() !== ""){
 
       const newMessage = {
         from: "user",
@@ -306,10 +314,10 @@ class ChatWidget extends Component{
             <div id="chatHeader" className="flexRow" style={{justifyContent: "space-between"}}>
 
               <div id="chatHeaderPicWrapper"> {/* Wrapping the image in a div, because setting a littlborder against a dark image would cause a lot of pixelation so, we reduce border width on img element*/}
-                <img id ="chatHeaderPic" src="https://res.cloudinary.com/dtvfkbdm8/image/upload/v1483014172/gzwmuo4ngp7cjasyjn4k.jpg" />
+                <img id ="chatHeaderPic" src={this.state.chatDetails.admin.photo} />
               </div>
 
-              <div style={{fontSize: 16}}>Your boy, Mani</div>
+              <div style={{fontSize: 16}}>{this.state.chatDetails.admin.name}</div>
 
               <div style={{marginRight: 10}}>
                 <button className={"pt-button pt-minimal pt-icon-more "+ buttonActiveClass} style={{  top:10, right:50 }} onClick={this.showDetails}></button>
@@ -322,7 +330,9 @@ class ChatWidget extends Component{
               (this.state.isDetailsActive)?
               <div className="flexRow" style={{ textAlign: "center", padding: "0px 10px 10px 10px", backgroundColor: "#f5f5f5", width: "100%", position: "absolute", left: 0, boxShadow: "0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05)"}}>
                 <div style={{color: "grey"}}>
-
+                  <p>{this.state.chatDetails.admin.position}</p>
+                  <p>{this.state.chatDetails.admin.phone_no}</p>
+                  <p>{this.state.chatDetails.admin.email_id}</p>
                 </div>
               </div>
               :null
