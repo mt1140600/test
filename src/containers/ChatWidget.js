@@ -9,8 +9,27 @@ import { FocusStyleManager } from "@blueprintjs/core";
 import {cloudinaryCloudName, cloudinaryChatUploadPreset} from '../constants';
 import moment from 'moment';
 import logo from '../images/prokure_logo.png';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 FocusStyleManager.onlyShowFocusOnTabs();
+
+
+class FileChatMessage extends Component{
+  handleClick = () => {
+    this.refs.file.click();
+  }
+  render(){
+    let extension = (this.props.format === "unknown")? " " : "."+this.props.format;
+    return(
+      <div onClick={this.handleClick} style={{display: "flex", justifyContent: "space-between", backgroundColor: "#F5F5F5", alignItems:"center", padding: "10px", borderRadius: "4px", border:"1px solid rgba(75,89,97,.1)", cursor: "pointer"}}>
+        <span className="pt-icon-arrow-top-right" style={{color: "rgba(75,89,97,.5)"}}></span>
+        <a ref="file" href={this.props.url} target="_blank" style={{width: "100%", overflow:"hidden", paddingLeft: 10, color: "#4B5961", textDecoration: "none", fontStyle: "italic"}}>{this.props.filename + extension}</a>
+      </div>
+    );
+  }
+
+}
 
 class ChatMessage extends Component{
 
@@ -19,23 +38,8 @@ class ChatMessage extends Component{
       this.state = {messageType: "plain"};
   }
 
-  checkMessageType = (url) => {
-    let messageType = "plain";
-    const array1 = url.split("://");
-    const array2 = url.split(".");
-
-    if(array1[0] === "http" || array1[0] === "https") messageType = "link";
-    if(array2[array2.length - 1] === "png" || array2[array2.length - 1] === "jpg" || array2[array2.length - 1] === "jpeg" || array2[array2.length - 1] === "bmp"){
-      if(messageType === "link")
-        messageType = "image";
-    }
-    return messageType;
-  }
 
   componentDidMount(){
-      const messageObj = Object.assign({}, this.props);
-      this.setState({ messageType: this.checkMessageType(messageObj.children) });
-
       const chatMessagesContainer = document.getElementById("chatMessagesContainer");
       chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; //Note this alone might not scroll all the way down if there are any image messages. Since these images are loaed asynchronously, their height is not properly accounted for. Thus we need a hack to fix this.  //We are triggering props in InputArea as a hack
   }
@@ -61,13 +65,32 @@ class ChatMessage extends Component{
 
   render(){
     let dynamicClassName = (this.props.from === "user")? "messageUser" : "messageAdmin";
+    let fileFormat;
+    switch(this.props.messageType){
+      case 'bmp':
+      case 'png':
+      case 'jpg':
+      case 'jpeg':
+      case 'gif':
+        fileFormat = "Image";
+      break;
+      case 'Text':
+        fileFormat = "Text";
+      break;
+      default:
+        fileFormat = "Link";
+    }
+    console.log("file format  is "+ fileFormat);
     return(
       <div className={"chatMessageWrapper "+dynamicClassName}>
         <div className={"chatMessage "+dynamicClassName} style={{display: "inline-block"}}>
-            {(this.state.messageType === "image")?
-              <a href={this.props.children} target="_blank"><img src={this.props.children} style={{width: 100}} onLoad={this.imageLoaded}></img></a>
-              : (this.state.messageType === "link")?
-                  <a href={this.props.children} target="_blank">{this.props.children}</a>
+            {(fileFormat === "Image")?
+              <a href={this.props.messageUrl} target="_blank"><img src={this.props.messageUrl} style={{maxWidth: 300}} onLoad={this.imageLoaded}></img></a>
+              : (fileFormat === "Link")?
+                  <FileChatMessage
+                    filename={this.props.children}
+                    url={this.props.messageUrl}
+                    format={this.props.messageType}/>
                   : this.props.children}
             <div style={{textAlign: "right", fontSize: 10, color: "grey", fontStyle: "italic", paddingTop: 5}}>{this.getTime()}</div>
         </div>
@@ -76,10 +99,13 @@ class ChatMessage extends Component{
   }
 }
 
+
 ChatMessage.propTypes = {
   children: React.PropTypes.string,
   from: React.PropTypes.string,
-  timestamp: React.PropTypes.number
+  timestamp: React.PropTypes.number,
+  messageType: React.PropTypes.string,
+  messageUrl: React.PropTypes.string
 }
 
 
@@ -87,7 +113,7 @@ ChatMessage.propTypes = {
 class InputArea extends Component{
 
   handleChange = (event) => {
-    this.props.onChange(event.target.value);
+    this.props.onChange({messageText: event.target.value, messageType: "Text", messageUrl: "" });
   }
 
   handleClick = () => {
@@ -95,7 +121,7 @@ class InputArea extends Component{
   }
 
   componentDidMount(){
-    setTimeout(this.props.onChange.bind(null, ""), 250); //Hack to scroll to the bottom of the screen to handle images
+    setTimeout(this.props.onChange.bind(null, {messageText: "", messageType: "", messageUrl: ""}), 250); //Hack to scroll to the bottom of the screen to handle images
     //Binding empty string because binding null or undefined will throw warning React converting controlled component to uncontrolled
   }
 
@@ -105,7 +131,7 @@ class InputArea extends Component{
        console.log(error, result);
        if(error === null){
           console.log(result[0].secure_url);
-          this.props.onChange(result[0].secure_url);
+          this.props.onChange({messageText: result[0].original_filename, messageType: result[0].format||"unknown", messageUrl: result[0].secure_url });
           this.props.onSend();
        }
        else{
@@ -123,15 +149,16 @@ class InputArea extends Component{
     return(
         <div className="pt-input-group" style={{position:"absolute", left: 0, bottom: 0, width: "100%", backgroundColor:"#f5f5f5", padding: "10px 0 10px 0"}}>
           <button className="pt-button pt-minimal pt-icon-paperclip" style={{ marginLeft: 10, marginTop: 13 }} onClick={this.handleUpload}></button>
-          <input className="pt-input" style={{paddingLeft: 50,boxShadow: "none", backgroundColor:"#f5f5f5"}} placeholder="Type a message"  value={this.props.value} onChange={this.handleChange} onKeyDown={this.handleEnter}/>
+          <input className="pt-input" style={{paddingLeft: 50,boxShadow: "none", backgroundColor:"#f5f5f5"}} placeholder="Type a message"  value={this.props.newMessage.messageText} onChange={this.handleChange} onKeyDown={this.handleEnter}/>
           <button className="pt-button pt-minimal pt-icon-arrow-right" style={{ marginTop: 13 }} onClick={this.handleClick}></button>
         </div>
     );
   }
 }
 
+
 InputArea.propTypes = {
-  value: React.PropTypes.string,
+  newMessage: React.PropTypes.object,
   onChange: React.PropTypes.func,
   onSend: React.PropTypes.func
 }
@@ -141,23 +168,28 @@ class ChatWidget extends Component{
 
   constructor(){
     super();
-    this.state = {active: false, messages:{}, newMessage: "", countUnread: 0}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
+    this.state = {active: false, messages:{}, newMessage: {messageText: "", messageType: "", messageUrl: ""}, countUnread: 0}; //For a controlled component, if initial value is null or undefined, React will throw warning "Changing Controlled component to uncontrolled"
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");  //inital date set to 13/05/2014 just like that
+    this.lastSeen = 0;
   }
 
   componentDidMount(){
     this.currentDateDiv = moment(1400000000000).format("DD MMM YYYY");
-    firebase.database().ref('messages/').on('value', (snapshot) => {
+    firebase.database().ref('chatMessages/'+localStorage.getItem('user_id')).on('value', (snapshot) => {
       const currentMessages = snapshot.val();
-
-      if (this.state.active === false){
-        this.setState({countUnread: Object.keys(currentMessages).length - Object.keys(this.state.messages).length});
-      }
-
-      if (currentMessages != null){
+      console.log("on load: ", currentMessages);
+      if (currentMessages !== null){
         this.setState({messages: currentMessages});
       }
 
+      let countUnread  = 0;
+      for(let key in currentMessages){
+        if(key > this.lastSeen) countUnread++;
+      }
+
+      if (this.state.active === false){
+        this.setState({countUnread: countUnread});
+      }
     })
   }
 
@@ -168,16 +200,12 @@ class ChatWidget extends Component{
     }
   }
 
-  componentWillReceiveProps(){
-
-  }
-
   renderDateDiv = (timestamp) => {
     const messageDate = moment(timestamp).format("DD MMM YYYY");
     if(moment(messageDate).isAfter(this.currentDateDiv, 'day')){
       this.currentDateDiv = messageDate;
       return(
-        <div key={messageDate} style={{textAlign: "center", color: "grey", fontStyle: "italic", marginBottom: 10, fontSize: 10}}>
+        <div key={messageDate} style={{textAlign: "center", color: "grey", fontStyle: "italic", marginBottom: 10, paddingTop: 5, fontSize: 10}}>
           {messageDate}
         </div>
       );
@@ -189,12 +217,14 @@ class ChatWidget extends Component{
     let messages = [];
     for(let key in this.state.messages){
       messages.push (
-            this.renderDateDiv(this.state.messages[key].id),
+            this.renderDateDiv(Number(key)),
             <ChatMessage
-              key = {this.state.messages[key].id}
+              key = {key}
               from = {this.state.messages[key].from}
-              timestamp = {this.state.messages[key].id}>
-              {this.state.messages[key].message}
+              timestamp = {Number(key)}
+              messageType = {this.state.messages[key].message.messageType}
+              messageUrl = {this.state.messages[key].message.messageUrl}>
+              {this.state.messages[key].message.messageText}
             </ChatMessage>
       );
     }
@@ -210,15 +240,22 @@ class ChatWidget extends Component{
   }
 
   commitNewMessage = () => {
-    if(this.state.newMessage !== "" || this.state.newMessage.trim() !== ""){ //adding first part to get rid of warning
+    if(this.state.newMessage.messageText !== "" || this.state.newMessage.messageText.trim() !== ""){ //adding first part to get rid of warning
 
       const newMessage = {
-        id: this.generateId(),
         from: "user",
         message: this.state.newMessage
       }
-      this.setState({newMessage: ""});
-      firebase.database().ref('messages/'+newMessage.id).set(newMessage);
+
+      this.setState({newMessage: {messageText:"", messageType:"", messageUrl:""} });
+
+      const commitTime = this.generateId();
+      this.lastSeen = commitTime;
+      //chatMetadata
+      firebase.database().ref('chatDetails/'+localStorage.getItem('user_id')+"/user_lastSeen").set(commitTime);
+      firebase.database().ref('chatDetails/'+localStorage.getItem('user_id')+"/user_name").set(localStorage.getItem("user_name"));
+      //chatMessages
+      firebase.database().ref('chatMessages/'+localStorage.getItem('user_id')+"/"+commitTime).set(newMessage);
     }
   }
 
@@ -240,7 +277,6 @@ class ChatWidget extends Component{
 
           <div id="chatBox">
             <div id="chatHeader">
-              {/* <img src={logo} style={{height: 50, width: 50}}/> */}
               <div style={{fontSize: 16}}>How can we help?</div>
               <button className="pt-button pt-minimal pt-icon-cross" style={{ position:"absolute", top:10, right:10 }} onClick={this.toggleChat}></button>
             </div>
@@ -250,7 +286,7 @@ class ChatWidget extends Component{
             </div>
 
             <InputArea
-              value={this.state.newMessage}
+              newMessage={this.state.newMessage}
               onChange={this.updateNewMessage}
               onSend={this.commitNewMessage}
             />
@@ -265,4 +301,10 @@ class ChatWidget extends Component{
   }
 }
 
-export default ChatWidget;
+const mapStateToProps = (state) => {
+  return {
+    userData: state.userData
+  }
+}
+
+export default connect(mapStateToProps, null)(ChatWidget);
