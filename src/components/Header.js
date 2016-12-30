@@ -7,7 +7,7 @@ function header() {
       <a>
         <img id="header-logo" src = {logo} style={{}} />
       </a>
-      <div id="header-name">
+      <div id="header-name" className="companyName">
         Prokure
       </div>
     </div>

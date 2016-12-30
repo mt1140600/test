@@ -38,7 +38,7 @@ class PaymentDetails extends Component {
       account_type: this.props.paymentDetails.value.accType,
       cancelled_cheque_url: this.props.paymentDetails.value.cancCheque
     }
-    const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+    const successHandler = () => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
       console.log("successHandler");
       console.log(this.props.updateTabValidation);
       this.setState({showSpinner: false});
@@ -50,7 +50,8 @@ class PaymentDetails extends Component {
       console.log("failureHandler");
       console.log(response);
     }
-    storeSubForm(this.props.paymentDetails, this.props.updatePaymentDetails, this.props.updateTabValidation.bind(null, 3, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+    const subFormValid = storeSubForm(this.props.paymentDetails, this.props.updatePaymentDetails, this.props.updateTabValidation.bind(null, 3, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+    if(!subFormValid) this.setState({showSpinner: false});
   }
 
   render() {
@@ -104,9 +105,10 @@ class PaymentDetails extends Component {
               onChange={this.updateInfo.bind(this,"cancCheque")}
               validationState={this.props.paymentDetails.vState.cancCheque}
               validate={fieldValidations.noValidation}
-              helpText="Upload a PNG or JPG file"
+              helpText="Upload a PNG, JPG, BMP or PDF file"
               cloudinaryCloudName={constants.cloudinaryCloudName}
-              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}>
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
+              cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
                 Cancelled Cheque
             </LabelledUpload>
             <br/>

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {Component} from 'react';
 import { Position, Tooltip } from "@blueprintjs/core";
 import OrderBy from "./OrderBy";
@@ -8,7 +9,7 @@ class TableHeaders extends Component {
       let itemObj = Object.assign({label: "<Label>", width: 1, tooltip: null, orderby: true, justify:"center"}, item);
       return(
         <div style={{flex: itemObj.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent:itemObj.justify}} key={index}>
-          {itemObj.tooltip ? 
+          {itemObj.tooltip ?
           <Tooltip
             content={itemObj.tooltip}
             inline={false}

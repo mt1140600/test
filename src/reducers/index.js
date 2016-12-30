@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {routerReducer} from 'react-router-redux';
 import userData from './userData';
+import floatingNotification from './generic';
 import * as registrationForm from './registrationForm';
 
 const rootReducer = combineReducers({
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   paymentDetails: registrationForm.paymentDetails,
   pocDetails: registrationForm.pocDetails,
   addlInfo: registrationForm.addlInfo,
-  tabValidation: registrationForm.tabValidation
+  tabValidation: registrationForm.tabValidation,
+  floatingNotification: floatingNotification
 });
 
 export default rootReducer;

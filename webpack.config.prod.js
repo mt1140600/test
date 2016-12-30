@@ -6,6 +6,7 @@ import WebpackMd5Hash from 'webpack-md5-hash';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 import path from 'path';
+let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'),
@@ -27,6 +28,7 @@ export default {
     filename: '[name].[chunkhash].js'
   },
   plugins: [
+
     // Hash the files using MD5 so that their names change when the content changes.
     new WebpackMd5Hash(),
 
@@ -39,6 +41,7 @@ export default {
     // Generate an external css file with a hash in the filename
     new ExtractTextPlugin('[name].[contenthash].css'),
 
+    new CopyWebpackPlugin([{from: "./src/styles/", to:"./styles/"}]),
     // Generate HTML file that contains references to generated bundles. See here for how this works: https://github.com/ampedandwired/html-webpack-plugin#basic-usage
     new HtmlWebpackPlugin({
       template: 'src/index.ejs',
@@ -64,7 +67,11 @@ export default {
     new webpack.optimize.DedupePlugin(),
 
     // Minify JS
-    new webpack.optimize.UglifyJsPlugin()
+    new webpack.optimize.UglifyJsPlugin({
+    output: {
+        comments: false
+      }
+    })
   ],
   module: {
     loaders: [

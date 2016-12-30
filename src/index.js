@@ -13,6 +13,8 @@ import * as firebase from 'firebase';
 // Perf.start();
 const store = configureStore();
 
+if(process.env.NODE_ENV === 'production') console.log = function(){};
+
 // Create an enhanced history that syncs navigation events with the store
 const history = syncHistoryWithStore(browserHistory, store);
 

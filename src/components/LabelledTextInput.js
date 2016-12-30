@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Tooltip} from "@blueprintjs/core";
 
 class LabelledTextInput extends Component{
 
@@ -22,20 +21,20 @@ class LabelledTextInput extends Component{
   render(){
     let warningClass = (this.props.validationState === false)?'errorField':'';
     return(
-      <div onFocus={this.handleClick}>
-        <label className="pt-label pt-inline container">
-          {this.props.children}
+        <label className="pt-label pt-inline" style={{display: "flex", flexWrap: "wrap"}} onFocus={this.handleClick}>
+          <div style={{display: "inline-block", width: "50%"}}>
+              {this.props.children}
+          </div>
           <input
             className={`pt-input ${warningClass}`}
             value={this.props.value}
             onChange = {this.handleChange}
-            style={{width: "200px", float:"right"}}
+            style={{width: "50%", float:"right", margin: 0}}
             type="text"
             name={this.props.children}
             dir="auto" />
-          {(this.props.validationState === false)?<div className="helpText" >{this.props.helpText}</div>:null}
+          {(this.props.validationState === false)?<div className="helpText">{this.props.helpText}</div>:null}
         </label>
-      </div>
     );
   }
 

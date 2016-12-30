@@ -30,7 +30,7 @@ class POCDetails extends Component {
       poc_phoneno:  this.props.pocDetails.value.POCPhone,
       poc_email:  this.props.pocDetails.value.POCEmail
     }
-    const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+    const successHandler = () => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
       console.log("successHandler");
       console.log(this.props.pocDetails);
       this.setState({showSpinner: false});
@@ -42,7 +42,10 @@ class POCDetails extends Component {
       console.log("failureHandler");
       console.log(response);
     }
-    storeSubForm(this.props.pocDetails, this.props.updatePOCDetails, this.props.updateTabValidation.bind(null, 4, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+
+    const subFormValid = storeSubForm(this.props.pocDetails, this.props.updatePOCDetails, this.props.updateTabValidation.bind(null, 4, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+
+    if(!subFormValid) this.setState({showSpinner: false});
   }
 
   render() {

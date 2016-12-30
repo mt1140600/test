@@ -43,7 +43,6 @@ body{
 #header-name{
   margin-left: 10px;
   line-height: 50px;
-  color: blue;
   display: inline-block;
   float: left;
   font-size: large;
@@ -69,9 +68,14 @@ body{
 }
 h2{
   margin-top: 10px;
-  color:blue;
+  color: blue;
   font-weight: 200;
 }
+
+.companyName{
+  color: #3F53AC;
+}
+
 h4{
   font-weight: 200;
 }
@@ -89,13 +93,18 @@ h6{
   position: relative;
 }
 
-.tabs.tabs75{
-  height: 75vh;
+.tabs.tabs80{
+  height: 80vh;
 }
 
 #progressBar{
   margin: 20px 40px 20px 40px;
 }
+
+/*input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}*/
+
 .helpText{
   text-align: left;
   color: #F55656;

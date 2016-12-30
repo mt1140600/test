@@ -1,3 +1,5 @@
+import 'whatwg-fetch';
+
 export function createConstants(...constants) {
     return constants.reduce((acc, constant) => {
         acc[constant] = constant;
@@ -9,7 +11,6 @@ export function createConstants(...constants) {
 export function createReducer(initialState, reducerMap) {
     return (state = initialState, action) => {
         const reducer = reducerMap[action.type];
-
         return reducer
             ? reducer(state, action.payload)
             : state;
@@ -70,8 +71,10 @@ export function storeSubForm(subFormObj, subFormCheckSuccessAction, subFormCheck
 
   if(validateSubForm){
     pushSubFormToDB(url, mapToDbObj, successHandler, failureHandler);
+    return true;
   }
   else{
     subFormCheckFailureAction();
+    return false;
   }
 }

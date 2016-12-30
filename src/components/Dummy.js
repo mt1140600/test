@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 
 var select =  null;
 
@@ -7,7 +6,6 @@ class Dummy extends Component{
   handleClick = () => {
     // this.refs.textArea.value="Hello";
     console.log(this.refs);
-    console.log(glo);
     select.value="updated";
   }
 

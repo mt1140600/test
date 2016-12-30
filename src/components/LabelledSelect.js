@@ -27,9 +27,11 @@ class LabelledSelect extends Component{
 
   render(){
     return(
-      <label className="pt-label pt-inline" onFocus={this.handleClick}>
-        {this.props.children}
-        <div className="pt-select" style={{width:"200px", marginRight:"auto", float:"right"}}>
+      <label className="pt-label pt-inline" style={{display: "flex", flexWrap: "wrap"}} onFocus={this.handleClick}>
+        <div style={{display: "inline-block", width: "50%"}}>
+            {this.props.children}
+        </div>
+        <div className="pt-select" style={{width:"50%", margin: 0, float:"right"}}>
           <select
             value={this.props.value}
             onChange={this.handleChange}>

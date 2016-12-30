@@ -2,19 +2,15 @@ import React, {Component} from 'react';
 import { Button, FocusStyleManager, Spinner } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledSelect from '../components/LabelledSelect';
-import LabelledCheckbox from '../components/LabelledCheckbox';
 import CheckboxWrapper from '../components/CheckboxWrapper';
 import PlainSelect from '../components/PlainSelect';
 import LabelledCheckboxGroup from '../components/LabelledCheckboxGroup';
-import Callout from '../components/Callout';
 import * as constants from '../constants';
 import * as fieldValidations from '../utils/fieldValidations';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateSellerInfo, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
-import {storeSubFormCheck} from '../utils';
-import {pushSubFormToDB} from '../utils';
 import {storeSubForm} from '../utils';
 
 var _ = require('lodash');
@@ -106,7 +102,7 @@ class SellerInfo extends Component {
       warehouse_active_hours: this.props.sellerInfo.value.operationalHours
     };
 
-      const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+      const successHandler = () => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
         console.log("successHandler");
         console.log(this.props.updateTabValidation);
         this.setState({showSpinner: false});
@@ -119,7 +115,9 @@ class SellerInfo extends Component {
         console.log(response);
       }
 
-      storeSubForm(this.props.sellerInfo, this.props.updateSellerInfo, this.props.updateTabValidation.bind(null, 1, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+      const subFormValid = storeSubForm(this.props.sellerInfo, this.props.updateSellerInfo, this.props.updateTabValidation.bind(null, 1, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+
+      if(!subFormValid) this.setState({showSpinner: false});
   }
 
   render() {
