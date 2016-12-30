@@ -153,7 +153,10 @@ class InputArea extends Component{
   }
 
   handleEnter = (event) => {
-      if(event.keyCode === 13) this.handleClick();
+      if(event.keyCode === 13){
+        this.handleClick();
+        event.preventDefault();
+      }
   }
 
   componentWillUnmount(){
@@ -161,12 +164,19 @@ class InputArea extends Component{
     firebase.database().ref('chatDetails/'+localStorage.getItem('user_id')+"/user").set({lastSeen: currentTime, name: localStorage.getItem("user_name")});
   }
 
+  auto_grow = (element, event) => {   //Not using event, but just showing that event which is automatically passed as a param to the callfunction given in onKeyUp is fed as a second parameter
+    // console.log("autogrowing",element);
+    // console.log("event", event);
+    element.style.height = "auto"; //To reset size after pressing enter
+    element.style.height = (element.scrollHeight)+"px";
+  }
+
   render(){
     return(
-        <div className="pt-input-group" style={{position:"absolute", left: 0, bottom: 0, width: "100%", backgroundColor:"#f5f5f5", padding: "10px 0 10px 0"}}>
-          <button className="pt-button pt-minimal pt-icon-paperclip" style={{ marginLeft: 10, marginTop: 13 }} onClick={this.handleUpload}></button>
-          <input ref={(input) => {this.refTextInput = input;}} className="pt-input" style={{paddingLeft: 50,boxShadow: "none", backgroundColor:"#f5f5f5"}} placeholder="Type a message"  value={this.props.newMessage.messageText} onChange={this.handleChange} onKeyDown={this.handleEnter}/>
-          <button className="pt-button pt-minimal pt-icon-arrow-right" style={{ marginTop: 13 }} onClick={this.handleClick}></button>
+        <div className="pt-input-group" style={{ backgroundColor:"#f5f5f5", margin: "0px -5px 0px -5px", boxShadow: "0 -2px 2px rgba(0,0,0,.05), 0 -1px 0 rgba(0,0,0,.05)"}}>
+          <button className="pt-button pt-minimal pt-icon-paperclip" style={{ marginLeft: 10, marginTop: 9 }} onClick={this.handleUpload}></button>
+          <textArea onKeyUp={this.auto_grow.bind(null, this.refTextInput)} ref={(input) => {this.refTextInput = input;}} className="pt-input" style={{paddingLeft: 50, boxShadow: "none", resize: "none" , backgroundColor:"#f5f5f5", minHeight: "50px", maxHeight: "150px"}} placeholder="Type a message"  value={this.props.newMessage.messageText} onChange={this.handleChange} onKeyDown={this.handleEnter}/>
+          <button className="pt-button pt-minimal pt-icon-arrow-right" style={{ marginTop: 9 }} onClick={this.handleClick}></button>
         </div>
     );
   }
