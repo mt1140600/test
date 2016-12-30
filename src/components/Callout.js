@@ -23,13 +23,13 @@ class Callout extends Component {
   render () {
     if (this.state.visible) {
       return (
-        <div className={"pt-callout " +this.props.intent } style={{marginTop:'10px', textAlign: "center", height: 30, lineHeight: "10px", color: "#706f6f"}}>
+        <div className={"pt-callout " +this.props.intent } style={Object.assign({}, {marginTop:'10px', textAlign: "center", height: 30, lineHeight: "10px", color: "#706f6f"}, this.props.style)}>
           {this.props.text}
           <span onClick={this.handleCloseClick} style={{float:'right'}} className="pt-icon-cross"/>
         </div>
       );
     } else {
-      return <div/>;
+      return null;
     }
   }
 }
@@ -38,6 +38,7 @@ class Callout extends Component {
 Callout.propTypes = {
   visible: React.PropTypes.bool,
   text: React.PropTypes.string,
+  style: React.PropTypes.object
   intent: React.PropTypes.string
 };
 

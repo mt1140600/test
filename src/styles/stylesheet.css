@@ -18,6 +18,11 @@ body{
   display: flex;
   flex-direction: column;
 }
+.flexRow{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 #header{
   height: 50px;
   box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05);
@@ -223,6 +228,159 @@ h6{
 #react-paginate .break a {
     cursor: default;
 }
+
+#chatWidget{
+  height: 60px;
+  width: 60px;
+  background-color: #2779ac;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  box-shadow: 0 0 24px rgba(0,0,0,.15);
+  z-index: 10;
+}
+
+#chatWidget:hover{
+  background-color: #106ba3;
+}
+
+#chatNotification{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: red;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
+  text-align: center;
+  font-size: smaller;
+}
+
+#chatBox{
+  background-color: white;
+  width: 350px;
+  height: 500px;
+  padding: 50px 5px 0px 5px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  /*padding-right: 11px;*/
+  border-radius: 5px;
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  box-shadow: 0 0 24px rgba(0,0,0,.15);
+  z-index: 10;
+}
+
+#chatHeader{
+  position: absolute;
+  color: grey;
+  top: 0;
+  left:0;
+  background-color: #f5f5f5;
+  width: 100%;
+  height:50px;
+  box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05);
+  border-radius: 4px 4px 0 0;
+}
+
+#chatHeaderPicWrapper{
+  height: 60px;
+  width: 60px;
+  background-color: #f5f5f5;
+  margin: -20px 0px 0px 10px;
+  border-radius: 50%;
+}
+
+#chatHeaderPic{
+  height: 50px;
+  width: 50px;
+  margin: 5px;
+  border: 1px solid #f5f5f5;
+  border-radius: 50%;
+}
+
+#chatMessagesContainer{
+  overflow-y: scroll;
+}
+
+#chatMessagesContainer::-webkit-scrollbar {
+    /*-webkit-appearance: none;*/
+}
+
+#chatMessagesContainer::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+#chatMessagesContainer::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+#chatMessagesContainer::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+
+#chatMessagesContainer::-webkit-scrollbar-track {
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.chatMessageWrapper.messageUser{
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 20px;
+}
+
+.chatMessageWrapper.messageAdmin{
+  display: flex;
+  justify-content: flex-start;
+  margin-right: 20px;
+}
+
+.chatMessage{
+  padding: 10px;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  max-width: 100%;
+  word-wrap: break-word;
+}
+
+.chatMessage.messageUser{
+  background-color: whitesmoke;
+}
+
+.chatMessage.messageAdmin{
+  background-color: lavenderblush;
+}
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+
 .red{
   color: #ff4c4c;
 }

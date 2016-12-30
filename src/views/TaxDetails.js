@@ -10,6 +10,7 @@ import {updateTaxDetails, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
 import * as constants from '../constants';
 import {storeSubForm} from '../utils';
+import {cloudinaryCloudName, cloudinaryImageUploadPreset} from '../constants';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -25,7 +26,7 @@ class TaxDetails extends Component{
   }
 
   handleClick = () => {
-    cloudinary.openUploadWidget({ cloud_name: 'dtvfkbdm8', upload_preset: 'dgfm0gcv'},
+    cloudinary.openUploadWidget({ cloud_name: cloudinaryCloudName, upload_preset: cloudinaryImageUploadPreset},
     function(error, result) { console.log(error, result) });
   }
 
