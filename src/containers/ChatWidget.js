@@ -1,7 +1,9 @@
+/* global cloudinary */
 import React, {Component, PureComponent} from 'react';
 // var VelocityComponent = require('velocity-react/velocity-component');
 // var VelocityTransitionGroup = require('velocity-react/velocity-transition-group');
-import { VelocityTransitionGroup } from 'velocity-react';
+
+// import { VelocityTransitionGroup } from 'velocity-react';
 import * as firebase from 'firebase';
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
@@ -10,7 +12,6 @@ import {cloudinaryCloudName, cloudinaryChatUploadPreset} from '../constants';
 import moment from 'moment';
 import logo from '../images/prokure_logo.png';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import Callout from '../components/Callout';
 
 FocusStyleManager.onlyShowFocusOnTabs();
@@ -165,8 +166,8 @@ class InputArea extends Component{
   }
 
   auto_grow = (element, event) => {   //Not using event, but just showing that event which is automatically passed as a param to the callfunction given in onKeyUp is fed as a second parameter
-    // console.log("autogrowing",element);
-    // console.log("event", event);
+    console.log("autogrowing",element);
+    console.log("event", event);
     element.style.height = "auto"; //To reset size after pressing enter
     element.style.height = (element.scrollHeight)+"px";
   }
@@ -318,7 +319,7 @@ class ChatWidget extends Component{
           <span className="pt-icon-large pt-icon-chat" style={{color:"white"}}></span>
         </div>
         {this.state.active?
-        <VelocityTransitionGroup key={1} enter={{animation: "transition.slideUpBigIn", duration: 300}} leave={{animation: ""}} runOnMount >
+        // <VelocityTransitionGroup key={1} enter={{animation: "transition.slideUpBigIn", duration: 300}} leave={{animation: ""}} runOnMount >
 
           <div id="chatBox">
             <div id="chatHeader" className="flexRow" style={{justifyContent: "space-between"}}>
@@ -365,8 +366,8 @@ class ChatWidget extends Component{
             />
           </div>
 
-        </VelocityTransitionGroup>:
-        null}
+        // </VelocityTransitionGroup>
+        :null}
       </div>
 
 
