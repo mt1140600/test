@@ -22,3 +22,4 @@ export const newPasswordUrl = `${url}/api/merchant/reset_password?token=`;
 export const cloudinaryCloudName = "prokure";
 export const cloudinaryImageUploadPreset = "ahibedth";
 export const cloduinaryMerchantInfoFolder = "MerchantInfo";
+export const cloudinaryChatFolder = "SellerChat";

@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
 import { FocusStyleManager } from "@blueprintjs/core";
-import {cloudinaryCloudName, cloudinaryChatUploadPreset} from '../constants';
+import {cloudinaryCloudName, cloudinaryImageUploadPreset, cloudinaryChatFolder} from '../constants';
 import moment from 'moment';
 import logo from '../images/prokure_logo.png';
 import {connect} from 'react-redux';
@@ -137,7 +137,7 @@ class InputArea extends Component{
   }
 
   handleUpload = () => {
-    cloudinary.openUploadWidget({ cloud_name: cloudinaryCloudName, upload_preset: cloudinaryChatUploadPreset},
+    cloudinary.openUploadWidget({ cloud_name: cloudinaryCloudName, upload_preset: cloudinaryImageUploadPreset, folder: cloudinaryChatFolder},
     (error, result) => {
        console.log(error, result);
        if(error === null){
@@ -207,7 +207,7 @@ class ChatWidget extends Component{
       const chatDetails = snapshot.val();
       console.log("on load: ", chatDetails);
       if(chatDetails !== null){
-        this.setState({chatDetails: chatDetails});
+        this.setState({chatDetails: Object.assign({}, this.state.chatDetails, chatDetails)});
       }
     })
     firebase.database().ref('chatMessages/'+localStorage.getItem('user_id')).on('value', (snapshot) => {

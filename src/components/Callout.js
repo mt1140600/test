@@ -38,7 +38,7 @@ class Callout extends Component {
 Callout.propTypes = {
   visible: React.PropTypes.bool,
   text: React.PropTypes.string,
-  style: React.PropTypes.object
+  style: React.PropTypes.object,
   intent: React.PropTypes.string
 };
 
