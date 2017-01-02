@@ -239,7 +239,7 @@ h6{
     cursor: default;
 }
 
-.changeQuantityModal{
+.ordersModal{
     top: 100px;
     left: calc(50% - 200px);
     z-index: 21;

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Overlay, Button, Classes, RadioGroup, Radio, Popover, PopoverInteractionKind, Position} from "@blueprintjs/core";
+import {Overlay, Button, RadioGroup, Radio} from "@blueprintjs/core";
 import {DateInput, TimePicker} from '@blueprintjs/datetime'
 import LabelledTextInput from './LabelledTextInput';
 
@@ -27,7 +27,7 @@ class ChangeQuantity extends Component{
       <div>
           <Button text="Show overlay" onClick={this.toggleOverlay} />
           <Overlay isOpen={this.state.isOpen} onClose={this.toggleOverlay} hasBackdrop={true}>
-            <div className="pt-card pt-elevation-5 docs-overlay-example-transition pt-overlay-content flexCol changeQuantityModal">
+            <div className="pt-card pt-elevation-5 docs-overlay-example-transition pt-overlay-content flexCol ordersModal">
                 <h3 style={{fontWeight: "lighter"}}>Change Quantity</h3>
                 <br/>
 
