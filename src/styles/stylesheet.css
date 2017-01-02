@@ -9,6 +9,10 @@ body{
 *{
   font-weight: 200;
 }
+.pt-timepicker-input{
+  font-size: 14px;
+  font-weight: 400;
+}
 .container {
   display: flex;
   flex-direction: row;
@@ -20,6 +24,12 @@ body{
 }
 .flexRow{
   display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.flexCol{
+  display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
@@ -229,6 +239,13 @@ h6{
     cursor: default;
 }
 
+.changeQuantityModal{
+    top: 100px;
+    left: calc(50% - 200px);
+    z-index: 21;
+    width: 400px;
+}
+
 #chatWidget{
   height: 60px;
   width: 60px;
@@ -389,6 +406,10 @@ h6{
 }
 .grey{
   color: #4c4c4c;
+}
+
+.modalTimePicker{
+  width: 100%;
 }
 /*
 .pt-tabs.pt-horizontal {

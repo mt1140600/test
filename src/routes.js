@@ -10,6 +10,7 @@ import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
 import Verification from './views/Verification';
 import VerifyEmail from './views/VerifyEmail';
+import ChangeQuantity from './components/ChangeQuantity';
 
 export default (
   <Route path="/" component={App}>
@@ -21,6 +22,7 @@ export default (
     <Route path="registration" component={UserIsAuthenticated(UserIsEmailVerified(AccountSetup))}/>
     <Route path="verification" component={UserIsAuthenticated(UserIsEmailVerified(Verification))} />
     <Route path="dashboard" component={UserIsAuthenticated(UserIsEmailVerified(ProductUpload))} />
+    <Route path="modal" component={ChangeQuantity} />
   </Route>
 
   // <Route path="/" component={App}>
