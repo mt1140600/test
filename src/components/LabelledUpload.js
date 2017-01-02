@@ -25,7 +25,10 @@ class LabelledUpload extends Component{
       }
     );
   }
-
+  preventClick = (event) => {
+    console.log("prevent event");
+    event.preventDefault();
+  }
   render(){
     return( //If validationState is null, neither helpText nor successText will be shown
       <label className="pt-label pt-inline container">
@@ -36,7 +39,7 @@ class LabelledUpload extends Component{
         {(this.props.validationState === false)?<div className="helpText" >{this.props.helpText}</div>:null}
         {(this.props.validationState === true)?
           //enclosing popover in a div cuz it is a span otherwise
-          <div>
+          <div onClick={this.preventClick}>
             <Popover content={<ImageThumbnail source={this.props.value}/>}
                interactionKind={PopoverInteractionKind.HOVER}
                popoverClassName="pt-popover-content-sizing"
