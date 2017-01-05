@@ -16,3 +16,19 @@ export const getKeyValueData = (key) => {
     })
   }
 }
+
+export const getMulitpleKeyValueData = (keys) => {
+  return (dispatch, state) => {
+    const keyValuesRef =  firebaseApp.database().ref('keyValues/');
+    keys.forEach((key) => {
+      keyValuesRef.child(key).on('value',(snapshot) => {
+        let payload = {};
+        payload[key] = snapshot.val();
+        dispatch({
+          type:GET_PRODUCT_KEY_VALUES,
+          payload:payload
+        });
+      });
+    })
+  }
+}

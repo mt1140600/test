@@ -49,7 +49,7 @@ class UploadProduct extends Component{
 
   constructor(){
     super();
-    this.state = {vStateCategory:true, categoryKey:null};
+    this.state = {vStateCategory:true, categoryKey:null,commonKeys:[]};
     this.tableHeaders = ["Sub Category", "Brand", "Company", "Model", "MRP", "Selling Price", "MOQ", "Warranty", "Image"];
     this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]]
   }
@@ -60,12 +60,15 @@ class UploadProduct extends Component{
 
 
   onChange = (value, vState) => {
-    this.setState({vStateCategory:vState, categoryKey:value});
+    this.setState({vStateCategory:vState, categoryKey:value, commonKeys:[]});
     this.props.getKeyValueData(value);
 
     return null;
   }
 
+  onCheckboxChange = (value, vState) => {
+    this.setState({commonKeys:value});
+  }
   renderTableRow = (item,index) => {
     return(
       <div key={index} style={{flexBasis:"11%", textAlign:"center", display:"flex", flexDirection:"column", justifyContent:"center", minHeight:"40px"}}>
@@ -82,7 +85,19 @@ class UploadProduct extends Component{
     );
   }
 
+  submitSelectedKeys = () => {
+    let requiredKeys = [];
+    let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
+    _.each(categoryData, (value, key) => {
+      if(value.ref && value.common) {
+        requiredKeys.push(value.ref);
+      }
+    });
+    this.props.getMulitpleKeyValueData(requiredKeys);
+  }
+
   render() {
+    console.log(this.props);
     let categories = this.props.productUploadData.keyValue.categories;
     if (categories) {
       categories["0"]={name:"Choose Category",ref:"Choose Category"};
@@ -101,11 +116,9 @@ class UploadProduct extends Component{
       compulsaryValues = _.sortBy(compulsaryValues,'priority');
       optionalValues = _.sortBy(optionalValues,'priority');
       commonValues = _.sortBy(commonValues, 'priority');
-      console.log(commonValues);
       commonValues = _.map(commonValues,(value, index) => {
         return value.key;
       });
-      console.log(commonValues);
     }
     return(
       <div>
@@ -134,27 +147,26 @@ class UploadProduct extends Component{
                   {optionalValues.map((value, index) => {return <DataWithPopover count={optionalValues.length} key={index} index={index} value={value} description={categoryData[value.key].description}/>})}
                 </span>
               </p>
+              <br/>
+
+              <h5> Step 1 of 3 </h5>
+
+              <div>
+                <div>Please select the key-values which are common in all the products</div>
+                <br/>
+                <LabelledCheckboxGroup
+                  options={commonValues}
+                  groupColumns={3}
+                  value={this.state.commonKeys}
+                  onChange={this.onCheckboxChange}
+                  validationState={true}
+                  validate={fieldValidations.noValidation}
+                  helpText={"Choose atleast one option"}>
+                </LabelledCheckboxGroup>
+                <Button onClick={this.submitSelectedKeys} className="pt-intent-primary" style={{width:"200px"}}>Continue</Button>
+              </div>
             </div>
           }
-          <br/>
-          <h5> Step 1 of 3 </h5>
-          <div>Please select the key-values which are common in all the products</div>
-          <br/>
-          <LabelledCheckboxGroup
-            options={commonValues}
-            groupColumns={3}
-            value={"sdfgsg"}
-            onChange={this.onChange.bind(this,"typeOfEstablishment")}
-            validationState={true}
-            validate={fieldValidations.noValidation}
-            helpText={"Choose atleast one option"}>
-          </LabelledCheckboxGroup>
-
-        <br/>
-        <Button style={{width:"200px"}}>Continue</Button>
-        <br/>
-
-        <TableDollarExample />
 
       </div>
 
