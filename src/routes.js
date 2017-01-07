@@ -12,6 +12,8 @@ import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
 import Dummy from './components/Dummy';
 import Verification from './views/Verification';
+import LabelledAutoComplete from './components/LabelledAutoComplete';
+import MultipleImageUpload from './components/MultipleImageUpload';
 
 export default (
   // <Route path="/" component={App}>
@@ -29,6 +31,9 @@ export default (
     <Route path="registration" component={AccountSetup}/>
     <Route path="dashboard" component={ProductUpload} />
     <Route path="dummy" component={Dummy} />
+    <Route path="auto" component={LabelledAutoComplete} />
+    <Route path="image" component={MultipleImageUpload} />
     <Route path="verification" component={Verification} />
+
   </Route>
 );

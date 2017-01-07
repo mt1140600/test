@@ -7,7 +7,7 @@ body{
     overflow: hidden;
 }
 *{
-  font-weight: 200;
+  /*font-weight: 200;*/
 }
 .container {
   display: flex;
@@ -17,6 +17,11 @@ body{
 .col{
   display: flex;
   flex-direction: column;
+}
+.flexRow{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 #header{
   height: 50px;
@@ -223,6 +228,21 @@ h6{
 .grey{
   color: #4c4c4c;
 }
+
+.pt-input-blueShadowDisable:focus{
+  box-shadow: 0 0 0 0 rgba(19, 124, 189, 0), 0 0 0 0 rgba(19, 124, 189, 0), inset 0 0 0 1px rgba(16, 22, 26, 0.15), inset 0 1px 1px rgba(16, 22, 26, 0.2);
+}
+
+.dropDown{
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.ImagesContainer{
+  justify-content: flex-start;
+  overflow-x: scroll;
+}
+
 /*
 .pt-tabs.pt-horizontal {
   display: -webkit-flex;
