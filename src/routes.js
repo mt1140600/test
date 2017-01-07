@@ -14,6 +14,7 @@ import Dummy from './components/Dummy';
 import Verification from './views/Verification';
 import LabelledAutoComplete from './components/LabelledAutoComplete';
 import MultipleImageUpload from './components/MultipleImageUpload';
+import TestContainer from './containers/TestContainer';
 
 export default (
   // <Route path="/" component={App}>
@@ -34,6 +35,7 @@ export default (
     <Route path="auto" component={LabelledAutoComplete} />
     <Route path="image" component={MultipleImageUpload} />
     <Route path="verification" component={Verification} />
+    <Route path="test" component={TestContainer} />
 
   </Route>
 );

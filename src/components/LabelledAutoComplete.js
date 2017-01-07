@@ -11,17 +11,21 @@ class LabelledAutoComplete extends Component {
       this.state = { options: props.options, input: ""};
   }
 
+  handleSelect = (value) => {
+    this.props.onSelect(value);
+  }
+
   renderOptions = (item, index) => {
     if(item.indexOf('++') === 0){ //To add new Option
       item = item.slice(3, item.length);
       //TODO: API call to add new option
       return(
-          <MenuItem key={index} text={item} iconName="pt-icon-add-to-artifact"/>
+          <MenuItem key={index} text={item} iconName="pt-icon-add-to-artifact" onClick={this.handleSelect.bind(null, item)}/>
       );
     }
 
     return(
-      <MenuItem ref={(input)=>{defaultOption = input;}} intent="primary" key={index} text={item}/>
+      <MenuItem ref={(input)=>{defaultOption = input;}} intent="primary" key={index} text={item} onClick={this.handleSelect.bind(null, item)}/>
     );
   }
 
@@ -85,6 +89,9 @@ LabelledAutoComplete.propTypes = {
     options: React.PropTypes.array,
     value: React.PropTypes.string,
     onSelect: React.PropTypes.func,
+    //handleSelect = (value) => {
+    // this.setState({value: value})
+    // }
     style: React.PropTypes.object
 }
 

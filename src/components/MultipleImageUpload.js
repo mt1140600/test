@@ -4,26 +4,20 @@ let Immutable = require('immutable');
 
 class MultipleImageUpload extends Component{
 
-  constructor(){
-      super();
-      this.state = { default: 0, value: Immutable.List(["https://res.cloudinary.com/dtvfkbdm8/image/upload/v1483769354/fqaq8ucamvlsu3riuw9z.jpg","https://res.cloudinary.com/dtvfkbdm8/image/upload/v1483769354/fqaq8ucamvlsu3riuw9z.jpg","https://res.cloudinary.com/dtvfkbdm8/image/upload/v1483769354/fqaq8ucamvlsu3riuw9z.jpg","https://res.cloudinary.com/dtvfkbdm8/image/upload/v1483769354/fqaq8ucamvlsu3riuw9z.jpg", "https://res.cloudinary.com/dtvfkbdm8/image/upload/v1483769354/fqaq8ucamvlsu3riuw9z.jpg", "https://res.cloudinary.com/dtvfkbdm8/image/upload/v1483769354/fqaq8ucamvlsu3riuw9z.jpg"]) };
-  }
-
   handleClick = () => {
     cloudinary.openUploadWidget({ cloud_name: this.props.cloudinaryCloudName, upload_preset: this.props.cloudinaryUploadPreset},
     (error, result) => {
        console.log(error, result);
        if(error === null){
-          let newValue = this.state.value;
+          let newValue = this.props.value;
           for(let i=0; i<result.length; i++){
             newValue = newValue.push( result[i].secure_url );
           }
-          this.setState({ value: newValue});
-          // this.props.onChange(result[0].secure_url, true);
+          // this.setState({ value: newValue});
+          this.props.onChange(newValue, this.props.defaultImage);
        }
        else{
          console.log(error);
-         this.props.onChange("", false);
        }
       }
     );
@@ -31,20 +25,20 @@ class MultipleImageUpload extends Component{
 
   removeImage = (index, event) => {
     event.stopPropagation(); //to prevent removebutton from bubbling to setDefaultImage
-    if(this.state.default === index){
-      console.log("resetting default ");
-      this.setState({default: 0});
+    if(this.props.default === index){
+      // console.log("resetting default ");
+      this.props.onChange(this.props.value, 0);
     }
-    this.setState({value: this.state.value.delete(index)});
+    this.props.onChange(this.props.value.delete(index), this.props.default);
   }
 
   setDefaultImage = (index) => {
-    this.setState({default: index});
+    this.props.onChange(this.props.value, index);
   }
 
   renderImages = (item, index) => {
     let imageStyle = {height: 75, boxSizing: "content-box", borderRadius: 4};
-    (this.state.default === index)? Object.assign(imageStyle, {border: "3px solid #48AFF0"}): null;
+    (this.props.defaultImage === index)? Object.assign(imageStyle, {border: "3px solid #48AFF0"}): null;
 
     return(
       <div key={index} style={{position: "relative", marginRight: 10}} onClick={this.setDefaultImage.bind(this, index)}>
@@ -64,13 +58,13 @@ class MultipleImageUpload extends Component{
           </div>
         </div>
         {
-          (this.state.value.size > 0)?
+          (this.props.value.size > 0)?
           <div>
             <br/>
             <p style={{margin: 0}}> <i>Choose default image:</i> </p>
             <div className="flexRow ImagesContainer ">
               {
-                this.state.value.map(this.renderImages)
+                this.props.value.map(this.renderImages)
               }
             </div>
           </div>
@@ -84,9 +78,12 @@ class MultipleImageUpload extends Component{
 
 MultipleImageUpload.propTypes = {
   children: React.PropTypes.node,
-  value: React.PropTypes.string,
+  value: React.PropTypes.instanceOf(Immutable.List),
   defaultImage: React.PropTypes.number,
   onChange: React.PropTypes.func,
+  // handleChange = (newImages, defaultImage) =>{
+  //     this.setState({images: newImages, defaultImage: defaultImage});
+  //   }
   cloudinaryCloudName: React.PropTypes.string,
   cloudinaryUploadPreset: React.PropTypes.string
 }
