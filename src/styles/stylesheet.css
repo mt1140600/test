@@ -195,9 +195,6 @@ h6{
   border-top: 1px solid #e5e5e5;
   padding: 5px;
   text-align: center;
-  width: 95%;
-  position: absolute;
-  bottom: 0;
 }
 #react-paginate ul {
     display: inline-block;
