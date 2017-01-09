@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import CheckboxWrapper from '../components/CheckboxWrapper';
 import PlainSelect from '../components/PlainSelect';
 import LabelledSelect from '../components/LabelledSelect';
+import DateRangePopover from '../components/DateRangePopover';
 import {productCategories} from '../constants';
 import * as fieldValidations from '../utils/fieldValidations';
 import ReactPaginate from 'react-paginate';
@@ -86,6 +87,7 @@ class NewOrders extends Component{
 
   constructor(){
     super();
+    this.state= { dateRange: [null, null]};
     this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start"}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
     this.orders=[{productDetails:"Micromax Q-Pad Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Mig 390 Silicone Durable Cover", qty:"10", marketplacePrice:"200", marketplaceMargin:"10.55%", sellingPrice:"178" },{productDetails:"Micromax Q8100 Mobile Phone Cover (Red, Green, Blue)", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
   }
@@ -96,10 +98,16 @@ class NewOrders extends Component{
     );
   }
 
+  handleDateSelected = (dateRange) => {
+    this.setState({dateRange});
+  }
+
   render(){
     return(
       <div>
-        <br/>
+        <DateRangePopover
+          dateRange = {this.state.dateRange}
+          onSelect = {this.handleDateSelected}/>
         <div style={{display:"flex", justifyContent:"space-between"}}>
             <div className="pt-control-group" style={{display:"flex"}}>
               <div style={{marginTop:10, marginRight: 10}}>
