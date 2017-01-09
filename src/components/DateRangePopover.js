@@ -20,6 +20,7 @@ class DateRangePopover extends Component{
   }
 
   handleDateChange = (dateRange) => {
+    // console.log(moment.utc(dateRange[0]).format());
     this.setState({ dateRange });
   }
 

@@ -15,13 +15,8 @@ const fillOrders = (orders) => {
 }
 
 export const fetchOrders = (sellerId, type, orderBy, from, to) => {
-  console.log("fetching orders");
   return function(dispatch){
-
     let url = constants.fetchOrders;
-    console.log("url is", url);
-    console.log(sellerId);
-    // url.replace(":seller_id",1);
     url = url.replace(":seller_id", sellerId);
     if(type) url = url + `${type}`;
     if(orderBy) url = url + `&orderBy=${orderBy}`;

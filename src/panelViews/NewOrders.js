@@ -10,7 +10,7 @@ import TableHeaders from '../components/TableHeaders'
 import * as actions from '../actions/orderManagement';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-
+var moment = require('moment');
 
 class OrdersNewRow extends Component{
   constructor(){
@@ -103,13 +103,22 @@ class NewOrders extends Component{
 
   handleDateSelected = (dateRange) => {
     this.setState({dateRange});
+    // console.log(dateRange[0]);
   }
 
   componentDidMount(){
-    this.props.fetchOrders(1, "new", "quantity_accepted ASC", "2016-01-08T10:25:33.175Z", "2017-01-08T10:25:33.175Z");
+    // this.props.fetchOrders(1, "new", "quantity_accepted ASC", "2016-01-08T10:25:33.175Z", "2017-01-08T10:25:33.175Z");
+    // this.props.fetchOrders(userData.user, "new", null, null, null);
+    this.props.fetchOrders(1, "new", null, null, null);
+  }
+
+  componentWillReceiveProps(){
+
   }
 
   render(){
+    console.log("Rendering newOrders");
+    console.log("orders:", this.props.orders);
     return(
       <div>
         <DateRangePopover
@@ -173,7 +182,8 @@ class NewOrders extends Component{
 const mapStatetoProps = (state) => {
   return {
     orders: state.orders,
-    // searchSpecs: state.searchSpecs
+    userData: state.userData,
+    searchSpecs: state.searchSpecs
   }
 }
 

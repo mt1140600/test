@@ -13,3 +13,4 @@ export const LOGOUT = 'LOGOUT';
 export const RESTORE_LOGIN = 'RESTORE_LOGIN';
 
 export const FETCH_ORDERS = 'FETCH_ORDERS';
+export const SET_SEARCH_SPECS  = 'SET_SEARCH_SPECS';
