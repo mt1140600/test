@@ -7,6 +7,9 @@ import {productCategories} from '../constants';
 import * as fieldValidations from '../utils/fieldValidations';
 import ReactPaginate from 'react-paginate';
 import TableHeaders from '../components/TableHeaders'
+import * as actions from '../actions/orderManagement';
+import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
 
 
 class OrdersNewRow extends Component{
@@ -102,6 +105,10 @@ class NewOrders extends Component{
     this.setState({dateRange});
   }
 
+  componentDidMount(){
+    this.props.fetchOrders(1, "new", "quantity_accepted ASC", "2016-01-08T10:25:33.175Z", "2017-01-08T10:25:33.175Z");
+  }
+
   render(){
     return(
       <div>
@@ -163,4 +170,15 @@ class NewOrders extends Component{
 
 }
 
-export default NewOrders;
+const mapStatetoProps = (state) => {
+  return {
+    orders: state.orders,
+    // searchSpecs: state.searchSpecs
+  }
+}
+
+const mapDisptachToProps = (dispatch) => {
+  return bindActionCreators({ fetchOrders: actions.fetchOrders }, dispatch);
+}
+
+export default connect(mapStatetoProps, mapDisptachToProps)(NewOrders);
