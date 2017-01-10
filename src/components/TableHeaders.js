@@ -2,6 +2,9 @@
 import React, {Component} from 'react';
 import { Position, Tooltip } from "@blueprintjs/core";
 import OrderByWidget from "./OrderByWidget";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actions from '../actions/orderManagement';
 
 class TableHeader extends Component{
 
@@ -13,12 +16,21 @@ class TableHeader extends Component{
     handleClick = () => {
       this.setState((prevState) => {
         if(prevState.order === 0){
+          this.props.setSearchSpecs({
+            orderBy:  `${this.props.itemObj.filter_name} DESC`
+          });
           return { order: 1 };
         }
         else if(prevState.order === 1){
+          this.props.setSearchSpecs({
+            orderBy:  `${this.props.itemObj.filter_name} ASC`
+          });
           return { order: 2 };
         }
         else if(prevState.order === 2){
+          this.props.setSearchSpecs({
+            orderBy:  `${this.props.itemObj.filter_name} DESC`
+          });
           return { order: 1 };
         }
         else {
@@ -56,10 +68,19 @@ class TableHeader extends Component{
     }
 }
 
+const mapDisptachToProps = (dispatch) => {
+  return bindActionCreators({
+    setSearchSpecs: actions.setSearchSpecs
+  }, dispatch);
+}
+
 TableHeader.propTypes = {
   itemObj: React.PropTypes.object,
   index: React.PropTypes.number
 }
+
+TableHeader = connect(null, mapDisptachToProps)(TableHeader);
+
 
 
 
