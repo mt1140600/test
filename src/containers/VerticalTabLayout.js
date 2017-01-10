@@ -8,7 +8,7 @@ import Completed from '../panelViews/Completed';
 import Payment from '../panelViews/Payment';
 import ManageInventory from '../panelViews/ManageInventory';
 
-const tabs      = ["Product Upload","Manage Inventory", "Orders","Returns/Replacements","Completed Orders","Payments"];
+const tabs      = [{name: "Product Upload", icon: "pt-icon-cloud-upload", color: "#7ba428"}, {name: "Manage Inventory", icon: "pt-icon-box", color: "#e5e500"}, {name: "Orders", icon: "pt-icon-projects", color: "#7fbafd"}, {name: "Returns/Replacements", icon: "pt-icon-swap-horizontal", color: "#c17196"}, {name: "Completed Orders", icon: "pt-icon-saved", color: "#aceace"}, {name: "Payments", icon: "pt-icon-credit-card", color: "#ffb6c1"} ];
 const tabPanels = [UploadProduct,   ManageInventory,      Orders,   Returns,                Completed ,     Payment];
 
 class VerticalTabLayout extends Component{
@@ -26,7 +26,10 @@ class VerticalTabLayout extends Component{
 
   renderTabs(item, index) {
     return(
-      <div className="verticalTab" key={index} onClick={()=>{this.handleChange(index);}}>{item}</div>
+      <div className="verticalTab" key={index} onClick={()=>{this.handleChange(index);}}>
+        <span className={item.icon} style={{marginRight: 10, color: item.color}}/>
+        {item.name}
+      </div>
     );
   }
 
@@ -47,7 +50,7 @@ class VerticalTabLayout extends Component{
             {tabs.map(this.renderTabs)}
           </div>
           <div className="verticalTabPanel">
-            {ViewNameBar(tabs[this.state.currentTab])}
+            {ViewNameBar(tabs[this.state.currentTab].name)}
             {tabPanels.map(this.renderTabPanels)}
           </div>
         </div>
