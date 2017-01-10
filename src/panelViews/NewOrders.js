@@ -90,7 +90,7 @@ class NewOrders extends Component{
 
   constructor(){
     super();
-    this.state= { dateRange: [null, null]};
+    this.state= { dateRange: [null, null], category: "All Categories", searchText: ""};
     this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start", filter_name:""}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start", filter_name:"product_name"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center", filter_name:"quantity_requested"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center", filter_name:"marketplace_price"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center", filter_name:"marketplace_margin"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center", filter_name:"selling_price"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
     this.orders=[{productDetails:"Micromax Q-Pad Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Mig 390 Silicone Durable Cover", qty:"10", marketplacePrice:"200", marketplaceMargin:"10.55%", sellingPrice:"178" },{productDetails:"Micromax Q8100 Mobile Phone Cover (Red, Green, Blue)", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
   }
@@ -110,10 +110,29 @@ class NewOrders extends Component{
     // console.log(dateRange[0]);
   }
 
+  handleCategory = (value) => {
+    this.setState({category: value});
+    this.props.setSearchSpecs({
+      filter: value
+    });
+  }
+
+  handleSearchText = (event) => {
+    this.setState({ searchText: event.target.value });
+  }
+
+  handleSearch = (event) =>{
+    if(event.keyCode == 13){
+      this.props.setSearchSpecs({
+            search_text: event.target.value
+          });
+    }
+  }
+
   componentDidMount(){
     // this.props.fetchOrders(1, "new", "quantity_accepted ASC", "2016-01-08T10:25:33.175Z", "2017-01-08T10:25:33.175Z");
     // this.props.fetchOrders(userData.user, "new", null, null, null);
-    this.props.fetchOrders(1, "new", null, null, null);
+    this.props.fetchOrders(1, "new", null, null, null, "", "");
   }
 
   componentWillReceiveProps(nextProps){
@@ -121,7 +140,7 @@ class NewOrders extends Component{
     console.log("ordersData:", nextProps.ordersData);
     if( JSON.stringify(this.props.ordersData.searchSpecs) !== JSON.stringify(nextProps.ordersData.searchSpecs) ){
       console.log("fetching new data");
-      this.props.fetchOrders(1, "new", nextProps.ordersData.searchSpecs.orderBy, nextProps.ordersData.searchSpecs.from, nextProps.ordersData.searchSpecs.to);
+      this.props.fetchOrders(1, "new", nextProps.ordersData.searchSpecs.orderBy, nextProps.ordersData.searchSpecs.from, nextProps.ordersData.searchSpecs.to, nextProps.ordersData.searchSpecs.filter, nextProps.ordersData.searchSpecs.search_text);
     }
     else{
       console.log("no change");
@@ -147,16 +166,17 @@ class NewOrders extends Component{
             <div>
               <LabelledSelect
                 options={productCategories}
-
+                onChange={this.handleCategory}
+                value = {this.state.category}
                 validationState={true}
                 validate={fieldValidations.noValidation}
-                helpText={"Choose a valid state"}>
+                helpText={""}>
                 Category
               </LabelledSelect>
             </div>
             <div className="pt-input-group .modifier">
               <span className="pt-icon pt-icon-search"></span>
-              <input className="pt-input" type="search" placeholder="Search input" dir="auto" />
+              <input className="pt-input" type="search" placeholder="Search input" dir="auto" value={this.state.searchText} onChange={this.handleSearchText} onKeyUp={this.handleSearch}/>
             </div>
           </div>
           <br/>
