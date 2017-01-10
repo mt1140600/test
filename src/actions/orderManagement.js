@@ -1,5 +1,5 @@
 import { checkHttpStatus, parseJSON } from '../utils';
-import { FETCH_ORDERS } from '../constant';
+import { FETCH_ORDERS, SET_SEARCH_SPECS } from '../constant';
 import * as constants from '../constants';
 import 'whatwg-fetch';
 
@@ -18,10 +18,10 @@ export const fetchOrders = (sellerId, type, orderBy, from, to) => {
   return function(dispatch){
     let url = constants.fetchOrders;
     url = url.replace(":seller_id", sellerId);
-    if(type) url = url + `${type}`;
-    if(orderBy) url = url + `&orderBy=${orderBy}`;
-    if(from) url = url + `&from=${from}`;
-    if(to) url = url + `&to=${to}`;
+    if(type && typeof(type)!=='undefined') url = url + `${type}`;
+    if(orderBy && typeof(orderBy)!=='undefined') url = url + `&orderBy=${orderBy}`;
+    if(from && typeof(from)!=='undefined' && from !== 'Invalid date') url = url + `&from=${from}`; //Invalid date is assigned when we do moment().format()
+    if(to && typeof(to)!=='undefined' && to !== 'Invalid date') url = url + `&to=${to}`;
 
     return fetch(url, {
       method: 'get',
@@ -33,5 +33,14 @@ export const fetchOrders = (sellerId, type, orderBy, from, to) => {
     .then(parseJSON)
     .then( response => { dispatch(fillOrders(response)); })
     .catch( error => { console.log("Failed to fetch orders ", error); })
+  }
+}
+
+export const setSearchSpecs = ( searchSpecs ) => {
+  return{
+    type: SET_SEARCH_SPECS,
+    payload: {
+      searchSpecs
+    }
   }
 }

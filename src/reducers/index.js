@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   addlInfo: registrationForm.addlInfo,
   tabValidation: registrationForm.tabValidation,
   floatingNotification: floatingNotification,
-  orders: orderManagement
+  ordersData: orderManagement
 });
 
 export default rootReducer;

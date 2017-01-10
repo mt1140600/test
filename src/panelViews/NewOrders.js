@@ -103,6 +103,10 @@ class NewOrders extends Component{
 
   handleDateSelected = (dateRange) => {
     this.setState({dateRange});
+    this.props.setSearchSpecs({
+      from: moment.utc(dateRange[0]).format(),
+      to: moment.utc(dateRange[1]).format()
+    });
     // console.log(dateRange[0]);
   }
 
@@ -112,13 +116,19 @@ class NewOrders extends Component{
     this.props.fetchOrders(1, "new", null, null, null);
   }
 
-  componentWillReceiveProps(){
-
+  componentWillReceiveProps(nextProps){
+    console.log("newOrders receiving new props");
+    console.log("ordersData:", nextProps.ordersData);
+    if( JSON.stringify(this.props.ordersData.searchSpecs) !== JSON.stringify(nextProps.ordersData.searchSpecs) ){
+      console.log("fetching new data");
+      this.props.fetchOrders(1, "new", nextProps.ordersData.orderBy, nextProps.ordersData.searchSpecs.from, nextProps.ordersData.searchSpecs.to);
+    }
+    else{
+      console.log("no change");
+    }
   }
 
   render(){
-    console.log("Rendering newOrders");
-    console.log("orders:", this.props.orders);
     return(
       <div>
         <DateRangePopover
@@ -181,14 +191,14 @@ class NewOrders extends Component{
 
 const mapStatetoProps = (state) => {
   return {
-    orders: state.orders,
+    // ordersData: state.ordersData.searchSpecs,  //Could sign up to just one key of one state, too!
+    ordersData: state.ordersData,
     userData: state.userData,
-    searchSpecs: state.searchSpecs
   }
 }
 
 const mapDisptachToProps = (dispatch) => {
-  return bindActionCreators({ fetchOrders: actions.fetchOrders }, dispatch);
+  return bindActionCreators({ fetchOrders: actions.fetchOrders, setSearchSpecs: actions.setSearchSpecs }, dispatch);
 }
 
 export default connect(mapStatetoProps, mapDisptachToProps)(NewOrders);

@@ -12,7 +12,8 @@ const orderManagement = (state = initial_state, action) => {
         return Object.assign({}, state, action.payload);
       break;
       case SET_SEARCH_SPECS:
-        return Object.assign({}, state, action.payload);
+        let newSearchSpecs = Object.assign({}, state.searchSpecs, action.payload.searchSpecs);
+        return Object.assign({}, state, {searchSpecs: newSearchSpecs});
       break;
       default:
         return state;
