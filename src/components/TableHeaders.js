@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, {Component} from 'react';
 import { Position, Tooltip } from "@blueprintjs/core";
-import OrderBy from "./OrderBy";
+//import OrderBy from "./OrderBy";
 
 class TableHeaders extends Component {
   render() {
