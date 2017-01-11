@@ -42,7 +42,7 @@ class DateRangePopover extends Component{
 
     let popoverContent = (
       <DateRangePicker
-        allowSingleDayRange={false}
+        allowSingleDayRange={true}
         className={Classes.ELEVATION_1}
         onChange={this.handleDateChange} /> );
 
@@ -56,11 +56,16 @@ class DateRangePopover extends Component{
           <button className="pt-button" style={{marginRight: 10}}> Date Range  <span className="pt-icon-standard pt-icon-calendar pt-align-right"></span> </button>
         </Popover>
 
-        <div style={{marginRight: 10}}>
-          <Moment date={start} />
-          <span className={`${Classes.ICON_LARGE} ${Classes.iconClass("arrow-right")}`} />
-          <Moment date={end} />
-        </div>
+        {
+          (this.state.dateRange[0])?
+            <div style={{marginRight: 10}}>
+              <Moment date={start} />
+              <span className={`${Classes.ICON_LARGE} ${Classes.iconClass("arrow-right")}`} />
+              <Moment date={end} />
+            </div>
+            :
+            null
+        }
 
         <button className="pt-intent-success pt-button" onClick={this.handleDateSelected}>Search</button>
 
