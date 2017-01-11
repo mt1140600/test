@@ -15,10 +15,28 @@ var moment = require('moment');
 class OrdersNewRow extends Component{
   constructor(){
     super();
+    this.state = { quantity: 0 };
   }
 
-  onChange = () => {
-    return null;
+  onChange = (value) => {
+    this.setState({ quantity: value });
+    //TODO: make post call
+  }
+
+  getQuantityDropdown = (maxValue) => {
+    let values = [];
+    for(let i = 1; i <= maxValue; i++){
+      values.push(i);
+    }
+    return values;
+  }
+
+  componentDidMount(){
+    this.setState({ quantity: this.props.value.qty });
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({ quantity: nextProps.value.qty });
   }
 
   render(){
@@ -33,19 +51,19 @@ class OrdersNewRow extends Component{
         </div>
 
         <div className="tableRowCell" style={{flex:"8", justifyContent:"flex-start"}}>
-          <div style={{flex:1}}>
-            <div style={{width:"40px", height:"40px", backgroundColor:"#7fdc88", borderRadius:"4px"}}/>
+          <div style={{flex:1, marginRight: 10}}>
+            <img style={{width:"40px", height:"40px", borderRadius:"4px"}} src={this.props.value.productDetails.image} />
           </div>
           <div  style={{flex:6}}>
-            {this.props.value.productDetails}
+            {this.props.value.productDetails.name}
           </div>
         </div>
 
         <div className="tableRowCell" style={{flex:"2"}}>
           <div>
             <PlainSelect style={{marginRight:0}}
-              options={["10","20","30","40","50"]}
-              value={this.props.value.qty}
+              options={this.getQuantityDropdown(this.props.value.qty)}
+              value={this.state.quantity}
               onChange={this.onChange}/>
           </div>
         </div>
@@ -91,7 +109,7 @@ class NewOrders extends Component{
   constructor(){
     super();
     this.state= { dateRange: [null, null], category: "All Categories", searchText: ""};
-    this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start", filter_name:""}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start", filter_name:"product_name"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center", filter_name:"quantity_requested"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center", filter_name:"marketplace_price"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center", filter_name:"marketplace_margin"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center", filter_name:"selling_price"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
+    this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start", filter_name:""}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start", filter_name:"name"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center", filter_name:"quantity_requested"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center", filter_name:"marketplace_price"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center", filter_name:"marketplace_margin"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center", filter_name:"seller_price"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
     this.orders = [];
   }
 
@@ -132,10 +150,10 @@ class NewOrders extends Component{
   setRowData = (item, index) => {
     // this.orders=[{productDetails:"Micromax Q -Pad Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
     return ({
-      productDetails: item.SellerFulfillments[0].BuyerFulfillment.OrderProduct.Product.name,
+      productDetails: { name: item.SellerFulfillments[0].BuyerFulfillment.OrderProduct.Product.name, image: item.SellerFulfillments[0].BuyerFulfillment.OrderProduct.Product.image },
       qty: item.quantity_requested,
-      marketplacePrice: 9999,
-      marketplaceMargin: "99%",
+      marketplacePrice: null,
+      marketplaceMargin: null,
       sellingPrice: item.seller_price
     });
   }
@@ -196,9 +214,11 @@ class NewOrders extends Component{
 
       <TableHeaders tableHeaders={this.tableHeaders} />
 
-      <div className="tableRowCategoryName">
-        Back Covers
-      </div>
+      {
+        // <div className="tableRowCategoryName">
+        //   {"Category"}
+        // </div>
+      }
 
       {this.orders.map(this.renderRows)}
 
