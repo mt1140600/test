@@ -92,7 +92,7 @@ class NewOrders extends Component{
     super();
     this.state= { dateRange: [null, null], category: "All Categories", searchText: ""};
     this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start", filter_name:""}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start", filter_name:"product_name"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center", filter_name:"quantity_requested"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center", filter_name:"marketplace_price"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center", filter_name:"marketplace_margin"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center", filter_name:"selling_price"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
-    this.orders=[{productDetails:"Micromax Q-Pad Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Mig 390 Silicone Durable Cover", qty:"10", marketplacePrice:"200", marketplaceMargin:"10.55%", sellingPrice:"178" },{productDetails:"Micromax Q8100 Mobile Phone Cover (Red, Green, Blue)", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
+    this.orders = [];
   }
 
   renderRows = (item, index) => {
@@ -113,7 +113,7 @@ class NewOrders extends Component{
   handleCategory = (value) => {
     this.setState({category: value});
     this.props.setSearchSpecs({
-      filter: value
+      category: value
     });
   }
 
@@ -129,6 +129,17 @@ class NewOrders extends Component{
     }
   }
 
+  setRowData = (item, index) => {
+    // this.orders=[{productDetails:"Micromax Q -Pad Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
+    return ({
+      productDetails: item.SellerFulfillments[0].BuyerFulfillment.OrderProduct.Product.name,
+      qty: item.quantity_requested,
+      marketplacePrice: 9999,
+      marketplaceMargin: "99%",
+      sellingPrice: item.seller_price
+    });
+  }
+
   componentDidMount(){
     // this.props.fetchOrders(1, "new", "quantity_accepted ASC", "2016-01-08T10:25:33.175Z", "2017-01-08T10:25:33.175Z");
     // this.props.fetchOrders(userData.user, "new", null, null, null);
@@ -136,14 +147,16 @@ class NewOrders extends Component{
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("newOrders receiving new props");
+    console.log("newOrders componentWillReceiveProps");
     console.log("ordersData:", nextProps.ordersData);
     if( JSON.stringify(this.props.ordersData.searchSpecs) !== JSON.stringify(nextProps.ordersData.searchSpecs) ){
       console.log("fetching new data");
-      this.props.fetchOrders(1, "new", nextProps.ordersData.searchSpecs.orderBy, nextProps.ordersData.searchSpecs.from, nextProps.ordersData.searchSpecs.to, nextProps.ordersData.searchSpecs.filter, nextProps.ordersData.searchSpecs.search_text);
+      this.props.fetchOrders(1, "new", nextProps.ordersData.searchSpecs.orderBy, nextProps.ordersData.searchSpecs.from, nextProps.ordersData.searchSpecs.to, nextProps.ordersData.searchSpecs.category, nextProps.ordersData.searchSpecs.search_text);
     }
     else{
-      console.log("no change");
+      console.log("rendering new rows");
+      this.orders = nextProps.ordersData.orders.map(this.setRowData);
+      // console.log("temp is ", temp);
     }
   }
 

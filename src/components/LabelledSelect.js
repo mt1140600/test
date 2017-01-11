@@ -47,7 +47,10 @@ class LabelledSelect extends Component{
 LabelledSelect.propTypes = {
   children: React.PropTypes.string,
   options: React.PropTypes.array,
-  value: React.PropTypes.string,
+  value: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number,
+  ]),
   onChange: React.PropTypes.func,
   validationState: React.PropTypes.bool,
   validate: React.PropTypes.func,

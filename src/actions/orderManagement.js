@@ -14,7 +14,7 @@ const fillOrders = (orders) => {
   }
 }
 
-export const fetchOrders = (sellerId, type, orderBy, from, to, filter, search_text) => {
+export const fetchOrders = (sellerId, type, orderBy, from, to, category, search_text) => {
   console.log("Inside fetchOrders function");
   console.log(orderBy);
   return function(dispatch){
@@ -24,7 +24,7 @@ export const fetchOrders = (sellerId, type, orderBy, from, to, filter, search_te
     if(orderBy && typeof(orderBy)!=='undefined') url = url + `&orderBy=${orderBy}`;
     if(from && typeof(from)!=='undefined' && from !== 'Invalid date') url = url + `&from=${from}`; //Invalid date is assigned when we do moment().format()
     if(to && typeof(to)!=='undefined' && to !== 'Invalid date') url = url + `&to=${to}`;
-    if(filter && typeof(filter)!=='undefined') url = url + `&filter=${filter}`;
+    if(category && typeof(category)!=='undefined') url = url + `&category=${category}`;
     if(search_text && typeof(search_text)!=='undefined') url = url + `&search_text=${search_text}`;
 
     return fetch(url, {
