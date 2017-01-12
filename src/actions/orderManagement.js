@@ -1,5 +1,5 @@
 import { checkHttpStatus, parseJSON } from '../utils';
-import { FETCH_ORDERS, SET_SEARCH_SPECS } from '../constant';
+import { FETCH_ORDERS, SET_SEARCH_SPECS, TOGGLE_ORDER_SELECTED } from '../constant';
 import * as constants from '../constants';
 import 'whatwg-fetch';
 
@@ -45,6 +45,16 @@ export const setSearchSpecs = ( searchSpecs ) => {
     type: SET_SEARCH_SPECS,
     payload: {
       searchSpecs
+    }
+  }
+}
+
+export const toggleOrderSelected = ( index, value ) => {
+  return{
+    type: TOGGLE_ORDER_SELECTED,
+    payload: {
+      index: index,
+      value: value
     }
   }
 }

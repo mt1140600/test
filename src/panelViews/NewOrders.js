@@ -36,6 +36,7 @@ class OrdersNewRow extends Component{
 
   toggleSelected = () => {
     console.log("toggling "+this.props.value.id);
+    this.props.toggleOrderSelected(this.props.value.index, !this.props.value.selected);
       // this.setState(
       //   (prevState) => { return { selected : !prevState.selected} }
       // );
@@ -43,7 +44,7 @@ class OrdersNewRow extends Component{
 
   render(){
     let styleObj = { display: "flex" };
-    (this.state.selected)? Object.assign(styleObj, { backgroundColor: "#f2f2f2"}) : null;
+    (this.props.value.selected)? Object.assign(styleObj, { backgroundColor: "#f2f2f2"}) : null;
 
     return(
       <div className="tableRow" style={styleObj} onClick={this.toggleSelected}>
@@ -52,7 +53,7 @@ class OrdersNewRow extends Component{
           <div style={{marginBottom:"-10px"}}>
             <CheckboxWrapper
               onChange = {this.toggleSelected}
-              value = {this.state.selected}
+              value = {this.props.value.selected}
             />
           </div>
         </div>
@@ -106,6 +107,11 @@ OrdersNewRow.propTypes = {
   value: React.PropTypes.object,
 }
 
+const mapDisptachToProps2 = (dispatch) => {
+  return bindActionCreators({ toggleOrderSelected: actions.toggleOrderSelected }, dispatch);
+}
+
+OrdersNewRow = connect(null, mapDisptachToProps2)(OrdersNewRow);
 
 
 class NewOrders extends Component{
@@ -166,7 +172,9 @@ class NewOrders extends Component{
       qty: item.quantity_requested,
       marketplacePrice: null,
       marketplaceMargin: null,
-      sellingPrice: item.seller_price
+      sellingPrice: item.seller_price,
+      selected: item.selected,
+      index: index
     });
   }
 
@@ -263,7 +271,7 @@ const mapStatetoProps = (state) => {
 }
 
 const mapDisptachToProps = (dispatch) => {
-  return bindActionCreators({ fetchOrders: actions.fetchOrders, setSearchSpecs: actions.setSearchSpecs }, dispatch);
+  return bindActionCreators({ fetchOrders: actions.fetchOrders, setSearchSpecs: actions.setSearchSpecs}, dispatch);
 }
 
 export default connect(mapStatetoProps, mapDisptachToProps)(NewOrders);
