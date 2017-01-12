@@ -9,6 +9,11 @@ export function validateMandatoryString(value){ //also doubles up for checking i
   else return false;
 }
 
+export function validatePositiveNumber(value){
+    if(value > 0 && !isNaN(value)) return true;
+    else return false;
+}
+
 // export function validateOneOfMultiple(arr, value){ //takes multiple validation functions as input, returns true if it passes any one validation function
 //   //Note this function fails if any validation function requires more than just value as parameter
 //   arr.map()

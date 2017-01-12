@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import CheckboxWrapper from '../components/CheckboxWrapper';
-import PlainSelect from '../components/PlainSelect';
 import LabelledSelect from '../components/LabelledSelect';
 import DateRangePopover from '../components/DateRangePopover';
 import {productCategories} from '../constants';
@@ -8,6 +7,7 @@ import * as fieldValidations from '../utils/fieldValidations';
 import ReactPaginate from 'react-paginate';
 import TableHeaders from '../components/TableHeaders'
 import * as actions from '../actions/orderManagement';
+import ChangeQuantity from '../components/ChangeQuantity';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 var moment = require('moment');
@@ -21,14 +21,6 @@ class OrdersNewRow extends Component{
   onChange = (value) => {
     this.setState({ quantity: value });
     //TODO: make post call
-  }
-
-  getQuantityDropdown = (maxValue) => {
-    let values = [];
-    for(let i = 1; i <= maxValue; i++){
-      values.push(i);
-    }
-    return values;
   }
 
   componentDidMount(){
@@ -60,12 +52,9 @@ class OrdersNewRow extends Component{
         </div>
 
         <div className="tableRowCell" style={{flex:"2"}}>
-          <div>
-            <PlainSelect style={{marginRight:0}}
-              options={this.getQuantityDropdown(this.props.value.qty)}
-              value={this.state.quantity}
-              onChange={this.onChange}/>
-          </div>
+          <ChangeQuantity
+            quantity = {this.props.value.qty}
+          />
         </div>
 
         <div className="tableRowCell" style={{flex:"2"}}>
@@ -192,7 +181,7 @@ class NewOrders extends Component{
                 </CheckboxWrapper>
               </div>
               <button className="pt-button pt-intent-primary">Confirm</button>
-              <button className="pt-button pt-intent-danger">Reject</button>
+              {/* <button className="pt-button pt-intent-danger">Reject</button> */}
             </div>
             <div>
               <LabelledSelect
