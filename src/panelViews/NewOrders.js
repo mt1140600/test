@@ -10,6 +10,9 @@ import * as actions from '../actions/orderManagement';
 import ChangeQuantity from '../components/ChangeQuantity';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
+import ConfirmItem from '../components/ConfirmItem';
+import RejectItem from '../components/RejectItem';
+
 var moment = require('moment');
 
 class OrdersNewRow extends Component{
@@ -31,14 +34,26 @@ class OrdersNewRow extends Component{
     this.setState({ quantity: nextProps.value.qty });
   }
 
+  toggleSelected = () => {
+    console.log("toggling "+this.props.value.id);
+      // this.setState(
+      //   (prevState) => { return { selected : !prevState.selected} }
+      // );
+  }
+
   render(){
+    let styleObj = { display: "flex" };
+    (this.state.selected)? Object.assign(styleObj, { backgroundColor: "#f2f2f2"}) : null;
+
     return(
-      <div className="tableRow" style={{display:"flex"}}>
+      <div className="tableRow" style={styleObj} onClick={this.toggleSelected}>
 
         <div className="tableRowCell" style={{flex:"1", justifyContent:"flex-start"}}>
           <div style={{marginBottom:"-10px"}}>
-            <CheckboxWrapper>
-            </CheckboxWrapper>
+            <CheckboxWrapper
+              onChange = {this.toggleSelected}
+              value = {this.state.selected}
+            />
           </div>
         </div>
 
@@ -46,7 +61,7 @@ class OrdersNewRow extends Component{
           <div style={{flex:1, marginRight: 10}}>
             <img style={{width:"40px", height:"40px", borderRadius:"4px"}} src={this.props.value.productDetails.image} />
           </div>
-          <div  style={{flex:6}}>
+          <div  style={{flex:6, width: 0, wordWrap: "break-word"}}>
             {this.props.value.productDetails.name}
           </div>
         </div>
@@ -76,9 +91,9 @@ class OrdersNewRow extends Component{
         </div>
 
         <div className="tableRowCell" style={{flex:"4"}}>
-          <div className="pt-button-group" style={{paddingRight: "10px", alignSelf:"center"}}>
-            <button type="button" className="pt-button pt-intent-primary">Confirm</button>
-            <button type="button" className="pt-button pt-intent-danger">Reject</button>
+          <div className="pt-button-group" style={{ borderRadius: 5, alignSelf:"center", backgroundColor: "grey"}}>
+            <ConfirmItem/>
+            <RejectItem/>
           </div>
         </div>
 
@@ -97,7 +112,7 @@ class NewOrders extends Component{
 
   constructor(){
     super();
-    this.state= { dateRange: [null, null], category: "All Categories", searchText: ""};
+    this.state= { dateRange: [null, null], category: "All Categories", searchText: "" };
     this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start", filter_name:""}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start", filter_name:"name"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center", filter_name:"quantity_requested"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center", filter_name:"marketplace_price"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center", filter_name:"marketplace_margin"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center", filter_name:"seller_price"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
     this.orders = [];
   }
@@ -126,7 +141,14 @@ class NewOrders extends Component{
 
   handleSearchText = (event) => {
     this.setState({ searchText: event.target.value });
+
+    if(event.target.value.length === 0){  //Backspaced, the content is alutomatically fetched (without enter)
+      this.props.setSearchSpecs({
+            search_text: event.target.value
+          });
+    }
   }
+
 
   handleSearch = (event) =>{
     if(event.keyCode == 13){
@@ -139,6 +161,7 @@ class NewOrders extends Component{
   setRowData = (item, index) => {
     // this.orders=[{productDetails:"Micromax Q -Pad Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
     return ({
+      id: item.id,
       productDetails: { name: item.SellerFulfillments[0].BuyerFulfillment.OrderProduct.Product.name, image: item.SellerFulfillments[0].BuyerFulfillment.OrderProduct.Product.image },
       qty: item.quantity_requested,
       marketplacePrice: null,

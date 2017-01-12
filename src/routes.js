@@ -10,7 +10,8 @@ import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
 import Verification from './views/Verification';
 import VerifyEmail from './views/VerifyEmail';
-import ChangeQuantity from './components/ChangeQuantity';
+import ConfirmItem from './components/ConfirmItem';
+import RejectItem from './components/RejectItem';
 import DateRangePopover from './components/DateRangePopover';
 
 export default (
@@ -36,6 +37,7 @@ export default (
     <Route path="dashboard" component={ProductUpload} />
     <Route path="reset2" component={ResetPassword2} />
     <Route path="date" component={DateRangePopover} />
-    <Route path="modal" component={ChangeQuantity} />
+    <Route path="modal" component={ConfirmItem} />
+    <Route path="modal2" component={RejectItem} />
   </Route>
 );

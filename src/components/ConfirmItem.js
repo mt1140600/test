@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Overlay, Button} from "@blueprintjs/core";
+import {Overlay, Button, Intent} from "@blueprintjs/core";
 import CheckboxWrapper from './CheckboxWrapper';
 
 class ConfirmItem extends Component{
@@ -15,7 +15,7 @@ class ConfirmItem extends Component{
   render(){
     return(
       <div>
-          <Button text="Show overlay" onClick={this.toggleOverlay} />
+          <Button text="Confirm" intent={0} onClick={this.toggleOverlay} />
 
           <Overlay isOpen={this.state.isOpen} onClose={this.toggleOverlay} hasBackdrop={true}>
             <div className="pt-card pt-elevation-5 docs-overlay-example-transition pt-overlay-content flexCol ordersModal" style={{alignItems: "flex-start"}}>

@@ -8,21 +8,17 @@ import {operationalHours2} from '../constants';
 // import moment from "moment";
 window.moment = require('moment');
 
-class ChangeQuantity extends Component{
+class RejectItem extends Component{
 
   constructor(){
     super();
-    this.state= {isOpen: false, reason: "one", quantity: 0, newPrice: "", date:"", time:"8:30", ampm:"am", newPriceVState: null};
-    // this.newPriceVState = null;
+    this.state= {isOpen: false, reason: "one", newPrice: "", date:"", time:"8:30", ampm:"am", newPriceVState: null};
   }
 
   componentDidMount(){
-    this.setState({ quantity: this.props.quantity, date: moment().toDate() }); //using moment().toDate() instead of Date() because it throws deprecation warning
+    this.setState({ date: moment().toDate() }); //using moment().toDate() instead of Date() because it throws deprecation warning
   }
 
-  componentWillReceiveProps(nextProps){
-    this.setState({ quantity: this.props.quantity});
-  }
 
   toggleOverlay = () => {
       this.setState({isOpen: !this.state.isOpen });
@@ -32,17 +28,6 @@ class ChangeQuantity extends Component{
     this.setState({reason: event.target.value});
   }
 
-  onQuantityChange = (value) => {
-    this.setState({ quantity: value });
-  }
-
-  getQuantityDropdown = (maxValue) => {
-    let values = [];
-    for(let i = 1; i <= maxValue; i++){
-      values.push(i);
-    }
-    return values;
-  }
 
   handleConfirm = () => {
     //Combining all date components into one
@@ -58,7 +43,7 @@ class ChangeQuantity extends Component{
           this.toggleOverlay();
         }
         else{
-          this.setState({ newPriceVState: false });
+          this.setState({ newPriceVState: false })
         }
       break;
 
@@ -76,45 +61,26 @@ class ChangeQuantity extends Component{
         console.log("Something went wrong!");
       break;
     }
-
-      //TODO: Make post call for confirmed items
-      //TODO: Make post call for rejected items
   }
 
   handleNewPriceChange = (newValue, newVState) => {
-      this.setState({ newPrice: newValue, newPriceVState: newVState });
-      // this.newPriceVState = newVState;
-
+      this.setState({ newPrice: newValue });
+      this.state.newPriceVState = newVState;
   }
 
   render(){
     return(
       <div>
-          <button className="pt-button" onClick={this.toggleOverlay}>
-            {this.props.quantity}
-            <span className="pt-icon-standard pt-icon-edit pt-align-right"></span>
+          <button className="pt-button pt-intent-danger" onClick={this.toggleOverlay}>
+            Reject
           </button>
           <Overlay isOpen={this.state.isOpen} onClose={this.toggleOverlay} hasBackdrop={true}>
             <div className="pt-card pt-elevation-5 docs-overlay-example-transition pt-overlay-content flexCol ordersModal">
-                <h3 style={{fontWeight: "lighter"}}>Change Quantity</h3>
-                <br/>
-
-                {/* <div className="pt-input-group" style={{width: 150}}>
-                  <button className="pt-button pt-intent-danger pt-icon-minus"></button>
-                  <input className="pt-input" style={{textAlign: "center"}}/>
-                  <button className="pt-button pt-intent-primary pt-icon-plus"></button>
-                </div>
-                <br/> */}
-
-                <PlainSelect style={{marginRight:0}}
-                  options={this.getQuantityDropdown(this.props.quantity)}
-                  value={this.state.quantity}
-                  onChange={this.onQuantityChange}
-                />
-                <br/>
+              <h3 style={{fontWeight: "lighter"}}>Reject Item</h3>
+              <br/>
 
                 <RadioGroup
-                    label="Reason for change in quantity:"
+                    label="Reason for unavailability of items:"
                     onChange={this.handleReasonChange}
                     selectedValue={this.state.reason}
                 >
@@ -167,7 +133,7 @@ class ChangeQuantity extends Component{
                       null
                 }
                 <br/>
-                <Button className="pt-intent-primary" onClick={this.handleConfirm}>Confirm</Button>
+                <Button className="pt-intent-danger" onClick={this.handleConfirm}>Proceed</Button>
                 <br/>
                 <div style={{fontStyle: "italic", fontSize: "small", color: "grey", borderTop: "1px solid grey"}}>
                   <div style={{marginTop: 4}}>Note:</div>
@@ -188,9 +154,4 @@ class ChangeQuantity extends Component{
 
 }
 
-ChangeQuantity.propTypes = {
-    quantity: React.PropTypes.number,
-    // handleChange: React.PropTypes.func
-}
-
-export default ChangeQuantity;
+export default RejectItem;
