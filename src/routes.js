@@ -13,6 +13,7 @@ import VerifyEmail from './views/VerifyEmail';
 import ConfirmItem from './components/ConfirmItem';
 import RejectItem from './components/RejectItem';
 import DateRangePopover from './components/DateRangePopover';
+import CascadedDisplay from './components/CascadedDisplay';
 
 export default (
   // <Route path="/" component={App}>
@@ -39,5 +40,6 @@ export default (
     <Route path="date" component={DateRangePopover} />
     <Route path="modal" component={ConfirmItem} />
     <Route path="modal2" component={RejectItem} />
+    <Route path="azure" component={CascadedDisplay} />
   </Route>
 );

@@ -12,6 +12,7 @@ import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import ConfirmItem from '../components/ConfirmItem';
 import RejectItem from '../components/RejectItem';
+import {FETCH_ORDERS_LIMIT} from '../constant';
 
 var moment = require('moment');
 
@@ -47,7 +48,7 @@ class OrdersNewRow extends Component{
     (this.props.value.selected)? Object.assign(styleObj, { backgroundColor: "#f2f2f2"}) : null;
 
     return(
-      <div className="tableRow" style={styleObj} onClick={this.toggleSelected}>
+      <div className="tableRow" style={styleObj}>
 
         <div className="tableRowCell" style={{flex:"1", justifyContent:"flex-start"}}>
           <div style={{marginBottom:"-10px"}}>
@@ -118,7 +119,7 @@ class NewOrders extends Component{
 
   constructor(){
     super();
-    this.state= { dateRange: [null, null], category: "All Categories", searchText: "" };
+    this.state= { dateRange: [null, null], category: "All Categories", searchText: "", selectAll: false };
     this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start", filter_name:""}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start", filter_name:"name"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center", filter_name:"quantity_requested"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center", filter_name:"marketplace_price"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center", filter_name:"marketplace_margin"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center", filter_name:"seller_price"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
     this.orders = [];
   }
@@ -133,7 +134,8 @@ class NewOrders extends Component{
     this.setState({dateRange});
     this.props.setSearchSpecs({
       from: moment.utc(dateRange[0]).format(),
-      to: moment.utc(dateRange[1]).format()
+      to: moment.utc(dateRange[1]).format(),
+      page: 1
     });
     // console.log(dateRange[0]);
   }
@@ -159,7 +161,8 @@ class NewOrders extends Component{
   handleSearch = (event) =>{
     if(event.keyCode == 13){
       this.props.setSearchSpecs({
-            search_text: event.target.value
+            search_text: event.target.value,
+            page: 1
           });
     }
   }
@@ -168,7 +171,7 @@ class NewOrders extends Component{
     // this.orders=[{productDetails:"Micromax Q -Pad Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
     return ({
       id: item.id,
-      productDetails: { name: item.SellerFulfillments[0].BuyerFulfillment.OrderProduct.Product.name, image: item.SellerFulfillments[0].BuyerFulfillment.OrderProduct.Product.image },
+      productDetails: { name: item.Product.name, image: item.Product.image },
       qty: item.quantity_requested,
       marketplacePrice: null,
       marketplaceMargin: null,
@@ -189,13 +192,34 @@ class NewOrders extends Component{
     console.log("ordersData:", nextProps.ordersData);
     if( JSON.stringify(this.props.ordersData.searchSpecs) !== JSON.stringify(nextProps.ordersData.searchSpecs) ){
       console.log("fetching new data");
-      this.props.fetchOrders(1, "new", nextProps.ordersData.searchSpecs.orderBy, nextProps.ordersData.searchSpecs.from, nextProps.ordersData.searchSpecs.to, nextProps.ordersData.searchSpecs.category, nextProps.ordersData.searchSpecs.search_text);
+      this.props.fetchOrders(1, "new", nextProps.ordersData.searchSpecs.orderBy, nextProps.ordersData.searchSpecs.from, nextProps.ordersData.searchSpecs.to, nextProps.ordersData.searchSpecs.category, nextProps.ordersData.searchSpecs.search_text, nextProps.ordersData.searchSpecs.page);
     }
     else{
       console.log("rendering new rows");
-      this.orders = nextProps.ordersData.orders.map(this.setRowData);
+      console.log(nextProps.ordersData.orders);
+      this.orders = nextProps.ordersData.orders.rows.map(this.setRowData);
       // console.log("temp is ", temp);
     }
+  }
+
+  handlePageClick = (data) =>{ // data.selected starts from index 0
+      console.log("Page selected", data.selected + 1);
+      this.props.setSearchSpecs({
+          page: data.selected + 1
+      });
+  }
+
+  toggleSelectAll = () => {
+    this.setState( (prevState) => {
+      if(prevState.selectAll === false){
+        this.props.ordersData.orders.rows.map((item, index) => { console.log("index is "+ index); this.props.toggleOrderSelected(index, true); });
+      }
+      else{
+        this.props.ordersData.orders.rows.map((item, index) => { this.props.toggleOrderSelected(index, false); });
+      }
+
+      return {selectAll: !prevState.selectAll};
+    } );
   }
 
   render(){
@@ -207,7 +231,10 @@ class NewOrders extends Component{
         <div style={{display:"flex", justifyContent:"space-between"}}>
             <div className="pt-control-group" style={{display:"flex"}}>
               <div style={{marginTop:10, marginRight: 10}}>
-                <CheckboxWrapper>
+                <CheckboxWrapper
+                  value={this.state.selectAll}
+                  onChange={this.toggleSelectAll}
+                >
                   Select All
                 </CheckboxWrapper>
               </div>
@@ -245,12 +272,13 @@ class NewOrders extends Component{
       <div id="react-paginate">
         <ReactPaginate previousLabel={"<"}
          nextLabel={">"}
-         breakLabel={<a href="">...</a>}
+         breakLabel={"..."}
          breakClassName={"break-me"}
-         pageCount={10}
+         pageCount={Math.ceil(Number(this.props.ordersData.orders.count)/FETCH_ORDERS_LIMIT)}
          marginPagesDisplayed={2}
          pageRangeDisplayed={2}
-         onPageChange={()=>null}
+         initialPage={0}
+         onPageChange={this.handlePageClick}
          containerClassName={"pagination"}
          subContainerClassName={"pages pagination"}
          activeClassName={"active"} />
@@ -271,7 +299,7 @@ const mapStatetoProps = (state) => {
 }
 
 const mapDisptachToProps = (dispatch) => {
-  return bindActionCreators({ fetchOrders: actions.fetchOrders, setSearchSpecs: actions.setSearchSpecs}, dispatch);
+  return bindActionCreators({ fetchOrders: actions.fetchOrders, setSearchSpecs: actions.setSearchSpecs, toggleOrderSelected: actions.toggleOrderSelected }, dispatch);
 }
 
 export default connect(mapStatetoProps, mapDisptachToProps)(NewOrders);

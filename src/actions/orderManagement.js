@@ -14,7 +14,7 @@ const fillOrders = (orders) => {
   }
 }
 
-export const fetchOrders = (sellerId, type, orderBy, from, to, category, search_text) => {
+export const fetchOrders = (sellerId, type, orderBy, from, to, category, search_text, page) => {
   console.log("Inside fetchOrders function");
   console.log(orderBy);
   return function(dispatch){
@@ -26,6 +26,7 @@ export const fetchOrders = (sellerId, type, orderBy, from, to, category, search_
     if(to && typeof(to)!=='undefined' && to !== 'Invalid date') url = url + `&to=${to}`;
     if(category && typeof(category)!=='undefined') url = url + `&category=${category}`;
     if(search_text && typeof(search_text)!=='undefined') url = url + `&search_text=${search_text}`;
+    if(page && typeof(page)!=='undefined')  url = url + `&page=${page}`;
 
     return fetch(url, {
       method: 'get',
