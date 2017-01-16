@@ -122,6 +122,8 @@ class NewOrders extends Component{
     this.state= { dateRange: [null, null], category: "All Categories", searchText: "", selectAll: false };
     this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start", filter_name:""}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start", filter_name:"name"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center", filter_name:"quantity_requested"}, {label: "M Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center", filter_name:"marketplace_price"}, {label: "M Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center", filter_name:"marketplace_margin"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center", filter_name:"seller_price"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
     this.orders = [];
+    this.selectedRows = 0;
+    this.countRows = 0;
   }
 
   renderRows = (item, index) => {
@@ -169,6 +171,8 @@ class NewOrders extends Component{
 
   setRowData = (item, index) => {
     // this.orders=[{productDetails:"Micromax Q -Pad Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
+    this.countRows++;
+    if(item.selected === true) this.selectedRows++;
     return ({
       id: item.id,
       productDetails: { name: item.Product.name, image: item.Product.image },
@@ -197,7 +201,10 @@ class NewOrders extends Component{
     else{
       console.log("rendering new rows");
       console.log(nextProps.ordersData.orders);
+      this.countRows = 0; this.selectedRows = 0; this.setState({ indeterminate: false, selectAll: false });
       this.orders = nextProps.ordersData.orders.rows.map(this.setRowData);
+      if(this.selectedRows > 0 && this.countRows > this.selectedRows) this.setState({ indeterminate: true });
+      if(this.countRows === this.selectedRows) this.setState({ selectAll: true });
       // console.log("temp is ", temp);
     }
   }
@@ -234,6 +241,7 @@ class NewOrders extends Component{
                 <CheckboxWrapper
                   value={this.state.selectAll}
                   onChange={this.toggleSelectAll}
+                  indeterminate={this.state.indeterminate}
                 >
                   Select All
                 </CheckboxWrapper>
