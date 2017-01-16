@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {Checkbox} from "@blueprintjs/core";
 import CheckboxWrapper from './CheckboxWrapper';
 
 class LabelledCheckboxGroup extends Component{

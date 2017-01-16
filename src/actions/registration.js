@@ -1,5 +1,6 @@
 import * as constants from '../constants';
 import { checkHttpStatus, parseJSON } from '../utils';
+import 'whatwg-fetch';
 
 export const actionTabChange = (tab) => {
     return {
@@ -31,7 +32,6 @@ export const updateAddlInfo = actionCreator("Update Addl Info");
 export const updateVerifyOtp = actionCreator("Update Verify OTP");
 
 export const updateTabValidation = (index, vState) => {
-  console.log("inside function");
   return {
     type: "Set Tab Validation",
     payload: {
@@ -55,9 +55,11 @@ export const fillForm = (obj) =>{
     return (dispatch) => {
       checkNull = checkNull.bind(null, dispatch);
       // (obj.store_name!==null)?dispatch(updateSellerInfo("storeName", obj.store_name, null)):null;
-      if(checkNull(obj.merchant_phoneno, "phoneNo", updateVerifyOtp)){
-        dispatch(updateTabValidation(0, true)); 
+      checkNull(obj.merchant_phoneno, "phoneNo", updateVerifyOtp);
+      if(obj.phone_verified === true){
+        dispatch(updateTabValidation(0, true));
       }
+
 
       if(checkNull(obj.store_name, "storeName", updateSellerInfo)){
         dispatch(updateTabValidation(1, true));  //Setting Tab validation to true under the assumption that, if one field is filled in the subform, all fields must be filled in the subForm as we cannot save the subForm otherwise from the frontend

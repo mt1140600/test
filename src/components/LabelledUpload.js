@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Popover, PopoverInteractionKind, Position,} from "@blueprintjs/core";
 import ImageThumbnail from "../components/ImageThumbnail";
+/* global cloudinary*/
 
 class LabelledUpload extends Component{
 
@@ -9,7 +10,7 @@ class LabelledUpload extends Component{
     this.state = {fileName: "",fileURL: ""};
   }
   handleClick = () => {
-    cloudinary.openUploadWidget({ cloud_name: this.props.cloudinaryCloudName, upload_preset: this.props.cloudinaryUploadPreset},
+    cloudinary.openUploadWidget({ cloud_name: this.props.cloudinaryCloudName, upload_preset: this.props.cloudinaryUploadPreset, folder:this.props.cloudinaryFolder},
     (error, result) => {
        console.log(error, result);
        if(error === null){
@@ -58,7 +59,8 @@ LabelledUpload.propTypes = {
     validate: React.PropTypes.func,
     helpText: React.PropTypes.string,
     cloudinaryCloudName: React.PropTypes.string,
-    cloudinaryUploadPreset: React.PropTypes.string
+    cloudinaryUploadPreset: React.PropTypes.string,
+    cloudinaryFolder: React.PropTypes.string
 };
 
 export default LabelledUpload;

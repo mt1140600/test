@@ -44,9 +44,12 @@ class LabelledSelect extends Component{
       option_type = 'object';
     }
     return(
+
       <label className="pt-label pt-inline" onFocus={this.handleClick}>
-        {this.props.children}
-        <div className="pt-select" style={Object.assign({width:"200px", marginRight:"auto", float:"right"},this.props.style)}>
+        <div style={{display: "inline-block", width: "50%"}}>  
+          {this.props.children}
+        </div>
+        <div className="pt-select" style={Object.assign({width:"50%", margin: 0, float:"right"},this.props.style)}>
           <select value={this.props.value} onChange={this.handleChange}>
             {(option_type === 'array') ? options.map(this.renderOption) : this.mapObject(options)}
           </select>
@@ -60,7 +63,10 @@ class LabelledSelect extends Component{
 LabelledSelect.propTypes = {
   children: React.PropTypes.string,
   options: React.PropTypes.oneOfType([React.PropTypes.object, React.PropTypes.array]),
-  value: React.PropTypes.string,
+  value: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number,
+  ]),
   onChange: React.PropTypes.func,
   validationState: React.PropTypes.bool,
   validate: React.PropTypes.func,

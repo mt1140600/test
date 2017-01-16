@@ -9,6 +9,7 @@ import * as fieldValidations from "../utils/fieldValidations";
 import {Button} from "@blueprintjs/core";
 import {Table, Column, Cell} from "@blueprintjs/table"
 import {productCategories} from '../constants';
+
 import moment from "moment";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -44,6 +45,7 @@ class DataWithPopover extends Component {
     )
   }
 }
+
 
 class UploadProduct extends Component{
 
@@ -135,6 +137,7 @@ class UploadProduct extends Component{
             Choose a category:
           </LabelledSelect>
           <br/>
+
           {categoryData &&
             <div style={{fontSize:'14px'}}>
               <p>
@@ -167,7 +170,7 @@ class UploadProduct extends Component{
               </div>
             </div>
           }
-
+          
       </div>
 
     </div>

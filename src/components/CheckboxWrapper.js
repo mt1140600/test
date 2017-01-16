@@ -15,7 +15,7 @@ class CheckboxWrapper extends Component{
   render() {
     return(
       <div style={this.props.style}>
-        <Checkbox  checked={this.props.value} onChange={this.handleChange}>
+        <Checkbox  checked={this.props.value} onChange={this.handleChange} indeterminate={this.props.indeterminate}>
             {this.props.children}
         </Checkbox>
       </div>
@@ -28,7 +28,8 @@ CheckboxWrapper.propTypes = {
   index: React.PropTypes.number,
   value: React.PropTypes.bool,
   onChange: React.PropTypes.func,
-  style: React.PropTypes.object
+  style: React.PropTypes.object,
+  indeterminate: React.PropTypes.bool
 }
 
 export default CheckboxWrapper;

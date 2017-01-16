@@ -29,7 +29,10 @@ class PlainSelect extends Component{
 
 PlainSelect.propTypes = {
   options: React.PropTypes.array,
-  value: React.PropTypes.string,
+  value: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number,
+  ]),
   onChange: React.PropTypes.func,
   style: React.PropTypes.object
 };

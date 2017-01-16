@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {Tabs, TabList, Tab, TabPanel} from "@blueprintjs/core";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import { checkHttpStatus, parseJSON } from '../utils';
-import * as constants from '../constants';
 import VerifyOtp from '../views/VerifyOtp';
 import SellerInfo from '../views/SellerInfo';
 import TaxDetails from '../views/TaxDetails';
@@ -42,13 +40,12 @@ class TabLayout extends Component {
     this.props.loadForm();
   }
 
-  handleTabChange = (selectedTab, prevTab) => {
+  handleTabChange = (selectedTab) => {
     this.props.actionTabChange(selectedTab);
   }
   render() {
-    console.log("In TabLayout render");
     return(
-      <Tabs className="tabs tabs75" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
+      <Tabs className="tabs tabs80" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
         <TabList className="pt-large">
           {tabs.map(this.renderTabs)}
         </TabList>

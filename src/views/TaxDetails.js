@@ -1,3 +1,4 @@
+/* global cloudinary*/
 import React, {Component} from 'react';
 import { Button, FocusStyleManager, Spinner } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
@@ -8,9 +9,8 @@ import {bindActionCreators} from 'redux';
 import {updateTaxDetails, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
 import * as constants from '../constants';
-import {storeSubFormCheck} from '../utils';
-import {pushSubFormToDB} from '../utils';
 import {storeSubForm} from '../utils';
+import {cloudinaryCloudName, cloudinaryImageUploadPreset} from '../constants';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -26,7 +26,7 @@ class TaxDetails extends Component{
   }
 
   handleClick = () => {
-    cloudinary.openUploadWidget({ cloud_name: 'dtvfkbdm8', upload_preset: 'dgfm0gcv'},
+    cloudinary.openUploadWidget({ cloud_name: cloudinaryCloudName, upload_preset: cloudinaryImageUploadPreset},
     function(error, result) { console.log(error, result) });
   }
 
@@ -39,7 +39,7 @@ class TaxDetails extends Component{
         certification_of_incorporation_url: this.props.taxDetails.value.certIncorp,
         membership_with_icc_url:  this.props.taxDetails.value.membICC
       }
-      const successHandler = (response) => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
+      const successHandler = () => { //When passing this function as an argument to another function, although arrow function does not set context, this fucntion's context is the SellerInfo component class?
         console.log("successHandler");
         console.log(this.props.updateTabValidation);
         this.setState({showSpinner: false});
@@ -51,7 +51,10 @@ class TaxDetails extends Component{
         console.log("failureHandler");
         console.log(response);
       }
-      storeSubForm(this.props.taxDetails, this.props.updateTaxDetails, this.props.updateTabValidation.bind(null, 2, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+
+      const subFormValid = storeSubForm(this.props.taxDetails, this.props.updateTaxDetails, this.props.updateTabValidation.bind(null, 2, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
+
+      if(!subFormValid) this.setState({showSpinner: false});
   }
 
   render() {
@@ -94,9 +97,10 @@ class TaxDetails extends Component{
               onChange={this.updateInfo.bind(this,"certIncorp")}
               validationState={this.props.taxDetails.vState.certIncorp}
               validate={fieldValidations.noValidation}
-              helpText="Upload a PNG or JPG file"
+              helpText="Upload a PNG, JPG, BMP or PDF file"
               cloudinaryCloudName={constants.cloudinaryCloudName}
-              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}>
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
+              cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
                 Certification of Incorporation
             </LabelledUpload>
 
@@ -105,9 +109,10 @@ class TaxDetails extends Component{
               onChange={this.updateInfo.bind(this,"membICC")}
               validationState={this.props.taxDetails.vState.membICC}
               validate={fieldValidations.noValidation}
-              helpText="Upload a PNG or JPG file"
+              helpText="Upload a PNG, JPG, BMP or PDF file"
               cloudinaryCloudName={constants.cloudinaryCloudName}
-              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}>
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
+              cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
                 Membership with Indian Chamber of Commerce
             </LabelledUpload>
 

@@ -1,9 +1,5 @@
 import React, {Component} from 'react';
 import ReactPaginate from 'react-paginate';
-import { Intent, Popover, Position, Switch, Tooltip } from "@blueprintjs/core";
-import OrderBy from "../components/OrderBy";
-import PlainSelect from '../components/PlainSelect';
-import CheckboxWrapper from '../components/CheckboxWrapper';
 import TableHeaders from '../components/TableHeaders'
 
 class OrdersDispatchedRow extends Component{
