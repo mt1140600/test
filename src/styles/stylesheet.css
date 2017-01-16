@@ -1,6 +1,7 @@
 html, body, #app, #app>div, .app{
   /*height: 100%;*/
 }
+
 body{
     margin: 0;
     background-color: #f5f5f5;
@@ -8,27 +9,28 @@ body{
     /*overflow: hidden;*/
 }
 
-*{
-  /*font-weight: 200;*/
-}
 
 .pt-popover.pt-popover-content-sizing .pt-popover-content {
     max-width: 1000px;
     padding: 20px;
 }
+
 .pt-timepicker-input{
   font-size: 14px;
   font-weight: 400;
+}
 
 .container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
+
 .col{
   display: flex;
   flex-direction: column;
 }
+
 .flexRow{
   display: flex;
   justify-content: space-around;
@@ -114,9 +116,11 @@ h6{
 
 .tabs.tabs75{
   min-height: 75vh;
+}
 
 .tabs.tabs80{
-  height: 80vh;
+  min-height: 80vh;
+
 }
 
 #progressBar{
@@ -428,6 +432,7 @@ h6{
   color: #4c4c4c;
 }
 
+
 .pt-input-blueShadowDisable:focus{
   box-shadow: 0 0 0 0 rgba(19, 124, 189, 0), 0 0 0 0 rgba(19, 124, 189, 0), inset 0 0 0 1px rgba(16, 22, 26, 0.15), inset 0 1px 1px rgba(16, 22, 26, 0.2);
 }
@@ -441,6 +446,7 @@ h6{
   justify-content: flex-start;
   overflow-x: scroll;
 }
+
 
 .modalTimePicker{
   width: 100%;

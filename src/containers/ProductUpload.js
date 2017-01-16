@@ -14,7 +14,7 @@ class ProductUpload extends Component{
         <Header/>
         <HeaderButtons/>
         <VerticalTabLayout/>
-        <ChatWidget/>
+        {/* <ChatWidget/> */}
       </div>
     );
   }

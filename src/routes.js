@@ -39,7 +39,6 @@ export default (
     <Route path="reset" component={ResetPassword} />
     <Route path="registration" component={AccountSetup}/>
     <Route path="dashboard" component={ProductUpload} />
-    <Route path="dummy" component={Dummy} />
     <Route path="auto" component={LabelledAutoComplete} />
     <Route path="image" component={MultipleImageUpload} />
     <Route path="verification" component={Verification} />

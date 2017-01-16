@@ -12,13 +12,14 @@ class AccountSetup extends Component{
       <div>
         <Header/>
         <div style={{paddingTop: 50}}>
-        <HeaderButtons/>
-        <div style={{marginTop: 50}}>
+          <HeaderButtons/>
+        </div>
+        <div>
           {ViewNameBar("Account Settings")}
           <ProgressBar/>
           <TabLayout/>
         </div>
-        <ChatWidget/>
+        {/* <ChatWidget/> */}
       </div>
     );
   }

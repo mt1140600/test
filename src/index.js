@@ -19,13 +19,13 @@ if(process.env.NODE_ENV === 'production') console.log = function(){};
 const history = syncHistoryWithStore(browserHistory, store);
 
 //Initialising firebase
-var config = {
-  apiKey: "AIzaSyBfe2cPpkCVcbkB0HVgmTT9jRQ409dSzOA",
-  authDomain: "prokure-chat.firebaseapp.com",
-  databaseURL: "https://prokure-chat.firebaseio.com",
-  storageBucket: "prokure-chat.appspot.com"
-};
-firebase.initializeApp(config);
+// var config = {
+//   apiKey: "AIzaSyBfe2cPpkCVcbkB0HVgmTT9jRQ409dSzOA",
+//   authDomain: "prokure-chat.firebaseapp.com",
+//   databaseURL: "https://prokure-chat.firebaseio.com",
+//   storageBucket: "prokure-chat.appspot.com"
+// };
+// firebase.initializeApp(config);
 
 render(
   <Provider store={store}>

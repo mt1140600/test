@@ -59,7 +59,7 @@
     "redux": "3.6.0",
     "redux-auth-wrapper": "^0.9.0",
     "redux-thunk": "2.1.0",
-    "tether": "^1.4.0"
+    "tether": "^1.4.0",
     "velocity-react": "1.1.11",
     "whatwg-fetch": "2.0.1",
     "yarn": "^0.17.10"
