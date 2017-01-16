@@ -11,6 +11,7 @@ class AccountSetup extends Component{
     return(
       <div>
         <Header/>
+        <div style={{paddingTop: 50}}>
         <HeaderButtons/>
         <div style={{marginTop: 50}}>
           {ViewNameBar("Account Settings")}

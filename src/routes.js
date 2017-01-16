@@ -9,11 +9,15 @@ import ResetPassword2 from './views/ResetPassword2';
 import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
 import Verification from './views/Verification';
+import LabelledAutoComplete from './components/LabelledAutoComplete';
+import MultipleImageUpload from './components/MultipleImageUpload';
+import TestContainer from './containers/TestContainer';
 import VerifyEmail from './views/VerifyEmail';
 import ConfirmItem from './components/ConfirmItem';
 import RejectItem from './components/RejectItem';
 import DateRangePopover from './components/DateRangePopover';
 import CascadedDisplay from './components/CascadedDisplay';
+
 
 export default (
   // <Route path="/" component={App}>
@@ -34,12 +38,12 @@ export default (
     <Route path="verifyEmail" component={VerifyEmail} />
     <Route path="reset" component={ResetPassword} />
     <Route path="registration" component={AccountSetup}/>
-    <Route path="verification" component={Verification} />
     <Route path="dashboard" component={ProductUpload} />
-    <Route path="reset2" component={ResetPassword2} />
-    <Route path="date" component={DateRangePopover} />
-    <Route path="modal" component={ConfirmItem} />
-    <Route path="modal2" component={RejectItem} />
-    <Route path="azure" component={CascadedDisplay} />
+    <Route path="dummy" component={Dummy} />
+    <Route path="auto" component={LabelledAutoComplete} />
+    <Route path="image" component={MultipleImageUpload} />
+    <Route path="verification" component={Verification} />
+    <Route path="test" component={TestContainer} />
+
   </Route>
 );

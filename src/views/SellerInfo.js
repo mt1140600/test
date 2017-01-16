@@ -12,10 +12,7 @@ import {bindActionCreators} from 'redux';
 import {updateSellerInfo, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
 import {storeSubForm} from '../utils';
-
-var _ = require('lodash');
-// import Immutable from 'immutable';
-// window.Immutable = Immutable;
+import * as _ from 'lodash';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 

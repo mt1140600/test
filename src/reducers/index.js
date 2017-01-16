@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import {routerReducer} from 'react-router-redux';
 import userData from './userData';
+import productUploadData from './productUploadData';
 import floatingNotification from './generic';
 import * as registrationForm from './registrationForm';
 import orderManagement from './orderManagement';
@@ -8,6 +9,7 @@ import orderManagement from './orderManagement';
 const rootReducer = combineReducers({
   routing: routerReducer,
   userData: userData,
+  productUploadData: productUploadData,
   registrationCurrentTab: registrationForm.tabReducer,
   verifyOtp: registrationForm.verifyOtp,
   sellerInfo: registrationForm.sellerInfo,
