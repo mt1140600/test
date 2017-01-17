@@ -9,13 +9,15 @@ import * as fieldValidations from "../utils/fieldValidations";
 import {Button} from "@blueprintjs/core";
 import {Table, Column, Cell} from "@blueprintjs/table"
 import {productCategories} from '../constants';
-
+import CascadedDisplay from '../components/CascadedDisplay';
 import moment from "moment";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as productUploadActions from '../actions/productUpload';
 import * as _ from 'lodash';
 import Tether from 'tether';
+import MultipleImageUpload from '../components/MultipleImageUpload';
+import Immutable from 'immutable';
 
 export class TableDollarExample extends Component{
     render() {
@@ -51,7 +53,7 @@ class UploadProduct extends Component{
 
   constructor(){
     super();
-    this.state = {vStateCategory:true, categoryKey:null,commonKeys:[]};
+    this.state = {vStateCategory:true, categoryKey:null,commonKeys:[], images: Immutable.List([]), defaultImage: 0 };
     this.tableHeaders = ["Sub Category", "Brand", "Company", "Model", "MRP", "Selling Price", "MOQ", "Warranty", "Image"];
     this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]]
   }
@@ -71,6 +73,7 @@ class UploadProduct extends Component{
   onCheckboxChange = (value, vState) => {
     this.setState({commonKeys:value});
   }
+
   renderTableRow = (item,index) => {
     return(
       <div key={index} style={{flexBasis:"11%", textAlign:"center", display:"flex", flexDirection:"column", justifyContent:"center", minHeight:"40px"}}>
@@ -96,6 +99,16 @@ class UploadProduct extends Component{
       }
     });
     this.props.getMulitpleKeyValueData(requiredKeys);
+  }
+
+  handleChange = (newImages, defaultImage) =>{
+    this.setState({images: newImages, defaultImage: defaultImage});
+  }
+
+  renderCorresponsingComponent = (item, index) => {
+    switch(item){
+
+    }
   }
 
   render() {
@@ -124,56 +137,67 @@ class UploadProduct extends Component{
     }
     return(
       <div>
-        <div className="tabs" style={{display:"flex",flexDirection:"column", alignItems:"left"}}>
-          <LabelledSelect
-            options={categories}
-            displayKey={"name"}
-            responseKey={"ref"}
-            validationState={this.state.vStateCategory}
-            validate={fieldValidations.validateSelect.bind(null,"Choose Category")}
-            style={{"float":"none"}}
-            helpText={"No category selected."}
-            onChange={this.onChange}>
-            Choose a category:
-          </LabelledSelect>
-          <br/>
-
-          {categoryData &&
-            <div style={{fontSize:'14px'}}>
-              <p>
-                <span style={{fontWeight:600}}>Required Fields</span> : <span style={{color:'#db3737'}}>
-                  {compulsaryValues.map((value, index) => {return <DataWithPopover count={compulsaryValues.length} key={index} index={index} value={value} description={categoryData[value.key].description}/>})}
-                </span>
-              </p>
-              <p>
-                <span style={{fontWeight:600}}>Optional Fields</span> : <span style={{color:'#db3737'}}>
-                  {optionalValues.map((value, index) => {return <DataWithPopover count={optionalValues.length} key={index} index={index} value={value} description={categoryData[value.key].description}/>})}
-                </span>
-              </p>
-              <br/>
-
-              <h5> Step 1 of 3 </h5>
-
+        <div className="tabs" style={{ display:"flex", flexDirection:"column", alignItems:"left", padding: 0 }}>
+          <CascadedDisplay
+            style= {{ minHeight: "75vh" }}
+            one={
               <div>
-                <div>Please select the key-values which are common in all the products</div>
+                <LabelledSelect
+                  options={categories}
+                  displayKey={"name"}
+                  responseKey={"ref"}
+                  validationState={this.state.vStateCategory}
+                  validate={fieldValidations.validateSelect.bind(null,"Choose Category")}
+                  style={{"float":"none"}}
+                  helpText={"No category selected."}
+                  onChange={this.onChange}>
+                  Choose a category:
+                </LabelledSelect>
                 <br/>
-                <LabelledCheckboxGroup
-                  options={commonValues}
-                  groupColumns={3}
-                  value={this.state.commonKeys}
-                  onChange={this.onCheckboxChange}
-                  validationState={true}
-                  validate={fieldValidations.noValidation}
-                  helpText={"Choose atleast one option"}>
-                </LabelledCheckboxGroup>
-                <Button onClick={this.submitSelectedKeys} className="pt-intent-primary" style={{width:"200px"}}>Continue</Button>
-              </div>
-            </div>
-          }
-          
-      </div>
 
-    </div>
+                {categoryData &&
+                  <div style={{fontSize:'14px'}}>
+                    <p>
+                      <span style={{fontWeight:600}}>Required Fields</span> : <span style={{color:'#db3737'}}>
+                        {compulsaryValues.map((value, index) => {return <DataWithPopover count={compulsaryValues.length} key={index} index={index} value={value} description={categoryData[value.key].description}/>})}
+                      </span>
+                    </p>
+                    <p>
+                      <span style={{fontWeight:600}}>Optional Fields</span> : <span style={{color:'#db3737'}}>
+                        {optionalValues.map((value, index) => {return <DataWithPopover count={optionalValues.length} key={index} index={index} value={value} description={categoryData[value.key].description}/>})}
+                      </span>
+                    </p>
+                    <br/>
+
+                    <h5> Step 1 of 3 </h5>
+
+                    <div>
+                      <div>Please select the key-values which are common in all the products</div>
+                      <br/>
+                      <LabelledCheckboxGroup
+                        options={commonValues}
+                        groupColumns={3}
+                        value={this.state.commonKeys}
+                        onChange={this.onCheckboxChange}
+                        validationState={true}
+                        validate={fieldValidations.noValidation}
+                        helpText={"Choose atleast one option"}>
+                      </LabelledCheckboxGroup>
+                      <Button onClick={this.submitSelectedKeys} className="pt-intent-primary" style={{width:"200px"}}>Continue</Button>
+                    </div>
+                  </div>
+                }
+              </div>
+            }
+            two={
+              <div onClick = {() => {console.log(this.props)}}>
+                ggwp
+              </div>
+            }
+            three={3}
+          />
+        </div>
+      </div>
     );
   }
 

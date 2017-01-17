@@ -5,6 +5,7 @@ import productUploadData from './productUploadData';
 import floatingNotification from './generic';
 import * as registrationForm from './registrationForm';
 import orderManagement from './orderManagement';
+import cascadedDisplay from './cascadedDisplay';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   addlInfo: registrationForm.addlInfo,
   tabValidation: registrationForm.tabValidation,
   floatingNotification: floatingNotification,
-  ordersData: orderManagement
+  ordersData: orderManagement,
+  cascadedDisplay: cascadedDisplay
 });
 
 export default rootReducer;
