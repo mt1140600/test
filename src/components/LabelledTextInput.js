@@ -21,7 +21,7 @@ class LabelledTextInput extends Component{
   render(){
     let warningClass = (this.props.validationState === false)?'errorField':'';
     return(
-        <label className="pt-label pt-inline" style={{display: "flex", flexWrap: "wrap"}} onFocus={this.handleClick}>
+        <label className="pt-label pt-inline" style={Object.assign({}, {display: "flex", flexWrap: "wrap"}, this.props.style)} onFocus={this.handleClick}>
           <div style={{display: "inline-block", width: "50%"}}>
               {this.props.children}
           </div>
@@ -43,7 +43,10 @@ class LabelledTextInput extends Component{
 LabelledTextInput.propTypes = {
 
   children: React.PropTypes.node,
-  value: React.PropTypes.string,
+  value: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number
+  ]),
   onChange: React.PropTypes.func,
   validationState: React.PropTypes.bool,
   validate: React.PropTypes.func,

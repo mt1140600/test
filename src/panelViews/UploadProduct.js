@@ -18,6 +18,9 @@ import * as _ from 'lodash';
 import Tether from 'tether';
 import MultipleImageUpload from '../components/MultipleImageUpload';
 import Immutable from 'immutable';
+import cascadedDisplay from '../actions/cascadedDisplay';
+import LabelledAutoComplete from '../components/LabelledAutoComplete';
+
 
 export class TableDollarExample extends Component{
     render() {
@@ -99,6 +102,7 @@ class UploadProduct extends Component{
       }
     });
     this.props.getMulitpleKeyValueData(requiredKeys);
+    this.props.cascadedDisplay(1, true);
   }
 
   handleChange = (newImages, defaultImage) =>{
@@ -106,8 +110,33 @@ class UploadProduct extends Component{
   }
 
   renderCorresponsingComponent = (item, index) => {
-    switch(item){
-
+    switch(item.type){
+      case "auto-fill":
+        return(
+          <LabelledAutoComplete
+            options = {item.options}
+          >
+            {item.key}
+          </LabelledAutoComplete>
+        );
+      break;
+      case "additional-info":
+        return(
+          <textArea/>
+        );
+      break;
+      case "image-upload":
+        return(
+          <MultipleImageUpload
+          >
+            {item.key}
+          </MultipleImageUpload>
+        )
+      break;
+      case "":
+      break;
+      default:
+      break;
     }
   }
 
@@ -190,8 +219,14 @@ class UploadProduct extends Component{
               </div>
             }
             two={
-              <div onClick = {() => {console.log(this.props)}}>
-                ggwp
+              <div>
+                {
+                  this.renderCorresponsingComponent({
+                    type: "auto-fill",
+                    key: "Face",
+                    options: ["Front", "Back"]
+                  }, 0)
+                }
               </div>
             }
             three={3}
@@ -210,7 +245,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators(productUploadActions, dispatch);
+  return bindActionCreators(Object.assign({}, productUploadActions, {cascadedDisplay} ), dispatch);
 
 }
 
