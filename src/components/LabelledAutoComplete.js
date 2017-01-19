@@ -70,9 +70,9 @@ class LabelledAutoComplete extends Component {
         <div style={{flex: 1}}>
           {this.props.children}
         </div>
-        <div style={{flex: 1}}>
-          <Popover content={compassMenu} position={Position.BOTTOM} popoverDidOpen={this.popoverOpened}>
-              <button className="pt-button" type="button">
+        <div style={{flex: 1, display: "flex", justifyContent: "flex-end"}}>
+          <Popover content={compassMenu} position={Position.BOTTOM_RIGHT} popoverDidOpen={this.popoverOpened}>
+              <button className="pt-button" type="button" style={{}}>
                 {this.props.value}
                 <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
               </button>

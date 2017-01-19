@@ -12,10 +12,9 @@ class ProductQuantity extends Component{
   dummy = () => {}
 
   render(){
-    console.log(this.props.value);
     return(
-      <div>
-
+      <label>
+        <p>Product Quantity</p>
         <LabelledTextInput
           value= {this.props.value[0]}
           onChange = {this.handleChange.bind(null, 0)}
@@ -43,7 +42,7 @@ class ProductQuantity extends Component{
           Steps of
         </LabelledTextInput>
 
-      </div>
+      </label>
     );
   }
 }

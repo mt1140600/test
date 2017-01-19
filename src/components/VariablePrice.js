@@ -6,7 +6,7 @@ class VariablePrice extends Component{
   dummy = () => {}
 
   updateQuantity = (index, value) => {
-    newRange = [...this.props.value.range];
+    let newRange = [...this.props.value.range];
     newRange[index] = value;
     this.props.onChange(
       {
@@ -17,7 +17,7 @@ class VariablePrice extends Component{
   }
 
   updatePrice = (index, value) => {
-    newPrice = [...this.props.value.range];
+    let newPrice = [...this.props.value.price];
     newPrice[index] = value;
     this.props.onChange(
       {
@@ -32,7 +32,7 @@ class VariablePrice extends Component{
       <div key={index} style={{display: "flex"}}>
         <LabelledTextInput
           value= {item}
-          onChange = {this.dummy}
+          onChange = {this.updateQuantity.bind(null, index)}
           validationState = {true}
           validate = {this.dummy}
           style= {{flex: 1}}
@@ -42,7 +42,7 @@ class VariablePrice extends Component{
 
         <LabelledTextInput
           value={this.props.value.price[index]}
-          onChange= {this.dummy}
+          onChange= {this.updatePrice.bind(null, index)}
           validationState = {true}
           validate = {this.dummy}
           style= {{flex: 1, marginLeft: 20}}
@@ -62,16 +62,19 @@ class VariablePrice extends Component{
 
   render(){
     return(
-        <div>
+        <div style={{marginBottom: 10}}>
+          <div style= {{display: "flex", justifyContent: "space-between", marginBottom: 10, alignItems: "center"}}>
+            <div>Variable Price</div>
+            <button className="pt-button pt-icon-add" onClick={this.addRow}> Add Row </button>
+          </div>
           {this.props.value.range.map(this.renderRows)}
-          <button className="pt-button" onClick={this.addRow}> Add Row </button>
         </div>
     );
   }
 }
 
 VariablePrice.propTypes = {
-    value: React.PropTypes.value,
+    value: React.PropTypes.object,
     onChange: React.PropTypes.func
 }
 

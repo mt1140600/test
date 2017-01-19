@@ -452,6 +452,16 @@ h6{
   width: 100%;
 }
 
+.productDetailContainer{
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.productDetailContainer:hover{
+    background-color: #cfe1ec;
+    border-radius: 4px;
+}
+
 /*
 .pt-tabs.pt-horizontal {
   display: -webkit-flex;

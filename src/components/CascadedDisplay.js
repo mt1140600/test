@@ -20,12 +20,12 @@ class CascadedTab extends PureComponent{
           minWidth: (this.props.nextVisible)? 400: 800,
           padding: 20,
           borderRight: (this.props.nextVisible)? "1px solid #dee5e7" : null,
-          borderBottom: (this.props.nextVisible)? "2px solid #106ba3" : null,
+          borderTop: (this.props.nextVisible)? "2px solid #106ba3" : null,
         }}
         // onClick={this.props.showNext.bind(null, false)}
       >
         {this.props.content}
-        <button onClick={this.props.showNext.bind(null, true)}>Open Next</button>
+        {/* <button onClick={this.props.showNext.bind(null, true)}>Open Next</button> */}
       </div>
     );
   }

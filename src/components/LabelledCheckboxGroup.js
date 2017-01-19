@@ -66,8 +66,7 @@ class LabelledCheckboxGroup extends Component{
   render(){
     // let errorField = !this.props.validationState && this.state.clicked;
     return(
-      <div onFocus={this.handleClick}>
-        <label className="pt-label pt-inline" style={{display: "flex"}}>
+        <label className="pt-label pt-inline" style={{display: "flex"}} onFocus={this.handleClick}>
           { this.props.children &&
             <div style={{flex:"1"}}>
               {this.props.children}
@@ -78,13 +77,12 @@ class LabelledCheckboxGroup extends Component{
             {this.alignCheckboxes(this.props.options,this.props.groupColumns)}
           </div>
         </label>
-
-     </div>
     );
   }
 
 }
 
+const dummy = () => {};
 LabelledCheckboxGroup.propTypes = {
   children: React.PropTypes.string,
   options: React.PropTypes.array, //Array of individual checkbox labels
@@ -99,5 +97,11 @@ LabelledCheckboxGroup.propTypes = {
 //option =      ["option1","option2","option3"]
 //value =                 ["option2","option3"]
 //new value =  [  false,     true,     true]
+
+LabelledCheckboxGroup.defaultProps = {
+    groupColumns: 3,
+    validationState: true,
+    validate: dummy
+}
 
 export default LabelledCheckboxGroup;

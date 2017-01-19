@@ -8,11 +8,11 @@ import VariablePrice from '../components/VariablePrice';
 class TestContainer extends Component{
   constructor(){
     super();
-    this.state={ images: Immutable.List([]), defaultImage: 0, qty: [0, 0, 0], varPrice: {range: [9999], price: [0]} };
+    this.state={ images: {images:[], defaultImage: 0}, defaultImage: 0, qty: [0, 0, 0], varPrice: {range: [9999], price: [0]} };
   }
 
-  handleChange = (newImages, defaultImage) =>{
-    this.setState({images: newImages, defaultImage: defaultImage});
+  handleChange = (value) =>{
+    this.setState({images: value});
   }
 
   handleSelect = (value) => {

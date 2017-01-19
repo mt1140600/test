@@ -4,7 +4,7 @@ import PanelHeader from "../components/PanelHeader";
 import LabelledSelect from "../components/LabelledSelect";
 import LabelledCheckboxGroup from "../components/LabelledCheckboxGroup";
 import LabelledTextInput from "../components/LabelledTextInput";
-import LabelledFileUpload from "../components/LabelledFileUpload";
+import LabelledUpload from "../components/LabelledUpload";
 import * as fieldValidations from "../utils/fieldValidations";
 import {Button} from "@blueprintjs/core";
 import {Table, Column, Cell} from "@blueprintjs/table"
@@ -20,7 +20,9 @@ import MultipleImageUpload from '../components/MultipleImageUpload';
 import Immutable from 'immutable';
 import cascadedDisplay from '../actions/cascadedDisplay';
 import LabelledAutoComplete from '../components/LabelledAutoComplete';
-
+import ProductQuantity from '../components/ProductQuantity';
+import VariablePrice from '../components/VariablePrice';
+import LabelledTextArea from '../components/LabelledTextArea';
 
 export class TableDollarExample extends Component{
     render() {
@@ -56,9 +58,45 @@ class UploadProduct extends Component{
 
   constructor(){
     super();
-    this.state = {vStateCategory:true, categoryKey:null,commonKeys:[], images: Immutable.List([]), defaultImage: 0 };
+    this.state = {vStateCategory:true, categoryKey:null,commonKeys:[], images: Immutable.List([]), defaultImage: 0, stepTwoStates: Immutable.List([]) };
     this.tableHeaders = ["Sub Category", "Brand", "Company", "Model", "MRP", "Selling Price", "MOQ", "Warranty", "Image"];
-    this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]]
+    this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]];
+    this.stepTwoArray = [
+      {
+        type: "auto-fill",
+        key: "Face",
+        options: ["Front", "Back"]
+      },
+      {
+        type: "additional-info",
+        key: "AdditionalInfo",
+      },
+      {
+        type: "image-upload",
+        key: "Image"
+      },
+      {
+        type: "multiselect",
+        key: "Model",
+        options: ["Apple", "Banana"]
+      },
+      {
+        type: "String",
+        key: "Name"
+      },
+      {
+        type: "variable-price",
+        key: "Price"
+      },
+      {
+        type: "quantity",
+        key: "Quantity"
+      },
+      {
+        type: "video",
+        key: "Video"
+      }
+    ];
   }
 
   componentWillMount() {
@@ -105,37 +143,143 @@ class UploadProduct extends Component{
     this.props.cascadedDisplay(1, true);
   }
 
+  submitStepTwo = () => {
+    this.props.cascadedDisplay(2, true);
+  }
+
   handleChange = (newImages, defaultImage) =>{
     this.setState({images: newImages, defaultImage: defaultImage});
   }
 
+  setStepTwoStates = (index, value) => {
+    this.setState({stepTwoStates})
+  }
+
+  handleStepTwoStateChange = (index, value) => {
+    console.log("index, value", index, value);
+    this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, value) });
+  }
+
   renderCorresponsingComponent = (item, index) => {
     switch(item.type){
+
       case "auto-fill":
+        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, item.options[0])});
         return(
-          <LabelledAutoComplete
-            options = {item.options}
-          >
-            {item.key}
-          </LabelledAutoComplete>
+          <div key= {index} className="productDetailContainer">
+            <LabelledAutoComplete
+              options = {item.options}
+              value = {this.state.stepTwoStates.get(index)}
+              onSelect = {this.handleStepTwoStateChange.bind(null, index)}
+            >
+              {item.key}
+            </LabelledAutoComplete>
+          </div>
         );
       break;
+
       case "additional-info":
+        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, "")});
         return(
-          <textArea/>
+          <div key= {index} className="productDetailContainer">
+            <LabelledTextArea
+              value = {this.state.stepTwoStates.get(index)}
+              onChange = {this.handleStepTwoStateChange.bind(null, index)}
+            >
+              {item.key}
+            </LabelledTextArea>
+          </div>
         );
       break;
+
       case "image-upload":
+      if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, { images: [], defaultImage: 0 })});
         return(
-          <MultipleImageUpload
-          >
-            {item.key}
-          </MultipleImageUpload>
-        )
+          <div key= {index} className="productDetailContainer">
+            <MultipleImageUpload
+              value= {this.state.stepTwoStates.get(index)}
+              onChange = {this.handleStepTwoStateChange.bind(null, index)}
+            >
+              {item.key}
+            </MultipleImageUpload>
+          </div>
+        );
       break;
-      case "":
+
+      case "multiselect":
+        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, [])});
+        return(
+          <div key= {index} className="productDetailContainer">
+            <LabelledCheckboxGroup
+              options= {item.options}
+              value= {this.state.stepTwoStates.get(index)}
+              onChange = {this.handleStepTwoStateChange.bind(null, index)}
+            >
+              {item.key}
+            </LabelledCheckboxGroup>
+          </div>
+        );
       break;
+
+      case "String":
+        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, "")});
+        return(
+          <div key= {index} className="productDetailContainer">
+            <LabelledTextInput
+              value= {this.state.stepTwoStates.get(index)}
+              onChange = {this.handleStepTwoStateChange.bind(null, index)}
+            >
+              {item.key}
+            </LabelledTextInput>
+          </div>
+        );
+      break;
+
+      case "variable-price":
+        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, {range: [9999], price: [0]} )});
+        return(
+          <div key= {index} className="productDetailContainer">
+            <VariablePrice
+              value= {this.state.stepTwoStates.get(index)}
+              onChange = {this.handleStepTwoStateChange.bind(null, index)}
+            >
+              {item.key}
+            </VariablePrice>
+          </div>
+        );
+      break;
+
+      case "quantity":
+        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, [0,0,0]) });
+        return(
+          <div key= {index} className="productDetailContainer">
+            <ProductQuantity
+              value= {this.state.stepTwoStates.get(index)}
+              onChange = {this.handleStepTwoStateChange.bind(null, index)}
+            >
+              {item.key}
+            </ProductQuantity>
+          </div>
+        );
+      break;
+
+      case "video":
+        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, null) });
+        return(
+          <div key= {index} className="productDetailContainer">
+            <LabelledUpload
+              value= {this.state.stepTwoStates.get(index)}
+              onChange= {this.handleStepTwoStateChange.bind(null, index)}
+            >
+              {item.key}
+            </LabelledUpload>
+          </div>
+
+        );
+      break;
+
       default:
+        console.log("No component found corresponding to type! ", item);
       break;
     }
   }
@@ -220,16 +364,18 @@ class UploadProduct extends Component{
             }
             two={
               <div>
+                <h2>Step 2 of 3</h2>
                 {
-                  this.renderCorresponsingComponent({
-                    type: "auto-fill",
-                    key: "Face",
-                    options: ["Front", "Back"]
-                  }, 0)
+                  this.stepTwoArray.map(this.renderCorresponsingComponent)
                 }
+                <Button className="pt-intent-primary" style={{width:"200px"}} onClick={this.submitStepTwo}>Continue</Button>
               </div>
             }
-            three={3}
+            three={
+              <div>
+                <h2>Step 3 of 3</h2>
+              </div>
+            }
           />
         </div>
       </div>

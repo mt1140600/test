@@ -40,8 +40,9 @@ class LabelledTextInput extends Component{
 
 }
 
-LabelledTextInput.propTypes = {
+const dummy = () => {};
 
+LabelledTextInput.propTypes = {
   children: React.PropTypes.node,
   value: React.PropTypes.oneOfType([
     React.PropTypes.string,
@@ -52,7 +53,11 @@ LabelledTextInput.propTypes = {
   validate: React.PropTypes.func,
   helpText: React.PropTypes.string,
   style: React.PropTypes.object
-
 };
+
+LabelledTextInput.defaultProps = {
+  validationState: true,
+  validate: dummy
+}
 
 export default LabelledTextInput;
