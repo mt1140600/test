@@ -7,7 +7,7 @@ import LabelledTextInput from "../components/LabelledTextInput";
 import LabelledUpload from "../components/LabelledUpload";
 import * as fieldValidations from "../utils/fieldValidations";
 import {Button} from "@blueprintjs/core";
-import {Table, Column, Cell} from "@blueprintjs/table"
+import {Table, Column, Cell, EditableCell} from "@blueprintjs/table";
 import {productCategories} from '../constants';
 import CascadedDisplay from '../components/CascadedDisplay';
 import moment from "moment";
@@ -23,6 +23,7 @@ import LabelledAutoComplete from '../components/LabelledAutoComplete';
 import ProductQuantity from '../components/ProductQuantity';
 import VariablePrice from '../components/VariablePrice';
 import LabelledTextArea from '../components/LabelledTextArea';
+import AdditionalInfo from '../components/AdditionalInfo';
 
 export class TableDollarExample extends Component{
     render() {
@@ -58,7 +59,7 @@ class UploadProduct extends Component{
 
   constructor(){
     super();
-    this.state = {vStateCategory:true, categoryKey:null,commonKeys:[], images: Immutable.List([]), defaultImage: 0, stepTwoStates: Immutable.List([]) };
+    this.state = {vStateCategory:true, categoryKey:null,commonKeys:[], images: Immutable.List([]), defaultImage: 0, stepTwoStates: Immutable.List([]), tableRows: 2 };
     this.tableHeaders = ["Sub Category", "Brand", "Company", "Model", "MRP", "Selling Price", "MOQ", "Warranty", "Image"];
     this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]];
     this.stepTwoArray = [
@@ -76,7 +77,7 @@ class UploadProduct extends Component{
         key: "Image"
       },
       {
-        type: "multiselect",
+        type: "auto-fill",
         key: "Model",
         options: ["Apple", "Banana"]
       },
@@ -144,6 +145,7 @@ class UploadProduct extends Component{
   }
 
   submitStepTwo = () => {
+    // console.log(this.state.stepTwoStates);
     this.props.cascadedDisplay(2, true);
   }
 
@@ -156,8 +158,26 @@ class UploadProduct extends Component{
   }
 
   handleStepTwoStateChange = (index, value) => {
-    console.log("index, value", index, value);
+    // console.log("index, value", index, value);
     this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, value) });
+  }
+
+  renderTableColumns = (colObj, index) => {
+    // console.log("Column Object is ", colObj);
+
+    const renderCell = (rowIndex) => {
+      if(typeof(this.state.stepTwoStates.get(index)) !== "object"){
+        // console.log("Value is ", this.state.stepTwoStates.get(index));
+        return <Cell>{this.state.stepTwoStates.get(index)}</Cell>
+      }
+      else {
+        // console.log("else Value is ", this.state.stepTwoStates.get(index));
+        return <Cell>{null}</Cell>;
+      }
+    }
+    return(
+      <Column name={colObj.key} renderCell={renderCell}/>
+    );
   }
 
   renderCorresponsingComponent = (item, index) => {
@@ -179,15 +199,15 @@ class UploadProduct extends Component{
       break;
 
       case "additional-info":
-        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, "")});
+        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, [ { info: ""} ])});
         return(
           <div key= {index} className="productDetailContainer">
-            <LabelledTextArea
+            <AdditionalInfo
               value = {this.state.stepTwoStates.get(index)}
               onChange = {this.handleStepTwoStateChange.bind(null, index)}
             >
               {item.key}
-            </LabelledTextArea>
+            </AdditionalInfo>
           </div>
         );
       break;
@@ -285,7 +305,8 @@ class UploadProduct extends Component{
   }
 
   render() {
-    console.log(this.props);
+    const renderCell = (rowIndex: number) => <Cell>{`$${(rowIndex * 10).toFixed(2)}`}</Cell>;
+    // console.log(this.props);
     let categories = this.props.productUploadData.keyValue.categories;
     if (categories) {
       categories["0"]={name:"Choose Category",ref:"Choose Category"};
@@ -293,12 +314,14 @@ class UploadProduct extends Component{
     let optionalValues = [];
     let compulsaryValues = [];
     let commonValues = [];
+    let commonValuesObj = [];
     let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
     if(categoryData) {
       _.each(categoryData, (value, key) => {
           (value.required) ? compulsaryValues.push({key:key, priority:value.priority}) : optionalValues.push({key:key, priority:value.priority});
           if (value.common) {
             commonValues.push({key:key, priority:value.priority});
+            commonValuesObj.push({key: key, });
           }
       });
       compulsaryValues = _.sortBy(compulsaryValues,'priority');
@@ -312,7 +335,7 @@ class UploadProduct extends Component{
       <div>
         <div className="tabs" style={{ display:"flex", flexDirection:"column", alignItems:"left", padding: 0 }}>
           <CascadedDisplay
-            style= {{ minHeight: "75vh" }}
+            style= {{ height: "75vh" }}
             one={
               <div>
                 <LabelledSelect
@@ -364,7 +387,6 @@ class UploadProduct extends Component{
             }
             two={
               <div>
-                <h2>Step 2 of 3</h2>
                 {
                   this.stepTwoArray.map(this.renderCorresponsingComponent)
                 }
@@ -373,7 +395,13 @@ class UploadProduct extends Component{
             }
             three={
               <div>
-                <h2>Step 3 of 3</h2>
+                <Button className="pt-icon-plus" onClick={ () => {this.setState({ tableRows: this.state.tableRows + 1})} } />
+                <br/>
+                <Table numRows={this.state.tableRows}>
+                  {
+                    this.stepTwoArray.map(this.renderTableColumns)
+                  }
+                </Table>
               </div>
             }
           />

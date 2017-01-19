@@ -17,6 +17,7 @@ import ConfirmItem from './components/ConfirmItem';
 import RejectItem from './components/RejectItem';
 import DateRangePopover from './components/DateRangePopover';
 import CascadedDisplay from './components/CascadedDisplay';
+import TableExample  from './components/Table';
 
 
 export default (
@@ -43,6 +44,7 @@ export default (
     <Route path="image" component={MultipleImageUpload} />
     <Route path="verification" component={Verification} />
     <Route path="test" component={TestContainer} />
+    <Route path="table" component={TableExample} />
 
   </Route>
 );
