@@ -32,9 +32,10 @@
   "author": "Cory House",
   "license": "MIT",
   "dependencies": {
-    "@blueprintjs/table": "^1.2.0",
     "@blueprintjs/core": "1.4.0",
     "@blueprintjs/datetime": "1.4.0",
+    "@blueprintjs/table": "^1.2.0",
+    "babyparse": "0.4.6",
     "cloudinary": "1.4.6",
     "express": "4.14.0",
     "firebase": "3.6.4",

@@ -25,3 +25,6 @@ export const cloudinaryCloudName = "prokure";
 export const cloudinaryImageUploadPreset = "ahibedth";
 export const cloduinaryMerchantInfoFolder = "MerchantInfo";
 export const cloudinaryChatFolder = "SellerChat";
+
+export const cloudinaryCsvUploadPreset = "aas3tkko";
+// export const cloudinaryProductUploadFolder = "productUpload";

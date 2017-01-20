@@ -304,6 +304,14 @@ class UploadProduct extends Component{
     }
   }
 
+  downloadCsv = () => {
+    console.log("Downloading table as csv");
+  }
+
+  uploadCsv = () => {
+      console.log("Uploading csv");
+  }
+
   render() {
     const renderCell = (rowIndex: number) => <Cell>{`$${(rowIndex * 10).toFixed(2)}`}</Cell>;
     // console.log(this.props);
@@ -402,6 +410,11 @@ class UploadProduct extends Component{
                     this.stepTwoArray.map(this.renderTableColumns)
                   }
                 </Table>
+                <br/>
+                <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center"}}>
+                  <Button iconName="pt-icon-download" intent={0} onClick={this.downloadCsv}>Download as CSV</Button>
+                  <Button iconName="pt-icon-upload" intent={1} onClick={this.uploadCsv}>Upload CSV of products</Button>
+                </div>
               </div>
             }
           />
