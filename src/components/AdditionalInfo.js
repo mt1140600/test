@@ -4,9 +4,9 @@ import Immutable from 'immutable';
 
 class AdditionalInfo extends Component{
 
-    handleChange = ( index, value ) => {
+    handleChange = ( index, event ) => {
       let newArray = [...this.props.value];
-      newArray[index] = { info: value };
+      newArray[index] = { info: event.target.value };
       this.props.onChange(newArray);
     }
 
@@ -19,7 +19,7 @@ class AdditionalInfo extends Component{
             className="pt-input"
             value={item.info}
             style= {{ flex: 1 }}
-            onChange = {this.handleChange.bind(index)}
+            onChange = {this.handleChange.bind(null,index)}
             type="text"
             dir="auto"
           />
