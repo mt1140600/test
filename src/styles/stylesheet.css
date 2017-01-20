@@ -9,6 +9,9 @@ body{
 *{
   font-weight: 200;
 }
+strong{
+  font-weight: bold;
+}
 .container {
   display: flex;
   flex-direction: row;

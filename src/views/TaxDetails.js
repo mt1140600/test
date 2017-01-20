@@ -79,7 +79,7 @@ class TaxDetails extends Component{
               onChange={this.updateInfo.bind(this,"VAT")}
               validationState={this.props.taxDetails.vState.VAT}
               validate={fieldValidations.validateVAT}
-              helpText={"Enter a valid VAT"}>
+              helpText={"Enter a valid VAT eg.12345678900"}>
               VAT/TIN Number
             </LabelledTextInput>
 
@@ -88,7 +88,7 @@ class TaxDetails extends Component{
               onChange={this.updateInfo.bind(this,"CST")}
               validationState={this.props.taxDetails.vState.CST}
               validate={fieldValidations.validateCST}
-              helpText={"Enter a valid CST"}>
+              helpText={"Enter a valid CST eg.12345678900"}>
               CST Number
             </LabelledTextInput>
 

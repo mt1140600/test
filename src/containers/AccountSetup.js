@@ -17,7 +17,6 @@ class AccountSetup extends Component{
           <ProgressBar/>
           <TabLayout/>
         </div>
-        <ChatWidget/>
       </div>
     );
   }
