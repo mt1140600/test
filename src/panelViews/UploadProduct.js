@@ -426,6 +426,10 @@ class UploadProduct extends Component{
     }
   }
 
+  submitStepThree = () => {
+      console.log("Persisting table to Mongo");
+  }
+
   render() {
     const renderCell = (rowIndex: number) => <Cell>{`$${(rowIndex * 10).toFixed(2)}`}</Cell>;
     // console.log(this.props);
@@ -519,19 +523,23 @@ class UploadProduct extends Component{
             }
             three={
               <div>
-                <Button className="pt-icon-plus" onClick={this.addRow} />
+                <Button className="pt-icon-plus" onClick={this.addRow}> Add Row </Button>
+                <br/>
                 <br/>
                 <Table numRows={this.state.tableCells.length - 1}>
                   {this.state.tableCells[0].map(this.renderColumn)}
                 </Table>
                 <br/>
                 <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center"}}>
-                  <Button iconName="pt-icon-download" intent={0} onClick={this.download}>Download as CSV</Button>
-                  {/* <Button type="file" iconName="pt-icon-upload" intent={1} onChange={this.handleFileSelect}>Upload CSV of products</Button> */}
-                  <label className="pt-file-upload">
-                    <input type="file" onChange={this.handleFileSelect}/>
-                    <span className="pt-file-upload-input">Upload CSV</span>
+
+                  <Button iconName="pt-icon-download" intent={2} onClick={this.download}>Download as CSV</Button>
+
+                  <label className="pt-button pt-icon-upload pt-intent-primary">
+                    <input type="file" style={{display: "none"}} onChange={this.handleFileSelect}/>
+                    <span className="pt-file-upload-input">Upload filled CSV</span>
                   </label>
+
+                  <Button iconName="pt-icon-confirm" intent={1} onClick={this.submitStepThree}>Confirm</Button>
                 </div>
               </div>
             }
