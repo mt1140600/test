@@ -19,10 +19,12 @@ class CascadedTab extends PureComponent{
     // console.log("Rendering "+ this.props.index);
     return(
       <div
+        className= "cascadedTab"
         style={{
           flex: (this.props.nextVisible)? 1: 2,
-          minWidth: (this.props.nextVisible)? 400: 800,
+          minWidth: (this.props.nextVisible)? 500: "none",
           padding: 20,
+          display: "inline-block",
           borderRight: (this.props.nextVisible)? "1px solid #dee5e7" : null,
           borderBottom: (this.props.nextVisible)? "2px solid #106ba3" : null,
           height: this.props.height,
