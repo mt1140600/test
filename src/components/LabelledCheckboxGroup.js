@@ -66,7 +66,7 @@ class LabelledCheckboxGroup extends Component{
   render(){
     // let errorField = !this.props.validationState && this.state.clicked;
     return(
-        <label className="pt-label pt-inline" style={{display: "flex"}} onFocus={this.handleClick}>
+        <div className="pt-label pt-inline" style={{display: "flex", marginBottom: 10}} onFocus={this.handleClick}>
           { this.props.children &&
             <div style={{flex:"1"}}>
               {this.props.children}
@@ -76,7 +76,7 @@ class LabelledCheckboxGroup extends Component{
           <div style={{display:"flex",flexWrap:"wrap",flex:"1",justifyContent:"flex-end"}}>
             {this.alignCheckboxes(this.props.options,this.props.groupColumns)}
           </div>
-        </label>
+        </div>
     );
   }
 
