@@ -62,42 +62,44 @@ class UploadProduct extends Component{
     this.state = {vStateCategory:true, categoryKey:null,commonKeys:[], images: Immutable.List([]), defaultImage: 0, stepTwoStates: Immutable.List([]), tableRows: 2 };
     this.tableHeaders = ["Sub Category", "Brand", "Company", "Model", "MRP", "Selling Price", "MOQ", "Warranty", "Image"];
     this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]];
-    this.stepTwoArray = [
-      {
-        type: "auto-fill",
-        key: "Face",
-        options: ["Front", "Back"]
-      },
-      {
-        type: "additional-info",
-        key: "AdditionalInfo",
-      },
-      {
-        type: "image-upload",
-        key: "Image"
-      },
-      {
-        type: "auto-fill",
-        key: "Model",
-        options: ["Apple", "Banana"]
-      },
-      {
-        type: "String",
-        key: "Name"
-      },
-      {
-        type: "variable-price",
-        key: "Price"
-      },
-      {
-        type: "quantity",
-        key: "Quantity"
-      },
-      {
-        type: "video",
-        key: "Video"
-      }
-    ];
+    this.denormalizedFields = [];
+    this.stepTwoArray = [];
+    // this.stepTwoArray = [
+    //   {
+    //     type: "auto-fill",
+    //     key: "Face",
+    //     options: ["Front", "Back"]
+    //   },
+    //   {
+    //     type: "additional-info",
+    //     key: "AdditionalInfo",
+    //   },
+    //   {
+    //     type: "image-upload",
+    //     key: "Image"
+    //   },
+    //   {
+    //     type: "auto-fill",
+    //     key: "Model",
+    //     options: ["Apple", "Banana"]
+    //   },
+    //   {
+    //     type: "String",
+    //     key: "Name"
+    //   },
+    //   {
+    //     type: "variable-price",
+    //     key: "Price"
+    //   },
+    //   {
+    //     type: "quantity",
+    //     key: "Quantity"
+    //   },
+    //   {
+    //     type: "video",
+    //     key: "Video"
+    //   }
+    // ];
   }
 
   componentWillMount() {
@@ -111,6 +113,8 @@ class UploadProduct extends Component{
 
     return null;
   }
+
+
 
   onCheckboxChange = (value, vState) => {
     this.setState({commonKeys:value});
@@ -132,16 +136,46 @@ class UploadProduct extends Component{
     );
   }
 
+  buildStepTwoState = (selectedFieldsArray) => {
+    const fetchOptions = (item, index) => {
+      _.each( this.denormalizedFields, (item2, index2) => {
+        if(item2.key === item){
+          if(typeof(item2.ref) !== "undefined"){
+            // this.denormalizedFields[index2].options =
+            console.log("fetching options for ", item2.ref);
+            console.log(this.props.productUploadData.keyValue[item2.ref]);
+            let newArray = [];
+            _.each(this.props.productUploadData.keyValue[item2.ref], (value, key) => {
+              return newArray.push(value.name);
+            });
+            this.denormalizedFields[index2].options = newArray;
+            console.log("denorm", this.denormalizedFields);
+          }
+          this.stepTwoArray.push(this.denormalizedFields[index2]);
+          console.log(this.stepTwoArray);
+        }
+      });
+    };
+    console.log("Inside build step two");
+    console.log(selectedFieldsArray);
+    console.log(this.denormalizedFields);
+    selectedFieldsArray.map(fetchOptions);
+    console.log(this.stepTwoArray);
+    this.props.cascadedDisplay(1, true);
+    //ffff
+  }
+
   submitSelectedKeys = () => {
     let requiredKeys = [];
     let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
+    this.stepTwoArray = [];
     _.each(categoryData, (value, key) => {
       if(value.ref && value.common) {
         requiredKeys.push(value.ref);
       }
     });
     this.props.getMulitpleKeyValueData(requiredKeys);
-    this.props.cascadedDisplay(1, true);
+    setTimeout(() => {this.buildStepTwoState(this.state.commonKeys)}, 500);
   }
 
   submitStepTwo = () => {
@@ -323,6 +357,7 @@ class UploadProduct extends Component{
     let compulsaryValues = [];
     let commonValues = [];
     let commonValuesObj = [];
+    this.denormalizedFields= [];
     let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
     if(categoryData) {
       _.each(categoryData, (value, key) => {
@@ -330,7 +365,8 @@ class UploadProduct extends Component{
           if (value.common) {
             commonValues.push({key:key, priority:value.priority});
             commonValuesObj.push({key: key, });
-          }
+          };
+          this.denormalizedFields.push({key: key, priority: value.priority, ref: value.ref, type: value.type});
       });
       compulsaryValues = _.sortBy(compulsaryValues,'priority');
       optionalValues = _.sortBy(optionalValues,'priority');
