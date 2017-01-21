@@ -525,7 +525,6 @@ class UploadProduct extends Component{
               <div>
                 <Button className="pt-icon-plus" onClick={this.addRow}> Add Row </Button>
                 <br/>
-                <br/>
                 <Table numRows={this.state.tableCells.length - 1}>
                   {this.state.tableCells[0].map(this.renderColumn)}
                 </Table>

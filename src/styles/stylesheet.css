@@ -20,6 +20,10 @@ body{
   font-weight: 400;
 }
 
+.cascadedTab * .bp-table-container{
+  max-width: none;
+}
+
 .container {
   display: flex;
   flex-direction: row;
@@ -166,7 +170,7 @@ h6{
   width: 100%;
 }
 .verticalTabBar{
-  z-index: 10;
+  z-index: 12;
   position: fixed;
   width: 200px;
   background-color: #3a3f51;
