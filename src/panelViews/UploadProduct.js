@@ -24,6 +24,11 @@ import ProductQuantity from '../components/ProductQuantity';
 import VariablePrice from '../components/VariablePrice';
 import LabelledTextArea from '../components/LabelledTextArea';
 import AdditionalInfo from '../components/AdditionalInfo';
+import Baby from "babyparse";
+
+Array.prototype.diff = function(a) {
+    return this.filter(function(i) {return a.indexOf(i) < 0;});
+};
 
 export class TableDollarExample extends Component{
     render() {
@@ -59,11 +64,12 @@ class UploadProduct extends Component{
 
   constructor(){
     super();
-    this.state = {vStateCategory:true, categoryKey:null,commonKeys:[], images: Immutable.List([]), defaultImage: 0, stepTwoStates: Immutable.List([]), tableRows: 2 };
+    this.state = {vStateCategory:true, categoryKey:null,commonKeys:[], images: Immutable.List([]), defaultImage: 0, stepTwoStates: Immutable.List([]), tableRows: 2, csv: null, tableCells: [["Name", "Age", "Sex"], ["Anand", 22, "Male"], ["Stone Cold", 40, "Beast"]] };
     this.tableHeaders = ["Sub Category", "Brand", "Company", "Model", "MRP", "Selling Price", "MOQ", "Warranty", "Image"];
     this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]];
     this.denormalizedFields = [];
     this.stepTwoArray = [];
+    this.stepThreeArray = [];
     // this.stepTwoArray = [
     //   {
     //     type: "auto-fill",
@@ -137,8 +143,16 @@ class UploadProduct extends Component{
   }
 
   buildStepTwoState = (selectedFieldsArray) => {
+    this.stepThreeArray = [];
+    let allFields = [];
+    let stepTwoFields = [];
+
     const fetchOptions = (item, index) => {
+      allFields = [];
       _.each( this.denormalizedFields, (item2, index2) => {
+        allFields.push(this.denormalizedFields[index2].key);
+        console.log("initial step 3 array");
+        console.log(this.stepThreeArray);
         if(item2.key === item){
           if(typeof(item2.ref) !== "undefined"){
             // this.denormalizedFields[index2].options =
@@ -149,26 +163,33 @@ class UploadProduct extends Component{
               return newArray.push(value.name);
             });
             this.denormalizedFields[index2].options = newArray;
-            console.log("denorm", this.denormalizedFields);
+            // console.log("denorm", this.denormalizedFields);
           }
           this.stepTwoArray.push(this.denormalizedFields[index2]);
+          stepTwoFields.push(this.denormalizedFields[index2].key);
+          // this.stepThreeArray.splice(this.stepThreeArray.indexOf(this.denormalizedFields[index2].key), 1);
+          console.log("step2");
           console.log(this.stepTwoArray);
         }
       });
+      this.stepThreeArray = allFields.diff(stepTwoFields);
     };
     console.log("Inside build step two");
     console.log(selectedFieldsArray);
     console.log(this.denormalizedFields);
     selectedFieldsArray.map(fetchOptions);
-    console.log(this.stepTwoArray);
+    console.log("step2",this.stepTwoArray);
+    console.log("step3", this.stepThreeArray);
     this.props.cascadedDisplay(1, true);
     //ffff
   }
 
   submitSelectedKeys = () => {
+    this.props.cascadedDisplay(1, false);
     let requiredKeys = [];
     let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
     this.stepTwoArray = [];
+    this.stepThreeArray = [];
     _.each(categoryData, (value, key) => {
       if(value.ref && value.common) {
         requiredKeys.push(value.ref);
@@ -180,6 +201,10 @@ class UploadProduct extends Component{
 
   submitStepTwo = () => {
     // console.log(this.state.stepTwoStates);
+    //set tableCells
+    let newtableCellsArray = [];
+    newtableCellsArray.push(this.stepThreeArray);
+    this.setState({ tableCells: newtableCellsArray });
     this.props.cascadedDisplay(2, true);
   }
 
@@ -196,23 +221,23 @@ class UploadProduct extends Component{
     this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, value) });
   }
 
-  renderTableColumns = (colObj, index) => {
-    // console.log("Column Object is ", colObj);
-
-    const renderCell = (rowIndex) => {
-      if(typeof(this.state.stepTwoStates.get(index)) !== "object"){
-        // console.log("Value is ", this.state.stepTwoStates.get(index));
-        return <Cell>{this.state.stepTwoStates.get(index)}</Cell>
-      }
-      else {
-        // console.log("else Value is ", this.state.stepTwoStates.get(index));
-        return <Cell>{null}</Cell>;
-      }
-    }
-    return(
-      <Column name={colObj.key} renderCell={renderCell}/>
-    );
-  }
+  // renderTableColumns = (colObj, index) => {
+  //   // console.log("Column Object is ", colObj);
+  //
+  //   const renderCell = (rowIndex) => {
+  //     if(typeof(this.state.stepTwoStates.get(index)) !== "object"){
+  //       // console.log("Value is ", this.state.stepTwoStates.get(index));
+  //       return <Cell>{this.state.stepTwoStates.get(index)}</Cell>
+  //     }
+  //     else {
+  //       // console.log("else Value is ", this.state.stepTwoStates.get(index));
+  //       return <Cell>{null}</Cell>;
+  //     }
+  //   }
+  //   return(
+  //     <Column name={colObj.key} renderCell={renderCell}/>
+  //   );
+  // }
 
   renderCorresponsingComponent = (item, index) => {
     switch(item.type){
@@ -346,6 +371,61 @@ class UploadProduct extends Component{
       console.log("Uploading csv");
   }
 
+
+  download = () => {
+    var csvContent = "data:text/csv;charset=utf-8,";
+    this.state.tableCells.forEach( (infoArray, index) => {
+      let dataString = infoArray.join(",");
+      csvContent += index < this.state.tableCells.length ? dataString+ "\n" : dataString;
+    });
+    var encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
+  }
+
+  editCell = (row, col, value) => {
+    console.log("confirm");
+    let newArray = [...this.state.tableCells];
+    let newRow = [...newArray][row];
+    newRow[col] = value;
+    newArray[row] = newRow;
+    this.setState({ tableCells: newArray });
+  }
+
+  renderColumn = (item, index) => {
+    const renderCell = (rowIndex) => {
+      return <EditableCell value={this.state.tableCells[rowIndex + 1][index]} onConfirm={this.editCell.bind(null, rowIndex+1, index)}/>
+    }
+    return(
+      <Column name={item} renderCell={renderCell} />
+    );
+  }
+
+  addRow = () => {
+    let newArray = [...this.state.tableCells];
+    let newRow = [];
+    for(let i=0; i< this.state.tableCells[0].length; i++){
+      newRow.push(null);
+    }
+    newArray.push(newRow);
+    this.setState({ tableCells: newArray });
+  }
+
+  handleFileSelect = (evt) => {
+    var files = evt.target.files; // FileList object
+    var reader = new FileReader();
+    reader.readAsText(files[0], "UTF-8");
+    reader.onload = (evt) => {
+      console.log(evt.target.result);
+      //map csv contents to 2D array
+      let parsed = Baby.parse(evt.target.result);
+      console.log(parsed.data);
+      this.setState({tableCells: parsed.data});
+    }
+    reader.onerror = function (evt) {
+      console.log("error reading file");
+    }
+  }
+
   render() {
     const renderCell = (rowIndex: number) => <Cell>{`$${(rowIndex * 10).toFixed(2)}`}</Cell>;
     // console.log(this.props);
@@ -439,17 +519,19 @@ class UploadProduct extends Component{
             }
             three={
               <div>
-                <Button className="pt-icon-plus" onClick={ () => {this.setState({ tableRows: this.state.tableRows + 1})} } />
+                <Button className="pt-icon-plus" onClick={this.addRow} />
                 <br/>
-                <Table numRows={this.state.tableRows}>
-                  {
-                    this.stepTwoArray.map(this.renderTableColumns)
-                  }
+                <Table numRows={this.state.tableCells.length - 1}>
+                  {this.state.tableCells[0].map(this.renderColumn)}
                 </Table>
                 <br/>
                 <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center"}}>
-                  <Button iconName="pt-icon-download" intent={0} onClick={this.downloadCsv}>Download as CSV</Button>
-                  <Button iconName="pt-icon-upload" intent={1} onClick={this.uploadCsv}>Upload CSV of products</Button>
+                  <Button iconName="pt-icon-download" intent={0} onClick={this.download}>Download as CSV</Button>
+                  {/* <Button type="file" iconName="pt-icon-upload" intent={1} onChange={this.handleFileSelect}>Upload CSV of products</Button> */}
+                  <label className="pt-file-upload">
+                    <input type="file" onChange={this.handleFileSelect}/>
+                    <span className="pt-file-upload-input">Upload CSV</span>
+                  </label>
                 </div>
               </div>
             }
