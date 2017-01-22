@@ -18,7 +18,7 @@ import RejectItem from './components/RejectItem';
 import DateRangePopover from './components/DateRangePopover';
 import CascadedDisplay from './components/CascadedDisplay';
 import TableExample  from './components/Table';
-
+import SampleHOC from './components/SampleHOC';
 
 export default (
   // <Route path="/" component={App}>
@@ -45,6 +45,8 @@ export default (
     <Route path="verification" component={Verification} />
     <Route path="test" component={TestContainer} />
     <Route path="table" component={TableExample} />
+    <Route path="hoc" component={SampleHOC} />
+
 
   </Route>
 );
