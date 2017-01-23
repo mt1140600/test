@@ -396,7 +396,7 @@ class UploadProduct extends Component{
       return <EditableCell value={this.state.tableCells[rowIndex + 1][index]} onConfirm={this.editCell.bind(null, rowIndex+1, index)}/>
     }
     return(
-      <Column name={item} renderCell={renderCell} />
+      <Column key={index} name={item} renderCell={renderCell} />
     );
   }
 
@@ -461,7 +461,7 @@ class UploadProduct extends Component{
     }
     return(
       <div>
-        <div className="tabs" style={{ display:"flex", flexDirection:"column", alignItems:"left", padding: 0 }}>
+        <div id="tabs" className="tabs" style={{ display:"flex", flexDirection:"column", alignItems:"left", padding: 0 }}>
           <CascadedDisplay
             style= {{ height: "75vh" }}
             one={

@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import cascadedDisplay from '../actions/cascadedDisplay';
+import shallowCompare from 'react-addons-shallow-compare'
 
 
 // const makeCascadedTab = (WrappedComponent) => {
@@ -136,11 +137,38 @@ class CascadedDisplay extends Component{
   //   this.setState({threeVisible: value});
   // }
 
+  componentWillReceiveProps(nextProps){
+
+    const isSame = (array1, array2) => {
+      return(
+        (array1.length == array2.length) && array1.every(function(element, index) {
+          return element === array2[index];
+        })
+      );
+    }
+
+    if(!isSame(this.props.tabsVisible, nextProps.tabsVisible)){
+      setTimeout(
+        () => {
+          const container = document.getElementById("app");
+          const tab = document.getElementsByClassName("cascadedTab");
+          let widthToScroll = 0;
+          for(let i=0; i<tab.length-1; i++ ){ //Skipping width of last tab as we need to scroll to begining of last tab
+            console.log("i is "+ i);
+            widthToScroll = widthToScroll + tab[i].offsetWidth
+          }
+          container.scrollLeft = widthToScroll + 40; //40 is the margin in container
+        }, 100)
+    }
+
+  }
+
+
   dummy = () => {  }
 
   render(){
     return(
-      <div style={ Object.assign({}, { display: "flex", height: "100%", backgroundColor: "white"}, this.props.style) }>
+      <div id= "cascadedDisplay" style={ Object.assign({}, { display: "flex", height: "100%", backgroundColor: "white"}, this.props.style) }>
         <CascadedTab
           index ={1}
           content = {this.props.one}
