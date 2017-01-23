@@ -4,6 +4,58 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import cascadedDisplay from '../actions/cascadedDisplay';
 
+
+// const makeCascadedTab = (WrappedComponent) => {
+//
+//   return class extends PureComponent{
+//
+//                 componentWillUnmount(){
+//                   this.props.showNext(false);
+//                 }
+//
+//                 collapseTab = () => {
+//                   this.props.collapseTab();
+//                 }
+//
+//                 render(){
+//                   return(
+//                     <div
+//                       className= "cascadedTab"
+//                       style={{
+//                         flex: (this.props.nextVisible)? 1: 2,
+//                         minWidth: (this.props.nextVisible)? 500: "auto",
+//                         padding: 20,
+//                         display: "inline-block",
+//                         borderRight: (this.props.nextVisible)? "1px solid #dee5e7" : null,
+//                         borderBottom: (this.props.nextVisible)? "2px solid #106ba3" : null,
+//                         height: this.props.height,
+//                         boxSizing: "border-box",
+//                         position: "relative"
+//                       }}
+//                       // onClick={this.props.showNext.bind(null, false)}
+//                     >
+//                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#f6f8f8", margin: "0px -20px 0px -20px", padding: "0px 10px 0px 10px", boxShadow: "0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05)", position: "absolute", top: 0, boxSizing: "border-box", zIndex: 2, width: "100%"}}>
+//                         <h2 style={{ color: "#5c7080", fontWeight: "100", fontSize: "x-large" }}>{`Step ${this.props.index} of 3`}</h2>
+//                         {
+//                           (typeof(this.props.collapseTab) !== "undefined")?
+//                             <button className="pt-button pt-icon-cross pt-intent-danger" onClick={this.collapseTab}/>
+//                             :
+//                             null
+//                         }
+//                       </div>
+//                       <div style={{ marginTop: 20, paddingTop: 10, overflowY: "scroll", height: `calc(${this.props.height} - 50px)`}}>
+//                         <WrappedComponent {...this.props} />
+//                       </div>
+//                     </div>
+//                   );
+//                 }
+//
+//               }
+// }
+//
+// export makeCascadedTab;
+
+
 //TODO: CascadedTab will re-render because we are printing a blue bottomborder and rightborder. Try to eliminate this.
 class CascadedTab extends PureComponent{
 

@@ -26,7 +26,7 @@ const inductMember = (WrappedComponent) => {
       }
 
       componentDidMount(){
-          console.log("mounting ");
+          console.log(WrappedComponent.displayName);
       }
 
       render(){
