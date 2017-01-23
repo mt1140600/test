@@ -154,7 +154,6 @@ class CascadedDisplay extends Component{
           const tab = document.getElementsByClassName("cascadedTab");
           let widthToScroll = 0;
           for(let i=0; i<tab.length-1; i++ ){ //Skipping width of last tab as we need to scroll to begining of last tab
-            console.log("i is "+ i);
             widthToScroll = widthToScroll + tab[i].offsetWidth
           }
           container.scrollLeft = widthToScroll + 40; //40 is the margin in container

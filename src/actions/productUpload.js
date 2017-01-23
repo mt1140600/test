@@ -1,8 +1,8 @@
 import {firebaseApp} from './firebase';
-import {GET_PRODUCT_KEY_VALUES} from '../constant';
+import {GET_PRODUCT_KEY_VALUES, SELECT_COMMON_FIELDS} from '../constant';
 
 export const getKeyValueData = (key) => {
-  return (dispatch, state) => {
+  return (dispatch) => {
     const database = firebaseApp.database();
     database.ref('keyValues/' + key).on('value', (snapshot) => {
       let payload = {};
@@ -18,7 +18,7 @@ export const getKeyValueData = (key) => {
 }
 
 export const getMulitpleKeyValueData = (keys) => {
-  return (dispatch, state) => {
+  return (dispatch) => {
     const keyValuesRef =  firebaseApp.database().ref('keyValues/');
     keys.forEach((key) => {
       keyValuesRef.child(key).on('value',(snapshot) => {
@@ -30,5 +30,12 @@ export const getMulitpleKeyValueData = (keys) => {
         });
       });
     })
+  }
+}
+
+export const selectCommonFields = (value) => {
+  return{
+    type: SELECT_COMMON_FIELDS,
+    payload: value
   }
 }
