@@ -105,14 +105,14 @@ class UploadProductThree extends Component{
         <br/>
         <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center"}}>
 
-          <Button iconName="pt-icon-download" intent={2} onClick={this.download}>Download as CSV</Button>
+          <button className="pt-button pt-icon-download pt-intent-warning" onClick={this.download} style={{maxHeight: 30}}>Download as CSV</button>
 
-          <label className="pt-button pt-icon-upload pt-intent-primary">
+          <label className="pt-button pt-icon-upload pt-intent-primary" style={{maxHeight: 30}}>
             <input type="file" style={{display: "none"}} onChange={this.handleFileSelect}/>
             <span className="pt-file-upload-input">Upload filled CSV</span>
           </label>
 
-          <Button iconName="pt-icon-confirm" intent={1} onClick={this.submitStepThree}>Confirm</Button>
+          <button className="pt-button pt-icon-confirm pt-intent-success" onClick={this.submitStepThree} style={{maxHeight: 30}}>Confirm</button>
         </div>
       </div>
     );
