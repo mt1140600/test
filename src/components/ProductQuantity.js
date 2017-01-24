@@ -15,33 +15,37 @@ class ProductQuantity extends Component{
     return(
       <label>
         <p>Product Quantity</p>
-        <LabelledTextInput
-          value= {this.props.value[0]}
-          onChange = {this.handleChange.bind(null, 0)}
-          validationState = {true}
-          validate = {this.dummy}
-        >
-          Minimum Order Quantity
-        </LabelledTextInput>
+        <div style={{display: "flex", justifyContent:"space-between"}}>
+          <LabelledTextInput
+            value= {this.props.value[0]}
+            onChange = {this.handleChange.bind(null, 0)}
+            validationState = {true}
+            validate = {this.dummy}
+            style= {{ marginRight: 15}}
+          >
+            Minimum
+          </LabelledTextInput>
 
-        <LabelledTextInput
-          value = {this.props.value[1]}
-          onChange = {this.handleChange.bind(null, 1)}
-          validationState = {true}
-          validate = {this.dummy}
-        >
-          Maximum Order Quantity
-        </LabelledTextInput>
+          <LabelledTextInput
+            value = {this.props.value[1]}
+            onChange = {this.handleChange.bind(null, 1)}
+            validationState = {true}
+            validate = {this.dummy}
+            style= {{ marginRight: 15}}
+          >
+            Maximum
+          </LabelledTextInput>
 
-        <LabelledTextInput
-          value = {this.props.value[2]}
-          onChange = {this.handleChange.bind(null, 2)}
-          validationState = {true}
-          validate = {this.dummy}
-        >
-          Steps of
-        </LabelledTextInput>
-
+          <LabelledTextInput
+            value = {this.props.value[2]}
+            onChange = {this.handleChange.bind(null, 2)}
+            validationState = {true}
+            validate = {this.dummy}
+            style= {{ marginRight: 15}}
+          >
+            Steps of
+          </LabelledTextInput>
+        </div>
       </label>
     );
   }
