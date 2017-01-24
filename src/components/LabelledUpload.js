@@ -68,7 +68,8 @@ LabelledUpload.propTypes = {
 LabelledUpload.defaultProps = {
   cloudinaryCloudName: "dtvfkbdm8",
   cloudinaryUploadPreset: "dgfm0gcv",
-  validationState: true,
+  validationState: false,
+  helpText: "",
   validate: dummy
 }
 

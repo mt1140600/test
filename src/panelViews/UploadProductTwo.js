@@ -12,7 +12,7 @@ import VariablePrice from '../components/VariablePrice';
 import LabelledTextArea from '../components/LabelledTextArea';
 import AdditionalInfo from '../components/AdditionalInfo';
 import MultipleImageUpload from '../components/MultipleImageUpload';
-
+import cascadedDisplay from '../actions/cascadedDisplay';
 import * as productUploadActions from '../actions/productUpload';
 import * as _ from "lodash";
 
@@ -259,6 +259,13 @@ class UploadProductTwo extends Component{
       );
   }
 
+  submitStepTwo = () => {
+  // let newtableCellsArray = [];
+  // newtableCellsArray.push(this.stepThreeArray);
+  // this.setState({ tableCells: newtableCellsArray });
+  this.props.cascadedDisplay(2, true);
+  }
+
   componentDidMount(){
     console.log("Component is Mounting");
     console.log(this.props.productUploadData);
@@ -275,6 +282,7 @@ class UploadProductTwo extends Component{
 
   componentDidUpdate(prevProps){  //Using this instead of componentWillReceiveProps as we are still working with old state in handleStepTwoState method
       if( !_.isEqual(this.props.productUploadData.selectedCommonFields, prevProps.productUploadData.selectedCommonFields) ){
+        this.props.cascadedDisplay(2, false);
         let deletedFields = prevProps.productUploadData.selectedCommonFields.diff(this.props.productUploadData.selectedCommonFields); //added diff to Array.prototype
         if( deletedFields.length > 0 ){
           console.log("deleted fields ", deletedFields);
@@ -307,7 +315,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators(productUploadActions, dispatch);
+    return bindActionCreators(Object.assign({}, productUploadActions, {cascadedDisplay} ), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UploadProductTwo);
