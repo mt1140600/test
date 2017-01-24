@@ -96,8 +96,8 @@ LabelledAutoComplete.propTypes = {
 }
 
 LabelledAutoComplete.defaultProps = {
-    options: ["Reebok", "Nike", "Power", "Umbro", "Woodland", "Adidas"],
-    value: "Woodland",
+    options: [],
+    value: "",
     onSelect: () => null,
 }
 

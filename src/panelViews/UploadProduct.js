@@ -26,6 +26,7 @@ import AdditionalInfo from '../components/AdditionalInfo';
 import Baby from "babyparse";
 
 import UploadProductOne from "./UploadProductOne";
+import UploadProductTwo from './UploadProductTwo';
 
 Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
@@ -113,20 +114,6 @@ class UploadProduct extends Component{
     this.props.getKeyValueData('categories');
   }
 
-
-  onChange = (value, vState) => {
-    this.setState({vStateCategory:vState, categoryKey:value, commonKeys:[]});
-    this.props.getKeyValueData(value);
-    return null;
-  }
-
-
-
-  onCheckboxChange = (value, vState) => {
-    this.setState({commonKeys:value});
-    this.buildStepTwoState(value);
-  }
-
   renderTableRow = (item,index) => {
     return(
       <div key={index} style={{flexBasis:"11%", textAlign:"center", display:"flex", flexDirection:"column", justifyContent:"center", minHeight:"40px"}}>
@@ -141,63 +128,6 @@ class UploadProduct extends Component{
         {item}
       </div>
     );
-  }
-
-  buildStepTwoState = (selectedFieldsArray) => {
-    this.stepThreeArray = [];
-    let allFields = [];
-    let stepTwoFields = [];
-
-    const fetchOptions = (item, index) => {
-      allFields = [];
-      _.each( this.denormalizedFields, (item2, index2) => {
-        allFields.push(this.denormalizedFields[index2].key);
-        console.log("initial step 3 array");
-        console.log(this.stepThreeArray);
-        if(item2.key === item){
-          if(typeof(item2.ref) !== "undefined"){
-            // this.denormalizedFields[index2].options =
-            console.log("fetching options for ", item2.ref);
-            console.log(this.props.productUploadData.keyValue[item2.ref]);
-            let newArray = [];
-            _.each(this.props.productUploadData.keyValue[item2.ref], (value, key) => {
-              return newArray.push(value.name);
-            });
-            this.denormalizedFields[index2].options = newArray;
-            // console.log("denorm", this.denormalizedFields);
-          }
-          this.stepTwoArray.push(this.denormalizedFields[index2]);
-          stepTwoFields.push(this.denormalizedFields[index2].key);
-          // this.stepThreeArray.splice(this.stepThreeArray.indexOf(this.denormalizedFields[index2].key), 1);
-          console.log("step2");
-          console.log(this.stepTwoArray);
-        }
-      });
-      this.stepThreeArray = allFields.diff(stepTwoFields);
-    };
-    console.log("Inside build step two");
-    console.log(selectedFieldsArray);
-    console.log(this.denormalizedFields);
-    selectedFieldsArray.map(fetchOptions);
-    console.log("step2",this.stepTwoArray);
-    console.log("step3", this.stepThreeArray);
-    this.props.cascadedDisplay(1, true);
-    //ffff
-  }
-
-  submitSelectedKeys = () => {
-    this.props.cascadedDisplay(1, false);
-    let requiredKeys = [];
-    let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
-    this.stepTwoArray = [];
-    this.stepThreeArray = [];
-    _.each(categoryData, (value, key) => {
-      if(value.ref && value.common) {
-        requiredKeys.push(value.ref);
-      }
-    });
-    this.props.getMulitpleKeyValueData(requiredKeys);
-    setTimeout(() => {this.buildStepTwoState(this.state.commonKeys)}, 500);
   }
 
   submitStepTwo = () => {
@@ -240,130 +170,6 @@ class UploadProduct extends Component{
   //     <Column name={colObj.key} renderCell={renderCell}/>
   //   );
   // }
-
-  renderCorresponsingComponent = (item, index) => {
-    switch(item.type){
-
-      case "auto-fill":
-        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, item.options[0])});
-        return(
-          <div key= {index} className="productDetailContainer">
-            <LabelledAutoComplete
-              options = {item.options}
-              value = {this.state.stepTwoStates.get(index)}
-              onSelect = {this.handleStepTwoStateChange.bind(null, index)}
-            >
-              {item.key}
-            </LabelledAutoComplete>
-          </div>
-        );
-      break;
-
-      case "additional-info":
-        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, [ { info: ""} ])});
-        return(
-          <div key= {index} className="productDetailContainer">
-            <AdditionalInfo
-              value = {this.state.stepTwoStates.get(index)}
-              onChange = {this.handleStepTwoStateChange.bind(null, index)}
-            >
-              {item.key}
-            </AdditionalInfo>
-          </div>
-        );
-      break;
-
-      case "image-upload":
-      if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, { images: [], defaultImage: 0 })});
-        return(
-          <div key= {index} className="productDetailContainer">
-            <MultipleImageUpload
-              value= {this.state.stepTwoStates.get(index)}
-              onChange = {this.handleStepTwoStateChange.bind(null, index)}
-            >
-              {item.key}
-            </MultipleImageUpload>
-          </div>
-        );
-      break;
-
-      case "multiselect":
-        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, [])});
-        return(
-          <div key= {index} className="productDetailContainer">
-            <LabelledCheckboxGroup
-              options= {item.options}
-              value= {this.state.stepTwoStates.get(index)}
-              onChange = {this.handleStepTwoStateChange.bind(null, index)}
-            >
-              {item.key}
-            </LabelledCheckboxGroup>
-          </div>
-        );
-      break;
-
-      case "String":
-        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, "")});
-        return(
-          <div key= {index} className="productDetailContainer">
-            <LabelledTextInput
-              value= {this.state.stepTwoStates.get(index)}
-              onChange = {this.handleStepTwoStateChange.bind(null, index)}
-            >
-              {item.key}
-            </LabelledTextInput>
-          </div>
-        );
-      break;
-
-      case "variable-price":
-        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, {range: [9999], price: [0]} )});
-        return(
-          <div key= {index} className="productDetailContainer">
-            <VariablePrice
-              value= {this.state.stepTwoStates.get(index)}
-              onChange = {this.handleStepTwoStateChange.bind(null, index)}
-            >
-              {item.key}
-            </VariablePrice>
-          </div>
-        );
-      break;
-
-      case "quantity":
-        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, [0,0,0]) });
-        return(
-          <div key= {index} className="productDetailContainer">
-            <ProductQuantity
-              value= {this.state.stepTwoStates.get(index)}
-              onChange = {this.handleStepTwoStateChange.bind(null, index)}
-            >
-              {item.key}
-            </ProductQuantity>
-          </div>
-        );
-      break;
-
-      case "video":
-        if( typeof(this.state.stepTwoStates.get(index)) === "undefined" ) this.setState({ stepTwoStates: this.state.stepTwoStates.set(index, null) });
-        return(
-          <div key= {index} className="productDetailContainer">
-            <LabelledUpload
-              value= {this.state.stepTwoStates.get(index)}
-              onChange= {this.handleStepTwoStateChange.bind(null, index)}
-            >
-              {item.key}
-            </LabelledUpload>
-          </div>
-
-        );
-      break;
-
-      default:
-        console.log("No component found corresponding to type! ", item);
-      break;
-    }
-  }
 
   downloadCsv = () => {
     console.log("Downloading table as csv");
@@ -434,33 +240,6 @@ class UploadProduct extends Component{
 
   render() {
     const renderCell = (rowIndex: number) => <Cell>{`$${(rowIndex * 10).toFixed(2)}`}</Cell>;
-    // console.log(this.props);
-    let categories = this.props.productUploadData.keyValue.categories;
-    if (categories) {
-      categories["0"]={name:"Choose Category",ref:"Choose Category"};
-    }
-    let optionalValues = [];
-    let compulsaryValues = [];
-    let commonValues = [];
-    let commonValuesObj = [];
-    this.denormalizedFields= [];
-    let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
-    if(categoryData) {
-      _.each(categoryData, (value, key) => {
-          (value.required) ? compulsaryValues.push({key:key, priority:value.priority}) : optionalValues.push({key:key, priority:value.priority});
-          if (value.common) {
-            commonValues.push({key:key, priority:value.priority});
-            commonValuesObj.push({key: key, });
-          };
-          this.denormalizedFields.push({key: key, priority: value.priority, ref: value.ref, type: value.type});
-      });
-      compulsaryValues = _.sortBy(compulsaryValues,'priority');
-      optionalValues = _.sortBy(optionalValues,'priority');
-      commonValues = _.sortBy(commonValues, 'priority');
-      commonValues = _.map(commonValues,(value, index) => {
-        return value.key;
-      });
-    }
     return(
       <div>
         <div id="tabs" className="tabs" style={{ display:"flex", flexDirection:"column", alignItems:"left", padding: 0 }}>
@@ -470,12 +249,7 @@ class UploadProduct extends Component{
               <UploadProductOne />
             }
             two={
-              <div>
-                {
-                  this.stepTwoArray.map(this.renderCorresponsingComponent)
-                }
-                <Button className="pt-intent-primary" style={{width:"200px"}} onClick={this.submitStepTwo}>Continue</Button>
-              </div>
+              <UploadProductTwo />
             }
             three={
               <div>

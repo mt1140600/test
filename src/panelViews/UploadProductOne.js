@@ -40,6 +40,7 @@ class UploadProductOne extends Component{
 
   selectCategory = (value, vState) => {
     this.setState({vStateCategory:vState, categoryKey:value});
+    this.props.selectCategory(value);
     this.props.getKeyValueData(value);
     return null;
   }
@@ -103,7 +104,10 @@ class UploadProductOne extends Component{
         requiredKeys.push(value.ref);
       }
     });
+    console.log("requiredKeys", requiredKeys);
     this.props.getMulitpleKeyValueData(requiredKeys);
+    // this.props.cascadedDisplay(1, true)
+    setTimeout(() => {this.props.cascadedDisplay(1, true)}, 500);
     // setTimeout(() => {this.buildStepTwoState(this.state.commonKeys)}, 500);
   }
 
