@@ -208,7 +208,7 @@ class UploadProductTwo extends Component{
               let val = null;
               switch(value.type){
                 case 'auto-fill':
-                  val = "";
+                  val = `Select ${key}`;
                 break;
 
                 case 'additional-info':
