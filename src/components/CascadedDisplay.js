@@ -90,7 +90,7 @@ class CascadedTab extends PureComponent{
           <h2 style={{ color: "#5c7080", fontWeight: "100", fontSize: "x-large" }}>{`Step ${this.props.index} of 3`}</h2>
           {
             (typeof(this.props.collapseTab) !== "undefined")?
-              <button className="pt-button pt-icon-cross pt-intent-danger" onClick={this.collapseTab}/>
+              <button className="pt-button pt-icon-cross pt-minimal" onClick={this.collapseTab}/>
               :
               null
           }
