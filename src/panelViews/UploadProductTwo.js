@@ -228,7 +228,7 @@ class UploadProductTwo extends Component{
                 break;
 
                 case 'variable-price':
-                  val = {range: [9999], price: [0]};
+                  val = {range: ["max"], price: [0]};
                 break;
 
                 case 'quantity':

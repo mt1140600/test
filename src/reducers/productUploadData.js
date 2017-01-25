@@ -1,12 +1,13 @@
 import {createReducer} from '../utils';
 import { Map, List } from 'immutable';
-import {GET_PRODUCT_KEY_VALUES, SELECT_COMMON_FIELDS, SELECT_CATEGORY, HANDLE_STEP_TWO_STATE_CHANGE, REMOVE_SELECTED_FIELD} from '../constant';
+import {GET_PRODUCT_KEY_VALUES, SELECT_COMMON_FIELDS, SELECT_CATEGORY, HANDLE_STEP_TWO_STATE_CHANGE, REMOVE_SELECTED_FIELD, SET_PRODUCTS} from '../constant';
 
 const initialState = Map({
     keyValue: Map(),
     selectedCommonFields: List(),
     selectedCategory: null,
-    stepTwoState: Map()
+    stepTwoState: Map(),
+    productSearch: {}
 });
 
 export default createReducer(initialState, {
@@ -24,5 +25,8 @@ export default createReducer(initialState, {
     },
     [REMOVE_SELECTED_FIELD]: (state, payload) => {
       return state.deleteIn(["stepTwoState", payload]);
+    },
+    [SET_PRODUCTS]: (state, payload) => {
+      return state.set("productSearch", payload);
     }
 });

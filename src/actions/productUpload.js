@@ -1,5 +1,8 @@
 import {firebaseApp} from './firebase';
-import {GET_PRODUCT_KEY_VALUES, SELECT_COMMON_FIELDS, SELECT_CATEGORY, HANDLE_STEP_TWO_STATE_CHANGE, REMOVE_SELECTED_FIELD} from '../constant';
+import {GET_PRODUCT_KEY_VALUES, SELECT_COMMON_FIELDS, SELECT_CATEGORY, HANDLE_STEP_TWO_STATE_CHANGE, REMOVE_SELECTED_FIELD, SET_PRODUCTS} from '../constant';
+import * as constants from '../constants';
+import { checkHttpStatus, parseJSON } from '../utils';
+import 'whatwg-fetch';
 
 export const getKeyValueData = (key) => {
   return (dispatch) => {
@@ -58,5 +61,30 @@ export const removeSelectedField = (value) => {
   return{
     type: REMOVE_SELECTED_FIELD,
     payload: value
+  }
+}
+
+export const setProducts  = (value) => {
+  console.log("setProducts");
+  return {
+    type: SET_PRODUCTS,
+    payload: value
+  };
+}
+
+export const searchProduct = (value) => {
+  console.log("search for product "+ value);
+  return (dispatch) => {
+    return fetch(constants.searchProduct+value, {
+        method: 'get',
+        headers: {
+          'Content-Type' : 'application/json',
+          // 'Authorization' : localStorage.getItem('token')
+        }
+      })
+      .then(checkHttpStatus)
+      .then(parseJSON)
+      .then(response => { dispatch(setProducts(response)); })
+      .catch(error => {console.log("Failed to fetch products "+error); })
   }
 }

@@ -272,10 +272,10 @@ h6{
 }
 
 .ordersModal{
-    top: 100px;
-    left: calc(50% - 200px);
-    z-index: 21;
-    width: 400px;
+  top: 100px;
+  left: calc(50% - 200px);
+  z-index: 21;
+  width: 400px;
 }
 
 #chatWidget{
@@ -466,10 +466,18 @@ h6{
 }
 
 .productDetailContainer:hover{
-    background-color: rgba(167, 182, 194, 0.3);
+    background-color: rgba(167, 182, 194, 0.1);
     border-radius: 4px;
 }
 
+.sellProductWrapper:hover{
+  background-color: rgba(167, 182, 194, 0.5);
+}
+/*.sellProductButton{
+  -ms-transform:rotate(90deg);
+  -moz-transform:rotate(90deg);
+  -webkit-transform:rotate(90deg);
+}*/
 /*
 .pt-tabs.pt-horizontal {
   display: -webkit-flex;

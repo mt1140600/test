@@ -8,8 +8,8 @@ export const pathGeocode = "http://maps.googleapis.com/maps/api/geocode/json?add
 export const reCaptchaSiteKey = "6Lf8BA4UAAAAAO09u8gvITIdIij2mGGVcdfIwLDB";
 export const reCaptchaSecretKey = "6Lf8BA4UAAAAAP22CL02OVXJnlr3xoxZSEs4qIRA";
 
-// export const url = (process.env.NODE_ENV === "development")? "http://dev.adminapi.prokure.it": "http://adminapi.prokure.it";
-export const url = "http://localhost:3000";
+export const url = (process.env.NODE_ENV === "development")? "http://dev.adminapi.prokure.it": "http://adminapi.prokure.it";
+// export const url = "http://localhost:3000";
 
 export const pincodeToAddress = `${url}/api/bank_address?pincode=`;
 export const requestOtp = `${url}/api/phone/request_otp/`;
@@ -20,6 +20,7 @@ export const getForm = `${url}/api/merchant/info`;
 export const forgotPassword = `${url}/api/merchant/reset_password_request?merchantEmail=`;
 export const newPasswordUrl = `${url}/api/merchant/reset_password?token=`;
 export const fetchOrders = `${url}/api/seller_orders/:seller_id?type=`;
+export const searchProduct = "http://adminapi.prokure.it/api/products/search/";
 
 export const cloudinaryCloudName = "prokure";
 export const cloudinaryImageUploadPreset = "ahibedth";

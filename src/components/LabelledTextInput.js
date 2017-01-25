@@ -32,7 +32,9 @@ class LabelledTextInput extends Component{
             style={{width: "50%", float:"right", margin: 0}}
             type="text"
             name={this.props.children}
-            dir="auto" />
+            dir="auto"
+            disabled={this.props.disabled}
+          />
           {(this.props.validationState === false)?<div className="helpText">{this.props.helpText}</div>:null}
         </label>
     );
@@ -52,12 +54,14 @@ LabelledTextInput.propTypes = {
   validationState: React.PropTypes.bool,
   validate: React.PropTypes.func,
   helpText: React.PropTypes.string,
-  style: React.PropTypes.object
+  style: React.PropTypes.object,
+  disabled: React.PropTypes.bool
 };
 
 LabelledTextInput.defaultProps = {
   validationState: true,
-  validate: dummy
+  validate: dummy,
+  disabled: false
 }
 
 export default LabelledTextInput;
