@@ -58,7 +58,6 @@ class ProductQuantity extends Component{
             onChange = {this.handleChange.bind(null, 2)}
             validationState = {true}
             validate = {this.dummy}
-            style= {{ marginRight: 15}}
           >
             Steps of
           </LabelledTextInput>

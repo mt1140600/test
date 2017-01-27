@@ -228,7 +228,7 @@ class UploadProductTwo extends Component{
                 break;
 
                 case 'variable-price':
-                  val = {range: ["max"], price: [0]};
+                  val = {range: ["max"], price: [1]};
                 break;
 
                 case 'quantity':
@@ -252,7 +252,7 @@ class UploadProductTwo extends Component{
                 Object.assign(stateObj, {options: newArray});
               }
 
-              this.props.handleStepTwoStateChange({ [`${key}`]: stateObj });
+              if(typeof(this.props.productUploadData.stepTwoState[key]) === "undefined")  this.props.handleStepTwoStateChange({ [`${key}`]: stateObj });
             }
           })
         }

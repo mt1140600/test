@@ -18,7 +18,8 @@ class VariablePrice extends Component{
   }
 
   updatePrice = (index, value) => {
-    let newPrice = [...this.props.value.price];
+    let newPrice = [...this.
+      props.value.price];
     newPrice[index] = value;
     this.props.onChange(
       {
@@ -57,16 +58,16 @@ class VariablePrice extends Component{
 
   addRow = () => {
      this.props.onChange({ //new Value
-      range: [ 0, ...this.props.value.range ],
-      price: [ 0, ...this.props.value.price ]
+      range: [ 1, ...this.props.value.range ],
+      price: [ 1, ...this.props.value.price ]
     });
   }
 
   getContentRow = (item, index) => {
-    if(item === "max") return <div>{`more than ${this.props.value.price[index-1]} pieces costs ₹ ${this.props.value.price[index]}`}</div>
+    if(item === "max") return <div key={index}>{`more than ${this.props.value.price[index-1]} pieces costs ₹ ${this.props.value.price[index]}`}</div>
 
-    if(index === 0)  return <div>{`1 to ${item} pieces costs ₹ ${this.props.value.price[index]}`}</div>
-    else return <div>{`${this.props.value.price[index-1]} to ${item} pieces costs ₹ ${this.props.value.price[index]}`}</div>
+    if(index === 0)  return <div key={index}>{`1 to ${item} pieces costs ₹ ${this.props.value.price[index]}`}</div>
+    else return <div key={index}>{`${this.props.value.price[index-1]} to ${item} pieces costs ₹ ${this.props.value.price[index]}`}</div>
   }
 
   getContent = () => {

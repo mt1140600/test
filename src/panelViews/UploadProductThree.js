@@ -16,7 +16,7 @@ class UploadProductThree extends Component{
 
   constructor(){
     super();
-    this.state= { tableCells: []};
+    this.state= { tableCells: [], tableVState: [] };
     this.allFields = [];
   }
 
@@ -42,9 +42,9 @@ class UploadProductThree extends Component{
   renderColumn = (item, index) => {
     console.log("inside renderColumn", item);
     const renderCell = (rowIndex) => {
-      console.log("row"+ rowIndex);
-      console.log(this.state.tableCells[rowIndex + 1][index]);
-      return <EditableCell value={this.state.tableCells[rowIndex + 1][index]} onConfirm={this.editCell.bind(null, rowIndex+1, index)}/>
+      // console.log("row"+ rowIndex);
+      // console.log(this.state.tableCells[rowIndex + 1][index]);
+      return <EditableCell value={this.state.tableCells[rowIndex + 1][index]} intent= {3} onConfirm={this.editCell.bind(null, rowIndex+1, index)}/>
     }
     return(
       <Column key={index} name={item} renderCell={renderCell} />
