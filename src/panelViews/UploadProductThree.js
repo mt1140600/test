@@ -108,6 +108,7 @@ class UploadProductThree extends Component{
     this.state= { tableCells: [], tableVState: [], showTableError: false, showAutoComplete: false, dropdownOptions: [], dropdownValue: null, selectedCell: null };
     this.allFields = [];
     this.columnNames = [];
+    this.addRowButton = null;
   }
 
   addRow = () => {
@@ -167,6 +168,11 @@ class UploadProductThree extends Component{
   openPopover = (parentClassName, ref, event) => {
     console.log("opening popover");
     event.stopPropagation();
+
+    if(this.state.selectedCell === parentClassName){
+      this.setState((prevState) => {return {showAutoComplete: !prevState.showAutoComplete} });
+      return null;
+    }
     //set autocomplete state
     let newArray = [];
     _.each(this.props.productUploadData.keyValue[ref], (value, key) => {newArray.push(value.name)} );
@@ -180,6 +186,7 @@ class UploadProductThree extends Component{
         attachment: 'top center',
         targetAttachment: 'bottom center',
       });
+      //TODO: Fix hack
       const container = document.getElementById("app");
       container.scrollLeft = container.scrollLeft + 1;
     });  //After the dropdown is made visible, im calling tether else, alignment gets skewed cuz the element's display is none
@@ -221,6 +228,7 @@ class UploadProductThree extends Component{
 
   download = () => {
     var csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += this.columnNames.map((item, index) => item.key).join(",") + "\n";
     this.state.tableCells.forEach( (infoArray, index) => {
       let dataString = infoArray.join(",");
       csvContent += index < this.state.tableCells.length ? dataString+ "\n" : dataString;
@@ -245,8 +253,18 @@ class UploadProductThree extends Component{
     reader.onload = (evt) => {
       console.log(evt.target.result);
       //map csv contents to 2D array
-      let parsed = Baby.parse(evt.target.result);
-      console.log(parsed.data);
+      let parsed = Baby.parse(evt.target.result.trim());
+
+      //removing table headers
+      parsed.data.splice(0,1);
+
+      //calculate validationState 2D array
+      for(let i=0; i<parsed.data.length; i++ ){
+        for(let j=0; j<parsed.data[i].length; j++){
+          this.validateCell(i, j, parsed.data[i][j]);
+        }
+      }
+
       this.setState({tableCells: parsed.data});
     }
     reader.onerror = function (evt) {
@@ -282,8 +300,8 @@ class UploadProductThree extends Component{
       }
     })
     console.log("remaining fields: ", this.columnNames);
-
   }
+
 
   componentWillUnmount(){
     // this.drop.destroy();
@@ -291,7 +309,7 @@ class UploadProductThree extends Component{
     console.log("parent is", top);
     let nested = document.getElementsByClassName("autoCompleteDropDown")[0];
     console.log("removing ", nested);
-    let garbage = top.removeChild(nested)
+    if (nested.parentNode == top) top.removeChild(nested)
   }
 
   render(){
