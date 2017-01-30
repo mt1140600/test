@@ -15,6 +15,7 @@ Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
 };
 
+let dropdownTextInput = null;
 
 class AutoCompleteDropDown extends Component{
 
@@ -29,7 +30,7 @@ class AutoCompleteDropDown extends Component{
     console.log("props", this.props);
   }
 
-  handleSelect = (value) => {
+  handleSelect = (value) => { //Clicking an option automatically makes dropdown disapper as the vent propogates to the div which has an onClick callback that hides the dropdown
     this.props.onSelect(value);
   }
 
@@ -76,7 +77,7 @@ class AutoCompleteDropDown extends Component{
     return(
       <div className= "autoCompleteDropDown" style= {this.props.style}>
         <div style={{padding: "5px 5px 5px 5px", backgroundColor: "whitesmoke"}}>
-          <input className="pt-input pt-input-blueShadowDisable" style={{width: "100%"}} value={this.state.input} onChange={this.onChange} onClick={(event) => {event.stopPropagation();}}/>
+          <input ref={(input) => {dropdownTextInput = input;}} className="pt-input pt-input-blueShadowDisable" style={{width: "100%"}} value={this.state.input} onChange={this.onChange} onClick={(event) => {event.stopPropagation();}}/>
         </div>
         <Menu className="dropDown">
           {this.state.options.map(this.renderOptions)}
@@ -170,15 +171,20 @@ class UploadProductThree extends Component{
     let newArray = [];
     _.each(this.props.productUploadData.keyValue[ref], (value, key) => {newArray.push(value.name)} );
     console.log("new options are" + newArray);
-    this.setState({dropdownOptions: newArray, selectedCell: parentClassName});
 
-    this.drop = new Tether({
-      target: document.querySelector('.'+parentClassName),
-      element: document.querySelector('.autoCompleteDropDown'),
-      attachment: 'top center',
-      targetAttachment: 'bottom center',
-    });
-    this.setState({showAutoComplete: true});
+    //The first time the dropdown is supposed to appear, the tether happens only after another click or scroll. to fix this, i'm mocking a tiny scroll
+    this.setState({dropdownOptions: newArray, selectedCell: parentClassName, showAutoComplete: true}, () => {
+      this.drop = new Tether({
+        target: document.querySelector('.'+parentClassName),
+        element: document.querySelector('.autoCompleteDropDown'),
+        attachment: 'top center',
+        targetAttachment: 'bottom center',
+      });
+      const container = document.getElementById("app");
+      container.scrollLeft = container.scrollLeft + 1;
+    });  //After the dropdown is made visible, im calling tether else, alignment gets skewed cuz the element's display is none
+    console.log("executed");
+    setTimeout(() => {dropdownTextInput.focus();}, 200);
     // this.setState((prevState) => {return {showAutoComplete: !prevState.showAutoComplete} });
   }
 
@@ -291,7 +297,7 @@ class UploadProductThree extends Component{
   render(){
     return(
       <div id = "top" onClick = {() => this.setState({showAutoComplete: false})}>
-
+        {/* Have to render AutoComplete now itself so that i can tether it to a cell later on. On intial mount, i'm setting it's display to none. When a cell is clicked, it's display is made block */}
         <AutoCompleteDropDown
           options= {this.state.dropdownOptions}
           value= {this.state.dropdownValue}
