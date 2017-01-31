@@ -17,6 +17,24 @@ Array.prototype.diff = function(a) {
 
 let dropdownTextInput = null;
 
+
+
+class HoverTop extends Component{
+  render(){
+    return(
+      <div className="hoverTop" style={this.props.style}>
+        {this.props.content}
+      </div>
+    );
+  }
+}
+
+HoverTop.propTypes = {
+  content: React.PropTypes.string,
+  style: React.PropTypes.object
+}
+
+
 class AutoCompleteDropDown extends Component{
 
   constructor(props){
@@ -39,7 +57,6 @@ class AutoCompleteDropDown extends Component{
   }
 
   renderOptions = (item, index) => {
-    console.log("item is", item);
     if(item.indexOf('++') === 0){ //To add new Option
       item = item.slice(3, item.length);
       //TODO: API call to add new option
@@ -105,7 +122,7 @@ class UploadProductThree extends Component{
 
   constructor(){
     super();
-    this.state= { tableCells: [], tableVState: [], showTableError: false, showAutoComplete: false, dropdownOptions: [], dropdownValue: null, selectedCell: null };
+    this.state= { tableCells: [], tableVState: [], showTableError: false, showAutoComplete: false, dropdownOptions: [], dropdownValue: null, selectedCell: null, hoverTopValue: "hello there!", showHoverTop: false };
     this.allFields = [];
     this.columnNames = [];
     this.addRowButton = null;
@@ -164,8 +181,22 @@ class UploadProductThree extends Component{
     this.setState({ tableCells: newArray });
   }
 
+  openHoverTop = (parentClassName, ref) => {
+    console.log("parent is "+ parentClassName);
+    this.setState(
+      {showHoverTop: true},
+      () => {
+        this.hoverTop = new Tether({
+          target: document.querySelector('.'+parentClassName),
+          element: document.querySelector('.hoverTop'),
+          attachment: 'bottom center',
+          targetAttachment: 'top center',
+        });
+      }
+    );
+  }
 
-  openPopover = (parentClassName, ref, event) => {
+  toggleDropdown = (parentClassName, ref, event) => {
     console.log("opening popover");
     event.stopPropagation();
 
@@ -180,7 +211,7 @@ class UploadProductThree extends Component{
 
     //The first time the dropdown is supposed to appear, the tether happens only after another click or scroll. to fix this, i'm mocking a tiny scroll
     this.setState({dropdownOptions: newArray, selectedCell: parentClassName, showAutoComplete: true}, () => {
-      this.drop = new Tether({
+      this.dropdown = new Tether({
         target: document.querySelector('.'+parentClassName),
         element: document.querySelector('.autoCompleteDropDown'),
         attachment: 'top center',
@@ -206,19 +237,25 @@ class UploadProductThree extends Component{
                   key={rowIndex}
                   className= {cellClassName}
                   intent= {(this.state.tableVState[rowIndex][colIndex] === true)? null : 3}
-                  onClick={ this.openPopover.bind(this, cellClassName, item.ref ) }>
+                  onClick={ this.toggleDropdown.bind(this, cellClassName, item.ref) }
+                  onMouseEnter={this.openHoverTop.bind(this, cellClassName, item.ref)}
+                  onMouseLeave={()=>{this.setState({showHoverTop: false})}}
+                  >
                   {this.state.tableCells[rowIndex][colIndex]}
                 </Cell>
       }
       else{
         return <EditableCell
                   key={rowIndex}
+                  className= {cellClassName}
                   value={this.state.tableCells[rowIndex][colIndex]}
                   intent= {(this.state.tableVState[rowIndex][colIndex] === true)? null : 3}
                   onChange= {this.validateCell.bind(null, rowIndex, colIndex)}
                   onConfirm= {this.editCell.bind(null, rowIndex, colIndex)}
                   interactive= {true}
                   onClick= {()=>{console.log("closing popover"); this.setState({ showAutoComplete: false })}}
+                  onMouseEnter={this.openHoverTop.bind(this, cellClassName, item.ref)}
+                  onMouseLeave={()=>{this.setState({showHoverTop: false})}}
                 />
       }
     }
@@ -308,23 +345,32 @@ class UploadProductThree extends Component{
   }
 
   componentWillUnmount(){
-    // this.drop.destroy();
+    // this.dropdown.destroy(); //this is a tether destory, it will only destroy the tether link, thereofre the div wont be atached to it's parent. that's all
+
     let top = document.getElementById("body");
-    console.log("parent is", top);
-    let nested = document.getElementsByClassName("autoCompleteDropDown")[0];
-    console.log("removing ", nested);
-    if (nested.parentNode == top) top.removeChild(nested)
+
+    let dropdownDiv = document.getElementsByClassName("autoCompleteDropDown")[0];
+    if(dropdownDiv.parentNode == top) top.removeChild(dropdownDiv);
+
+    let hoverTopDiv = document.getElementsByClassName("hoverTop")[0];
+    if(hoverTopDiv.parentNode == top) top.removeChild(hoverTopDiv);
   }
 
   render(){
     return(
       <div id = "top" onClick = {() => this.setState({showAutoComplete: false})}>
+
+        <HoverTop
+          style={{ display: (this.state.showHoverTop)? "block" : "none" }}
+          content={this.state.hoverTopValue}
+        />
+
         {/* Have to render AutoComplete now itself so that i can tether it to a cell later on. On intial mount, i'm setting it's display to none. When a cell is clicked, it's display is made block */}
         <AutoCompleteDropDown
           options= {this.state.dropdownOptions}
           value= {this.state.dropdownValue}
           onSelect= {this.handleDropdownSelect}
-          style={{ display: (this.state.showAutoComplete)? "block" : "none", border: "1px solid whitesmoke" }}
+          style={{ display: (this.state.showAutoComplete)? "block" : "none", border: "1px solid whitesmoke", boxShadow: "0 0 0 1px rgba(16, 22, 26, 0.1), 0 2px 4px rgba(16, 22, 26, 0.2), 0 8px 24px rgba(16, 22, 26, 0.2)" }}
         />
 
         <div className="pt-callout pt-icon-info-sign">Fields marked * are required</div>
