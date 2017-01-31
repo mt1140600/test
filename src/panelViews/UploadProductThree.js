@@ -60,7 +60,7 @@ class AutoCompleteDropDown extends Component{
     for(let i = 0; i < this.props.options.length; i++){
       if(this.props.options[i].toLowerCase().indexOf(event.target.value.toLowerCase()) > -1){
         newOptions.push(this.props.options[i]);
-        if(this.props.options[i].toLowerCase() === event.target.value.toLowerCase())
+        if(this.props.options[i].toLowerCase() === event.target.value.trim().toLowerCase())
           found = true;
       }
     }
@@ -302,6 +302,9 @@ class UploadProductThree extends Component{
     console.log("remaining fields: ", this.columnNames);
   }
 
+  componentDidMount(){
+    this.addRow();
+  }
 
   componentWillUnmount(){
     // this.drop.destroy();
@@ -323,7 +326,7 @@ class UploadProductThree extends Component{
           style={{ display: (this.state.showAutoComplete)? "block" : "none", border: "1px solid whitesmoke" }}
         />
 
-        <p><strong>Note: </strong>Fields marked * are required</p>
+        <div className="pt-callout pt-icon-info-sign">Fields marked * are required</div>
         <br/>
 
         <Button className="pt-icon-plus" onClick={this.addRow}> Add Row </Button>

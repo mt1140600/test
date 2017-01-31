@@ -42,7 +42,7 @@ class LabelledAutoComplete extends Component {
     for(let i = 0; i < this.props.options.length; i++){
       if(this.props.options[i].toLowerCase().indexOf(event.target.value.toLowerCase()) > -1){
         newOptions.push(this.props.options[i]);
-        if(this.props.options[i].toLowerCase() === event.target.value.toLowerCase())
+        if(this.props.options[i].toLowerCase() === event.target.value.trim().toLowerCase())
           found = true;
       }
     }

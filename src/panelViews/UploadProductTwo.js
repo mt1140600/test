@@ -148,49 +148,6 @@ class UploadProductTwo extends Component{
     }
   }
 
-  // buildStepTwoState = (selectedFieldsArray) => {
-  //
-  //   const fetchOptions = (item, index) => {
-  //     allFields = [];
-  //     _.each( this.denormalizedFields, (item2, index2) => {
-  //       allFields.push(this.denormalizedFields[index2].key);
-  //       console.log("initial step 3 array");
-  //       console.log(this.stepThreeArray);
-  //       if(item2.key === item){
-  //         if(typeof(item2.ref) !== "undefined"){
-  //           // this.denormalizedFields[index2].options =
-  //           console.log("fetching options for ", item2.ref);
-  //           console.log(this.props.productUploadData.keyValue[item2.ref]);
-  //           let newArray = [];
-  //           _.each(this.props.productUploadData.keyValue[item2.ref], (value, key) => {
-  //             return newArray.push(value.name);
-  //           });
-  //           this.denormalizedFields[index2].options = newArray;
-  //           // console.log("denorm", this.denormalizedFields);
-  //         }
-  //         this.stepTwoArray.push(this.denormalizedFields[index2]);
-  //         stepTwoFields.push(this.denormalizedFields[index2].key);
-  //         // this.stepThreeArray.splice(this.stepThreeArray.indexOf(this.denormalizedFields[index2].key), 1);
-  //         console.log("step2");
-  //         console.log(this.stepTwoArray);
-  //       }
-  //     });
-  //     this.stepThreeArray = allFields.diff(stepTwoFields);
-  //   };
-  //
-  //   let allFields = [];
-  //   let stepTwoFields = [];
-  //
-  //   console.log("Inside build step two");
-  //   console.log(selectedFieldsArray);
-  //   console.log(this.denormalizedFields);
-  //   selectedFieldsArray.map(fetchOptions);
-  //   console.log("step2",this.stepTwoArray);
-  //   console.log("step3", this.stepThreeArray);
-  //   this.props.cascadedDisplay(1, true);
-  //   //ffff
-  // }
-
   handleStepTwoState = () => {
       console.log(this.props.productUploadData.selectedCommonFields);
       this.props.productUploadData.selectedCommonFields.forEach(
@@ -269,7 +226,6 @@ class UploadProductTwo extends Component{
   componentDidMount(){
     console.log("Component is Mounting");
     console.log(this.props.productUploadData);
-    // this.buildStepTwoState(this.props.productUploadData.selectedCommonFields);
     this.handleStepTwoState();
   }
 

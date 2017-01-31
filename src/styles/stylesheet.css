@@ -18,6 +18,9 @@ body{
     /*overflow: hidden;*/
 }
 
+.pt-tooltip-indicator {
+  border-bottom: inset 1px;
+  cursor: help; }
 
 .pt-popover.pt-popover-content-sizing .pt-popover-content {
     max-width: 1000px;
@@ -477,6 +480,16 @@ h6{
 
 .sellProductWrapper:hover{
   background-color: rgba(167, 182, 194, 0.5);
+}
+
+.checkboxRequired{
+  color: rgba(219, 55, 55, 1);
+  border-radius: 4px;
+}
+
+.checkboxOptional{
+  color: rgba(15, 153, 96, 1);
+  border-radius: 4px;
 }
 /*.sellProductButton{
   -ms-transform:rotate(90deg);
