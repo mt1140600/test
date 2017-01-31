@@ -153,6 +153,11 @@ class UploadProductThree extends Component{
 
     if(this.columnNames[col].validation){
       let pattern = new RegExp(this.columnNames[col].validation);
+
+      //Dynamically change helpText visibility
+      if(pattern.test(value)) this.setState({showHoverTop: false});
+      else this.setState({showHoverTop: true});
+
       newRow[col] = pattern.test(value);
       console.log("testing" + value + "with pattern " + pattern + "result " + newRow[col]);
     }
@@ -183,17 +188,24 @@ class UploadProductThree extends Component{
 
   openHoverTop = (parentClassName, ref) => {
     console.log("parent is "+ parentClassName);
-    this.setState(
-      {showHoverTop: true},
-      () => {
-        this.hoverTop = new Tether({
-          target: document.querySelector('.'+parentClassName),
-          element: document.querySelector('.hoverTop'),
-          attachment: 'bottom center',
-          targetAttachment: 'top center',
-        });
-      }
-    );
+    let cellNameArray = parentClassName.split("-");
+    //if the field has a help text, set that as hoverTopValue
+    let helpText = "Invalid value";
+    if(this.columnNames[cellNameArray[2]].helpText) helpText = this.columnNames[cellNameArray[2]].helpText;
+    console.log("helpText is ", this.columnNames[cellNameArray[2]]);
+    if(this.state.tableVState[cellNameArray[1]][cellNameArray[2]] === false){
+      this.setState(
+        {showHoverTop: true, hoverTopValue: helpText},
+        () => {
+          this.hoverTop = new Tether({
+            target: document.querySelector('.'+parentClassName),
+            element: document.querySelector('.hoverTop'),
+            attachment: 'bottom center',
+            targetAttachment: 'top center',
+          });
+        }
+      );
+    }
   }
 
   toggleDropdown = (parentClassName, ref, event) => {
