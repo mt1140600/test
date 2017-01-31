@@ -123,7 +123,7 @@ class UploadProductThree extends Component{
     newArray = [...this.state.tableVState];
     newRow = [];
     for(let i=0; i< this.columnNames.length; i++){
-      newRow.push((this.columnNames[i].validation)? false : true); //If a validation regex exists, we are pushing a default validation false.
+      newRow.push((this.columnNames[i].required)? false : true); //If a validation regex exists, we are pushing a default validation false.
     }
     newArray.push(newRow);
     this.setState({ tableVState: newArray });
@@ -188,7 +188,8 @@ class UploadProductThree extends Component{
       });
       //TODO: Fix hack
       const container = document.getElementById("app");
-      container.scrollLeft = container.scrollLeft + 1;
+      container.scrollLeft = container.scrollLeft - 1;
+      container.scrollLeft = container.scrollLeft + 1;  //If screen is already scrolled to right extreme, this alone does not work. Thus, above line is required
     });  //After the dropdown is made visible, im calling tether else, alignment gets skewed cuz the element's display is none
     console.log("executed");
     setTimeout(() => {dropdownTextInput.focus();}, 200);
