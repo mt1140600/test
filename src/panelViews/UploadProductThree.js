@@ -42,12 +42,6 @@ class AutoCompleteDropDown extends Component{
       this.state = { options: props.options, input: ""};
   }
 
-  componentDidMount(){
-    console.log("inside dropdown");
-    console.log("state", this.state);
-    console.log("props", this.props);
-  }
-
   handleSelect = (value) => { //Clicking an option automatically makes dropdown disapper as the vent propogates to the div which has an onClick callback that hides the dropdown
     this.props.onSelect(value);
   }
@@ -122,7 +116,7 @@ class UploadProductThree extends Component{
 
   constructor(){
     super();
-    this.state= { tableCells: [], tableVState: [], showTableError: false, showAutoComplete: false, dropdownOptions: [], dropdownValue: null, selectedCell: null, hoverTopValue: "hello there!", showHoverTop: false };
+    this.state= { tableCells: [], tableVState: [], showCallout: false, showAutoComplete: false, dropdownOptions: [], dropdownValue: null, selectedCell: null, hoverTopValue: "hello there!", showHoverTop: false, calloutText: "" };
     this.allFields = [];
     this.columnNames = [];
     this.addRowButton = null;
@@ -147,7 +141,6 @@ class UploadProductThree extends Component{
   }
 
   validateCell = (row, col, value) => {
-    console.log("the value passed is "+ value);
     let newArray = [...this.state.tableVState];
     let newRow = [...newArray][row];
 
@@ -159,10 +152,8 @@ class UploadProductThree extends Component{
       else this.setState({showHoverTop: true});
 
       newRow[col] = pattern.test(value);
-      console.log("testing" + value + "with pattern " + pattern + "result " + newRow[col]);
     }
     else{
-      console.log("no validation string");
       newRow[col] = true;
     }
 
@@ -178,7 +169,6 @@ class UploadProductThree extends Component{
 
   editCell = (row, col, value) => {
     this.setState({ showAutoComplete: false });
-    console.log("confirm");
     let newArray = [...this.state.tableCells];
     let newRow = [...newArray][row];
     newRow[col] = value;
@@ -187,12 +177,10 @@ class UploadProductThree extends Component{
   }
 
   openHoverTop = (parentClassName, ref) => {
-    console.log("parent is "+ parentClassName);
     let cellNameArray = parentClassName.split("-");
     //if the field has a help text, set that as hoverTopValue
     let helpText = "Invalid value";
     if(this.columnNames[cellNameArray[2]].helpText) helpText = this.columnNames[cellNameArray[2]].helpText;
-    console.log("helpText is ", this.columnNames[cellNameArray[2]]);
     if(this.state.tableVState[cellNameArray[1]][cellNameArray[2]] === false){
       this.setState(
         {showHoverTop: true, hoverTopValue: helpText},
@@ -209,7 +197,6 @@ class UploadProductThree extends Component{
   }
 
   toggleDropdown = (parentClassName, ref, event) => {
-    console.log("opening popover");
     event.stopPropagation();
 
     if(this.state.selectedCell === parentClassName){
@@ -219,7 +206,6 @@ class UploadProductThree extends Component{
     //set autocomplete state
     let newArray = [];
     _.each(this.props.productUploadData.keyValue[ref], (value, key) => {newArray.push(value.name)} );
-    console.log("new options are" + newArray);
 
     //The first time the dropdown is supposed to appear, the tether happens only after another click or scroll. to fix this, i'm mocking a tiny scroll
     this.setState({dropdownOptions: newArray, selectedCell: parentClassName, showAutoComplete: true}, () => {
@@ -234,7 +220,6 @@ class UploadProductThree extends Component{
       container.scrollLeft = container.scrollLeft - 1;
       container.scrollLeft = container.scrollLeft + 1;  //If screen is already scrolled to right extreme, this alone does not work. Thus, above line is required
     });  //After the dropdown is made visible, im calling tether else, alignment gets skewed cuz the element's display is none
-    console.log("executed");
     setTimeout(() => {dropdownTextInput.focus();}, 200);
     // this.setState((prevState) => {return {showAutoComplete: !prevState.showAutoComplete} });
   }
@@ -277,6 +262,7 @@ class UploadProductThree extends Component{
   }
 
   download = () => {
+    this.setState({calloutText:"Do not change table headers in csv!", showCallout: true});
     var csvContent = "data:text/csv;charset=utf-8,";
     csvContent += this.columnNames.map((item, index) => item.key).join(",") + "\n";
     this.state.tableCells.forEach( (infoArray, index) => {
@@ -288,9 +274,7 @@ class UploadProductThree extends Component{
   }
 
   handleDropdownSelect = (value) => {
-    console.log("selected cell is "+ this.state.selectedCell);
     let cellNameArray = this.state.selectedCell.split("-");
-    console.log("cell "+ cellNameArray[1] + cellNameArray[2]);
     this.validateCell(cellNameArray[1], cellNameArray[2], true);
     this.editCell(cellNameArray[1], cellNameArray[2], value);
     this.setState({dropdownValue: value});
@@ -301,12 +285,14 @@ class UploadProductThree extends Component{
     var reader = new FileReader();
     reader.readAsText(files[0], "UTF-8");
     reader.onload = (evt) => {
-      console.log(evt.target.result);
       //map csv contents to 2D array
       let parsed = Baby.parse(evt.target.result.trim());
 
       //removing table headers
       parsed.data.splice(0,1);
+
+      //Validate if uploaded csv is correct
+
 
       //calculate validationState 2D array
       for(let i=0; i<parsed.data.length; i++ ){
@@ -318,21 +304,21 @@ class UploadProductThree extends Component{
       this.setState({tableCells: parsed.data});
     }
     reader.onerror = function (evt) {
+      this.setState({calloutText:"Error reading file", showCallout: true});
       console.log("error reading file");
     }
   }
 
   submitStepThree = () => {
-    console.log("submit pressed");
     for(let i =0; i< this.state.tableVState.length; i++){
       for(let j=0; j< this.state.tableVState[i].length; j++){
         if(this.state.tableVState[i][j] === false){
-          this.setState({showTableError: true});
+          this.setState({calloutText:"Table has invalid values", showCallout: true});
           return null;
         }
       }
     }
-    this.setState({showTableError: false});
+    this.setState({showCallout: false});
     console.log("persisting to db");
   }
 
@@ -349,7 +335,6 @@ class UploadProductThree extends Component{
         this.columnNames.push(Object.assign({}, value, {key: key}));
       }
     })
-    console.log("remaining fields: ", this.columnNames);
   }
 
   componentDidMount(){
@@ -395,7 +380,7 @@ class UploadProductThree extends Component{
         </Table>
         <br/>
 
-        <Callout text={"Table has invalid fields"} visible={this.state.showTableError} intent={"pt-intent-danger"} />
+        <Callout text={this.state.calloutText} visible={this.state.showCallout} intent={"pt-intent-danger"} />
         <br/>
         <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center"}}>
 
