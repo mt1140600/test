@@ -86,8 +86,8 @@ class CascadedTab extends PureComponent{
         }}
         // onClick={this.props.showNext.bind(null, false)}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#f6f8f8", margin: "0px -20px 0px -20px", padding: "0px 10px 0px 10px", boxShadow: "0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05)", position: "absolute", top: 0, boxSizing: "border-box", zIndex: 2, width: "100%"}}>
-          <h2 style={{ color: "#5c7080", fontWeight: "100", fontSize: "x-large" }}>{`Step ${this.props.index} of 3`}</h2>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: "#fcfcfc", margin: "0px -20px 0px -20px", padding: "0px 10px 0px 10px", boxShadow: "0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05)", position: "absolute", top: 0, boxSizing: "border-box", zIndex: 2, width: "100%"}}>
+          <div style={{ color: "#5c7080", fontWeight: "100", fontSize: "x-large", padding: "5px 5px 5px 40px" }}>{`Step ${this.props.index} of 3`}</div>
           {
             (typeof(this.props.collapseTab) !== "undefined")?
               <button className="pt-button pt-icon-cross pt-minimal" onClick={this.collapseTab}/>
@@ -156,7 +156,7 @@ class CascadedDisplay extends Component{
           for(let i=0; i<tab.length-1; i++ ){ //Skipping width of last tab as we need to scroll to begining of last tab
             widthToScroll = widthToScroll + tab[i].offsetWidth
           }
-          container.scrollLeft = widthToScroll + 40; //40 is the margin in container
+          container.scrollLeft = widthToScroll;
         }, 100)
     }
 

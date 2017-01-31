@@ -88,9 +88,8 @@ class UploadProduct extends Component{
     const renderCell = (rowIndex: number) => <Cell>{`$${(rowIndex * 10).toFixed(2)}`}</Cell>;
     return(
       <div>
-        <div id="tabs" className="tabs" style={{ display:"flex", flexDirection:"column", alignItems:"left", padding: 0 }}>
           <CascadedDisplay
-            style= {{ height: "75vh" }}
+            style= {{ height: "calc(100vh - 100px)" }}
             one= {
               <UploadProductOne />
             }
@@ -101,7 +100,6 @@ class UploadProduct extends Component{
               <UploadProductThree />
             }
           />
-        </div>
       </div>
     );
   }
