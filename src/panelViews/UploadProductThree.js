@@ -295,9 +295,14 @@ class UploadProductThree extends Component{
 
 
       //calculate validationState 2D array
-      for(let i=0; i<parsed.data.length; i++ ){
-        for(let j=0; j<parsed.data[i].length; j++){
+      let i, j;
+      for(i=0; i<parsed.data.length; i++ ){
+        for(j=0; j<parsed.data[i].length; j++){
           this.validateCell(i, j, parsed.data[i][j]);
+        }
+        if(j < this.columnNames.length){  //Ideally, at the end of j-loop, j will be equal to columnNames.length (not columnNames.length-1 because of last j++). If some rows don't have all columns (some commas have been removed) then, j will be less than columnNames.length.
+          this.setState({calloutText:"Invalid CSV file uploaded", showCallout: true});
+          return null;
         }
       }
 
