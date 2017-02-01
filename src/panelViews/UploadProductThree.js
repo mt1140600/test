@@ -126,6 +126,7 @@ class UploadProductThree extends Component{
     this.allFields = [];
     this.columnNames = [];
     this.addRowButton = null;
+    this.fileInput = null;
   }
 
   addRow = () => {
@@ -307,10 +308,8 @@ class UploadProductThree extends Component{
     reader.onload = (evt) => {
       //map csv contents to 2D array
       let parsed = Baby.parse(evt.target.result.trim());
-
       //removing table headers
       parsed.data.splice(0,1);
-
       //calculate validationState 2D array
       let i, j;
       for(i=0; i<parsed.data.length; i++ ){
@@ -322,12 +321,15 @@ class UploadProductThree extends Component{
           return null;
         }
       }
-
       this.setState({tableCells: parsed.data});
+      //Reseting fileInput's value so that, even if same named file is uploaded, onChange callback is triggered
+      this.fileInput.value = '';
     }
     reader.onerror = function (evt) {
       this.setState({calloutText:"Error reading file", showCallout: true});
       console.log("error reading file");
+      //Reseting fileInput's value so that, even if same named file is uploaded, onChange callback is triggered
+      this.fileInput.value = ''; 
     }
   }
 
@@ -409,7 +411,7 @@ class UploadProductThree extends Component{
           <button className="pt-button pt-icon-download pt-intent-warning" onClick={this.download} style={{maxHeight: 30}}>Download as CSV</button>
 
           <label className="pt-button pt-icon-upload pt-intent-primary" style={{maxHeight: 30}}>
-            <input type="file" style={{display: "none"}} onChange={this.handleFileSelect}/>
+            <input ref={(input) => this.fileInput = input} type="file" style={{display: "none"}} onChange={this.handleFileSelect}/>
             <span className="pt-file-upload-input">Upload filled CSV</span>
           </label>
 
