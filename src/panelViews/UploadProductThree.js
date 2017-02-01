@@ -166,11 +166,7 @@ class UploadProductThree extends Component{
     newArray[row] = newRow;
     this.setState({ tableVState: newArray });
 
-    newArray = [...this.state.tableCells];
-    newRow = [...newArray][row];
-    newRow[col] = value;
-    newArray[row] = newRow;
-    this.setState({ tableCells: newArray });
+    // this.editCell(row, col, value);
   }
 
   editCell = (row, col, value) => {
@@ -226,7 +222,7 @@ class UploadProductThree extends Component{
       container.scrollLeft = container.scrollLeft - 1;
       container.scrollLeft = container.scrollLeft + 1;  //If screen is already scrolled to right extreme, this alone does not work. Thus, above line is required
     });  //After the dropdown is made visible, im calling tether else, alignment gets skewed cuz the element's display is none
-    setTimeout(() => {dropdownTextInput.focus();}, 200);
+    setTimeout(() => {dropdownTextInput.focus();}, 300);
     // this.setState((prevState) => {return {showAutoComplete: !prevState.showAutoComplete} });
   }
 
@@ -253,7 +249,7 @@ class UploadProductThree extends Component{
                   className= {cellClassName}
                   value={this.state.tableCells[rowIndex][colIndex]}
                   intent= {(this.state.tableVState[rowIndex][colIndex] === true)? null : 3}
-                  onChange= {this.validateCell.bind(null, rowIndex, colIndex)}
+                  onChange= { (value) => { this.validateCell(rowIndex, colIndex, value); this.editCell(rowIndex, colIndex, value); } }
                   onConfirm= {this.editCell.bind(null, rowIndex, colIndex)}
                   interactive= {true}
                   onClick= {()=>{console.log("closing popover"); this.setState({ showAutoComplete: false })}}
@@ -279,9 +275,17 @@ class UploadProductThree extends Component{
     window.open(encodedUri);
   }
 
+  validateCellTrue = (row, col) => {
+    let newArray = [...this.state.tableVState];
+    let newRow = [...newArray][row];
+    newRow[col] = true;
+    newArray[row] = newRow;
+    this.setState({ tableVState: newArray });
+  }
+
   handleDropdownSelect = (value) => {
     let cellNameArray = this.state.selectedCell.split("-");
-    this.validateCell(cellNameArray[1], cellNameArray[2], true);
+    this.validateCellTrue(cellNameArray[1], cellNameArray[2]);
     this.editCell(cellNameArray[1], cellNameArray[2], value);
     this.setState({dropdownValue: value});
   }
@@ -296,9 +300,6 @@ class UploadProductThree extends Component{
 
       //removing table headers
       parsed.data.splice(0,1);
-
-      //Validate if uploaded csv is correct
-
 
       //calculate validationState 2D array
       let i, j;
