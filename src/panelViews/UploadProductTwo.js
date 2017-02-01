@@ -15,6 +15,8 @@ import MultipleImageUpload from '../components/MultipleImageUpload';
 import cascadedDisplay from '../actions/cascadedDisplay';
 import * as productUploadActions from '../actions/productUpload';
 import * as _ from "lodash";
+// import deepCompare from 'react-addons-deep-compare';
+import deepEqual from 'deep-equal';
 
 Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
@@ -33,6 +35,7 @@ class UploadProductTwo extends Component{
   }
 
   renderCorresponsingComponent = (item, key) => {
+    console.log("item is", item);
     switch(item.type){
 
       case "auto-fill":
@@ -42,6 +45,7 @@ class UploadProductTwo extends Component{
               options = {item.options}
               value = {item.value}
               onSelect = {this.handleStepTwoStateChange.bind(null, key, item)}
+              dbPath= {`keyValues/${item.ref}`}
             >
               {key}
             </LabelledAutoComplete>
@@ -206,10 +210,16 @@ class UploadProductTwo extends Component{
                 let newArray = [];
                 _.each(this.props.productUploadData.keyValue[value.ref], (value, key) => {newArray.push(value.name)} );
                 console.log(newArray);
-                Object.assign(stateObj, {options: newArray});
+                Object.assign(stateObj, {options: newArray, ref: value.ref});
               }
 
-              if(typeof(this.props.productUploadData.stepTwoState[key]) === "undefined")  this.props.handleStepTwoStateChange({ [`${key}`]: stateObj });
+              if(typeof(this.props.productUploadData.stepTwoState[key]) === "undefined"){
+                this.props.handleStepTwoStateChange({ [`${key}`]: stateObj });
+              }
+              else if(!deepEqual(this.props.productUploadData.stepTwoState[key].options, stateObj.options)){
+                stateObj = {options: stateObj.options} //So that other keys don't get overwritten
+                this.props.handleStepTwoStateChange({ [`${key}`]: stateObj });
+              }
             }
           })
         }
@@ -245,6 +255,9 @@ class UploadProductTwo extends Component{
           this.props.removeSelectedField(deletedFields[0]) //There will always be only one element in the array as for every field unselected, new props are sent
         }
         console.log("new field selected");
+        this.handleStepTwoState();
+      }
+      else{
         this.handleStepTwoState();
       }
   }

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Menu, MenuDivider, MenuItem, Popover, Position } from "@blueprintjs/core";
+import * as firebase from 'firebase';
 
 let textInput = null;
 let defaultOption = null;
@@ -11,8 +12,15 @@ class LabelledAutoComplete extends Component {
       this.state = { options: props.options, input: ""};
   }
 
-  handleSelect = (value) => {
+  componentWillReceiveProps(nextProps){
+    this.setState({options: nextProps.options});
+  }
+
+  handleSelect = (value, updateDb) => {
     this.props.onSelect(value);
+    if(updateDb){
+      firebase.database().ref(this.props.dbPath+"/"+value).set({name: value, verified: false});
+    }
   }
 
   renderOptions = (item, index) => {
@@ -20,12 +28,12 @@ class LabelledAutoComplete extends Component {
       item = item.slice(3, item.length);
       //TODO: API call to add new option
       return(
-          <MenuItem key={index} text={item} iconName="pt-icon-add-to-artifact" onClick={this.handleSelect.bind(null, item)}/>
+          <MenuItem key={index} text={item} iconName="pt-icon-add-to-artifact" onClick={this.handleSelect.bind(null, item, true)}/>
       );
     }
 
     return(
-      <MenuItem ref={(input)=>{defaultOption = input;}} intent="primary" key={index} text={item} onClick={this.handleSelect.bind(null, item)}/>
+      <MenuItem ref={(input)=>{defaultOption = input;}} intent="primary" key={index} text={item} onClick={this.handleSelect.bind(null, item, false)}/>
     );
   }
 
@@ -56,6 +64,7 @@ class LabelledAutoComplete extends Component {
   }
 
   render(){
+    console.log("dbPAth"+this.props.dbPath);
     const compassMenu = (
       <div>
         <div style={{padding: "5px 5px 5px 5px", backgroundColor: "whitesmoke"}}>
@@ -93,7 +102,8 @@ LabelledAutoComplete.propTypes = {
     //handleSelect = (value) => {
     // this.setState({value: value})
     // }
-    style: React.PropTypes.object
+    style: React.PropTypes.object,
+    dbPath: React.PropTypes.string
 }
 
 LabelledAutoComplete.defaultProps = {

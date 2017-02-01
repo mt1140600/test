@@ -10,6 +10,7 @@ import * as _ from 'lodash';
 import Callout from '../components/Callout';
 let classNames = require("classnames");
 import Tether from 'tether';
+import * as firebase from 'firebase';
 
 Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
@@ -42,11 +43,15 @@ class AutoCompleteDropDown extends Component{
       this.state = { options: props.options, input: props.value};
   }
 
-  handleSelect = (value) => { //Clicking an option automatically makes dropdown disapper as the vent propogates to the div which has an onClick callback that hides the dropdown
+  handleSelect = (value, updateDb) => { //Clicking an option automatically makes dropdown disapper as the vent propogates to the div which has an onClick callback that hides the dropdown
     this.props.onSelect(value);
+    if(updateDb){
+      firebase.database().ref(this.props.dbPath+"/"+value).set({name: value, verified: false});
+    }
   }
 
   componentWillReceiveProps(nextProps){
+    console.log("dbPath", nextProps.dbPath);
     let dummyEvent = {};
     dummyEvent.target = {};
     dummyEvent.target.value = nextProps.value;
@@ -59,12 +64,12 @@ class AutoCompleteDropDown extends Component{
       item = item.slice(3, item.length);
       //TODO: API call to add new option
       return(
-          <MenuItem key={index} text={item} iconName="pt-icon-add-to-artifact" onClick={this.handleSelect.bind(null, item)}/>
+          <MenuItem key={index} text={item} iconName="pt-icon-add-to-artifact" onClick={this.handleSelect.bind(null, item, true)}/>
       );
     }
 
     return(
-      <MenuItem intent="primary" key={index} text={item} onClick={this.handleSelect.bind(null, item)}/>
+      <MenuItem intent="primary" key={index} text={item} onClick={this.handleSelect.bind(null, item, false)}/>
     );
   }
 
@@ -112,7 +117,8 @@ AutoCompleteDropDown.propTypes= {
   //handleSelect = (value) => {
   // this.setState({value: value})
   // }
-  style: React.PropTypes.object
+  style: React.PropTypes.object,
+  dbPath: React.PropTypes.string
 }
 
 
@@ -122,7 +128,7 @@ class UploadProductThree extends Component{
 
   constructor(){
     super();
-    this.state= { tableCells: [], tableVState: [], showCallout: false, showAutoComplete: false, dropdownOptions: [], dropdownValue: "", selectedCell: null, hoverTopValue: "hello there!", showHoverTop: false, calloutText: "" };
+    this.state= { tableCells: [], tableVState: [], showCallout: false, showAutoComplete: false, dropdownOptions: [], dropdownValue: "", selectedCell: null, dbSubPath: "", hoverTopValue: "hello there!", showHoverTop: false, calloutText: "" };
     this.allFields = [];
     this.columnNames = [];
     this.addRowButton = null;
@@ -220,7 +226,7 @@ class UploadProductThree extends Component{
     _.each(this.props.productUploadData.keyValue[ref], (value, key) => {newArray.push(value.name)} );
 
     //The first time the dropdown is supposed to appear, the tether happens only after another click or scroll. to fix this, i'm mocking a tiny scroll
-    this.setState({dropdownOptions: newArray, selectedCell: parentClassName, dropdownValue: this.state.tableCells[cellNameArray[1]][cellNameArray[2]], showAutoComplete: true}, () => {
+    this.setState({dropdownOptions: newArray, selectedCell: parentClassName, dbSubPath: ref, dropdownValue: this.state.tableCells[cellNameArray[1]][cellNameArray[2]], showAutoComplete: true}, () => {
       this.dropdown = new Tether({
         target: document.querySelector('.'+parentClassName),
         element: document.querySelector('.autoCompleteDropDown'),
@@ -329,7 +335,7 @@ class UploadProductThree extends Component{
       this.setState({calloutText:"Error reading file", showCallout: true});
       console.log("error reading file");
       //Reseting fileInput's value so that, even if same named file is uploaded, onChange callback is triggered
-      this.fileInput.value = ''; 
+      this.fileInput.value = '';
     }
   }
 
@@ -391,6 +397,7 @@ class UploadProductThree extends Component{
           options= {this.state.dropdownOptions}
           value= {this.state.dropdownValue}
           onSelect= {this.handleDropdownSelect}
+          dbPath= {`keyValues/${this.state.dbSubPath}`}
           style={{ display: (this.state.showAutoComplete)? "block" : "none", border: "1px solid whitesmoke", boxShadow: "0 0 0 1px rgba(16, 22, 26, 0.1), 0 2px 4px rgba(16, 22, 26, 0.2), 0 8px 24px rgba(16, 22, 26, 0.2)" }}
         />
 
