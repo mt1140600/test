@@ -38,20 +38,21 @@ class LabelledAutoComplete extends Component {
   onChange = (event) => {
     let newOptions = [];
     let found = false;
+    let value = event.target.value;
 
     for(let i = 0; i < this.props.options.length; i++){
-      if(this.props.options[i].toLowerCase().indexOf(event.target.value.trim().toLowerCase()) > -1){
+      if(this.props.options[i].toLowerCase().indexOf(value.trim().toLowerCase()) > -1){
         newOptions.push(this.props.options[i]);
-        if(this.props.options[i].toLowerCase() === event.target.value.trim().toLowerCase())
+        if(this.props.options[i].toLowerCase() === value.trim().toLowerCase())
           found = true;
       }
     }
 
-    if(found === false && event.target.value.length > 0){ //provision to add option if it doesn't already exist
-      newOptions.push(`++ ${event.target.value}`);
+    if(found === false && value.trim().length > 0){ //provision to add option if it doesn't already exist
+      newOptions.push(`++ ${value}`);
     }
 
-    this.setState({input: event.target.value, options: newOptions});
+    this.setState({input: value, options: newOptions});
   }
 
   render(){
