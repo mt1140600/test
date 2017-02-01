@@ -17,7 +17,7 @@ class LabelledAutoComplete extends Component {
   }
 
   handleSelect = (value, updateDb) => {
-    this.props.onSelect(value);
+    this.props.onSelect(value, true); //setting value, validation true
     if(updateDb){
       firebase.database().ref(this.props.dbPath+"/"+value).set({name: value, verified: false});
     }
@@ -74,19 +74,25 @@ class LabelledAutoComplete extends Component {
       </div>
     );
     return (
-      <label  className="pt-label pt-inline" style={{display: "flex"}}>
-        <div style={{flex: 1}}>
-          {this.props.children}
-        </div>
-        <div style={{flex: 1, display: "flex", justifyContent: "flex-end"}}>
-          <Popover content={compassMenu} position={Position.BOTTOM_RIGHT} popoverDidOpen={this.popoverOpened}>
-              <button className="pt-button" type="button" style={{}}>
-                {this.props.value}
-                <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
-              </button>
-          </Popover>
-        </div>
-      </label>
+      <div>
+        <label  className="pt-label pt-inline" style={{display: "flex"}}>
+          <div style={{flex: 1}}>
+            {this.props.children}
+          </div>
+          <div style={{flex: 1, display: "flex", justifyContent: "flex-end"}}>
+            <Popover content={compassMenu} position={Position.BOTTOM_RIGHT} popoverDidOpen={this.popoverOpened}>
+                <button className="pt-button" type="button" style={{}}>
+                  {this.props.value}
+                  <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
+                </button>
+            </Popover>
+          </div>
+        </label>
+        {
+          !this.props.vState &&
+          <div className="helpText" style={{flexBasis: "100%"}}>Choose an option</div>
+        }
+      </div>
     );
   }
 
@@ -97,6 +103,7 @@ LabelledAutoComplete.propTypes = {
     options: React.PropTypes.array,
     value: React.PropTypes.string,
     onSelect: React.PropTypes.func,
+    vState: React.PropTypes.bool,
     //handleSelect = (value) => {
     // this.setState({value: value})
     // }

@@ -28,13 +28,14 @@ class UploadProductTwo extends Component{
   constructor(){
     super();
     this.stepTwoArray = [];
+    this.state={vState: []};
   }
 
-  handleStepTwoStateChange = (key, oldObj, newVal) => {
-    this.props.handleStepTwoStateChange({ [`${key}`]: Object.assign({}, oldObj, {value: newVal}) });
+  handleStepTwoStateChange = (key, oldObj, newVal, newVState = true) => {
+    this.props.handleStepTwoStateChange({ [`${key}`]: Object.assign({}, oldObj, {value: newVal, vState: newVState}) });
   }
 
-  renderCorresponsingComponent = (item, key) => {
+  renderCorrespondingComponent = (item, key) => {
     console.log("item is", item);
     switch(item.type){
 
@@ -44,6 +45,7 @@ class UploadProductTwo extends Component{
             <LabelledAutoComplete
               options = {item.options}
               value = {item.value}
+              vState = {item.vState}
               onSelect = {this.handleStepTwoStateChange.bind(null, key, item)}
               dbPath= {`keyValues/${item.ref}`}
             >
@@ -58,6 +60,7 @@ class UploadProductTwo extends Component{
           <div key= {key} className="productDetailContainer">
             <AdditionalInfo
               value = {item.value}
+              vState = {item.vState}
               onChange = {this.handleStepTwoStateChange.bind(null, key, item)}
             >
               {key}
@@ -71,6 +74,7 @@ class UploadProductTwo extends Component{
           <div key= {key} className="productDetailContainer">
             <MultipleImageUpload
               value= {item.value}
+              vState = {item.vState}
               onChange = {this.handleStepTwoStateChange.bind(null, key, item)}
             >
               {key}
@@ -85,6 +89,7 @@ class UploadProductTwo extends Component{
             <LabelledCheckboxGroup
               options= {item.options}
               value= {item.value}
+              vState = {item.vState}
               onChange = {this.handleStepTwoStateChange.bind(null, key, item)}
             >
               {key}
@@ -98,6 +103,7 @@ class UploadProductTwo extends Component{
           <div key= {key} className="productDetailContainer">
             <LabelledTextInput
               value= {item.value}
+              vState = {item.vState}
               onChange = {this.handleStepTwoStateChange.bind(null, key, item)}
             >
               {key}
@@ -111,6 +117,7 @@ class UploadProductTwo extends Component{
           <div key= {key} className="productDetailContainer">
             <VariablePrice
               value= {item.value}
+              vState = {item.vState}
               onChange = {this.handleStepTwoStateChange.bind(null, key, item)}
             >
               {key}
@@ -124,6 +131,7 @@ class UploadProductTwo extends Component{
           <div key= {key} className="productDetailContainer">
             <ProductQuantity
               value= {item.value}
+              vState = {item.vState}
               onChange = {this.handleStepTwoStateChange.bind(null, key, item)}
             >
               {key}
@@ -137,6 +145,7 @@ class UploadProductTwo extends Component{
           <div key= {key} className="productDetailContainer">
             <LabelledUpload
               value= {item.value}
+              vState = {item.vState}
               onChange= {this.handleStepTwoStateChange.bind(null, key, item)}
             >
               {key}
@@ -167,43 +176,53 @@ class UploadProductTwo extends Component{
               let stateObj = { type: value.type } ;
 
               let val = null;
+              let vState = false;
+
               switch(value.type){
                 case 'auto-fill':
                   val = `Select ${key}`;
+                  // vState = false;
                 break;
 
                 case 'additional-info':
                   val = [ { info: ""} ];
+                  vState = true;
                 break;
 
                 case 'image-upload':
                   val = { images: [], defaultImage: 0 };
+                  // vState = false;
                 break;
 
                 case 'multiselect':
                   val = [];
+                  vState = true;
                 break;
 
                 case 'String':
                   val = "";
+                  // vState = false;
                 break;
 
                 case 'variable-price':
                   val = {range: ["max"], price: [1]};
+                  vState = true;
                 break;
 
                 case 'quantity':
-                  val = [0,0,0];
+                  val = [1,1,1];
+                  vState = true;
                 break;
 
                 case 'video':
                   val = null;
+                  vState = true;
                 break;
 
                 default:
                   console.log("Unknown type");
               }
-              Object.assign(stateObj, {value: val});
+              Object.assign(stateObj, {value: val, vState: vState});
 
               if(value.ref){
                 console.log("fetching options");
@@ -227,10 +246,18 @@ class UploadProductTwo extends Component{
   }
 
   submitStepTwo = () => {
-  // let newtableCellsArray = [];
-  // newtableCellsArray.push(this.stepThreeArray);
-  // this.setState({ tableCells: newtableCellsArray });
-  this.props.cascadedDisplay(2, true);
+    //check vState
+    let allClear = true;
+    _.each(this.props.productUploadData.stepTwoState, (item, key) => {
+      if(item.vState === false){
+        allClear = false;
+        return null;
+      }
+    });
+
+    if(allClear){
+      this.props.cascadedDisplay(2, true);
+    }
   }
 
   componentDidMount(){
@@ -264,7 +291,7 @@ class UploadProductTwo extends Component{
 
   render(){
     this.componentArray = [];
-    _.each(this.props.productUploadData.stepTwoState, this.renderCorresponsingComponent);
+    _.each(this.props.productUploadData.stepTwoState, this.renderCorrespondingComponent);
     return(
       <div>
         {

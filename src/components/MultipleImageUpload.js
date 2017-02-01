@@ -17,7 +17,7 @@ class MultipleImageUpload extends Component{
           this.props.onChange({
             images: newArray,
             defaultImage: this.props.value.defaultImage
-          });
+          }, (newArray.length > 0)? true : false);  //validation true if there's atleast one image
        }
        else{
          console.log(error);
@@ -79,6 +79,10 @@ class MultipleImageUpload extends Component{
           :
           null
         }
+        {
+          !this.props.vState &&
+          <div className="helpText">Atleast one image must be uploaded</div>
+        }
       </div>
     );
   }
@@ -89,6 +93,7 @@ MultipleImageUpload.propTypes = {
   // value: React.PropTypes.instanceOf(Immutable.List),
   // defaultImage: React.PropTypes.number,
   value: React.PropTypes.object,
+  vState: React.PropTypes.bool,
   onChange: React.PropTypes.func,
   // handleChange = (newImages, defaultImage) =>{
   //     this.setState({images: newImages, defaultImage: defaultImage});

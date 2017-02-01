@@ -465,7 +465,7 @@ class UploadProductThree extends Component{
             <span className="pt-file-upload-input">Upload filled CSV</span>
           </label>
 
-          <button className="pt-button pt-icon-confirm pt-intent-success" onClick={this.submitStepThree} style={{maxHeight: 30}}>Confirm</button>
+          <button className="pt-button pt-icon-confirm pt-intent-success" onClick={this.submitStepThree} style={{maxHeight: 30, minWidth: 100}}>Confirm</button>
         </div>
       </div>
     );
