@@ -11,6 +11,7 @@ import Callout from '../components/Callout';
 let classNames = require("classnames");
 import Tether from 'tether';
 import * as firebase from 'firebase';
+import {uploadProducts} from '../actions/productUpload';
 
 Array.prototype.diff = function(a) {
     return this.filter(function(i) {return a.indexOf(i) < 0;});
@@ -348,6 +349,38 @@ class UploadProductThree extends Component{
     }
     this.setState({showCallout: false});
     console.log("persisting to db");
+    //Convert table and stepTwoState to db payload
+    // {
+    //   user_id: {type: String},
+    //   name: {type: String},
+    //   type: {type: String},
+    //   brand: {type: String},
+    //   mobile: {type: String},
+    //   model: {type: String},
+    //   face: {type: String},
+    //   image: {type: String},
+    //   warranty: {type: String},
+    //   name: {type: String},
+    //   price: {type: String},
+    //   quantity: {type: String},
+    //   additionalInfo: {type: String},
+    //   video: {type: String}
+    // }
+    let payload = [];
+    for(let i=0; i<this.state.tableCells.length; i++){
+      let productObject = {};
+        // productObject.user_id = this.props.userData.user;
+        productObject.user_id = "d";
+      _.each(this.props.productUploadData.stepTwoState, (value, key) => {
+        productObject[`${key}`] = value.value;
+      });
+      for(let j=0; j<this.state.tableCells[i].length; j++){
+        productObject[`${this.columnNames[j].key}`] = this.state.tableCells[i][j];
+      }
+      payload.push(productObject);
+    }
+    console.log("storing into db: ", payload);
+    uploadProducts(payload);
   }
 
   componentWillMount(){
@@ -359,8 +392,20 @@ class UploadProductThree extends Component{
     // ), "def"));
     // console.log("_b is", _b);
     _.each( this.props.productUploadData.keyValue[this.props.productUploadData.selectedCategory], (value, key) => {
-      if(this.props.productUploadData.selectedCommonFields.indexOf(key) < 0){
-        this.columnNames.push(Object.assign({}, value, {key: key}));
+      if(this.props.productUploadData.selectedCommonFields.indexOf(key) < 0){   //If field is not present in stepTwo, it should be present in stepThree
+        // if(key === "AdditionalInfo"){
+        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Bullet 1"}));
+        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Bullet 2"}));
+        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Bullet 3"}));
+        // }
+        // else if(key === "Quantity"){
+        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Minimum Qty"}));
+        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Maximum Qty"}));
+        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Steps of"}));
+        // }
+        // else{
+          this.columnNames.push(Object.assign({}, value, {key: key}));
+        // }
       }
     })
   }
@@ -411,8 +456,8 @@ class UploadProductThree extends Component{
 
         <Callout text={this.state.calloutText} visible={this.state.showCallout} intent={"pt-intent-danger"} />
         <br/>
-        <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center"}}>
 
+        <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center"}}>
           <button className="pt-button pt-icon-download pt-intent-warning" onClick={this.download} style={{maxHeight: 30}}>Download as CSV</button>
 
           <label className="pt-button pt-icon-upload pt-intent-primary" style={{maxHeight: 30}}>
@@ -429,7 +474,8 @@ class UploadProductThree extends Component{
 
 const mapStateToProps = (state) => {
   return{
-    productUploadData : state.productUploadData.toJS()
+    productUploadData : state.productUploadData.toJS(),
+    userData: state.userData
   }
 }
 

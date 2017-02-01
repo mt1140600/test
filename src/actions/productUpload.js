@@ -88,3 +88,18 @@ export const searchProduct = (value) => {
       .catch(error => {console.log("Failed to fetch products "+error); })
   }
 }
+
+export const uploadProducts = (value) => {  //pseudo action. doesn't talk to redux
+  console.log("uploading prodcuts: ", value);
+  return fetch(constants.uploadProducts, {
+    method: 'post',
+    headers: {
+      'Content-Type' : 'application/json'
+    },
+    body: JSON.stringify(value)
+  })
+  .then(checkHttpStatus)
+  .then(parseJSON)
+  .then(response => { console.log(response); })
+  .catch(error => {console.log("Failed to upload products "+error); })
+}
