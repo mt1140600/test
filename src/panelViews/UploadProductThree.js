@@ -39,7 +39,7 @@ class AutoCompleteDropDown extends Component{
 
   constructor(props){
     super(props);
-      this.state = { options: props.options, input: ""};
+      this.state = { options: props.options, input: props.value};
   }
 
   handleSelect = (value) => { //Clicking an option automatically makes dropdown disapper as the vent propogates to the div which has an onClick callback that hides the dropdown
@@ -47,7 +47,7 @@ class AutoCompleteDropDown extends Component{
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({options: nextProps.options, input: ""});   //When a new cell is clicked, this component will receive new options. Along with that, we are clearing the text input
+    this.setState({options: nextProps.options, input: nextProps.value});   //When a new cell is clicked, this component will receive new options. Along with that, we are clearing the text input
   }
 
   renderOptions = (item, index) => {
@@ -69,10 +69,11 @@ class AutoCompleteDropDown extends Component{
     let found = false;
 
     for(let i = 0; i < this.props.options.length; i++){
-      if(this.props.options[i].toLowerCase().indexOf(event.target.value.toLowerCase()) > -1){
+      if(this.props.options[i].toLowerCase().indexOf(event.target.value.trim().toLowerCase()) > -1){
         newOptions.push(this.props.options[i]);
-        if(this.props.options[i].toLowerCase() === event.target.value.trim().toLowerCase())
+        if(this.props.options[i].toLowerCase() === event.target.value.trim().toLowerCase()){
           found = true;
+        }
       }
     }
 
@@ -198,7 +199,7 @@ class UploadProductThree extends Component{
 
   toggleDropdown = (parentClassName, ref, event) => {
     event.stopPropagation();
-
+    let cellNameArray = parentClassName.split("-");
     if(this.state.selectedCell === parentClassName){
       this.setState((prevState) => {return {showAutoComplete: !prevState.showAutoComplete} });
       return null;
@@ -208,7 +209,7 @@ class UploadProductThree extends Component{
     _.each(this.props.productUploadData.keyValue[ref], (value, key) => {newArray.push(value.name)} );
 
     //The first time the dropdown is supposed to appear, the tether happens only after another click or scroll. to fix this, i'm mocking a tiny scroll
-    this.setState({dropdownOptions: newArray, selectedCell: parentClassName, showAutoComplete: true}, () => {
+    this.setState({dropdownOptions: newArray, selectedCell: parentClassName, dropdownValue: this.state.tableCells[cellNameArray[1]][cellNameArray[2]], showAutoComplete: true}, () => {
       this.dropdown = new Tether({
         target: document.querySelector('.'+parentClassName),
         element: document.querySelector('.autoCompleteDropDown'),

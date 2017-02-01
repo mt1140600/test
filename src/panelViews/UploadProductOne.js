@@ -135,7 +135,7 @@ class UploadProductOne extends Component{
               <div style={{display: "flex", justifyContent: "flex-start"}}>
               {
                 optionalValues.map((item, index) =>
-                  <div key={index} className={optionalRequired[index]} style={{flexBasis: "calc(33% - 5%)", marginRight:"5px", minHeight: 20, paddingLeft: 26}}>
+                  <div key={index} className={optionalRequired[index]} style={{flexBasis: "calc(33% - 5%)", marginRight:"5px", minHeight: 20}}>
                     {
                       (optionalPopovers[index])?
                         <Tooltip className= "pt-tooltip-indicator" content={optionalPopovers[index]} inline={false} position={Position.RIGHT}>
@@ -148,6 +148,7 @@ class UploadProductOne extends Component{
                 )
               }
               </div>
+              <br/>
               <br/>
               <div className="pt-callout pt-icon-info-sign">
                   <span style={{color: "rgba(219, 55, 55, 1)"}}>Fields in red are required fields</span>

@@ -40,7 +40,7 @@ class LabelledAutoComplete extends Component {
     let found = false;
 
     for(let i = 0; i < this.props.options.length; i++){
-      if(this.props.options[i].toLowerCase().indexOf(event.target.value.toLowerCase()) > -1){
+      if(this.props.options[i].toLowerCase().indexOf(event.target.value.trim().toLowerCase()) > -1){
         newOptions.push(this.props.options[i]);
         if(this.props.options[i].toLowerCase() === event.target.value.trim().toLowerCase())
           found = true;
