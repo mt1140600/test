@@ -1,6 +1,7 @@
 /* global cloudinary*/
 import React, {Component} from 'react';
 let Immutable = require('immutable');
+import {Tooltip, Position} from '@blueprintjs/core';
 
 class MultipleImageUpload extends Component{
 
@@ -45,15 +46,17 @@ class MultipleImageUpload extends Component{
   }
 
   renderImages = (item, index) => {
-    let imageStyle = {height: 75, boxSizing: "content-box", borderRadius: 4};
-    (this.props.value.defaultImage === index)? Object.assign(imageStyle, {border: "3px solid #48AFF0"}): null;
+    let imageStyle = {height: 75, boxSizing: "content-box", border: "1px solid whitesmoke"};
+    (this.props.value.defaultImage === index)? Object.assign(imageStyle, {borderBottom: "3px solid #9fd6bf"}): null;
 
     return(
       <div key={index} style={{position: "relative", marginRight: 10}} onClick={this.setDefaultImage.bind(this, index)}>
-        <img src={item} style={imageStyle}/>
-        <button className="pt-button pt-intent-danger pt-icon-small-cross" style={{position: "absolute", top: 0, right: 0}} onClick={this.removeImage.bind(this, index)}/>
+        <Tooltip content="Default Image" inline={false} position={Position.TOP} isDisabled={(this.props.value.defaultImage === index)? false : true}>
+          <img src={item} style={imageStyle}/>
+        </Tooltip>
+        <button className="pt-button pt-intent-danger pt-minimal pt-icon-small-cross" style={{position: "absolute", top: 0, right: 0}} onClick={this.removeImage.bind(this, index)}/>
       </div>
-    )
+    );
   }
 
   render(){
@@ -69,7 +72,6 @@ class MultipleImageUpload extends Component{
           (this.props.value.images.length > 0)?
           <div>
             <br/>
-            <p style={{margin: 0}}> <i>Choose default image:</i> </p>
             <div className="flexRow ImagesContainer ">
               {
                 this.props.value.images.map(this.renderImages)
