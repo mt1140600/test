@@ -217,14 +217,14 @@ class UploadProductThree extends Component{
   toggleDropdown = (parentClassName, ref, event) => {
     event.stopPropagation();
     let cellNameArray = parentClassName.split("-");
-    if(this.state.selectedCell === parentClassName){
-      this.setState((prevState) => {return {showAutoComplete: !prevState.showAutoComplete} });
+    if(this.state.selectedCell === parentClassName && this.state.showAutoComplete === true){
+      this.setState({showAutoComplete: false});
       return null;
     }
     //set autocomplete state
     let newArray = [];
     _.each(this.props.productUploadData.keyValue[ref], (value, key) => {newArray.push(value.name)} );
-
+    console.log("newArray is", newArray);
     //The first time the dropdown is supposed to appear, the tether happens only after another click or scroll. to fix this, i'm mocking a tiny scroll
     this.setState({dropdownOptions: newArray, selectedCell: parentClassName, dbSubPath: ref, dropdownValue: this.state.tableCells[cellNameArray[1]][cellNameArray[2]], showAutoComplete: true}, () => {
       this.dropdown = new Tether({
