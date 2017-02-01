@@ -36,6 +36,7 @@ HoverTop.propTypes = {
 }
 
 
+
 class AutoCompleteDropDown extends Component{
 
   constructor(props){
@@ -51,7 +52,6 @@ class AutoCompleteDropDown extends Component{
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("dbPath", nextProps.dbPath);
     let dummyEvent = {};
     dummyEvent.target = {};
     dummyEvent.target.value = nextProps.value;
@@ -224,7 +224,6 @@ class UploadProductThree extends Component{
     //set autocomplete state
     let newArray = [];
     _.each(this.props.productUploadData.keyValue[ref], (value, key) => {newArray.push(value.name)} );
-    console.log("newArray is", newArray);
     //The first time the dropdown is supposed to appear, the tether happens only after another click or scroll. to fix this, i'm mocking a tiny scroll
     this.setState({dropdownOptions: newArray, selectedCell: parentClassName, dbSubPath: ref, dropdownValue: this.state.tableCells[cellNameArray[1]][cellNameArray[2]], showAutoComplete: true}, () => {
       this.dropdown = new Tether({
@@ -282,7 +281,7 @@ class UploadProductThree extends Component{
   download = () => {
     this.setState({calloutText:"Do not change table headers in csv!", showCallout: true});
     var csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += this.columnNames.map((item, index) => item.key).join(",") + "\n";
+    csvContent += this.columnNames.map( (item, index) => (item.required)? item.key+"*": item.key).join(",") + "\n";
     this.state.tableCells.forEach( (infoArray, index) => {
       let dataString = infoArray.join(",");
       csvContent += index < this.state.tableCells.length ? dataString+ "\n" : dataString;
@@ -307,7 +306,6 @@ class UploadProductThree extends Component{
   }
 
   handleFileSelect = (evt) => {
-    console.log("new file!");
     var files = evt.target.files; // FileList object
     var reader = new FileReader();
     reader.readAsText(files[0], "UTF-8");

@@ -40,7 +40,6 @@ class LabelledAutoComplete extends Component {
   popoverOpened(){
     setTimeout(() => {textInput.focus();}, 200);  //can't use instance variable this.textInput cuz, Popover component might be setting local context
     // defaultOption.click();
-    console.log(defaultOption);
   }
 
   onChange = (event) => {
@@ -64,7 +63,6 @@ class LabelledAutoComplete extends Component {
   }
 
   render(){
-    console.log("dbPAth"+this.props.dbPath);
     const compassMenu = (
       <div>
         <div style={{padding: "5px 5px 5px 5px", backgroundColor: "whitesmoke"}}>
