@@ -150,7 +150,18 @@ class UploadProductThree extends Component{
     let newArray = [...this.state.tableVState];
     let newRow = [...newArray][row];
 
-    if(this.columnNames[col].validation){
+    if(this.columnNames[col].ref){
+      //check if value is in options
+      let newArray = [];
+      _.each(this.props.productUploadData.keyValue[this.columnNames[col].ref], (value, key) => {newArray.push(value.name)} );
+      if(newArray.indexOf(value) > -1){
+        newRow[col] = true;
+      }
+      else {
+        newRow[col] = false;
+      }
+    }
+    else if(this.columnNames[col].validation){
       let pattern = new RegExp(this.columnNames[col].validation);
 
       //Dynamically change helpText visibility
@@ -165,8 +176,6 @@ class UploadProductThree extends Component{
 
     newArray[row] = newRow;
     this.setState({ tableVState: newArray });
-
-    // this.editCell(row, col, value);
   }
 
   editCell = (row, col, value) => {
@@ -291,6 +300,7 @@ class UploadProductThree extends Component{
   }
 
   handleFileSelect = (evt) => {
+    console.log("new file!");
     var files = evt.target.files; // FileList object
     var reader = new FileReader();
     reader.readAsText(files[0], "UTF-8");
