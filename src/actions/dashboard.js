@@ -1,8 +1,11 @@
-import {SELECT_DASHBOARD_TAB} from '../constant';
+import {SELECT_DASHBOARD_TAB, COLLAPSE_VERTICAL_TAB_BAR} from '../constant';
 
-const selectDashboardTab = (value) => ({
+export const selectDashboardTab = (value) => ({
   type: SELECT_DASHBOARD_TAB,
   payload: value
 });
 
-export default selectDashboardTab;
+export const collapseVerticalTabBar = (value) => ({
+  type: COLLAPSE_VERTICAL_TAB_BAR,
+  payload: value
+})

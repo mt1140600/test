@@ -189,6 +189,9 @@ h6{
   height: 100%;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
+.verticalTabBar.collapsed{
+  width: 55px;
+}
 .verticalTab{
   height: 50px;
   line-height: 50px;
@@ -196,6 +199,7 @@ h6{
   font-weight: 100;
   font-size: small;
   color: white;
+  cursor: pointer;
   /*border-bottom: 1px solid #e5e5e5;*/
 }
 .verticalTab:hover{
@@ -207,6 +211,9 @@ h6{
 .verticalTabPanel{
   flex:1;
   margin-left: 200px;
+}
+.verticalTabPanel.collapsed{
+  margin-left: 55px;
 }
 .cellLabel{
   min-height: 30px;
