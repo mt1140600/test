@@ -349,33 +349,49 @@ class UploadProductThree extends Component{
     }
     this.setState({showCallout: false});
     console.log("persisting to db");
-    //Convert table and stepTwoState to db payload
-    // {
-    //   user_id: {type: String},
-    //   name: {type: String},
-    //   type: {type: String},
-    //   brand: {type: String},
-    //   mobile: {type: String},
-    //   model: {type: String},
-    //   face: {type: String},
-    //   image: {type: String},
-    //   warranty: {type: String},
-    //   name: {type: String},
-    //   price: {type: String},
-    //   quantity: {type: String},
-    //   additionalInfo: {type: String},
-    //   video: {type: String}
-    // }
+
     let payload = [];
     for(let i=0; i<this.state.tableCells.length; i++){
       let productObject = {};
-        // productObject.user_id = this.props.userData.user;
-        productObject.user_id = "d";
+        productObject.user_id = this.props.userData.user;
+        // productObject.user_id = "d";
       _.each(this.props.productUploadData.stepTwoState, (value, key) => {
         productObject[`${key}`] = value.value;
       });
       for(let j=0; j<this.state.tableCells[i].length; j++){
-        productObject[`${this.columnNames[j].key}`] = this.state.tableCells[i][j];
+
+        switch(this.columnNames[j].type){
+          case "auto-fill":
+            productObject[`${this.columnNames[j].key}`] = this.state.tableCells[i][j];
+          break;
+          case "additional-info":
+            productObject[`${this.columnNames[j].key.split("-")[0].trim()}`] = [ this.state.tableCells[i][j], this.state.tableCells[i][j+1], this.state.tableCells[i][j+2]];
+            j = j + 2;
+          break;
+          case "image-upload":
+            productObject[`${this.columnNames[j].key}`] = {images: [this.state.tableCells[i][j]], defaultImage: 0};
+          break;
+          case "multiselect":
+            productObject[`${this.columnNames[j].key}`] = [this.state.tableCells[i][j]];
+          break;
+          case "String":
+            productObject[`${this.columnNames[j].key}`] = this.state.tableCells[i][j];
+          break;
+          case "variable-price":
+            productObject[`${this.columnNames[j].key}`] = { price: [this.state.tableCells[i][j]], range: ["max"] };
+          break;
+          case "quantity":
+            productObject[`${this.columnNames[j].key.split("-")[0].trim()}`] = [ this.state.tableCells[i][j], this.state.tableCells[i][j+1], this.state.tableCells[i][j+2]];
+            j = j + 2;
+          break;
+          case "video":
+            productObject[`${this.columnNames[j].key}`] = this.state.tableCells[i][j];
+          break;
+          default:
+            console.log("Type not found ", this.columnNames);
+            return null;
+          break;
+        }
       }
       payload.push(productObject);
     }
@@ -393,19 +409,19 @@ class UploadProductThree extends Component{
     // console.log("_b is", _b);
     _.each( this.props.productUploadData.keyValue[this.props.productUploadData.selectedCategory], (value, key) => {
       if(this.props.productUploadData.selectedCommonFields.indexOf(key) < 0){   //If field is not present in stepTwo, it should be present in stepThree
-        // if(key === "AdditionalInfo"){
-        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Bullet 1"}));
-        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Bullet 2"}));
-        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Bullet 3"}));
-        // }
-        // else if(key === "Quantity"){
-        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Minimum Qty"}));
-        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Maximum Qty"}));
-        //   this.columnNames.push(Object.assign({}, value, {key: key+" - Steps of"}));
-        // }
-        // else{
+        if(key === "AdditionalInfo"){
+          this.columnNames.push(Object.assign({}, value, {key: key+" - Bullet 1"}));
+          this.columnNames.push(Object.assign({}, value, {key: key+" - Bullet 2"}));
+          this.columnNames.push(Object.assign({}, value, {key: key+" - Bullet 3"}));
+        }
+        else if(key === "Quantity"){
+          this.columnNames.push(Object.assign({}, value, {key: key+" - Minimum Qty"}));
+          this.columnNames.push(Object.assign({}, value, {key: key+" - Maximum Qty"}));
+          this.columnNames.push(Object.assign({}, value, {key: key+" - Steps of"}));
+        }
+        else{
           this.columnNames.push(Object.assign({}, value, {key: key}));
-        // }
+        }
       }
     })
   }
