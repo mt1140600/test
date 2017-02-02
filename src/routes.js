@@ -11,13 +11,11 @@ import ProductUpload from './containers/ProductUpload';
 import Verification from './views/Verification';
 import LabelledAutoComplete from './components/LabelledAutoComplete';
 import MultipleImageUpload from './components/MultipleImageUpload';
-import TestContainer from './containers/TestContainer';
 import VerifyEmail from './views/VerifyEmail';
 import ConfirmItem from './components/ConfirmItem';
 import RejectItem from './components/RejectItem';
 import DateRangePopover from './components/DateRangePopover';
 import CascadedDisplay from './components/CascadedDisplay';
-import TableExample  from './components/Table';
 import SampleHOC from './components/SampleHOC';
 import UploadProductViaSearch from './panelViews/UploadProductViaSearch';
 
@@ -44,8 +42,6 @@ export default (
     <Route path="auto" component={LabelledAutoComplete} />
     <Route path="image" component={MultipleImageUpload} />
     <Route path="verification" component={Verification} />
-    <Route path="test" component={TestContainer} />
-    <Route path="table" component={TableExample} />
     <Route path="hoc" component={SampleHOC} />
     <Route path="search" component={UploadProductViaSearch} />
   </Route>

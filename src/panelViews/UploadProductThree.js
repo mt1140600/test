@@ -3,7 +3,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Baby from "babyparse";
 import {Button, Menu, MenuDivider, MenuItem, Popover, Position} from '@blueprintjs/core';
-import { Table, Column, Cell, EditableCell} from "@blueprintjs/table";
+import { Table, Column, EditableCell} from "@blueprintjs/table";
+import { Cell } from 'prokure_blueprint_table';
 import cascadedDisplay from '../actions/cascadedDisplay';
 import * as productUploadActions from '../actions/productUpload';
 import * as _ from 'lodash';
@@ -354,7 +355,6 @@ class UploadProductThree extends Component{
     for(let i=0; i<this.state.tableCells.length; i++){
       let productObject = {};
         productObject.user_id = this.props.userData.user;
-        // productObject.user_id = "d";
       _.each(this.props.productUploadData.stepTwoState, (value, key) => {
         productObject[`${key}`] = value.value;
       });
