@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import ViewNameBar from '../components/ViewNameBar';
-
 import UploadProduct from '../panelViews/UploadProduct';
 import Orders from '../panelViews/OrdersPanel';
 import Returns from '../panelViews/Returns';
 import Completed from '../panelViews/Completed';
 import Payment from '../panelViews/Payment';
 import ManageInventory from '../panelViews/ManageInventory';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import selectDashboardTab from '../actions/dashboard';
 
 const tabs      = [{name: "Product Upload", icon: "pt-icon-cloud-upload", color: "#7ba428"}, {name: "Manage Inventory", icon: "pt-icon-box", color: "#e5e500"}, {name: "Orders", icon: "pt-icon-projects", color: "#7fbafd"}, {name: "Returns/Replacements", icon: "pt-icon-swap-horizontal", color: "#c17196"}, {name: "Completed Orders", icon: "pt-icon-saved", color: "#aceace"}, {name: "Payments", icon: "pt-icon-credit-card", color: "#ffb6c1"} ];
 const tabPanels = [UploadProduct,   ManageInventory,      Orders,   Returns,                Completed ,     Payment];
@@ -17,16 +19,18 @@ class VerticalTabLayout extends Component{
     this.handleChange = this.handleChange.bind(this);
     this.renderTabs = this.renderTabs.bind(this);
     this.renderTabPanels = this.renderTabPanels.bind(this);
-    this.state={currentTab: 0};
+    // this.state={currentTab: 0};
   }
 
   handleChange(tab){
-    this.setState({currentTab: tab});
+    // this.setState({currentTab: tab});
+    this.props.selectDashboardTab(tab);
   }
 
   renderTabs(item, index) {
+    let className = (this.props.currentTab === index)? "verticalTab active" : "verticalTab";
     return(
-      <div className="verticalTab" key={index} onClick={()=>{this.handleChange(index);}}>
+      <div className={className} key={index} onClick={()=>{this.handleChange(index);}}>
         <span className={item.icon} style={{marginRight: 10, color: item.color}}/>
         {item.name}
       </div>
@@ -35,7 +39,8 @@ class VerticalTabLayout extends Component{
 
   renderTabPanels(item,index) {
     let DynamicComponent = item;
-    if(this.state.currentTab === index){
+    // if(this.state.currentTab === index){
+    if(this.props.currentTab === index){
       return(
         <DynamicComponent key={index}/>
       );
@@ -50,7 +55,7 @@ class VerticalTabLayout extends Component{
             {tabs.map(this.renderTabs)}
           </div>
           <div className="verticalTabPanel">
-            {ViewNameBar(tabs[this.state.currentTab].name)}
+            {ViewNameBar(tabs[this.props.currentTab].name)}
             {tabPanels.map(this.renderTabPanels)}
           </div>
         </div>
@@ -58,4 +63,14 @@ class VerticalTabLayout extends Component{
   }
 }
 
-export default VerticalTabLayout;
+const mapStateToProps = (state) => {
+  return {
+    currentTab: state.dashboard
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ selectDashboardTab: selectDashboardTab }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(VerticalTabLayout);

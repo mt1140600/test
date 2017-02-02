@@ -198,7 +198,10 @@ h6{
   color: white;
   /*border-bottom: 1px solid #e5e5e5;*/
 }
-.verticalTab:active, .verticalTab:hover{
+.verticalTab:hover{
+  background-color: #424756;
+}
+.verticalTab.active{
   background-color: #2e3344;
 }
 .verticalTabPanel{
