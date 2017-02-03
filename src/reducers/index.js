@@ -7,6 +7,7 @@ import * as registrationForm from './registrationForm';
 import orderManagement from './orderManagement';
 import cascadedDisplay from './cascadedDisplay';
 import dashboard from './dashboard.js';
+import {reducer as notificationsReducer} from 'reapop';
 
 const rootReducer = combineReducers({
   routing: routerReducer,
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   tabValidation: registrationForm.tabValidation,
   floatingNotification: floatingNotification,
   ordersData: orderManagement,
-  cascadedDisplay: cascadedDisplay
+  cascadedDisplay: cascadedDisplay,
+  notifications: notificationsReducer()
 });
 
 export default rootReducer;

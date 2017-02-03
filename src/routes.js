@@ -18,6 +18,7 @@ import DateRangePopover from './components/DateRangePopover';
 import CascadedDisplay from './components/CascadedDisplay';
 import SampleHOC from './components/SampleHOC';
 import UploadProductViaSearch from './panelViews/UploadProductViaSearch';
+import Test from './components/Test';
 
 export default (
   // <Route path="/" component={App}>
@@ -44,5 +45,6 @@ export default (
     <Route path="verification" component={Verification} />
     <Route path="hoc" component={SampleHOC} />
     <Route path="search" component={UploadProductViaSearch} />
+    <Route path="test" component={Test} />
   </Route>
 );
