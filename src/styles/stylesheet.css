@@ -97,11 +97,11 @@ body{
 #viewNameBar{
   height: 50px;
   background-color: #f6f8f8;
+  border-bottom: 1px solid #DEE5E7;
   line-height: 50px;
   padding-left: 40px;
   font-size: x-large;
   font-weight: 100;
-  border-bottom: 1px solid #DEE5E7;
 }
 h2{
   margin-top: 10px;
@@ -123,20 +123,28 @@ h6{
 .tabs{
   background-color: white;
   margin: 20px 40px 40px 40px;
-  padding: 20px;
   border: 1px solid #dee5e7;
   min-height: 75vh;
   position: relative;
 }
 
-
-.tabs.tabs75{
-  min-height: 75vh;
-}
-
 .tabs.tabs80{
   min-height: 80vh;
+}
 
+.pt-tab-list{
+  background-color: #f6f8f8;
+  border-bottom: 1px solid #DEE5E7;
+  font-weight: 100;
+  padding: 0px 20px 0px 20px;
+}
+
+.pt-tab{
+  color: #5c7080;
+}
+
+.pt-tab-panel{
+    padding: 0px 20px 20px 20px;
 }
 
 #progressBar{
@@ -203,7 +211,7 @@ h6{
   /*border-bottom: 1px solid #e5e5e5;*/
 }
 .verticalTab:hover{
-  background-color: #424756;
+  background-color: #32374a;
 }
 .verticalTab.active{
   background-color: #2e3344;

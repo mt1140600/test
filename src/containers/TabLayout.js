@@ -46,7 +46,7 @@ class TabLayout extends Component {
   render() {
     return(
       <Tabs className="tabs tabs80" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
-        <TabList className="pt-large">
+        <TabList className="pt-large" style={{padding: "0px 20px 0px 20px"}}>
           {tabs.map(this.renderTabs)}
         </TabList>
         {tabPanels.map(this.renderTabPanels)}

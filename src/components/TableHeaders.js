@@ -43,7 +43,7 @@ class TableHeader extends Component{
       let itemObj = this.props.itemObj;
       let index = this.props.index;
       return(
-        <div style={{flex: itemObj.width, textAlign:"center", display: "flex", alignItems:"center", justifyContent:itemObj.justify}} key={index}>
+        <div style={{flex: itemObj.width, cursor: "pointer", textAlign:"center", display: "flex", alignItems:"center", justifyContent:itemObj.justify}} key={index}>
           {
             itemObj.tooltip ?
               <Tooltip
