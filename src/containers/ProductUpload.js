@@ -13,7 +13,7 @@ class ProductUpload extends Component{
       <div className="app">
         <Header/>
         <HeaderButtons/>
-        <VerticalTabLayout/>
+        <VerticalTabLayout {...this.props}/>
         {/* <ChatWidget/> */}
       </div>
     );

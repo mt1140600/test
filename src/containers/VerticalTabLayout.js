@@ -9,43 +9,31 @@ import ManageInventory from '../panelViews/ManageInventory';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as dashboardActions from '../actions/dashboard';
+import { Link } from 'react-router';
 
-const tabs      = [{name: "Product Upload", icon: "pt-icon-cloud-upload", color: "#7ba428"}, {name: "Manage Inventory", icon: "pt-icon-box", color: "#e5e500"}, {name: "Orders", icon: "pt-icon-projects", color: "#7fbafd"}, {name: "Returns/Replacements", icon: "pt-icon-swap-horizontal", color: "#c17196"}, {name: "Completed Orders", icon: "pt-icon-saved", color: "#aceace"}, {name: "Payments", icon: "pt-icon-credit-card", color: "#ffb6c1"} ];
-const tabPanels = [UploadProduct,   ManageInventory,      Orders,   Returns,                Completed ,     Payment];
+const tabs      = [{name: "Product Upload", route: "/dashboard", icon: "pt-icon-cloud-upload", color: "#7ba428"}, {name: "Manage Inventory", route: "/dashboard/inventory", icon: "pt-icon-box", color: "#e5e500"}, {name: "Orders", route: "/dashboard/orders", icon: "pt-icon-projects", color: "#7fbafd"}, {name: "Returns/Replacements", route: "/dashboard/returns", icon: "pt-icon-swap-horizontal", color: "#c17196"}, {name: "Completed Orders", route: "/dashboard/completed", icon: "pt-icon-saved", color: "#aceace"}, {name: "Payments", route: "/dashboard/payment", icon: "pt-icon-credit-card", color: "#ffb6c1"} ];
 
 class VerticalTabLayout extends Component{
   constructor() {
     super();
     this.handleChange = this.handleChange.bind(this);
     this.renderTabs = this.renderTabs.bind(this);
-    this.renderTabPanels = this.renderTabPanels.bind(this);
-    // this.state={currentTab: 0};
   }
 
   handleChange(tab){
-    // this.setState({currentTab: tab});
     this.props.selectDashboardTab(tab);
   }
 
   renderTabs(item, index) {
     let className = (this.props.currentTab === index)? "verticalTab active" : "verticalTab";
     return(
-      <div className={className} key={index} onClick={()=>{this.handleChange(index);}}>
-        <span className={item.icon} style={{marginRight: 10, color: item.color}}/>
-        {(!this.props.collapsed)? item.name : ""}
-      </div>
+      <Link to={item.route} style={{ textDecoration: "none"}} key={index}>
+        <div className={className} onClick={()=>{this.handleChange(index);}}>
+          <span className={item.icon} style={{marginRight: 10, color: item.color}}/>
+          {(!this.props.collapsed)? item.name : ""}
+        </div>
+      </Link>
     );
-  }
-
-  renderTabPanels(item,index) {
-    let DynamicComponent = item;
-    // if(this.state.currentTab === index){
-    if(this.props.currentTab === index){
-      return(
-        <DynamicComponent key={index}/>
-      );
-    }
-    else return null;
   }
 
   collapseVerticalTabBar = () => {
@@ -65,7 +53,7 @@ class VerticalTabLayout extends Component{
 
           <div className= {`verticalTabPanel ${collapsedClassName}`}>
             {ViewNameBar(tabs[this.props.currentTab].name)}
-            {tabPanels.map(this.renderTabPanels)}
+            {this.props.children}
           </div>
         </div>
     );
