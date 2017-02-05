@@ -1,5 +1,5 @@
 html, body, #app, #app>div, .app{
-  /*height: 100%;*/
+  height: 100%;
 }
 .test{
   background-color: blue;
@@ -40,6 +40,11 @@ body{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.pad50{
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 
 .col{

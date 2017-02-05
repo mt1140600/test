@@ -50,6 +50,7 @@ export default (
     <Route path="signup" component={Signup} />
     <Route path="verifyEmail" component={VerifyEmail} />
     <Route path="reset" component={ResetPassword} />
+    <Route path="reset2" component={ResetPassword2} />
     <Route path="registration" component={AccountSetup}/>
     <Route path="dashboard" component={ProductUpload}>
       <IndexRoute component={UploadProduct} />

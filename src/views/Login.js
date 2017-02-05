@@ -77,34 +77,33 @@ class Login extends Component {
   render() {
     let buttonClass = (this.state.buttonDisabled)?"pt-disabled":"";
     return(
-      <div className="container">
-
+      <div className="container pad50">
         <div className="col" style={{textAlign:"center", minWidth:"300px", paddingTop:"20px"}}>
-
           <Logo/>
           <br/>
           <form>
-          <div className="pt-control-group pt-vertical item">
-            <div className="pt-input-group pt-large " >
-              <input type="text" name="email" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
+            <div className="pt-control-group pt-vertical">
+              <div className="pt-input-group pt-large " >
+                <input type="text" name="email" className="pt-input" placeholder="Email" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
+              </div>
+              <div className="pt-input-group pt-large" >
+                <input type="password" className="pt-input" placeholder="Password" value={this.state.password} onChange={this.handleFieldUpdate.bind(this, "password")} onKeyUp={this.handleEnter}/>
+              </div>
             </div>
-            <div className="pt-input-group pt-large" >
-              <input type="password" className="pt-input" placeholder="Password" value={this.state.password} onChange={this.handleFieldUpdate.bind(this, "password")} onKeyUp={this.handleEnter}/>
-            </div>
-          </div>
-        </form>
+          </form>
           <br/>
-          <Button className={"pt-intent-primary pt-button-height-large item " + buttonClass} onClick={this.handleLogin} disabled={this.state.buttonDisabled}>Log in</Button>
+          <Button className={"pt-intent-primary" + buttonClass} onClick={this.handleLogin} disabled={this.state.buttonDisabled}>Log in</Button>
           <Callout text={this.state.calloutText} visible={this.state.showCallout} intent={this.state.intent} />
           <br/>
-          <a onClick={this.handleResetPassword} className="item pt-text-muted" style={{color:"#5c7080"}}>Forgot Password?</a>
+          <a onClick={this.handleResetPassword}>Forgot Password?</a>
           <br/>
-          <Button onClick={this.handleSignupClick} className="pt-intent-warning item">Create new account</Button>
           <br/>
-          <p style={{marginTop:"15px", fontSize:"12px"}} className="item pt-text-muted">© 2016 Cerise Internet Technologies Pvt Ltd</p>
-
+          <p className="pt-text-muted" style={{ fontWeight: 100 }}>Do not have an account?</p>
+          <Button onClick={this.handleSignupClick} className="pt-intent-success">Create account</Button>
+          <br/>
+          <br/>
+          <p style={{marginTop:"15px", fontSize:"12px"}} className="pt-text-muted">© 2016 Cerise Internet Technologies Pvt Ltd</p>
         </div>
-
       </div>
     );
   }

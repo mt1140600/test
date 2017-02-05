@@ -86,23 +86,23 @@ class Signup extends Component {
   render() {
     let buttonClass = (this.state.buttonDisabled)?"pt-disabled":"";
     return(
-      <div className="container">
+      <div className="container pad50">
 
         <div className="col" style={{textAlign:"center", paddingTop:"20px", minWidth:"300px",}}>
 
           <Logo/>
           <br/>
           <p style={{color:"grey"}}>Sign up and start selling on our platform now!</p>
-          <div className="pt-control-group pt-vertical item">
+          <div className="pt-control-group pt-vertical">
             <div className="pt-input-group pt-large " >
               <input type="text" className="pt-input" placeholder="Name" value={this.state.username} onChange={this.handleFieldUpdate.bind(this, "username")}  />
             </div>
             <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Business Name" value={this.state.business_name} onChange={this.handleFieldUpdate.bind(this, "business_name")}  />
+              <input type="text" className="pt-input" placeholder="Name of Business" value={this.state.business_name} onChange={this.handleFieldUpdate.bind(this, "business_name")}  />
             </div>
           </div>
           <br/>
-          <div className="pt-control-group pt-vertical item">
+          <div className="pt-control-group pt-vertical">
             <div className="pt-input-group pt-large " >
               <input type="text" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} />
             </div>
@@ -123,13 +123,14 @@ class Signup extends Component {
             ref={e => this.recaptchaInstance = e}
           />
           <br/>
-          <Button onClick={this.handleSignupClick} className={"pt-intent-primary pt-button-height-large item " + buttonClass} disabled={this.state.buttonDisabled}>Sign up</Button>
+          <Button onClick={this.handleSignupClick} className={"pt-intent-success pt-button-height-large" + buttonClass} disabled={this.state.buttonDisabled}>Sign up</Button>
           <Callout text={this.state.calloutText} visible={this.state.showCallout} intent={this.state.intent}/>
           <br/>
-          <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Already have an account?</span>
-          <Button onClick={this.handleLoginClick}  className="pt-intent-warning item">Log in</Button>
           <br/>
-          <p style={{marginTop:"15px", fontSize:"12px"}} className="item pt-text-muted">© 2016 Cerise Internet Technologies Pvt Ltd</p>
+          <span style={{color:"grey", marginBottom:"5px", fontWeight: 100}}>Already have an account?</span>
+          <Button onClick={this.handleLoginClick}  className="pt-intent-primary">Log in</Button>
+          <br/>
+          <p style={{marginTop:"15px", fontSize:"12px"}} className="pt-text-muted">© 2016 Cerise Internet Technologies Pvt Ltd</p>
 
         </div>
 
