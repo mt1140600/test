@@ -8,7 +8,6 @@ export default class Verification extends Component{
     return(
       <div>
         <Header/>
-        <HeaderButtons/>
         <div style={{marginTop: 50}}>
           {ViewNameBar("Account Settings")}
           <div className="tabs col" style={{ fontSize: "x-large", fontWeight: 100, justifyContent: "space-around"}}>

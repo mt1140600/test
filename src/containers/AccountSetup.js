@@ -11,9 +11,6 @@ class AccountSetup extends Component{
     return(
       <div>
         <Header/>
-        <div style={{paddingTop: 50}}>
-          <HeaderButtons/>
-        </div>
         <div>
           {ViewNameBar("Account Settings")}
           <ProgressBar/>

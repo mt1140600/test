@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import {routerReducer} from 'react-router-redux';
 import userData from './userData';
 import productUploadData from './productUploadData';
-import floatingNotification from './generic';
+import floatingNotification, {notificationsLog} from './generic';
 import * as registrationForm from './registrationForm';
 import orderManagement from './orderManagement';
 import cascadedDisplay from './cascadedDisplay';
@@ -14,6 +14,8 @@ const rootReducer = combineReducers({
   userData: userData,
   dashboard: dashboard,
   productUploadData: productUploadData,
+  notificationsLog: notificationsLog,
+
   registrationCurrentTab: registrationForm.tabReducer,
   verifyOtp: registrationForm.verifyOtp,
   sellerInfo: registrationForm.sellerInfo,
@@ -22,6 +24,7 @@ const rootReducer = combineReducers({
   pocDetails: registrationForm.pocDetails,
   addlInfo: registrationForm.addlInfo,
   tabValidation: registrationForm.tabValidation,
+
   floatingNotification: floatingNotification,
   ordersData: orderManagement,
   cascadedDisplay: cascadedDisplay,

@@ -45,10 +45,10 @@ class VerticalTabLayout extends Component{
     return(
         <div className="verticalTabLayout">
           <div className={`verticalTabBar ${collapsedClassName}`}>
-            {tabs.map(this.renderTabs)}
-            <div className="verticalTab" style={{marginTop: 50}} key="99" onClick={this.collapseVerticalTabBar}>
+            <div className="verticalTab" style={{borderBottom: "1px solid #2e3344"}} key="99" onClick={this.collapseVerticalTabBar}>
               <span className={(this.props.collapsed)? "pt-icon-menu-open" : "pt-icon-menu-closed" } style={{marginRight: 10, color: "white"}}/>
             </div>
+            {tabs.map(this.renderTabs)}
           </div>
 
           <div className= {`verticalTabPanel ${collapsedClassName}`}>
