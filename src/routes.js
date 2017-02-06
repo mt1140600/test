@@ -16,7 +16,7 @@ import ConfirmItem from './components/ConfirmItem';
 import RejectItem from './components/RejectItem';
 import DateRangePopover from './components/DateRangePopover';
 import UploadProduct from './panelViews/UploadProduct';
-import Orders from './panelViews/OrdersPanel';
+import {Orders, New, Confirmed, Dispatched, Cancelled} from './panelViews/OrdersPanel';
 import Returns from './panelViews/Returns';
 import Completed from './panelViews/Completed';
 import Payment from './panelViews/Payment';
@@ -45,21 +45,28 @@ export default (
   //   </Route>
   // </Route>
 
-   <Route path="/" component={App}>
+  <Route path="/" component={App}>
     <IndexRoute component={Login}/>
     <Route path="signup" component={Signup} />
     <Route path="verifyEmail" component={VerifyEmail} />
     <Route path="reset" component={ResetPassword} />
     <Route path="reset2" component={ResetPassword2} />
     <Route path="registration" component={AccountSetup}/>
+
     <Route path="dashboard" component={ProductUpload}>
       <IndexRoute component={UploadProduct} />
-      <Route path="orders" component={Orders} />
+      <Route path="orders" component={Orders}>
+        <IndexRoute component={New} />
+        <Route path="confirmed" component={Confirmed} />
+        <Route path="dispatched" component={Dispatched} />
+        <Route path="cancelled" component={Cancelled} />v
+      </Route>
       <Route path="returns" component={Returns} />
       <Route path="completed" component={Completed} />
       <Route path="payment" component={Payment} />
       <Route path="inventory" component={ManageInventory} />
     </Route>
+
     <Route path="auto" component={LabelledAutoComplete} />
     <Route path="image" component={MultipleImageUpload} />
     <Route path="verification" component={Verification} />

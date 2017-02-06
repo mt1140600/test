@@ -81,12 +81,6 @@ class Header extends Component{
           (localStorage.getItem("user_id") !== null)?
             <div className="pt-navbar-group pt-align-right">
               <span className="pt-navbar-divider"></span>
-              <Popover content={this.loginMenu}
-                       position={Position.BOTTOM_RIGHT}
-                       interactionKind={PopoverInteractionKind.CLICK}
-              >
-                  <button className="pt-button pt-minimal pt-icon-user"></button>
-              </Popover>
 
               <Popover content= {<NotificationHistory />}
                        position={Position.BOTTOM_RIGHT}
@@ -95,7 +89,13 @@ class Header extends Component{
                 <button className="pt-button pt-minimal pt-icon-notifications"></button>
               </Popover>
 
-              <button className="pt-button pt-minimal pt-icon-cog"></button>
+              <Popover content={this.loginMenu}
+                       position={Position.BOTTOM_RIGHT}
+                       interactionKind={PopoverInteractionKind.CLICK}
+              >
+                  <button className="pt-button pt-minimal pt-icon-user"></button>
+              </Popover>
+
             </div>
           :
             null
