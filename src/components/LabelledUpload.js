@@ -32,12 +32,16 @@ class LabelledUpload extends Component{
   render(){
     return( //If validationState is null, neither helpText nor successText will be shown
       <label className="pt-label pt-inline container">
-        {this.props.children}
-        <div className="pt-file-upload" style={{float:"right"}}>
-          <button id="upload_widget_opener" className="pt-button" style={{maxWidth: "200px", maxHeight: "30px", overflow:"hidden"}} onClick={this.handleClick}>Choose File</button>
+        <div  style={{display: "flex", justifyContent: "space-between"}}>
+          <div>
+            {this.props.children}
+          </div>
+          <div className="pt-file-upload">
+            <button id="upload_widget_opener" className="pt-button" style={{minWidth: "100px", maxHeight: "30px", overflow:"hidden"}} onClick={this.handleClick}>Choose File</button>
+          </div>
         </div>
         {(this.props.validationState === false)?<div className="helpText" >{this.props.helpText}</div>:null}
-        {(this.props.validationState === true)?
+        {(this.props.validationState === true && this.props.value.length > 0)?
           //enclosing popover in a div cuz it is a span otherwise
           <div onClick={this.preventClick}>
             <Popover content={<ImageThumbnail source={this.props.value}/>}

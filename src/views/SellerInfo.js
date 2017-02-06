@@ -134,9 +134,19 @@ class SellerInfo extends Component {
               onChange={this.updateInfo.bind(this,"storeName")}
               validationState={this.props.sellerInfo.vState.storeName}
               validate={fieldValidations.validateMandatoryString}
-              helpText={"Store name is mandatory"}>
-              Store Name
+              helpText={"Name of business is mandatory"}>
+              Name of business
             </LabelledTextInput>
+
+            <LabelledSelect
+              options={["Choose Type", ...constants.businessType]}
+              value={this.props.sellerInfo.value.businessType}
+              onChange={this.updateInfo.bind(this,"businessType")}
+              validationState={this.props.sellerInfo.vState.businessType}
+              validate={fieldValidations.validateSelect.bind(null,"Choose Type")}
+              helpText={"Choose a valid type"}>
+              Type of business
+            </LabelledSelect>
 
             <LabelledSelect
               options={["Choose Primary Category", ...constants.productCategories]}
@@ -208,6 +218,15 @@ class SellerInfo extends Component {
             <br/>
 
             <LabelledTextInput
+              value={this.props.sellerInfo.value.wpincode}
+              onChange={this.updateInfo.bind(this,"wpincode")}
+              validationState={this.props.sellerInfo.vState.wpincode}
+              validate={fieldValidations.validatePincode}
+              helpText={"Pincode must be a valid 6 digit number"}>
+              Pin Code
+            </LabelledTextInput>
+
+            <LabelledTextInput
               value={this.props.sellerInfo.value.wadd1}
               onChange={this.updateInfo.bind(this,"wadd1")}
               validationState={this.props.sellerInfo.vState.wadd1}
@@ -223,15 +242,6 @@ class SellerInfo extends Component {
               validate={fieldValidations.noValidation}
               helpText={null}>
               Warehouse Address Line 2
-            </LabelledTextInput>
-
-            <LabelledTextInput
-              value={this.props.sellerInfo.value.wpincode}
-              onChange={this.updateInfo.bind(this,"wpincode")}
-              validationState={this.props.sellerInfo.vState.wpincode}
-              validate={fieldValidations.validatePincode}
-              helpText={"Pincode must be a valid 6 digit number"}>
-              Pin Code
             </LabelledTextInput>
 
             <LabelledSelect

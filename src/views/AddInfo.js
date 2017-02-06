@@ -79,7 +79,7 @@ class AddInfo extends Component {
             </LabelledCheckboxGroup>
 
             <LabelledSelect
-              options={["Less than 1 Lakh","Between 1 Lakh and 10 Lakhs","Between 10 Lakhs and 1 Crore","More than 1 Crore","I dont know"]}
+              options={["Less than 1 Lakh","Between 1 Lakh and 10 Lakhs","Between 10 Lakhs and 1 Crore","More than 1 Crore"]}
               value={this.props.addlInfo.value.annualTurnover}
               onChange={this.updateInfo.bind(this,"annualTurnover")}
               validationState={this.props.addlInfo.vState.annualTurnover}

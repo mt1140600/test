@@ -93,6 +93,18 @@ class TaxDetails extends Component{
             </LabelledTextInput>
 
             <LabelledUpload
+              value={this.props.taxDetails.value.panCard}
+              onChange={this.updateInfo.bind(this,"panCard")}
+              validationState={this.props.taxDetails.vState.panCard}
+              validate={fieldValidations.noValidation}
+              helpText="Upload a PNG, JPG, BMP or PDF file"
+              cloudinaryCloudName={constants.cloudinaryCloudName}
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
+              cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
+                PAN Card
+            </LabelledUpload>
+
+            <LabelledUpload
               value={this.props.taxDetails.value.certIncorp}
               onChange={this.updateInfo.bind(this,"certIncorp")}
               validationState={this.props.taxDetails.vState.certIncorp}
@@ -113,7 +125,7 @@ class TaxDetails extends Component{
               cloudinaryCloudName={constants.cloudinaryCloudName}
               cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
               cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
-                Membership with Indian Chamber of Commerce
+                Membership in Business Organisations (Chamber of Commerce,FICCI, CII etc.)
             </LabelledUpload>
 
             <br/>

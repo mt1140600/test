@@ -42,6 +42,7 @@ export const verifyOtp = createReducer(verifyOtp_initialState, "Update Verify OT
 const sellerInfo_initialState = {
   vState:{
     storeName: null,
+    businessType: null,
     pincode: null,
     add1: null,
     add2: true,
@@ -59,6 +60,7 @@ const sellerInfo_initialState = {
 
   value:{
     storeName:"",
+    businessType:"Choose Type",
     pincode:"",
     add1:"",
     add2:"",
@@ -84,14 +86,16 @@ const taxDetails_initialState = {
     PAN:null,
     VAT:null,
     CST:null,
-    certIncorp:null,
-    membICC:null
+    panCard:true,
+    certIncorp:true,
+    membICC:true
   },
 
   value:{
     PAN:"",
     VAT:"",
     CST:"",
+    panCard:"",
     certIncorp:"",
     membICC:""
   }
@@ -125,8 +129,8 @@ export const paymentDetails = createReducer(paymentDetails_initialState, "Update
 const pocDetails_initialState = {
 
   vState: {
-    POCName:true,
-    POCPhone:true,
+    POCName:null,
+    POCPhone:null,
     POCEmail:true
   },
 

@@ -98,7 +98,7 @@ class Signup extends Component {
               <input type="text" className="pt-input" placeholder="Name" value={this.state.username} onChange={this.handleFieldUpdate.bind(this, "username")}  />
             </div>
             <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Business Name" value={this.state.business_name} onChange={this.handleFieldUpdate.bind(this, "business_name")}  />
+              <input type="text" className="pt-input" placeholder="Name of Business" value={this.state.business_name} onChange={this.handleFieldUpdate.bind(this, "business_name")}  />
             </div>
           </div>
           <br/>

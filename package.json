@@ -21,7 +21,7 @@
     "prepublish": "npm run clean-dist && npm run lint && npm run test",
     "publish": "babel-node tools/build.js && node server.js",
     "deploy": "babel-node tools/build.js && node server.js",
-    "dist-setup" : "npm run clean-dist && babel-node tools/build.js",
+    "dist-setup": "npm run clean-dist && babel-node tools/build.js",
     "build": "babel-node tools/build.js && npm run open:dist",
     "test": "mocha tools/testSetup.js \"./{,!(node_modules)/**/}*.spec.js\" --reporter progress",
     "test:cover": "babel-node node_modules/isparta/bin/isparta cover --root src --report html node_modules/mocha/bin/_mocha -- --require ./tools/testSetup.js \"./{,!(node_modules)/**/}*.spec.js\" --reporter progress",
@@ -35,12 +35,13 @@
   "dependencies": {
     "@blueprintjs/core": "1.1.0",
     "cloudinary": "1.4.6",
-    "firebase": "3.6.4",
     "express": "4.14.0",
+    "firebase": "3.6.4",
     "immutable": "^3.8.1",
     "lodash": "4.17.2",
     "moment": "2.17.1",
     "nodemon": "1.11.0",
+    "normalize.css": "5.0.0",
     "object-assign": "4.1.0",
     "react": "15.4.1",
     "react-addons-create-fragment": "15.4.1",
@@ -58,8 +59,8 @@
     "redux-auth-wrapper": "^0.9.0",
     "redux-thunk": "2.1.0",
     "velocity-react": "1.1.11",
-    "yarn": "^0.17.10",
-    "whatwg-fetch": "2.0.1"
+    "whatwg-fetch": "2.0.1",
+    "yarn": "^0.17.10"
   },
   "devDependencies": {
     "autoprefixer": "6.5.1",

@@ -7,6 +7,7 @@ import configureStore from './store/configureStore';
 require('./favicon.ico');
 import { syncHistoryWithStore } from 'react-router-redux';
 import * as firebase from 'firebase';
+import 'normalize.css';
 
 // import Perf from 'react-addons-perf';
 // window.Perf = Perf;

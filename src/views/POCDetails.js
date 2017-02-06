@@ -62,17 +62,17 @@ class POCDetails extends Component {
               onChange={this.updateInfo.bind(this,"POCName")}
               validationState={this.props.pocDetails.vState.POCName}
               validate={fieldValidations.noValidation}
-              helpText={null}>
-              Name <small>(optional)</small>
+              helpText={"Name is mandatory"}>
+              Name
             </LabelledTextInput>
 
             <LabelledTextInput
               value={this.props.pocDetails.value.POCPhone}
               onChange={this.updateInfo.bind(this,"POCPhone")}
               validationState={this.props.pocDetails.vState.POCPhone}
-              validate={fieldValidations.noValidation}
+              validate={fieldValidations.validateMobileNumber}
               helpText={"Enter a valid phone number"}>
-              Phone Number <small>(optional)</small>
+              Phone Number
             </LabelledTextInput>
 
             <LabelledTextInput
@@ -81,7 +81,7 @@ class POCDetails extends Component {
               validationState={this.props.pocDetails.vState.POCEmail}
               validate={fieldValidations.validateOptionalEmail}
               helpText={"Enter a valid email ID"}>
-              Email ID <small>(optional)</small>
+              Email ID
             </LabelledTextInput>
             <br/>
             <Button className="pt-intent-primary" style={{margin:"auto"}} onClick={this.handleContinue}>Continue</Button>
