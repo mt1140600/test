@@ -87,6 +87,7 @@ class SellerInfo extends Component {
     this.setState({showSpinner: true});
     const mapToDbObj = {
       store_name: this.props.sellerInfo.value.storeName,
+      business_type: this.props.sellerInfo.value.businessType,
       product_category: this.props.sellerInfo.value.category,
       address_pincode:  this.props.sellerInfo.value.pincode,
       address_address_l1: this.props.sellerInfo.value.add1,

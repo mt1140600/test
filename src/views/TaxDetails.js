@@ -38,6 +38,7 @@ class TaxDetails extends Component{
         pan_no: this.props.taxDetails.value.PAN,
         vat_no: this.props.taxDetails.value.VAT,
         cst_no: this.props.taxDetails.value.CST,
+        pan_url: this.props.taxDetails.value.panCard,
         certification_of_incorporation_url: this.props.taxDetails.value.certIncorp,
         membership_with_icc_url:  this.props.taxDetails.value.membICC
       }
