@@ -1,20 +1,19 @@
 import React, {Component} from 'react';
-import TabLayout from './TabLayout';
+import EditTabLayout from './EditTabLayout';
 import ViewNameBar from '../components/ViewNameBar';
 import Header from '../components/Header';
 import HeaderButtons from '../components/HeaderButtons';
 import ProgressBar from '../components/ProgressBar';
 import ChatWidget from  './ChatWidget';
 
-class AccountSetup extends Component{
+class EditProfile extends Component{
   render() {
     return(
       <div>
         <Header/>
         <div style={{paddingTop: 50}}>
-          {ViewNameBar("Account Settings")}
-          <ProgressBar/>
-          <TabLayout/>
+          {ViewNameBar("Edit Profile")}
+          <EditTabLayout/>
         </div>
         {/* <ChatWidget/> */}
       </div>
@@ -22,4 +21,4 @@ class AccountSetup extends Component{
   }
 }
 
-export default AccountSetup;
+export default EditProfile;

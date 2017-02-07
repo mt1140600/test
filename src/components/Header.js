@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {handleLogout} from '../actions/login';
 import {Popover, PopoverInteractionKind, Position, Menu, MenuItem, MenuDivider} from '@blueprintjs/core';
 import {Link} from 'react-router';
+import { push } from 'react-router-redux'
 
 class NotificationHistory extends Component{
   renderNotification = (item, index) => {
@@ -57,7 +58,8 @@ class Header extends Component{
     this.loginMenu = <Menu>
                         <MenuItem
                             iconName="pt-icon-person"
-                            text="Profile" />
+                            onClick={this.handleProfile}
+                            text="Edit Profile" />
                         <MenuDivider />
                         <MenuItem
                             iconName="pt-icon-log-out"
@@ -70,6 +72,14 @@ class Header extends Component{
     this.props.handleLogout();
   }
 
+  handleProfile = () => {
+    this.props.dispatch(push('/profile'));
+  }
+
+  openDashboard  = () => {
+    this.props.dispatch(push('/dashboard'));
+  }
+
   render(){
     return(
       <nav id="header" className="pt-navbar">
@@ -80,6 +90,7 @@ class Header extends Component{
         {
           (localStorage.getItem("user_id") !== null)?
             <div className="pt-navbar-group pt-align-right">
+              <button className="pt-button pt-minimal pt-icon-control" onClick={this.openDashboard}/>
               <span className="pt-navbar-divider"></span>
 
               <Popover content= {<NotificationHistory />}
@@ -106,7 +117,7 @@ class Header extends Component{
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({handleLogout}, dispatch);
+  return { ...bindActionCreators({handleLogout}, dispatch), dispatch };
 }
 
 export default connect(null, mapDispatchToProps)(Header);

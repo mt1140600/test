@@ -8,13 +8,43 @@ import TaxDetails from '../views/TaxDetails';
 import PaymentDetails from '../views/PaymentDetails';
 import POCDetails from '../views/POCDetails';
 import AddInfo from '../views/AddInfo';
-import TnC from '../views/TnC';
 import {actionTabChange, loadForm} from '../actions/registration';
+import { push } from 'react-router-redux'
 
-const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Terms & Conditions"];
-const tabPanels = [     VerifyOtp,            SellerInfo,          TaxDetails,    PaymentDetails,       POCDetails,            AddInfo,                    TnC];
 
-class TabLayout extends Component {
+let GoToDashBoard = (props) => {
+  const handleClick = () => {
+    console.log(props);
+    props.actionTabChange(0);
+    props.dispatch(push('/dashboard'));
+  }
+  return(
+    <div onClick={handleClick} className="flexRow" style={{ fontSize: "x-large", fontWeight: 100, justifyContent: "center", margin: "100px 50px", cursor: "pointer"}}>
+      <div style={{textAlign: "center", fontSize: "60px", color: "#6666ff", paddingRight: 20, position: "relative", top: -5}} className="pt-icon-control" />
+      <div>
+        <p style={{textAlign: "center", textDecoration: "none !important"}}> You have finished Editing your profile. </p>
+        <p className="pseudoLink" style={{textAlign: "center"}}>Proceed to Dashboard?</p>
+      </div>
+    </div>
+  );
+}
+
+const mapDispatch = (dispatch) => {
+  return {
+    ...bindActionCreators({actionTabChange}, dispatch),
+    dispatch
+  }
+}
+
+GoToDashBoard = connect(null,mapDispatch)(GoToDashBoard);
+
+
+
+
+const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Dashboard"];
+const tabPanels = [     VerifyOtp,            SellerInfo,          TaxDetails,    PaymentDetails,       POCDetails,            AddInfo,             GoToDashBoard];
+
+class EditTabLayout extends Component {
   constructor() {
     super();
     this.renderTabs = this.renderTabs.bind(this);
@@ -66,4 +96,4 @@ const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({actionTabChange, loadForm}, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TabLayout);
+export default connect(mapStateToProps, mapDispatchToProps)(EditTabLayout);

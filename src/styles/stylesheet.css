@@ -128,6 +128,14 @@ h6{
   position: relative;
 }
 
+.tabs1{
+  background-color: white;
+  margin: 20px 40px 40px 40px;
+  border: 1px solid #dee5e7;
+  min-height: calc(100vh - 150px);
+  position: relative;
+}
+
 .tabs.tabs80{
   min-height: 80vh;
 }
@@ -519,6 +527,10 @@ h6{
   border-radius: 3px;
   max-width: 180px;
   box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 2px 4px rgba(16, 22, 26, 0.2), 0 8px 24px rgba(16, 22, 26, 0.2);
+}
+
+.pseudoLink:hover{
+  color: rgb(102, 102, 255);
 }
 
 /*.sellProductButton{

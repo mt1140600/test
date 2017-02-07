@@ -20,6 +20,14 @@ class VerticalTabLayout extends Component{
     this.renderTabs = this.renderTabs.bind(this);
   }
 
+  componentDidMount(){
+    
+  }
+
+  componentWillReceiveProps(){
+
+  }
+
   handleChange(tab){
     this.props.selectDashboardTab(tab);
   }

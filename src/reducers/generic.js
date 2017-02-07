@@ -46,7 +46,6 @@ const notifications_intitalState = [
 ];
 
 export const notificationsLog = (state = notifications_intitalState, action) => {
-  console.log("state is", state);
   switch(action.type){
     case ADD_NOTIFICATION:
       return [...state, action.payload ];

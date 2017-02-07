@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import { UserIsAuthenticated, UserIsNotAuthenticated, UserIsEmailVerified } from './utils/authWrappers.js'
 import AccountSetup from './containers/AccountSetup';
+import EditProfile from './containers/EditProfile';
 import App from './components/App';
 import Signup from './views/Signup';
 import ResetPassword from './views/ResetPassword';
@@ -52,6 +53,8 @@ export default (
     <Route path="reset" component={ResetPassword} />
     <Route path="reset2" component={ResetPassword2} />
     <Route path="registration" component={AccountSetup}/>
+
+    <Route path="profile" component={EditProfile} />
 
     <Route path="dashboard" component={ProductUpload}>
       <IndexRoute component={UploadProduct} />
