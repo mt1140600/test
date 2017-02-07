@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import { Button, FocusStyleManager, Spinner } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledUpload from '../components/LabelledUpload';
+import LabelledUploadMultiple from '../components/LabelledUploadMultiple';
 import * as fieldValidations from '../utils/fieldValidations';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -22,6 +23,7 @@ class TaxDetails extends Component{
   }
 
   updateInfo(field, value, vState) {
+    console.log("update", field, value, vState);
       this.props.updateTaxDetails(field, value, vState);
   }
 
@@ -116,9 +118,10 @@ class TaxDetails extends Component{
                 Certification of Incorporation
             </LabelledUpload>
 
-            <LabelledUpload
+            <LabelledUploadMultiple
               value={this.props.taxDetails.value.membICC}
               onChange={this.updateInfo.bind(this,"membICC")}
+              minImages={0}
               validationState={this.props.taxDetails.vState.membICC}
               validate={fieldValidations.noValidation}
               helpText="Upload a PNG, JPG, BMP or PDF file"
@@ -126,7 +129,7 @@ class TaxDetails extends Component{
               cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
               cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
                 Membership in Business Organisations (Chamber of Commerce,FICCI, CII etc.)
-            </LabelledUpload>
+            </LabelledUploadMultiple>
 
             <br/>
 

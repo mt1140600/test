@@ -97,7 +97,7 @@ const taxDetails_initialState = {
     CST:"",
     panCard:"",
     certIncorp:"",
-    membICC:""
+    membICC: []
   }
 
 }

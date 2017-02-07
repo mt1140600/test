@@ -7,7 +7,7 @@ class LabelledUpload extends Component{
 
   constructor(){
     super();
-    this.state = {fileName: "",fileURL: ""};
+    this.state = {fileName: "",fileURL: "", showHelpText: false};
   }
   handleClick = () => {
     cloudinary.openUploadWidget({ cloud_name: this.props.cloudinaryCloudName, upload_preset: this.props.cloudinaryUploadPreset, folder:this.props.cloudinaryFolder},
@@ -15,12 +15,17 @@ class LabelledUpload extends Component{
        console.log(error, result);
        if(error === null){
           console.log(result[0].secure_url);
-          this.setState({fileName: result[0].original_filename, fileURL: result[0].secure_url});
+          this.setState({fileName: result[0].original_filename, fileURL: result[0].secure_url, showHelpText: false});
           this.props.onChange(result[0].secure_url, true);
        }
        else{
          console.log(error);
-         this.props.onChange("", false);
+         if(this.props.validationState){ //If there is a valid image already uploaded or it's validation state is true by default, retain it but show helpText saying that new image couldnt be uploaded
+          this.setState({showHelpText: true});
+         }
+         else { //If there is no image already uploaded, then make validation state as false
+          this.props.onChange("", false);
+         }
        }
       }
     );
@@ -37,10 +42,10 @@ class LabelledUpload extends Component{
             {this.props.children}
           </div>
           <div className="pt-file-upload">
-            <button id="upload_widget_opener" className="pt-button" style={{minWidth: "100px", maxHeight: "30px", overflow:"hidden"}} onClick={this.handleClick}>Choose File</button>
+            <button id="upload_widget_opener" className="pt-button pt-icon-upload" style={{minWidth: "120px", maxHeight: "30px", overflow:"hidden"}} onClick={this.handleClick}>Choose File</button>
           </div>
         </div>
-        {(this.props.validationState === false)?<div className="helpText" >{this.props.helpText}</div>:null}
+        {(this.props.validationState === false || this.state.showHelpText)?<div className="helpText" >{this.props.helpText}</div>:null}
         {(this.props.validationState === true && this.props.value.length > 0)?
           //enclosing popover in a div cuz it is a span otherwise
           <div onClick={this.preventClick}>
