@@ -64,6 +64,7 @@ export const fillForm = (obj) =>{
       if(checkNull(obj.store_name, "storeName", updateSellerInfo)){
         dispatch(updateTabValidation(1, true));  //Setting Tab validation to true under the assumption that, if one field is filled in the subform, all fields must be filled in the subForm as we cannot save the subForm otherwise from the frontend
       }
+      checkNull(obj.business_type, "businessType", updateSellerInfo);
       checkNull(obj.product_category, "category", updateSellerInfo);
       checkNull(obj.address_pincode, "pincode", updateSellerInfo);
       checkNull(obj.address_address_l1, "add1", updateSellerInfo);
@@ -84,6 +85,7 @@ export const fillForm = (obj) =>{
       }
       checkNull(obj.vat_no, "VAT", updateTaxDetails);
       checkNull(obj.cst_no, "CST", updateTaxDetails);
+      checkNull(obj.pan_url, "panCard", updateTaxDetails);
       checkNull(obj.certification_of_incorporation_url, "certIncorp", updateTaxDetails);
       checkNull(obj.membership_with_icc_url, "membICC", updateTaxDetails);
 
