@@ -35,6 +35,8 @@ class LabelledUpload extends Component{
     event.preventDefault();
   }
   render(){
+    let length = 0;
+    if(typeof(this.props.value) !== "undefined")  length = this.props.value.length;
     return( //If validationState is null, neither helpText nor successText will be shown
       <label className="pt-label pt-inline container">
         <div  style={{display: "flex", justifyContent: "space-between"}}>
@@ -46,7 +48,7 @@ class LabelledUpload extends Component{
           </div>
         </div>
         {(this.props.validationState === false || this.state.showHelpText)?<div className="helpText" >{this.props.helpText}</div>:null}
-        {(this.props.validationState === true && this.props.value.length > 0)?
+        {(this.props.validationState === true && length > 0)?
           //enclosing popover in a div cuz it is a span otherwise
           <div onClick={this.preventClick}>
             <Popover content={<ImageThumbnail source={this.props.value}/>}

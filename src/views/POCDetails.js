@@ -61,7 +61,7 @@ class POCDetails extends Component {
               value={this.props.pocDetails.value.POCName}
               onChange={this.updateInfo.bind(this,"POCName")}
               validationState={this.props.pocDetails.vState.POCName}
-              validate={fieldValidations.noValidation}
+              validate={fieldValidations.validateMandatoryString}
               helpText={"Name is mandatory"}>
               Name
             </LabelledTextInput>

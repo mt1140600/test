@@ -46,14 +46,16 @@ class LabelledUploadMultiple extends Component{
   }
 
   renderImages = (item, index) => {
+    let fileName = (this.state.fileNames.length > index)? this.state.fileNames[index] : "";
     return(
       <Popover content={<ImageThumbnail source={item}/>}
         interactionKind={PopoverInteractionKind.HOVER}
         popoverClassName="pt-popover-content-sizing"
         position={Position.LEFT}
+        key={index}
       >
         <div>
-          <div className="successText" style={{marginRight: "30px", overflow: "hidden"}}>{`${this.state.fileNames[index]} Uploaded`}</div>
+          <div className="successText" style={{marginRight: "30px", overflow: "hidden"}}>{`${fileName} Uploaded`}</div>
           <button className="pt-button pt-intent-danger pt-minimal pt-icon-small-cross" style={{position: "absolute", top: -5, right: 0}} onClick={this.removeImage.bind(this, index)}/>
         </div>
       </Popover>
