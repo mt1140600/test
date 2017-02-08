@@ -13,7 +13,7 @@ import { VisibleOnlyAdmin } from '../utils/authWrappers.js';
 
 import { Link } from 'react-router';
 
-const tabs = [{name: "Product Upload", route: "/dashboard", icon: "pt-icon-cloud-upload", color: "#7ba428"}, {name: "Manage Inventory", route: "/dashboard/inventory", icon: "pt-icon-box", color: "#e5e500"}, {name: "Orders", route: "/dashboard/orders", icon: "pt-icon-projects", color: "#7fbafd"}, {name: "Returns/Replacements", route: "/dashboard/returns", icon: "pt-icon-swap-horizontal", color: "#c17196"}, {name: "Completed Orders", route: "/dashboard/completed", icon: "pt-icon-saved", color: "#aceace"}, {name: "Payments", route: "/dashboard/payment", icon: "pt-icon-credit-card", color: "#ffb6c1"} ];
+const tabs = [{name: "Product Upload", route: "/dashboard", icon: "pt-icon-cloud-upload", color: "#7ba428"}, {name: "Upload History", route: "/dashboard/uploadHistory", icon: "pt-icon-history", color: "#7ba428"}, {name: "Manage Inventory", route: "/dashboard/inventory", icon: "pt-icon-box", color: "#e5e500"}, {name: "Orders", route: "/dashboard/orders", icon: "pt-icon-projects", color: "#7fbafd"}, {name: "Returns/Replacements", route: "/dashboard/returns", icon: "pt-icon-swap-horizontal", color: "#c17196"}, {name: "Completed Orders", route: "/dashboard/completed", icon: "pt-icon-saved", color: "#aceace"}, {name: "Payments", route: "/dashboard/payment", icon: "pt-icon-credit-card", color: "#ffb6c1"} ];
 
 class VerticalTabLayout extends Component{
   constructor() {

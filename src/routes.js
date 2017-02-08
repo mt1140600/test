@@ -17,6 +17,7 @@ import ConfirmItem from './components/ConfirmItem';
 import RejectItem from './components/RejectItem';
 import DateRangePopover from './components/DateRangePopover';
 import UploadProduct from './panelViews/UploadProduct';
+import UploadHistory from './panelViews/UploadHistory';
 import {Orders, New, Confirmed, Dispatched, Cancelled} from './panelViews/OrdersPanel';
 import Returns from './panelViews/Returns';
 import Completed from './panelViews/Completed';
@@ -58,6 +59,7 @@ export default (
 
     <Route path="dashboard" component={ProductUpload}>
       <IndexRoute component={UploadProduct} />
+      <Route path="uploadHistory" component={UploadHistory} />
       <Route path="orders" component={Orders}>
         <IndexRoute component={New} />
         <Route path="confirmed" component={Confirmed} />

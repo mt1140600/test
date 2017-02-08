@@ -5,7 +5,7 @@ import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_USER,
 const initialState = {
     token: null,
     user: false,
-    isAdmin: false,
+    isAdmin: true,
     isAuthenticated: false,
     isAuthenticating: false,
     calloutText: '',
