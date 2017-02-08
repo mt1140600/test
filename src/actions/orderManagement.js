@@ -15,8 +15,6 @@ const fillOrders = (orders) => {
 }
 
 export const fetchOrders = (sellerId, type, orderBy, from, to, category, search_text, page) => {
-  console.log("Inside fetchOrders function");
-  console.log(orderBy);
   return function(dispatch){
     let url = constants.fetchOrders;
     url = url.replace(":seller_id", sellerId);

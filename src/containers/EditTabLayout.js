@@ -51,9 +51,8 @@ class EditTabLayout extends Component {
     this.renderTabPanels = this.renderTabPanels.bind(this);
   }
   renderTabs(item, index) {
-    let dynamicClassName = (this.props.tabValidation[index] === false)?"pt-icon-small-cross red":(this.props.tabValidation[index]===true)?"pt-icon-small-tick green": "pt-icon-caret-right grey";
     return(
-      <Tab key={index} isSelected={true} className={dynamicClassName}>{item}</Tab>
+      <Tab key={index} isSelected={true}>{item}</Tab>
     );
   }
   renderTabPanels(item, index) {

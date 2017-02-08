@@ -38,7 +38,7 @@ class VerticalTabLayout extends Component{
     return (index === 0)?
       tab
       :
-      <OnlyAdminLink />
+      <OnlyAdminLink key={index}/>
   }
 
   collapseVerticalTabBar = () => {
