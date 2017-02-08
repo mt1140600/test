@@ -1,16 +1,7 @@
 import React, {Component} from 'react';
-import { Popover, Classes, Position, PopoverInteractionKind, Tag } from '@blueprintjs/core';
+import { InputGroup, Popover, Classes, Position, PopoverInteractionKind, Tag } from '@blueprintjs/core';
 import { DateRange, DateRangePicker} from '@blueprintjs/datetime';
 import moment from "moment";
-
-const Moment: React.SFC<{ date: Date, format?: string }> = ({ date, format = "dddd, LL" }) => {
-    const m = moment(date);
-    if (m.isValid()) {
-        return <Tag className="pt-large pt-minimal pt-intent-primary">{m.format(format)}</Tag>;
-    } else {
-        return <Tag className="pt-large pt-minimal">no date</Tag>;
-    }
-};
 
 class DateRangePopover extends Component{
 
@@ -25,6 +16,7 @@ class DateRangePopover extends Component{
   }
 
   handleDateSelected = () => {
+    console.log("searching ", this.state.dateRange);
     this.props.onSelect(this.state.dateRange);
   }
 
@@ -36,9 +28,22 @@ class DateRangePopover extends Component{
     this.setState({dateRange: nextProps.dateRange});
   }
 
-  render(){
+  clearDate = (event) => {
+    event.stopPropagation();
+    this.setState({ dateRange: [null, null]});
+    this.props.onSelect([null, null]);
+  }
 
+  getText = (value) => {
+    let returnValue = (value[0])? moment(value[0]).format("DD/MM/YY") : "";
+    returnValue = (value[1])? returnValue + " to " + moment(value[1]).format("DD/MM/YY") : returnValue;
+    return returnValue;
+  }
+
+  render(){
+    let textValue = this.getText(this.state.dateRange);
     const [start, end] = this.state.dateRange;
+
 
     let popoverContent = (
       <DateRangePicker
@@ -47,36 +52,34 @@ class DateRangePopover extends Component{
         onChange={this.handleDateChange} /> );
 
     return(
-      <div style={{ display: "flex", justifyContent: "flex-start", marginBottom: 15}}>
-
-        <Popover content={popoverContent}
-                 popoverClassName="pt-popover-content-sizing"
-                 position={Position.BOTTOM_LEFT}
-                 useSmartPositioning={true}>
-          <button className="pt-button" style={{marginRight: 10}}> Date Range  <span className="pt-icon-standard pt-icon-calendar pt-align-right"></span> </button>
-        </Popover>
-
-        {
-          (this.state.dateRange[0])?
-            <div style={{marginRight: 10}}>
-              <Moment date={start} />
-              <span className={`${Classes.ICON_LARGE} ${Classes.iconClass("arrow-right")}`} />
-              <Moment date={end} />
-            </div>
+      <Popover
+        content={popoverContent}
+        popoverClassName="pt-popover-content-sizing"
+        position={Position.BOTTOM_LEFT}
+        useSmartPositioning={true}
+        onClose={this.handleDateSelected}
+      >
+        <div className="pt-input-group" style={this.props.style}>
+          <span className="pt-icon pt-icon-calendar"></span>
+          <input style={{width: 200}}className="pt-input" value={textValue} />
+          {
+            (this.state.dateRange[0])?
+              <span className="pt-icon pt-icon-small-cross" onClick={this.clearDate}></span>
             :
-            null
-        }
+              null
+          }
 
-        <button className="pt-intent-success pt-button" onClick={this.handleDateSelected}>Search</button>
+        </div>
 
-      </div>
+      </Popover>
     );
   }
 }
 
 DateRangePopover.propTypes = {
     dateRange: React.PropTypes.array, //[fromDate, toDate]
-    onSelect: React.PropTypes.func
+    onSelect: React.PropTypes.func,
+    style: React.PropTypes.object
 }
 
 export default DateRangePopover;

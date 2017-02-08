@@ -232,40 +232,38 @@ class NewOrders extends Component{
   render(){
     return(
       <div>
-        <DateRangePopover
-          dateRange = {this.state.dateRange}
-          onSelect = {this.handleDateSelected}/>
-        <div style={{display:"flex", justifyContent:"space-between"}}>
-            <div className="pt-control-group" style={{display:"flex"}}>
-              <div style={{marginTop:10, marginRight: 10}}>
-                <CheckboxWrapper
-                  value={this.state.selectAll}
-                  onChange={this.toggleSelectAll}
-                  indeterminate={this.state.indeterminate}
-                >
-                  Select All
-                </CheckboxWrapper>
-              </div>
-              <button className="pt-button pt-intent-primary">Confirm</button>
-              {/* <button className="pt-button pt-intent-danger">Reject</button> */}
-            </div>
-            <div>
-              <LabelledSelect
-                options={productCategories}
-                onChange={this.handleCategory}
-                value = {this.state.category}
-                validationState={true}
-                validate={fieldValidations.noValidation}
-                helpText={""}>
-                Category
-              </LabelledSelect>
-            </div>
+        <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", padding: 10, backgroundColor: "#f6f8f8", border: "1px solid #DEE5E7"}}>
+          <DateRangePopover
+            dateRange = {this.state.dateRange}
+            onSelect = {this.handleDateSelected} />
+
+          <LabelledSelect
+            options={productCategories}
+            onChange={this.handleCategory}
+            value = {this.state.category}
+            validationState={true}
+            validate={fieldValidations.noValidation}
+            helpText={""}
+            style={{marginBottom: 0}}/>
+
             <div className="pt-input-group .modifier">
               <span className="pt-icon pt-icon-search"></span>
-              <input className="pt-input" type="search" placeholder="Search input" dir="auto" value={this.state.searchText} onChange={this.handleSearchText} onKeyUp={this.handleSearch}/>
+              <input className="pt-input" type="search" placeholder="Search" dir="auto" value={this.state.searchText} onChange={this.handleSearchText} onKeyUp={this.handleSearch}/>
             </div>
-          </div>
-          <br/>
+        </div>
+        <br/>
+
+        <div style={{display:"flex", alignItems: "center", paddingBottom: 5}}>
+
+            <CheckboxWrapper
+              value={this.state.selectAll}
+              onChange={this.toggleSelectAll}
+              indeterminate={this.state.indeterminate}
+              style={{marginBottom: 0}}
+            />
+
+          <button className="pt-button pt-intent-primary">Confirm</button>
+        </div>
 
       <TableHeaders tableHeaders={this.tableHeaders} />
 

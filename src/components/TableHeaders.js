@@ -97,7 +97,7 @@ class TableHeaders extends Component {
       )
     });
     return(
-      <div className="tableHeader" style={{fontSize:'11px'}}>
+      <div className="tableHeader" style={{fontSize:'11px', backgroundColor: "whitesmoke", }}>
         {headers}
       </div>
     )

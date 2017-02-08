@@ -96,7 +96,7 @@ class UnderProcessing extends Component{
           </div>
           <div className="pt-input-group .modifier">
             <span className="pt-icon pt-icon-search"></span>
-            <input className="pt-input" type="search" placeholder="Search input" dir="auto" />
+            <input className="pt-input" type="search" placeholder="Search" dir="auto" />
           </div>
         </div>
         <br/>
@@ -214,7 +214,7 @@ class Accepted extends Component{
           </div>
           <div className="pt-input-group .modifier">
             <span className="pt-icon pt-icon-search"></span>
-            <input className="pt-input" type="search" placeholder="Search input" dir="auto" />
+            <input className="pt-input" type="search" placeholder="Search" dir="auto" />
           </div>
         </div>
         <br/>
@@ -337,7 +337,7 @@ class Rejected extends Component{
           </div>
           <div className="pt-input-group .modifier">
             <span className="pt-icon pt-icon-search"></span>
-            <input className="pt-input" type="search" placeholder="Search input" dir="auto" />
+            <input className="pt-input" type="search" placeholder="Search" dir="auto" />
           </div>
         </div>
         <br/>
@@ -455,7 +455,7 @@ class Uploaded extends Component{
           </div>
           <div className="pt-input-group .modifier">
             <span className="pt-icon pt-icon-search"></span>
-            <input className="pt-input" type="search" placeholder="Search input" dir="auto" />
+            <input className="pt-input" type="search" placeholder="Search" dir="auto" />
           </div>
         </div>
         <br/>

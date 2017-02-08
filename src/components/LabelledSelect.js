@@ -37,6 +37,7 @@ class LabelledSelect extends Component{
   }
 
   render() {
+    let variableWidth = (typeof(this.props.children) !== "undefined")? 50 : 0;
     let option_type = 'array';
     let options = this.props.options || [];
 
@@ -45,11 +46,11 @@ class LabelledSelect extends Component{
     }
     return(
 
-      <label className="pt-label pt-inline" onFocus={this.handleClick}>
-        <div style={{display: "inline-block", width: "50%"}}>  
+      <label className="pt-label pt-inline" onFocus={this.handleClick} style={this.props.style}>
+        <div style={{display: "inline-block", width: `${variableWidth}%`}}>
           {this.props.children}
         </div>
-        <div className="pt-select" style={Object.assign({width:"50%", margin: 0, float:"right"},this.props.style)}>
+        <div className="pt-select" style={{width:`${100 - variableWidth}%`, margin: 0, float:"right"}}>
           <select value={this.props.value} onChange={this.handleChange}>
             {(option_type === 'array') ? options.map(this.renderOption) : this.mapObject(options)}
           </select>

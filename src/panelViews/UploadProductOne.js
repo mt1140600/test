@@ -106,7 +106,6 @@ class UploadProductOne extends Component{
           responseKey={"ref"}
           validationState={this.state.vStateCategory}
           validate={fieldValidations.validateSelect.bind(null,"Choose Category")}
-          style={{"float":"none"}}
           helpText={"No category selected."}
           onChange={this.selectCategory}>
           Choose a category:

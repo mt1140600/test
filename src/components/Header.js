@@ -55,6 +55,7 @@ class Header extends Component{
 
   constructor(){
     super();
+    // this.state = {isFullScreen: false};
     this.loginMenu = <Menu>
                         <MenuItem
                             iconName="pt-icon-person"
@@ -80,17 +81,57 @@ class Header extends Component{
     this.props.dispatch(push('/dashboard'));
   }
 
+  isFullScreen = () =>
+  {
+    return (document.fullScreenElement && document.fullScreenElement !== null)
+         || document.mozFullScreen
+         || document.webkitIsFullScreen;
+  }
+
+  exitFullScreen = () =>
+  {
+      if (document.exitFullscreen)
+          document.exitFullscreen();
+      else if (document.msExitFullscreen)
+          document.msExitFullscreen();
+      else if (document.mozCancelFullScreen)
+          document.mozCancelFullScreen();
+      else if (document.webkitExitFullscreen)
+          document.webkitExitFullscreen();
+  }
+
+  toggleFullscreen = () => {
+    if(this.isFullScreen()){
+      // this.setState({isFullScreen: true});
+      this.exitFullScreen();
+    }
+    else{
+      // this.setState({isFullScreen: false});
+      let el = document.documentElement;
+      let rfs = el.requestFullscreen
+          || el.webkitRequestFullScreen
+          || el.mozRequestFullScreen
+          || el.msRequestFullscreen
+      ;
+      rfs.call(el);
+    }
+  }
+
   render(){
     return(
       <nav id="header" className="pt-navbar">
-        <div className="pt-navbar-group pt-align-left" style={{display: "flex", justifyContent: "center", alignItems:"center"}}>
+        <div className="pt-navbar-group pt-align-left" style={{display: "flex", justifyContent: "center", alignItems:"center", cursor: "pointer"}} onClick={this.openDashboard}>
           <img id="header-logo" src = {logo} />
           <div id="header-name" className="pt-navbar-heading companyName">Prokure</div>
         </div>
         {
           (localStorage.getItem("user_id") !== null)?
             <div className="pt-navbar-group pt-align-right">
+
               <button className="pt-button pt-minimal pt-icon-control" onClick={this.openDashboard}/>
+              <span className="pt-navbar-divider"></span>
+
+              <button className="pt-button pt-minimal pt-icon-fullscreen" onClick={this.toggleFullscreen}/>
               <span className="pt-navbar-divider"></span>
 
               <Popover content= {<NotificationHistory />}
