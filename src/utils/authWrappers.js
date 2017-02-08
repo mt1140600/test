@@ -31,6 +31,6 @@ export const UserIsEmailVerified = UserAuthWrapper({
 export const VisibleOnlyAdmin = UserAuthWrapper({
   authSelector: state => state.userData,
   wrapperDisplayName: 'VisibleOnlyAdmin',
-  predicate: user => user.isAdmin,
+  predicate: userData => userData.isAdmin,
   FailureComponent: null
 });

@@ -9,9 +9,11 @@ import ManageInventory from '../panelViews/ManageInventory';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as dashboardActions from '../actions/dashboard';
+import { VisibleOnlyAdmin } from '../utils/authWrappers.js';
+
 import { Link } from 'react-router';
 
-const tabs      = [{name: "Product Upload", route: "/dashboard", icon: "pt-icon-cloud-upload", color: "#7ba428"}, {name: "Manage Inventory", route: "/dashboard/inventory", icon: "pt-icon-box", color: "#e5e500"}, {name: "Orders", route: "/dashboard/orders", icon: "pt-icon-projects", color: "#7fbafd"}, {name: "Returns/Replacements", route: "/dashboard/returns", icon: "pt-icon-swap-horizontal", color: "#c17196"}, {name: "Completed Orders", route: "/dashboard/completed", icon: "pt-icon-saved", color: "#aceace"}, {name: "Payments", route: "/dashboard/payment", icon: "pt-icon-credit-card", color: "#ffb6c1"} ];
+const tabs = [{name: "Product Upload", route: "/dashboard", icon: "pt-icon-cloud-upload", color: "#7ba428"}, {name: "Manage Inventory", route: "/dashboard/inventory", icon: "pt-icon-box", color: "#e5e500"}, {name: "Orders", route: "/dashboard/orders", icon: "pt-icon-projects", color: "#7fbafd"}, {name: "Returns/Replacements", route: "/dashboard/returns", icon: "pt-icon-swap-horizontal", color: "#c17196"}, {name: "Completed Orders", route: "/dashboard/completed", icon: "pt-icon-saved", color: "#aceace"}, {name: "Payments", route: "/dashboard/payment", icon: "pt-icon-credit-card", color: "#ffb6c1"} ];
 
 class VerticalTabLayout extends Component{
   constructor() {
@@ -20,28 +22,23 @@ class VerticalTabLayout extends Component{
     this.renderTabs = this.renderTabs.bind(this);
   }
 
-  componentDidMount(){
-    
-  }
-
-  componentWillReceiveProps(){
-
-  }
-
   handleChange(tab){
     this.props.selectDashboardTab(tab);
   }
 
   renderTabs(item, index) {
     let className = (this.props.currentTab === index)? "verticalTab active" : "verticalTab";
-    return(
-      <Link to={item.route} style={{ textDecoration: "none"}} key={index}>
-        <div className={className} onClick={()=>{this.handleChange(index);}}>
-          <span className={item.icon} style={{marginRight: 10, color: item.color}}/>
-          {(!this.props.collapsed)? item.name : ""}
-        </div>
-      </Link>
-    );
+    let tab = <Link to={item.route} style={{ textDecoration: "none"}} key={index}>
+                <div className={className} onClick={()=>{this.handleChange(index);}}>
+                  <span className={item.icon} style={{marginRight: 10, color: item.color}}/>
+                  {(!this.props.collapsed)? item.name : ""}
+                </div>
+              </Link>
+    const OnlyAdminLink = VisibleOnlyAdmin( () => tab );
+    return (index === 0)?
+      tab
+      :
+      <OnlyAdminLink />
   }
 
   collapseVerticalTabBar = () => {
