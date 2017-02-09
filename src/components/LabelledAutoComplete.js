@@ -55,7 +55,7 @@ class LabelledAutoComplete extends Component {
       }
     }
 
-    if(found === false && value.trim().length > 0){ //provision to add option if it doesn't already exist
+    if(this.props.dbPath && found === false && value.trim().length > 0){ //If dbPath is given, provision to add option if it doesn't already exist 
       newOptions.push(`++ ${value}`);
     }
 
