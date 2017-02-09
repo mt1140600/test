@@ -2,7 +2,12 @@ import { FETCH_UPLOADS, UPLOAD_HISTORY_SET_SEARCH_SPECS  } from '../constant';
 import Immutable from 'immutable';
 
 const initial_state = {
-  searchSpecs: {},
+  searchSpecs: {
+    category: "Choose category",
+    from: null,
+    to: null,
+    search_text: ""
+  },
   uploads: []
 };
 

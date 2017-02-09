@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Tabs, TabList, Tab, TabPanel} from "@blueprintjs/core";
 import CheckboxWrapper from '../components/CheckboxWrapper';
+import LabelledAutoComplete from '../components/LabelledAutoComplete';
 import LabelledSelect from '../components/LabelledSelect';
 import {productCategories} from '../constants';
 import * as fieldValidations from '../utils/fieldValidations';
@@ -13,6 +14,7 @@ import {bindActionCreators} from 'redux';
 import * as actions from '../actions/uploadHistory';
 import moment from 'moment';
 import deepEqual from 'deep-equal';
+import {FETCH_ORDERS_LIMIT} from '../constant';
 
 class UnderProcessingRow extends Component{
   constructor(){
@@ -487,23 +489,47 @@ class Uploaded extends Component{
     });
   }
 
+  handleSearchText = (event) => {
+    console.log("changes");
+    this.setState({ searchText: event.target.value });
+
+    if(event.target.value.length === 0){  //Backspaced, the content is alutomatically fetched (without enter)
+      this.props.setSearchSpecs({
+            search_text: event.target.value
+          });
+    }
+  }
+
+  handleSearch = (event) =>{
+    if(event.keyCode == 13){
+      this.props.setSearchSpecs({
+            search_text: event.target.value,
+            page: 1
+          });
+    }
+  }
+
+  handlePageClick = (data) => { // data.selected starts from index 0
+      console.log("Page selected", data.selected + 1);
+      this.props.setSearchSpecs({
+          page: data.selected + 1
+      });
+  }
+
   render(){
     console.log("history props", this.props);
     return(
       <div>
         <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", padding: 10, backgroundColor: "#f6f8f8", border: "1px solid #DEE5E7"}}>
           <DateRangePopover
-            dateRange = {this.state.dateRange}
+            dateRange = {[this.props.uploadHistoryData.searchSpecs.from, this.props.uploadHistoryData.searchSpecs.to]}
             onSelect = {this.handleDateSelected} />
 
-          <LabelledSelect
-            options={productCategories}
-            onChange={this.handleCategory}
-            value = {this.state.category}
-            validationState={true}
-            validate={fieldValidations.noValidation}
-            helpText={""}
-            style={{marginBottom: 0}}/>
+            <LabelledAutoComplete
+              options = {["ana", "banana"]}
+              value = {this.props.uploadHistoryData.searchSpecs.category}
+              onSelect = {this.handleCategory}
+            />
 
             <div className="pt-input-group .modifier">
               <span className="pt-icon pt-icon-search"></span>
@@ -519,16 +545,17 @@ class Uploaded extends Component{
         <div id="react-paginate">
           <ReactPaginate previousLabel={"<"}
            nextLabel={">"}
-           breakLabel={<a href="">...</a>}
+           breakLabel={"..."}
            breakClassName={"break-me"}
-           pageCount={10}
+           pageCount={Math.ceil(Number(this.props.uploadHistoryData.uploads.count)/FETCH_ORDERS_LIMIT)}
            marginPagesDisplayed={2}
            pageRangeDisplayed={2}
-           onPageChange={()=>null}
+           initialPage={0}
+           onPageChange={this.handlePageClick}
            containerClassName={"pagination"}
            subContainerClassName={"pages pagination"}
            activeClassName={"active"} />
-         </div>
+        </div>
        </div>
 
     );

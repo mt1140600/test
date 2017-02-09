@@ -55,7 +55,7 @@ class LabelledAutoComplete extends Component {
       }
     }
 
-    if(this.props.dbPath && found === false && value.trim().length > 0){ //If dbPath is given, provision to add option if it doesn't already exist 
+    if(this.props.dbPath && found === false && value.trim().length > 0){ //If dbPath is given, provision to add option if it doesn't already exist
       newOptions.push(`++ ${value}`);
     }
 
@@ -74,14 +74,19 @@ class LabelledAutoComplete extends Component {
       </div>
     );
     return (
-      <div>
-        <label className="pt-label pt-inline" style={{display: "flex"}}>
-          <div style={{flex: 1}}>
-            {this.props.children}
-          </div>
+      <div style={this.props.style}>
+        <label className="pt-label pt-inline" style={{display: "flex", marginBottom: 0}}>
+          {
+            (this.props.children)?
+              <div style={{flex: 1}}>
+                {this.props.children}
+              </div>
+            :
+              null
+          }
           <div style={{flex: 1, display: "flex", justifyContent: "flex-end"}}>
             <Popover content={compassMenu} position={Position.BOTTOM_RIGHT} popoverDidOpen={this.popoverOpened}>
-                <button className="pt-button" type="button" style={{}}>
+                <button className="pt-button" type="button" style={{minWidth: 100}}>
                   {this.props.value}
                   <span className="pt-icon-standard pt-icon-caret-down pt-align-right"></span>
                 </button>
@@ -114,6 +119,7 @@ LabelledAutoComplete.propTypes = {
 LabelledAutoComplete.defaultProps = {
     options: [],
     value: "",
+    vState: true,
     onSelect: () => null,
 }
 

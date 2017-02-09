@@ -158,7 +158,6 @@ class NewOrders extends Component{
     }
   }
 
-
   handleSearch = (event) =>{
     if(event.keyCode == 13){
       this.props.setSearchSpecs({
