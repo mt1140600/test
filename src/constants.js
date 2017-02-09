@@ -20,6 +20,7 @@ export const getForm = `${url}/api/merchant/info`;
 export const forgotPassword = `${url}/api/merchant/reset_password_request?merchantEmail=`;
 export const newPasswordUrl = `${url}/api/merchant/reset_password?token=`;
 export const fetchOrders = `${url}/api/seller_orders/:seller_id?type=`;
+export const fetchUploads = `${url}/api/seller_orders/:seller_id?type=`;
 export const searchProduct = "http://adminapi.prokure.it/api/products/search/";
 export const uploadProducts = `${url}/api/seller/productUpload`;
 

@@ -75,7 +75,7 @@ class LabelledAutoComplete extends Component {
     );
     return (
       <div>
-        <label  className="pt-label pt-inline" style={{display: "flex"}}>
+        <label className="pt-label pt-inline" style={{display: "flex"}}>
           <div style={{flex: 1}}>
             {this.props.children}
           </div>

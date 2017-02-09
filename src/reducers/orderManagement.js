@@ -29,6 +29,7 @@ const orderManagement = (state = initial_state, action) => {
         newState = newState.toJS();
         newState.orders.rows[action.payload.index].selected = action.payload.value;
         return newState;
+      break;
       default:
         return state;
   }

@@ -5,6 +5,7 @@ import productUploadData from './productUploadData';
 import floatingNotification, {notificationsLog} from './generic';
 import * as registrationForm from './registrationForm';
 import orderManagement from './orderManagement';
+import uploadHistoryData from './uploadHistory';
 import cascadedDisplay from './cascadedDisplay';
 import dashboard from './dashboard.js';
 import {reducer as notificationsReducer} from 'reapop';
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   userData: userData,
   dashboard: dashboard,
   productUploadData: productUploadData,
+  uploadHistoryData: uploadHistoryData,
   notificationsLog: notificationsLog,
 
   registrationCurrentTab: registrationForm.tabReducer,

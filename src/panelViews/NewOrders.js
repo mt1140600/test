@@ -13,8 +13,8 @@ import {connect} from 'react-redux';
 import ConfirmItem from '../components/ConfirmItem';
 import RejectItem from '../components/RejectItem';
 import {FETCH_ORDERS_LIMIT} from '../constant';
-
-var moment = require('moment');
+import moment from 'moment';
+import deepEqual from 'deep-equal';
 
 class OrdersNewRow extends Component{
   constructor(){
@@ -139,7 +139,6 @@ class NewOrders extends Component{
       to: moment.utc(dateRange[1]).format(),
       page: 1
     });
-    // console.log(dateRange[0]);
   }
 
   handleCategory = (value) => {
@@ -194,7 +193,7 @@ class NewOrders extends Component{
   componentWillReceiveProps(nextProps){
     console.log("newOrders componentWillReceiveProps");
     console.log("ordersData:", nextProps.ordersData);
-    if( JSON.stringify(this.props.ordersData.searchSpecs) !== JSON.stringify(nextProps.ordersData.searchSpecs) ){
+    if(!deepEqual(this.props.ordersData.searchSpecs, nextProps.ordersData.searchSpecs)){
       console.log("fetching new data");
       this.props.fetchOrders(1, "new", nextProps.ordersData.searchSpecs.orderBy, nextProps.ordersData.searchSpecs.from, nextProps.ordersData.searchSpecs.to, nextProps.ordersData.searchSpecs.category, nextProps.ordersData.searchSpecs.search_text, nextProps.ordersData.searchSpecs.page);
     }

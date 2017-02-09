@@ -55,7 +55,7 @@ class TableHeader extends Component{
                 </div>
               </Tooltip>
               :
-              <div className="tableHeaderText" onClick={this.handleClick}>
+              <div className="tableHeaderText noSelect" onClick={this.handleClick}>
                 {itemObj.label}
               </div>
           }
@@ -97,7 +97,7 @@ class TableHeaders extends Component {
       )
     });
     return(
-      <div className="tableHeader" style={{fontSize:'11px', backgroundColor: "whitesmoke", }}>
+      <div className="tableHeader" style={{fontSize:'11px', backgroundColor: "whitesmoke" }}>
         {headers}
       </div>
     )
