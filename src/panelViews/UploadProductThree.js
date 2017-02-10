@@ -351,10 +351,10 @@ class UploadProductThree extends Component{
     console.log("persisting to db");
 
     let payload = [];
-    let productObject = {
-      sub_category_filters: []
-    };
     for(let i=0; i<this.state.tableCells.length; i++){
+      let productObject = {
+        sub_category_filters: []
+      };
       _.each(this.props.productUploadData.keyValue.categories, (value, key) => {
         if(value.ref === this.props.productUploadData.selectedCategory){
           productObject.category = value.category,
