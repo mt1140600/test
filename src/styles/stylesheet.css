@@ -158,15 +158,16 @@ h6{
 .tabs{
   background-color: white;
   /*border: 1px solid #dee5e7;*/
-  min-height: 75vh;
+  /*min-height: 75vh;*/
+  min-height: calc(100vh - 100px);
   position: relative;
 }
 
 .tabs1{
   background-color: white;
-  margin: 20px 40px 40px 40px;
+  /*margin: 20px 40px 40px 40px;*/
   /*border: 1px solid #dee5e7;*/
-  min-height: calc(100vh - 150px);
+  min-height: calc(100vh - 110px);
   position: relative;
 }
 
@@ -174,15 +175,23 @@ h6{
   min-height: 80vh;
 }
 
+.pt-progress-bar{
+  border-radius: 0px;
+}
+
+.pt-progress-bar .pt-progress-meter{
+  border-radius: 0px;
+}
+
 .pt-tab-list{
-  background-color: #3d4246;
+  /*background-color: #3d4246;*/
   border-bottom: 1px solid #DEE5E7;
   font-weight: 100;
   padding: 0px 20px 0px 20px;
 }
 
 .pt-tab{
-  color: #bec0c1;
+  color: #666;
 }
 
 .pt-tab-panel{
@@ -191,7 +200,7 @@ h6{
 }
 
 #progressBar{
-  margin: 20px 40px 20px 40px;
+  /*margin: 20px 40px 20px 40px;*/
 }
 
 /*input:-webkit-autofill {
