@@ -330,7 +330,7 @@ class ManageInventory extends Component{
   render(){
     return(
       <div>
-        <Tabs className="tabs " key="horizontal">
+        <Tabs className="tabs" key="horizontal">
           <TabList className="pt-large">
             {this.tabs.map(this.renderTabs)}
           </TabList>

@@ -126,7 +126,7 @@ class Header extends Component{
         </div>
         {
           (localStorage.getItem("user_id") !== null)?
-            <div className="pt-navbar-group pt-align-right">
+            <div className="pt-navbar-group pt-align-right" >
 
               <button className="pt-button pt-minimal pt-icon-control" onClick={this.openDashboard}/>
               <span className="pt-navbar-divider"></span>

@@ -60,6 +60,10 @@ body:-moz-full-screen {
   font-weight: 400;
 }
 
+.pt-button[class*="pt-icon-"]::before{
+  color: #bfccd6;
+}
+
 .cascadedTab * .bp-table-container{
   max-width: none;
 }
@@ -96,6 +100,7 @@ body:-moz-full-screen {
 #header{
   /*box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05);
   padding-left: 20px;*/
+  background-color: #202428;
   position: fixed;
   top: 0;
   width: 100%;
@@ -107,6 +112,7 @@ body:-moz-full-screen {
   display: inline-block;
 }
 #header-name{
+  color: white;
   margin-left: 10px;
   line-height: 50px;
   font-family: sans-serif;
@@ -124,8 +130,9 @@ body:-moz-full-screen {
 }
 #viewNameBar{
   height: 50px;
-  background-color: #f6f8f8;
-  border-bottom: 1px solid #DEE5E7;
+  background-color: #282d32;
+  border-bottom: 1px solid #3d4247;
+  color: white;
   line-height: 50px;
   padding-left: 40px;
   font-size: x-large;
@@ -150,8 +157,7 @@ h6{
 
 .tabs{
   background-color: white;
-  margin: 20px 40px 20px 40px;
-  border: 1px solid #dee5e7;
+  /*border: 1px solid #dee5e7;*/
   min-height: 75vh;
   position: relative;
 }
@@ -159,7 +165,7 @@ h6{
 .tabs1{
   background-color: white;
   margin: 20px 40px 40px 40px;
-  border: 1px solid #dee5e7;
+  /*border: 1px solid #dee5e7;*/
   min-height: calc(100vh - 150px);
   position: relative;
 }
@@ -169,14 +175,14 @@ h6{
 }
 
 .pt-tab-list{
-  background-color: #f6f8f8;
+  background-color: #3d4246;
   border-bottom: 1px solid #DEE5E7;
   font-weight: 100;
   padding: 0px 20px 0px 20px;
 }
 
 .pt-tab{
-  color: #5c7080;
+  color: #bec0c1;
 }
 
 .pt-tab-panel{
@@ -255,6 +261,7 @@ h6{
 .verticalTabPanel{
   flex:1;
   margin-left: 200px;
+  border: 1px solid;
 }
 .verticalTabPanel.collapsed{
   margin-left: 55px;
