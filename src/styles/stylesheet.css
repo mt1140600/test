@@ -46,6 +46,10 @@ body:-moz-full-screen {
   border-radius: 3px;
 }
 
+.pt-navbar-divider{
+    background-color: #bfccd6;
+}
+
 .pt-tooltip-indicator {
   border-bottom: inset 1px;
   cursor: help; }
@@ -177,6 +181,7 @@ h6{
 
 .pt-progress-bar{
   border-radius: 0px;
+  background-color: white;
 }
 
 .pt-progress-bar .pt-progress-meter{
@@ -184,7 +189,7 @@ h6{
 }
 
 .pt-tab-list{
-  /*background-color: #3d4246;*/
+  background-color: #d4d5d6;
   border-bottom: 1px solid #DEE5E7;
   font-weight: 100;
   padding: 0px 20px 0px 20px;
