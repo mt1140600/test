@@ -12,9 +12,8 @@ class ProductQuantity extends Component{
     </div>
   }
 
-  handleChange = (index, value) => {
-    let newValue = [...this.props.value];
-    newValue[index] = value;
+  handleChange = (key, value) => {
+    let newValue = Object({}, this.props.value, {[`${key}`]: value});
     this.props.onChange(newValue);
   }
 
@@ -35,7 +34,7 @@ class ProductQuantity extends Component{
         <div style={{display: "flex", justifyContent:"space-between"}}>
           <LabelledTextInput
             value= {this.props.value[0]}
-            onChange = {this.handleChange.bind(null, 0)}
+            onChange = {this.handleChange.bind(null, "min")}
             validationState = {true}
             validate = {this.dummy}
             style= {{ marginRight: 15}}
@@ -45,7 +44,7 @@ class ProductQuantity extends Component{
 
           <LabelledTextInput
             value = {this.props.value[1]}
-            onChange = {this.handleChange.bind(null, 1)}
+            onChange = {this.handleChange.bind(null, "max")}
             validationState = {true}
             validate = {this.dummy}
             style= {{ marginRight: 15}}
@@ -55,7 +54,7 @@ class ProductQuantity extends Component{
 
           <LabelledTextInput
             value = {this.props.value[2]}
-            onChange = {this.handleChange.bind(null, 2)}
+            onChange = {this.handleChange.bind(null, "step")}
             validationState = {true}
             validate = {this.dummy}
           >
@@ -70,6 +69,6 @@ class ProductQuantity extends Component{
 export default ProductQuantity;
 
 ProductQuantity.propTypes = {
-  value: React.PropTypes.array,
+  value: React.PropTypes.object,
   onChange: React.PropTypes.func
 }

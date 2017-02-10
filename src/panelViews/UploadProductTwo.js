@@ -210,7 +210,7 @@ class UploadProductTwo extends Component{
                 break;
 
                 case 'quantity':
-                  val = [1,1,1];
+                  val = {min: 1, max: 1, step: 1};
                   vState = true;
                 break;
 
