@@ -173,7 +173,7 @@ class UploadProductTwo extends Component{
               //check if state already has key
               //else
               //find options
-              let stateObj = { type: value.type } ;
+              let stateObj = { type: value.type, db_key: value.db_key, abstraction: value.abstraction } ;
 
               let val = null;
               let vState = false;

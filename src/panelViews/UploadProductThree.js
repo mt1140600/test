@@ -351,40 +351,57 @@ class UploadProductThree extends Component{
     console.log("persisting to db");
 
     let payload = [];
+    let productObject = {
+      sub_category_filters: []
+    };
     for(let i=0; i<this.state.tableCells.length; i++){
-      let productObject = {};
-        productObject.user_id = this.props.userData.user;
+      _.each(this.props.productUploadData.keyValue.categories, (value, key) => {
+        if(value.ref === this.props.productUploadData.selectedCategory){
+          productObject.category = value.category,
+          productObject.sub_category = value.name
+        }
+      });
+      // productObject.user_id = this.props.userData.user;
       _.each(this.props.productUploadData.stepTwoState, (value, key) => {
-        productObject[`${key}`] = value.value;
+        switch(value.abstraction){
+          case 'generic':
+            productObject[`${value.db_key}`] = value.value;
+          break;
+          case 'sub_category':
+            productObject.sub_category_filters.push({[`${value.db_key}`]: value.value});
+          break;
+          default:
+            console.log("abstraction doesn't exist for "+ key);
+        }
       });
       for(let j=0; j<this.state.tableCells[i].length; j++){
 
         switch(this.columnNames[j].type){
           case "auto-fill":
-            productObject[`${this.columnNames[j].key}`] = this.state.tableCells[i][j];
+            productObject[`${this.columnNames[j].db_key}`] = this.state.tableCells[i][j];
           break;
           case "additional-info":
-            productObject[`${this.columnNames[j].key.split("-")[0].trim()}`] = [ this.state.tableCells[i][j], this.state.tableCells[i][j+1], this.state.tableCells[i][j+2]];
+            productObject[`${this.columnNames[j].db_key.split("-")[0].trim()}`] = [ this.state.tableCells[i][j], this.state.tableCells[i][j+1], this.state.tableCells[i][j+2]];
             j = j + 2;
           break;
           case "image-upload":
-            productObject[`${this.columnNames[j].key}`] = {images: [this.state.tableCells[i][j]], defaultImage: 0};
+            productObject[`${this.columnNames[j].db_key}`] = {images: [this.state.tableCells[i][j]], defaultImage: 0};
           break;
           case "multiselect":
-            productObject[`${this.columnNames[j].key}`] = [this.state.tableCells[i][j]];
+            productObject[`${this.columnNames[j].db_key}`] = [this.state.tableCells[i][j]];
           break;
           case "String":
-            productObject[`${this.columnNames[j].key}`] = this.state.tableCells[i][j];
+            productObject[`${this.columnNames[j].db_key}`] = this.state.tableCells[i][j];
           break;
           case "variable-price":
-            productObject[`${this.columnNames[j].key}`] = { price: [this.state.tableCells[i][j]], range: ["max"] };
+            productObject[`${this.columnNames[j].db_key}`] = { price: [this.state.tableCells[i][j]], range: ["max"] };
           break;
           case "quantity":
-            productObject[`${this.columnNames[j].key.split("-")[0].trim()}`] = [ this.state.tableCells[i][j], this.state.tableCells[i][j+1], this.state.tableCells[i][j+2]];
+            productObject[`${this.columnNames[j].db_key.split("-")[0].trim()}`] = [ this.state.tableCells[i][j], this.state.tableCells[i][j+1], this.state.tableCells[i][j+2]];
             j = j + 2;
           break;
           case "video":
-            productObject[`${this.columnNames[j].key}`] = this.state.tableCells[i][j];
+            productObject[`${this.columnNames[j].db_key}`] = this.state.tableCells[i][j];
           break;
           default:
             console.log("Type not found ", this.columnNames);
