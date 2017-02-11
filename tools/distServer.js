@@ -12,6 +12,7 @@ console.log(chalkProcessing('Opening production build...'));
 // Run Browsersync
 browserSync({
   port: 3000,
+  host:'0.0.0.0',
   ui: {
     port: 3001
   },

@@ -83,7 +83,6 @@ TableHeader = connect(null, mapDisptachToProps)(TableHeader);
 
 
 
-
 class TableHeaders extends Component {
 
   render() {

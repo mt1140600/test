@@ -49,12 +49,14 @@ export function validatePAN(value){
 }
 
 export function validateVAT(value) {//11digits followed by V
-  let pattern = /^([0-9]){11}V$/;
+  // let pattern = /^([0-9]){11}V$/;
+  let pattern = /^([0-9]){11}$/;
   return pattern.test(value);
 }
 
 export function validateCST(value){//11digits followed by C
-  let pattern = /^([0-9]){11}C$/;
+  // let pattern = /^([0-9]){11}C$/;
+  let pattern = /^([0-9]){11}$/;
   return pattern.test(value);
 }
 

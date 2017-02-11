@@ -6,6 +6,7 @@ import routes from './routes';
 import configureStore from './store/configureStore';
 require('./favicon.ico');
 import { syncHistoryWithStore } from 'react-router-redux';
+import 'normalize.css';
 // import * as firebase from 'firebase';
 import 'babel-polyfill';
 

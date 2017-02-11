@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import { Button, FocusStyleManager, Spinner } from "@blueprintjs/core";
 import LabelledTextInput from '../components/LabelledTextInput';
 import LabelledUpload from '../components/LabelledUpload';
+import LabelledUploadMultiple from '../components/LabelledUploadMultiple';
 import * as fieldValidations from '../utils/fieldValidations';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
@@ -22,6 +23,7 @@ class TaxDetails extends Component{
   }
 
   updateInfo(field, value, vState) {
+    console.log("update", field, value, vState);
       this.props.updateTaxDetails(field, value, vState);
   }
 
@@ -36,6 +38,7 @@ class TaxDetails extends Component{
         pan_no: this.props.taxDetails.value.PAN,
         vat_no: this.props.taxDetails.value.VAT,
         cst_no: this.props.taxDetails.value.CST,
+        pan_url: this.props.taxDetails.value.panCard,
         certification_of_incorporation_url: this.props.taxDetails.value.certIncorp,
         membership_with_icc_url:  this.props.taxDetails.value.membICC
       }
@@ -79,7 +82,7 @@ class TaxDetails extends Component{
               onChange={this.updateInfo.bind(this,"VAT")}
               validationState={this.props.taxDetails.vState.VAT}
               validate={fieldValidations.validateVAT}
-              helpText={"Enter a valid VAT"}>
+              helpText={"Enter a valid VAT eg.12345678900"}>
               VAT/TIN Number
             </LabelledTextInput>
 
@@ -88,9 +91,21 @@ class TaxDetails extends Component{
               onChange={this.updateInfo.bind(this,"CST")}
               validationState={this.props.taxDetails.vState.CST}
               validate={fieldValidations.validateCST}
-              helpText={"Enter a valid CST"}>
+              helpText={"Enter a valid CST eg.12345678900"}>
               CST Number
             </LabelledTextInput>
+
+            <LabelledUpload
+              value={this.props.taxDetails.value.panCard}
+              onChange={this.updateInfo.bind(this,"panCard")}
+              validationState={this.props.taxDetails.vState.panCard}
+              validate={fieldValidations.noValidation}
+              helpText="Upload a PNG, JPG, BMP or PDF file"
+              cloudinaryCloudName={constants.cloudinaryCloudName}
+              cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
+              cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
+                PAN Card
+            </LabelledUpload>
 
             <LabelledUpload
               value={this.props.taxDetails.value.certIncorp}
@@ -104,17 +119,18 @@ class TaxDetails extends Component{
                 Certification of Incorporation
             </LabelledUpload>
 
-            <LabelledUpload
+            <LabelledUploadMultiple
               value={this.props.taxDetails.value.membICC}
               onChange={this.updateInfo.bind(this,"membICC")}
+              minImages={0}
               validationState={this.props.taxDetails.vState.membICC}
               validate={fieldValidations.noValidation}
               helpText="Upload a PNG, JPG, BMP or PDF file"
               cloudinaryCloudName={constants.cloudinaryCloudName}
               cloudinaryUploadPreset={constants.cloudinaryImageUploadPreset}
               cloudinaryFolder={constants.cloduinaryMerchantInfoFolder}>
-                Membership with Indian Chamber of Commerce
-            </LabelledUpload>
+                Membership in Business Organisations (Chamber of Commerce,FICCI, CII etc.)
+            </LabelledUploadMultiple>
 
             <br/>
 
