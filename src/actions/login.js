@@ -23,6 +23,7 @@ const loginUserSuccess = (response) => {
   localStorage.setItem('user_id', response.merchant._id);
   localStorage.setItem('email_verified', response.merchant.email_verified);
   localStorage.setItem('registration_complete', response.merchant.registration_complete);
+  localStorage.setItem('isApproved', response.merchant.isApproved);
   return {
     type: LOGIN_USER_SUCCESS,
     payload: {
@@ -30,6 +31,7 @@ const loginUserSuccess = (response) => {
       user: response.merchant._id,
       email_verified: response.merchant.email_verified,
       registration_complete: response.merchant.registration_complete,
+      isApproved: response.merchant.is_approved,
       isAuthenticating: false,
       isAuthenticated: true,
       showCallout: false,
@@ -71,8 +73,9 @@ export const loginUser = (email, password, redirect="/registration") => {
     .then(response => {
       console.log(response);
       dispatch(loginUserSuccess(response));
-      if(response.merchant.registration_complete === true) redirect = "/verification";  //technically, this line is not require cuz when we update userData, the authWrapper willhandle the routing
-      if(response.merchant.email_verified === false) redirect = "/verifyEmail"; //this is required as we have not specified an auth =Wrapper for it
+      if(response.merchant.is_approved === true) redirect = '/dashboard';
+      else if(response.merchant.registration_complete === true) redirect = "/verification";  //technically, this line is not require cuz when we update userData, the authWrapper willhandle the routing
+      else if(response.merchant.email_verified === false) redirect = "/verifyEmail"; //this is required as we have not specified an auth =Wrapper for it
       dispatch(push(redirect));
     })
     .catch(error => {
@@ -243,7 +246,8 @@ export const restoreLogin = () => {
       user: localStorage.getItem('user_id') === 'false'? false: localStorage.getItem('user_id'),
       token: localStorage.getItem('token'),
       email_verified: localStorage.getItem('email_verified') === 'false'? false: true,
-      registration_complete: localStorage.getItem('registration_complete') === 'false'? false: true
+      registration_complete: localStorage.getItem('registration_complete') === 'false'? false: true,
+      isApproved: localStorage.getItem('isApproved') === 'false'? false: true
     }
   }
 }

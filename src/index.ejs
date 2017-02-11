@@ -10,8 +10,11 @@
     This is an example of how to add features to index.html for only one environment.
     To track JavaScript errors via TrackJS, sign up for a free trial at TrackJS.com and enter your token in /webpack.config.prod.js on line 55.
    -->
-  <link rel="stylesheet" href="./styles/blueprint/blueprint.css"/>
-  <link rel="stylesheet" href="./styles/stylesheet.css"/>
+  <link rel="stylesheet" href="/styles/blueprint/blueprint.css"/>
+  <link rel="stylesheet" href="/styles/blueprint/table.css"/>
+  <link rel="stylesheet" href="/styles/blueprint/blueprint-datetime.css"/>
+  <link rel="stylesheet" href="/styles/drop-theme-arrows.css" />
+  <link rel="stylesheet" href="/styles/stylesheet.css"/>
   <% if (htmlWebpackPlugin.options.trackJSToken) { %>
   <script>window._trackJs = {token: '<%= htmlWebpackPlugin.options.trackJSToken %>'};</script>
   <script src="https://d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js"></script>
@@ -23,7 +26,7 @@
   <meta charset="utf-8"/>
   <title>Prokure Seller</title>
 </head>
-<body>
+<body id="body">
 <div id="app"></div>
 </body>
 </html>

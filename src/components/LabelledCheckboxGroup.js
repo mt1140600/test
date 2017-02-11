@@ -50,14 +50,16 @@ class LabelledCheckboxGroup extends Component{
   }
 
   alignCheckboxes(arr, cols){
-   const styleObj = {flexBasis:`${100/cols}%`}; //Dividing the container into required columns
+   const styleObj = {flexBasis:`${100/cols -5}%`, marginRight: 5}; //Dividing the container into required columns
    return arr.map((item,index)=>(
      <CheckboxWrapper
        key={index}
        index={index}
        value={this.newArr[index]}
        onChange={this.handleCheckboxChange}
-       style={styleObj}>
+       style={styleObj}
+       className={(typeof(this.props.classNames)!=="undefined")? this.props.classNames[index]: "" }
+       popover={(typeof(this.props.popovers)!=="undefined")? this.props.popovers[index]: ""}>
        {item}
      </CheckboxWrapper>
     ));
@@ -65,25 +67,24 @@ class LabelledCheckboxGroup extends Component{
 
   render(){
     // let errorField = !this.props.validationState && this.state.clicked;
-
     return(
-      <div onFocus={this.handleClick}>
-        <label className="pt-label pt-inline" style={{display: "flex"}}>
-          <div style={{flex:"1"}}>
-            {this.props.children}
-            {(this.props.validationState === false)?<div className="helpText" >{this.props.helpText}</div>:null}
-          </div>
-          <div style={{display:"flex",flexWrap:"wrap",flex:"1",justifyContent:"flex-end"}}>
+        <div className="pt-label pt-inline" style={{display: "flex", marginBottom: 10}} onFocus={this.handleClick}>
+          { this.props.children &&
+            <div style={{flex:"1"}}>
+              {this.props.children}
+              {(this.props.validationState === false)?<div className="helpText" >{this.props.helpText}</div>:null}
+            </div>
+          }
+          <div style={{display:"flex",flexWrap:"wrap",flex:"1",justifyContent:"flex-start"}}>
             {this.alignCheckboxes(this.props.options,this.props.groupColumns)}
           </div>
-        </label>
-
-     </div>
+        </div>
     );
   }
 
 }
 
+const dummy = () => {};
 LabelledCheckboxGroup.propTypes = {
   children: React.PropTypes.string,
   options: React.PropTypes.array, //Array of individual checkbox labels
@@ -93,10 +94,18 @@ LabelledCheckboxGroup.propTypes = {
   validationState: React.PropTypes.bool,
   validate: React.PropTypes.func,
   helpText: React.PropTypes.string,
+  popovers: React.PropTypes.array,
+  classNames: React.PropTypes.array
 }
 
 //option =      ["option1","option2","option3"]
 //value =                 ["option2","option3"]
 //new value =  [  false,     true,     true]
+
+LabelledCheckboxGroup.defaultProps = {
+    groupColumns: 3,
+    validationState: true,
+    validate: dummy
+}
 
 export default LabelledCheckboxGroup;

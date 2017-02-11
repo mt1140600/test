@@ -21,7 +21,7 @@ class TabLayout extends Component {
     this.renderTabPanels = this.renderTabPanels.bind(this);
   }
   renderTabs(item, index) {
-    let dynamicClassName = (this.props.tabValidation[index] === false)?"pt-icon-small-cross red":(this.props.tabValidation[index]===true)?"pt-icon-small-tick green": "pt-icon-caret-right grey";
+    let dynamicClassName = (this.props.tabValidation[index] === false)?"pt-icon-small-cross red":(this.props.tabValidation[index]===true)?"pt-icon-small-tick green": "pt-icon-caret-right";
     return(
       <Tab key={index} isSelected={true} className={dynamicClassName}>{item}</Tab>
     );
@@ -45,8 +45,8 @@ class TabLayout extends Component {
   }
   render() {
     return(
-      <Tabs className="tabs tabs80" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
-        <TabList className="pt-large">
+      <Tabs className="tabs1" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
+        <TabList className="pt-large" style={{padding: "0px 20px 0px 20px"}}>
           {tabs.map(this.renderTabs)}
         </TabList>
         {tabPanels.map(this.renderTabPanels)}

@@ -1,21 +1,33 @@
 import React, {Component} from 'react';
-import LabelledSelect from "../components/LabelledSelect";
-import LabelledTextInput from "../components/LabelledTextInput";
-import LabelledFileUpload from "../components/LabelledFileUpload";
-import * as fieldValidations from "../utils/fieldValidations";
-import {Button} from "@blueprintjs/core";
-import {productCategories} from '../constants';
+import CascadedDisplay from '../components/CascadedDisplay';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as productUploadActions from '../actions/productUpload';
+import Immutable from 'immutable';
+import cascadedDisplay from '../actions/cascadedDisplay';
+import UploadProductOne from "./UploadProductOne";
+import UploadProductTwo from './UploadProductTwo';
+import UploadProductThree from './UploadProductThree';
+
+Array.prototype.diff = function(a) {
+    return this.filter(function(i) {return a.indexOf(i) < 0;});
+};
+
 
 class UploadProduct extends Component{
 
   constructor(){
     super();
+    this.state = {stepTwoStates: Immutable.List([]), tableRows: 2, csv: null, tableCells: [["Name", "Age", "Sex"], ["Anand", 22, "Male"], ["Stone Cold", 40, "Beast"]] };
     this.tableHeaders = ["Sub Category", "Brand", "Company", "Model", "MRP", "Selling Price", "MOQ", "Warranty", "Image"];
-    this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]]
+    this.sampleCSV = [["Headphones", "JBL", "Harman Intl", "D233", "3220", "3220", "10", "26 Nov 2017", ""]];
+    this.denormalizedFields = [];
+    this.stepTwoArray = [];
+    this.stepThreeArray = [];
   }
 
-  onChange = () =>{
-    return null;
+  componentWillMount() {
+    this.props.getKeyValueData('categories');
   }
 
   renderTableRow = (item,index) => {
@@ -33,130 +45,37 @@ class UploadProduct extends Component{
       </div>
     );
   }
-  // <div>
-  //   {moment().format("DD-MM-YYYY")}
-  // </div>
-  render(){
+
+  render() {
     return(
-      <div>
-        <div className="tabs" style={{display:"flex",flexDirection:"column", alignItems:"center"}}>
-          <div>
-            <LabelledSelect
-              options={productCategories}
-
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={"Choose a valid state"}>
-              Choose a category:
-            </LabelledSelect>
-
-          </div>
-          <br/>
-          <div>Please fill in the common attributes of the product to be uploaded</div>
-          <br/>
-          <br/>
-          <div style={{maxWidth:"500px"}}>
-            <LabelledTextInput
-
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Sub Category
-            </LabelledTextInput>
-            <br/>
-
-            <LabelledTextInput
-
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Brand
-            </LabelledTextInput>
-            <br/>
-
-            <LabelledTextInput
-
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Company
-            </LabelledTextInput>
-            <br/>
-
-            <LabelledTextInput
-
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Model
-            </LabelledTextInput>
-            <br/>
-            <LabelledTextInput
-
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              MRP
-            </LabelledTextInput>
-            <br/>
-
-            <LabelledTextInput
-
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Selling Price
-            </LabelledTextInput>
-            <br/>
-
-            <LabelledTextInput
-
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Minimum Order Quantity
-            </LabelledTextInput>
-            <br/>
-
-
-            <LabelledTextInput
-
-              onChange={this.onChange}
-              validationState={true}
-              validate={fieldValidations.noValidation}
-              helpText={null}>
-              Warranty
-            </LabelledTextInput>
-            <br/>
-
-            <LabelledFileUpload>Image</LabelledFileUpload>
-            <a href=""><thin></thin>Click here to add image url from other sites</a>
-        </div>
-        <br/>
-        <br/>
-        <Button style={{width:"200px"}}>Upload CSV of products</Button>
-        <br/>
-
-        <div style={{display:"flex", flexWrap:"wrap"}}>
-          {this.tableHeaders.map(this.renderTableHeader)}
-          {this.sampleCSV.map(
-            (item) => {
-              return item.map(this.renderTableRow);
+      <div className="tabs">
+          <CascadedDisplay
+            style= {{ height: "calc(100vh - 150px)" }}
+            one= {
+              <UploadProductOne />
             }
-          )}
-        </div>
+            two={
+              <UploadProductTwo />
+            }
+            three={
+              <UploadProductThree />
+            }
+          />
       </div>
-    </div>
     );
   }
 
 }
 
-export default UploadProduct;
+const mapStateToProps = (state) => {
+  return{
+    productUploadData : state.productUploadData.toJS()
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators(Object.assign({}, productUploadActions, {cascadedDisplay} ), dispatch);
+
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UploadProduct);

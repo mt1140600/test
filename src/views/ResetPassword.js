@@ -58,26 +58,23 @@ class ResetPassword extends Component {
 
   render() {
     return(
-      <div className="container">
+      <div className="container pad50">
 
         <div className="col" style={{textAlign:"center", minWidth:"300px", paddingTop:"20px"}}>
 
           <Logo/>
           <br/>
-          <div className="pt-control-group pt-vertical item">
-          <span  className="item" style={{color:"grey", marginBottom:"5px"}}>Input your email to reset your password</span>
-
-            <div className="pt-input-group pt-large " >
-              <input type="text" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} onKeyUp={this.handleEnter} />
-            </div>
+          <p style={{color:"grey", marginBottom:"5px", fontWeight: 100}}>Input your email to reset your password</p>
+          <div className="pt-input-group pt-large " >
+            <input type="text" className="pt-input" placeholder="Email ID" value={this.state.email} onChange={this.handleFieldUpdate.bind(this, "email")} onKeyUp={this.handleEnter} />
+            <Button className="pt-button pt-minimal pt-intent-primary pt-icon-arrow-right" onClick={this.handleReset}/>
           </div>
-          <br/>
-          <Button className="pt-intent-primary pt-button-height-large item" onClick={this.handleReset} >Send</Button>
           <Callout text={this.state.calloutText} visible={this.state.showCallout} />
           <br/>
-          <Button onClick={this.goBack} className="pt-intent-warning item">Go Back</Button>
           <br/>
-          <p style={{marginTop:"15px", fontSize:"12px"}} className="item pt-text-muted">© 2016 Cerise Internet Technologies Pvt. Ltd.</p>
+          <Button onClick={this.goBack} className="pt-intent-primary">Back to Login</Button>
+          <br/>
+          <p style={{marginTop:"15px", fontSize:"12px"}} className="pt-text-muted">© 2016 Cerise Internet Technologies Pvt. Ltd.</p>
 
         </div>
 

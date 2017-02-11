@@ -3,6 +3,8 @@ import FloatingNotification from './FloatingNotification';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {restoreLogin} from '../actions/login';
+import NotificationsSystem from 'reapop';
+import theme from 'reapop-theme-wybo';
 
 // This is a class-based component because the current
 // version of hot reloading won't hot reload a stateless
@@ -26,6 +28,7 @@ class App extends React.Component {
           visible= {this.props.floatingNotification.active}
           intent ={this.props.floatingNotification.intent}
           duration = {this.props.floatingNotification.duration}/>
+        <NotificationsSystem theme={theme}/>
       </div>
     );
   }

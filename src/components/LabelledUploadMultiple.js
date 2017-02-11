@@ -1,6 +1,5 @@
 /* global cloudinary*/
 import React, {Component} from 'react';
-let Immutable = require('immutable');
 import {Popover, PopoverInteractionKind, Position,} from "@blueprintjs/core";
 import ImageThumbnail from "../components/ImageThumbnail";
 
@@ -35,7 +34,7 @@ class LabelledUploadMultiple extends Component{
     });
   }
 
-  removeImage = (index, event) => {
+  removeImage = (index) => {
     let newArray = [...this.props.value];
     newArray.splice(index,1);
     this.props.onChange(newArray, newArray.length >= this.props.minImages);

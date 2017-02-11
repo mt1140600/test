@@ -56,8 +56,9 @@ class ReturnsReplacmentsRow extends Component{
             <div>{this.props.value.currentStatus}</div>
             <br/>
             <div className="pt-button-group" style={{paddingRight: "10px", alignSelf:"center"}}>
-              <button type="button" className="pt-button pt-intent-success">Replace</button>
-              <button type="button" className="pt-button pt-intent-danger">Refund</button>
+              <button type="button" className="pt-button pt-intent-primary">Replace</button>
+              <button type="button" className="pt-button pt-intent-warning">Refund</button>
+              <button type="button" className="pt-button pt-intent-danger">Reject</button>
             </div>
           </div>
         </div>

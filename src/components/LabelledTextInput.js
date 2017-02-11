@@ -21,7 +21,7 @@ class LabelledTextInput extends Component{
   render(){
     let warningClass = (this.props.validationState === false)?'errorField':'';
     return(
-        <label className="pt-label pt-inline" style={{display: "flex", flexWrap: "wrap"}} onFocus={this.handleClick}>
+        <label className="pt-label pt-inline" style={Object.assign({}, {display: "flex", flexWrap: "wrap"}, this.props.style)} onFocus={this.handleClick}>
           <div style={{display: "inline-block", width: "50%"}}>
               {this.props.children}
           </div>
@@ -32,7 +32,9 @@ class LabelledTextInput extends Component{
             style={{width: "50%", float:"right", margin: 0}}
             type="text"
             name={this.props.children}
-            dir="auto" />
+            dir="auto"
+            disabled={this.props.disabled}
+          />
           {(this.props.validationState === false)?<div className="helpText">{this.props.helpText}</div>:null}
         </label>
     );
@@ -40,16 +42,26 @@ class LabelledTextInput extends Component{
 
 }
 
-LabelledTextInput.propTypes = {
+const dummy = () => {};
 
+LabelledTextInput.propTypes = {
   children: React.PropTypes.node,
-  value: React.PropTypes.string,
+  value: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.number
+  ]),
   onChange: React.PropTypes.func,
   validationState: React.PropTypes.bool,
   validate: React.PropTypes.func,
   helpText: React.PropTypes.string,
-  style: React.PropTypes.object
-
+  style: React.PropTypes.object,
+  disabled: React.PropTypes.bool
 };
+
+LabelledTextInput.defaultProps = {
+  validationState: true,
+  validate: dummy,
+  disabled: false
+}
 
 export default LabelledTextInput;

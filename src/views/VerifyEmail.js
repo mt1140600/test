@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Header from '../components/Header';
-import HeaderButtons from '../components/HeaderButtons';
 import ViewNameBar from '../components/ViewNameBar';
 import {connect} from 'react-redux';
 import{bindActionCreators} from 'redux';
@@ -22,7 +21,6 @@ class VerifyEmail extends Component{
     return(
       <div>
         <Header/>
-        {(localStorage.getItem("user_id") !== null)? <HeaderButtons/>: null}
         <div style={{marginTop: 50}}>
           {ViewNameBar("Account Settings")}
           <div className="tabs col" style={{ fontSize: "x-large", fontWeight: 100, justifyContent: "space-around"}}>

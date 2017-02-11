@@ -65,6 +65,8 @@ class LabelledUpload extends Component{
   }
 }
 
+const dummy = () => {};
+
 LabelledUpload.propTypes = {
     children: React.PropTypes.node,
     value: React.PropTypes.string,
@@ -76,5 +78,13 @@ LabelledUpload.propTypes = {
     cloudinaryUploadPreset: React.PropTypes.string,
     cloudinaryFolder: React.PropTypes.string
 };
+
+LabelledUpload.defaultProps = {
+  cloudinaryCloudName: "dtvfkbdm8",
+  cloudinaryUploadPreset: "dgfm0gcv",
+  validationState: false,
+  helpText: "",
+  validate: dummy
+}
 
 export default LabelledUpload;

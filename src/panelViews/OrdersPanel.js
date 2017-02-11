@@ -4,12 +4,12 @@ import NewOrders from './NewOrders';
 import ConfirmedOrders from './ConfirmedOrders';
 import DispatchedOrders from './DispatchedOrders';
 import CancelledOrders from './CancelledOrders';
+//TODO: relative routing with link
 
 const tabs = ["New","Confirmed","Dispatched","Cancelled"];
 const tabPanels = [ NewOrders, ConfirmedOrders, DispatchedOrders, CancelledOrders];
 
 class OrdersPanel extends Component{
-
   constructor(){
     super();
     this.renderTabs = this.renderTabs.bind(this);
@@ -18,7 +18,9 @@ class OrdersPanel extends Component{
 
   renderTabs(item,index){
     return(
-      <Tab key={index} isSelected={true}>{item}</Tab>
+      <Tab key={index} >
+          {item}
+      </Tab>
     );
   }
 
@@ -31,10 +33,16 @@ class OrdersPanel extends Component{
     );
   }
 
+  handleTabChange = (selectedTabIndex, prevSelectedTabIndex) => {
+    if(selectedTabIndex !== prevSelectedTabIndex){
+        (selectedTabIndex !== 0)? this.props.router.push(`/dashboard/orders/${tabs[selectedTabIndex].toLowerCase()}`): this.props.router.push("/dashboard/orders");
+    }
+  }
+
   render(){
     return(
       <div>
-        <Tabs className="tabs " key="horizontal">
+        <Tabs className="tabs " key="horizontal" selectedTabIndex={this.props.selectedTabIndex} onChange={this.handleTabChange}>
           <TabList className="pt-large">
             {tabs.map(this.renderTabs)}
           </TabList>
@@ -45,4 +53,21 @@ class OrdersPanel extends Component{
   }
 }
 
-export default OrdersPanel;
+OrdersPanel.PropTypes = {
+  selectedTabIndex: React.PropTypes.number
+}
+
+//TODO: Make this dynamic
+export const New = (props) => <OrdersPanel selectedTabIndex={0} {...props}/>
+export const Confirmed = (props) => <OrdersPanel selectedTabIndex={1} {...props} />
+export const Dispatched = (props) => <OrdersPanel selectedTabIndex={2} {...props} />
+export const Cancelled = (props) => <OrdersPanel selectedTabIndex={3}  {...props} />
+
+
+export const Orders = (props) => {
+  return(
+    <div>
+      {props.children}
+    </div>
+  );
+}

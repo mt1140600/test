@@ -86,7 +86,7 @@ class CancelledOrders extends Component{
       <div>
         <br/>
         <div style={{display:"flex", justifyContent:"flex-end"}}>
-          <div className="pt-input-group .modifier">
+          <div className="pt-input-group">
             <span className="pt-icon pt-icon-search"></span>
             <input className="pt-input" type="search" placeholder="Search input" dir="auto" />
           </div>

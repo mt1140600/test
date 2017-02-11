@@ -1,4 +1,4 @@
-import {SHOW_FLOATING_NOTIFICATION, HIDE_FLOATING_NOTIFICATION} from '../constant';
+import {SHOW_FLOATING_NOTIFICATION, HIDE_FLOATING_NOTIFICATION, ADD_NOTIFICATION} from '../constant';
 
 const floatingNotification_initialState = {
   message:  "",
@@ -8,7 +8,6 @@ const floatingNotification_initialState = {
 }
 
 const floatingNotification = (state = floatingNotification_initialState, action) => {
-
   switch(action.type){
       case SHOW_FLOATING_NOTIFICATION:
         return Object.assign({}, action.payload, { active: true });
@@ -25,3 +24,24 @@ const floatingNotification = (state = floatingNotification_initialState, action)
 }
 
 export default floatingNotification;
+
+
+
+const notifications_intitalState = [
+  {
+    route: "/dashboard",
+    new: true,
+    content: "Welcome to Prokure!"
+  }
+];
+
+export const notificationsLog = (state = notifications_intitalState, action) => {
+  switch(action.type){
+    case ADD_NOTIFICATION:
+      return [...state, action.payload ];
+    // break;
+
+    default:
+      return state;
+  }
+}

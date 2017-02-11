@@ -59,15 +59,15 @@ class ResetPassword2 extends Component {
 
   render() {
     return(
-      <div className="container">
+      <div className="container pad50">
 
         <div className="col" style={{textAlign:"center", minWidth:"300px", paddingTop:"20px"}}>
 
           <Logo/>
 
           <br/>
-          <div className="pt-control-group pt-vertical item">
-            <div className="pt-input-group pt-large " >
+          <div className="pt-control-group pt-vertical">
+            <div className="pt-input-group pt-large" >
               <input type="password" className="pt-input" placeholder="New Password" value={this.state.newPassword} onChange={this.handleFieldUpdate.bind(this, "newPassword")} />
             </div>
             <div className="pt-input-group pt-large" >
@@ -75,10 +75,11 @@ class ResetPassword2 extends Component {
             </div>
           </div>
           <br/>
+          <Button className="pt-intent-success" onClick={this.setPassword}>Set Password</Button>
           <Callout text={this.state.calloutText} visible={this.state.showCallout} />
           <br/>
-          <Button className="pt-intent-primary pt-button-height-large item" onClick={this.setPassword}>Set Password</Button>
-          <p style={{marginTop:"15px", fontSize:"12px"}} className="item pt-text-muted">© 2016 Cerise Internet Technologies Pvt. Ltd.</p>
+
+          <p style={{marginTop:"15px", fontSize:"12px"}} className="pt-text-muted">© 2016 Cerise Internet Technologies Pvt. Ltd.</p>
 
         </div>
 

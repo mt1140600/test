@@ -85,7 +85,7 @@ class ManageInventoryActive extends Component{
   constructor(){
     super();
     this.tableHeaders = [{label: "#", width: 1, tooltip: null, orderby: false, justify:"flex-start"}, {label: "Product Details", width: 8, tooltip: null, orderby: true, justify:"flex-start"}, {label: "Quantity", width: 2, tooltip: null, orderby: true, justify:"center"}, {label: "Price", width: 2, tooltip: "Marketplace Price", orderby: true, justify:"center"}, {label: "Margin", width: 2, tooltip: "Marketplace margin", orderby: true, justify:"center"}, {label: "S Price", width: 2, tooltip: "Selling Price", orderby: true, justify:"center"}, {label: " ", width: 4, tooltip: null, orderby: false, justify:"center"}];
-    this.orders=[{productDetails:"Micromax Q392 IMD Graphic Black Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Curved Tempered glass for Redmi Note 3", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
+    this.orders=[{productDetails:"Micromax Q392 IMD Graphic Black Cover", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Curved Tempered glass for Redmi Note 3", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" },{productDetails:"Lenovo Vibe X3 Cover Green", qty:"40", marketplacePrice:"40", marketplaceMargin:"10%", sellingPrice:"36" }];
   }
 
   renderRows(item, index){
@@ -330,7 +330,7 @@ class ManageInventory extends Component{
   render(){
     return(
       <div>
-        <Tabs className="tabs " key="horizontal">
+        <Tabs className="tabs" key="horizontal">
           <TabList className="pt-large">
             {this.tabs.map(this.renderTabs)}
           </TabList>

@@ -31,6 +31,13 @@ export const UserIsEmailVerified = UserAuthWrapper({
 export const VisibleOnlyAdmin = UserAuthWrapper({
   authSelector: state => state.userData,
   wrapperDisplayName: 'VisibleOnlyAdmin',
-  predicate: user => user.isAdmin,
+  predicate: userData => userData.isAdmin,
   FailureComponent: null
+});
+
+export const UserIsApproved = UserAuthWrapper({
+  authSelector: state => state.userData,
+  wrapperDisplayName: 'UserIsApproved',
+  predicate: userData => userData.isApproved,
+  failureRedirectPath: state => (state.userData.registration_complete === true ?'/verification':'/registration')
 });

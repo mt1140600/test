@@ -1,55 +1,131 @@
 html, body, #app, #app>div, .app{
   height: 100%;
 }
+.test{
+  background-color: blue;
+}
+#app{
+    overflow-x: scroll;
+    position: relative;  /* required for tether to work. Need to change overflow parent to something other than this */
+}
+.table{
+  overflow: hidden;
+}
 body{
     margin: 0;
     background-color: #f5f5f5;
-    overflow: hidden;
+    /*height: 100vh;
+    width: 100vw;*/
+    /*overflow: hidden;*/
 }
-*{
-  font-weight: 200;
+
+/*body:fullscreen {
+    background-color: #f5f5f5;
 }
+body:-webkit-full-screen {
+    background-color: #f5f5f5;
+}
+body:-moz-full-screen {
+    background-color: #f5f5f5;
+}
+*:fullscreen, *:-webkit-full-screen, *:-moz-full-screen {
+    background-color: #f5f5f5;
+}*/
+
+.noSelect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.pt-input[type="search"]{
+  border-radius: 3px;
+}
+
 strong{
   font-weight: bold;
 }
+
+.pt-navbar-divider{
+    background-color: #bfccd6;
+}
+
+.pt-tooltip-indicator {
+  border-bottom: inset 1px;
+  cursor: help; }
+
+.pt-popover.pt-popover-content-sizing .pt-popover-content {
+    max-width: 1000px;
+    padding: 20px;
+}
+
+.pt-timepicker-input{
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.pt-button[class*="pt-icon-"]::before{
+  color: #bfccd6;
+}
+
+.cascadedTab * .bp-table-container{
+  max-width: none;
+}
+
 .container {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
+
+.pad50{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 .col{
   display: flex;
   flex-direction: column;
 }
+
 .flexRow{
   display: flex;
   justify-content: space-around;
   align-items: center;
 }
+
+.flexCol{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
 #header{
-  height: 50px;
-  box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05);
-  padding-left: 40px;
-  background-color: white;
+  /*box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05);
+  padding-left: 20px;*/
+  background-color: #202428;
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 10;
 }
 #header-logo{
-  width:  40px;
-  height: 40px;
-  margin-top: 5px;
+  width:  30px;
+  height: 30px;
+  border-radius: 2px;
   display: inline-block;
-  float: left;
 }
 #header-name{
+  color: white;
   margin-left: 10px;
   line-height: 50px;
-  display: inline-block;
-  float: left;
+  font-family: sans-serif;
   font-size: large;
-  font-weight: 100;
+  font-weight: 300;
 }
 #headerButtons{
   position: fixed;
@@ -62,12 +138,13 @@ strong{
 }
 #viewNameBar{
   height: 50px;
-  background-color: #f6f8f8;
+  background-color: #282d32;
+  border-bottom: 1px solid #3d4247;
+  color: white;
   line-height: 50px;
   padding-left: 40px;
   font-size: x-large;
   font-weight: 100;
-  border-bottom: 1px solid #DEE5E7;
 }
 h2{
   margin-top: 10px;
@@ -88,20 +165,51 @@ h6{
 
 .tabs{
   background-color: white;
-  margin: 20px 40px 40px 40px;
-  padding: 20px;
-  border: 1px solid #dee5e7;
-  height: 80vh;
-  overflow: scroll;
+  /*border: 1px solid #dee5e7;*/
+  /*min-height: 75vh;*/
+  min-height: calc(100vh - 100px);
+  position: relative;
+}
+
+.tabs1{
+  background-color: white;
+  /*margin: 20px 40px 40px 40px;*/
+  /*border: 1px solid #dee5e7;*/
+  min-height: calc(100vh - 110px);
   position: relative;
 }
 
 .tabs.tabs80{
-  height: 80vh;
+  min-height: 80vh;
+}
+
+.pt-progress-bar{
+  border-radius: 0px;
+  background-color: white;
+}
+
+.pt-progress-bar .pt-progress-meter{
+  border-radius: 0px;
+}
+
+.pt-tab-list{
+  background-color: #d4d5d6;
+  border-bottom: 1px solid #DEE5E7;
+  font-weight: 100;
+  padding: 0px 20px 0px 20px;
+}
+
+.pt-tab{
+  color: #666;
+}
+
+.pt-tab-panel{
+    width: 100%;
+    padding: 0px 20px 20px 20px;
 }
 
 #progressBar{
-  margin: 20px 40px 20px 40px;
+  /*margin: 20px 40px 20px 40px;*/
 }
 
 /*input:-webkit-autofill {
@@ -133,19 +241,22 @@ h6{
   justify-content: space-between;
   align-items: center;
 }
-.pt-tab-panel{
-  width: 100%;
-}
 .verticalTabLayout{
-  margin-top: 50px;
+  padding-top: 50px;
   display: flex;
   height: 100%;
   width: 100%;
 }
 .verticalTabBar{
+  z-index: 5;
+  position: fixed;
   width: 200px;
-  background-color: white;
-  border-right: 1px solid #e5e5e5;
+  background-color: #282d32;
+  height: 100%;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+.verticalTabBar.collapsed{
+  width: 55px;
 }
 .verticalTab{
   height: 50px;
@@ -153,13 +264,25 @@ h6{
   padding-left: 20px;
   font-weight: 100;
   font-size: small;
-  border-bottom: 1px solid #e5e5e5;
+  color: #b4b6bd;
+  cursor: pointer;
+  /*border-bottom: 1px solid #e5e5e5;*/
 }
-.verticalTab:active, .verticalTab:hover{
-  background-color: #e5e5e5;
+.verticalTab:hover{
+  background-color: #3d4247;
+  color: white;
+}
+.verticalTab.active{
+  background-color: #3d4247;
+  color: white;
 }
 .verticalTabPanel{
   flex:1;
+  margin-left: 200px;
+  border: 1px solid;
+}
+.verticalTabPanel.collapsed{
+  margin-left: 55px;
 }
 .cellLabel{
   min-height: 30px;
@@ -190,6 +313,9 @@ h6{
   min-height: 60px;
   display: flex;
 }
+.tableRow:hover{
+  background-color: #f2f2f2;
+}
 .tableRowCategoryName{
   border-top: 1px solid #e5e5e5;
   padding: 5px;
@@ -203,10 +329,12 @@ h6{
   border-top: 1px solid #e5e5e5;
   padding: 5px;
   text-align: center;
-  width: 95%;
-  position: absolute;
-  bottom: 0;
 }
+
+#react-paginate .active{
+  background-color: #e5e5e5;
+}
+
 #react-paginate ul {
     display: inline-block;
     padding-left: 15px;
@@ -215,21 +343,26 @@ h6{
 
 #react-paginate li {
     display: inline-block;
-    padding-left: 15px;
-    padding-right: 15px;
     padding: 10px;
     border: 1px solid #e5e5e5;
     border-left: 0;
 }
-#react-paginate li:hover {
+/*#react-paginate li:hover {
   background-color: #e5e5e5;
-}
+}*/
 #react-paginate li:first-child{
     border-left: 1px solid #e5e5e5;
 }
 
 #react-paginate .break a {
     cursor: default;
+}
+
+.ordersModal{
+  top: 100px;
+  left: calc(50% - 200px);
+  z-index: 21;
+  width: 400px;
 }
 
 #chatWidget{
@@ -393,6 +526,90 @@ h6{
 .grey{
   color: #4c4c4c;
 }
+
+
+.pt-input-blueShadowDisable:focus{
+  box-shadow: 0 0 0 0 rgba(19, 124, 189, 0), 0 0 0 0 rgba(19, 124, 189, 0), inset 0 0 0 1px rgba(16, 22, 26, 0.15), inset 0 1px 1px rgba(16, 22, 26, 0.2);
+}
+
+.dropDown{
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.ImagesContainer{
+  justify-content: flex-start;
+  overflow-x: scroll;
+}
+
+
+.modalTimePicker{
+  width: 100%;
+}
+
+.productDetailContainer{
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.productDetailContainer:hover{
+    background-color: rgba(167, 182, 194, 0.1);
+    border-radius: 4px;
+}
+
+.sellProductWrapper:hover{
+  background-color: rgba(167, 182, 194, 0.5);
+}
+
+.checkboxRequired{
+  color: rgba(219, 55, 55, 1);
+  border-radius: 4px;
+}
+
+.checkboxOptional{
+  color: rgba(15, 153, 96, 1);
+  border-radius: 4px;
+}
+
+.hoverTop{
+  padding: 5px;
+  background-color: white;
+  border: 1px solid whitesmoke;
+  border-radius: 3px;
+  max-width: 180px;
+  box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 2px 4px rgba(16, 22, 26, 0.2), 0 8px 24px rgba(16, 22, 26, 0.2);
+}
+
+.pseudoLink{
+  cursor: pointer;
+}
+
+.pseudoLink:hover{
+  color: rgb(102, 102, 255);
+}
+
+.xxlargeThin{
+  font-weight: 100;
+  font-size: xx-large;
+}
+
+.smallLink{
+  display: block;
+  font-size:small;
+  text-align: center;
+  color: #6666ff;
+  cursor: pointer;
+}
+
+.smallLink:hover{
+  text-decoration: underline;
+}
+
+/*.sellProductButton{
+  -ms-transform:rotate(90deg);
+  -moz-transform:rotate(90deg);
+  -webkit-transform:rotate(90deg);
+}*/
 /*
 .pt-tabs.pt-horizontal {
   display: -webkit-flex;
