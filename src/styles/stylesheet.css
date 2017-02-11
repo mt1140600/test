@@ -577,7 +577,7 @@ h6{
 }
 
 .pseudoLink{
-  text-decoration: underline;
+  cursor: pointer;
 }
 
 .pseudoLink:hover{
