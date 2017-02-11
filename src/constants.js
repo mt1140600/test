@@ -31,4 +31,6 @@ export const cloduinaryMerchantInfoFolder = "MerchantInfo";
 export const cloudinaryChatFolder = "SellerChat";
 
 export const cloudinaryCsvUploadPreset = "aas3tkko";
+export const cloudinaryProductUploadDumbPreset = "f5lmbf5o";
+
 // export const cloudinaryProductUploadFolder = "productUpload";

@@ -576,8 +576,29 @@ h6{
   box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 2px 4px rgba(16, 22, 26, 0.2), 0 8px 24px rgba(16, 22, 26, 0.2);
 }
 
+.pseudoLink{
+  text-decoration: underline;
+}
+
 .pseudoLink:hover{
   color: rgb(102, 102, 255);
+}
+
+.xxlargeThin{
+  font-weight: 100;
+  font-size: xx-large;
+}
+
+.smallLink{
+  display: block;
+  font-size:small;
+  text-align: center;
+  color: #6666ff;
+  cursor: pointer;
+}
+
+.smallLink:hover{
+  text-decoration: underline;
 }
 
 /*.sellProductButton{
