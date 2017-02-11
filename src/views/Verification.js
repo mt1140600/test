@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Header from '../components/Header';
-import HeaderButtons from '../components/HeaderButtons';
 import ViewNameBar from '../components/ViewNameBar';
 
 export default class Verification extends Component{

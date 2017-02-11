@@ -23,7 +23,7 @@ class UploadProductViaSearch extends Component{
   }
 
   renderProducts = (item, index) => {
-    let desc = item.details.map((item2, index2) => item2.value );
+    let desc = item.details.map((item2) => item2.value );
     return(
       <div className="sellProductWrapper" style={{padding: 10, display: "flex", justifyContent: "center"}}>
         <ProductCard

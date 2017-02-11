@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import CheckboxWrapper from './CheckboxWrapper';
-import { Popover, Classes, Position, PopoverInteractionKind, Tag } from '@blueprintjs/core';
 
 class LabelledCheckboxGroup extends Component{
   constructor(){
@@ -53,23 +52,16 @@ class LabelledCheckboxGroup extends Component{
   alignCheckboxes(arr, cols){
    const styleObj = {flexBasis:`${100/cols -5}%`, marginRight: 5}; //Dividing the container into required columns
    return arr.map((item,index)=>(
-    //  <Popover
-    //    content= "Lala land"
-    //    interactionKind={PopoverInteractionKind.HOVER}
-    //    popoverClassName="pt-popover-content-sizing"
-    //    position={Position.RIGHT}
-    //    useSmartPositioning={false}>
-         <CheckboxWrapper
-           key={index}
-           index={index}
-           value={this.newArr[index]}
-           onChange={this.handleCheckboxChange}
-           style={styleObj}
-           className={(typeof(this.props.classNames)!=="undefined")? this.props.classNames[index]: "" }
-           popover={(typeof(this.props.popovers)!=="undefined")? this.props.popovers[index]: ""}>
-           {item}
-         </CheckboxWrapper>
-    //  </Popover>
+     <CheckboxWrapper
+       key={index}
+       index={index}
+       value={this.newArr[index]}
+       onChange={this.handleCheckboxChange}
+       style={styleObj}
+       className={(typeof(this.props.classNames)!=="undefined")? this.props.classNames[index]: "" }
+       popover={(typeof(this.props.popovers)!=="undefined")? this.props.popovers[index]: ""}>
+       {item}
+     </CheckboxWrapper>
     ));
   }
 

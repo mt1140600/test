@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
 import ViewNameBar from '../components/ViewNameBar';
-import UploadProduct from '../panelViews/UploadProduct';
-import Orders from '../panelViews/OrdersPanel';
-import Returns from '../panelViews/Returns';
-import Completed from '../panelViews/Completed';
-import Payment from '../panelViews/Payment';
-import ManageInventory from '../panelViews/ManageInventory';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as dashboardActions from '../actions/dashboard';

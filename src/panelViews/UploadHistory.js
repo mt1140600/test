@@ -1,12 +1,11 @@
+/* eslint-disable */
 import React, {Component} from 'react';
 import {Tabs, TabList, Tab, TabPanel} from "@blueprintjs/core";
-import CheckboxWrapper from '../components/CheckboxWrapper';
 import LabelledAutoComplete from '../components/LabelledAutoComplete';
 import LabelledSelect from '../components/LabelledSelect';
 import {productCategories} from '../constants';
 import * as fieldValidations from '../utils/fieldValidations';
 import ReactPaginate from 'react-paginate';
-import PlainSelect from '../components/PlainSelect';
 import TableHeaders from '../components/TableHeaders';
 import DateRangePopover from '../components/DateRangePopover';
 import {connect} from 'react-redux';

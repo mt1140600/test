@@ -1,9 +1,9 @@
 import React, {Component, PureComponent} from 'react';
-import Immutable from 'immutable';
+// import Immutable from 'immutable';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import cascadedDisplay from '../actions/cascadedDisplay';
-import shallowCompare from 'react-addons-shallow-compare'
+// import shallowCompare from 'react-addons-shallow-compare'
 
 
 // const makeCascadedTab = (WrappedComponent) => {

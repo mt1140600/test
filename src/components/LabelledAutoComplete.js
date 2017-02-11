@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import { Menu, MenuDivider, MenuItem, Popover, Position } from "@blueprintjs/core";
+import { Menu, MenuItem, Popover, Position } from "@blueprintjs/core";
 import * as firebase from 'firebase';
 
 let textInput = null;
-let defaultOption = null;
 
 class LabelledAutoComplete extends Component {
 
@@ -33,7 +32,7 @@ class LabelledAutoComplete extends Component {
     }
 
     return(
-      <MenuItem ref={(input)=>{defaultOption = input;}} intent="primary" key={index} text={item} onClick={this.handleSelect.bind(null, item, false)}/>
+      <MenuItem intent="primary" key={index} text={item} onClick={this.handleSelect.bind(null, item, false)}/>
     );
   }
 

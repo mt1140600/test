@@ -1,30 +1,10 @@
 import React, {Component} from 'react';
-import {Tooltip, Position} from "@blueprintjs/core";
-import PanelHeader from "../components/PanelHeader";
-import LabelledSelect from "../components/LabelledSelect";
-import LabelledCheckboxGroup from "../components/LabelledCheckboxGroup";
-import LabelledTextInput from "../components/LabelledTextInput";
-import LabelledUpload from "../components/LabelledUpload";
-import * as fieldValidations from "../utils/fieldValidations";
-import {Button} from "@blueprintjs/core";
-import {Table, Column, Cell, EditableCell} from "@blueprintjs/table";
-import {productCategories} from '../constants';
 import CascadedDisplay from '../components/CascadedDisplay';
-import moment from "moment";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as productUploadActions from '../actions/productUpload';
-import * as _ from 'lodash';
-import MultipleImageUpload from '../components/MultipleImageUpload';
 import Immutable from 'immutable';
 import cascadedDisplay from '../actions/cascadedDisplay';
-import LabelledAutoComplete from '../components/LabelledAutoComplete';
-import ProductQuantity from '../components/ProductQuantity';
-import VariablePrice from '../components/VariablePrice';
-import LabelledTextArea from '../components/LabelledTextArea';
-import AdditionalInfo from '../components/AdditionalInfo';
-import Baby from "babyparse";
-
 import UploadProductOne from "./UploadProductOne";
 import UploadProductTwo from './UploadProductTwo';
 import UploadProductThree from './UploadProductThree';
@@ -66,26 +46,7 @@ class UploadProduct extends Component{
     );
   }
 
-  // renderTableColumns = (colObj, index) => {
-  //   // console.log("Column Object is ", colObj);
-  //
-  //   const renderCell = (rowIndex) => {
-  //     if(typeof(this.state.stepTwoStates.get(index)) !== "object"){
-  //       // console.log("Value is ", this.state.stepTwoStates.get(index));
-  //       return <Cell>{this.state.stepTwoStates.get(index)}</Cell>
-  //     }
-  //     else {
-  //       // console.log("else Value is ", this.state.stepTwoStates.get(index));
-  //       return <Cell>{null}</Cell>;
-  //     }
-  //   }
-  //   return(
-  //     <Column name={colObj.key} renderCell={renderCell}/>
-  //   );
-  // }
-
   render() {
-    const renderCell = (rowIndex: number) => <Cell>{`$${(rowIndex * 10).toFixed(2)}`}</Cell>;
     return(
       <div className="tabs">
           <CascadedDisplay

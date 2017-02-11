@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import { InputGroup, Popover, Classes, Position, PopoverInteractionKind, Tag } from '@blueprintjs/core';
-import { DateRange, DateRangePicker} from '@blueprintjs/datetime';
+import { Popover, Classes, Position } from '@blueprintjs/core';
+import {DateRangePicker} from '@blueprintjs/datetime';
 import moment from "moment";
 
 class DateRangePopover extends Component{
@@ -42,8 +42,6 @@ class DateRangePopover extends Component{
 
   render(){
     let textValue = this.getText(this.state.dateRange);
-    const [start, end] = this.state.dateRange;
-
 
     let popoverContent = (
       <DateRangePicker

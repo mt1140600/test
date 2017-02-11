@@ -2,14 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Button} from '@blueprintjs/core';
-import LabelledSelect from "../components/LabelledSelect";
 import LabelledCheckboxGroup from "../components/LabelledCheckboxGroup";
 import LabelledTextInput from "../components/LabelledTextInput";
 import LabelledUpload from "../components/LabelledUpload";
 import LabelledAutoComplete from '../components/LabelledAutoComplete';
 import ProductQuantity from '../components/ProductQuantity';
 import VariablePrice from '../components/VariablePrice';
-import LabelledTextArea from '../components/LabelledTextArea';
 import AdditionalInfo from '../components/AdditionalInfo';
 import MultipleImageUpload from '../components/MultipleImageUpload';
 import cascadedDisplay from '../actions/cascadedDisplay';
@@ -227,7 +225,7 @@ class UploadProductTwo extends Component{
               if(value.ref){
                 console.log("fetching options");
                 let newArray = [];
-                _.each(this.props.productUploadData.keyValue[value.ref], (value, key) => {newArray.push(value.name)} );
+                _.each(this.props.productUploadData.keyValue[value.ref], (value) => {newArray.push(value.name)} );
                 console.log(newArray);
                 Object.assign(stateObj, {options: newArray, ref: value.ref});
               }
@@ -248,7 +246,7 @@ class UploadProductTwo extends Component{
   submitStepTwo = () => {
     //check vState
     let allClear = true;
-    _.each(this.props.productUploadData.stepTwoState, (item, key) => {
+    _.each(this.props.productUploadData.stepTwoState, (item) => {
       if(item.vState === false){
         allClear = false;
         return null;

@@ -25,7 +25,7 @@ class UploadProductOne extends Component{
     return null;
   }
 
-  onCheckboxChange = (value, vState) => {
+  onCheckboxChange = (value) => {
     this.setState({commonKeys:value});
     this.props.selectCommonFields(value);
   }
@@ -35,7 +35,7 @@ class UploadProductOne extends Component{
     let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
     this.stepTwoArray = [];
     this.stepThreeArray = [];
-    _.each(categoryData, (value, key) => {
+    _.each(categoryData, (value) => {
       if(value.ref && value.common) {
         requiredKeys.push(value.ref);
       }
@@ -54,8 +54,6 @@ class UploadProductOne extends Component{
     let optionalRequired = [];
     let optionalPopovers = [];
 
-    let compulsaryValues = [];
-
     let commonValues = [];
     let commonRequired = [];
     let commonPopovers = [];
@@ -64,7 +62,6 @@ class UploadProductOne extends Component{
     let categoryData = this.props.productUploadData.keyValue[this.state.categoryKey];
     if(categoryData) {
       _.each(categoryData, (value, key) => {
-          // (value.required) ? compulsaryValues.push({key:key, priority:value.priority}) : optionalValues.push({key:key, priority:value.priority});
           if (value.common) {
             //if the checkbox is required, i'm pushing a classname that will make it's background red
             commonValues.push({key:key, priority:value.priority, required:(value.required)? "checkboxRequired" : "checkboxOptional", description:(value.description)? value.description : false });
@@ -74,26 +71,26 @@ class UploadProductOne extends Component{
           }
           this.denormalizedFields.push({key: key, priority: value.priority, ref: value.ref, type: value.type});
       });
-      // compulsaryValues = _.sortBy(compulsaryValues,'priority');
+
       optionalValues = _.sortBy(optionalValues,'priority');
-      optionalRequired = _.map(optionalValues,(value, index) => {
+      optionalRequired = _.map(optionalValues,(value) => {
         return value.required;
       });
-      optionalPopovers = _.map(optionalValues,(value, index) => {
+      optionalPopovers = _.map(optionalValues,(value) => {
         return value.description;
       })
-      optionalValues = _.map(optionalValues,(value, index) => {
+      optionalValues = _.map(optionalValues,(value) => {
         return value.key;
       });
 
       commonValues = _.sortBy(commonValues, 'priority');
-      commonRequired = _.map(commonValues,(value, index) => {
+      commonRequired = _.map(commonValues,(value) => {
         return value.required;
       });
-      commonPopovers = _.map(commonValues,(value, index) => {
+      commonPopovers = _.map(commonValues,(value) => {
         return value.description;
       })
-      commonValues = _.map(commonValues,(value, index) => {
+      commonValues = _.map(commonValues,(value) => {
         return value.key;
       });
     }

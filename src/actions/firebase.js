@@ -6,7 +6,6 @@ var config = {
   databaseURL: "https://prokure.firebaseio.com",
   storageBucket: "project-1502850120591354565.appspot.com",
   messagingSenderId: "262399359247"
-};;
+};
 
 export const firebaseApp = firebase.initializeApp(config);
-

@@ -39,7 +39,7 @@ export const notificationsLog = (state = notifications_intitalState, action) => 
   switch(action.type){
     case ADD_NOTIFICATION:
       return [...state, action.payload ];
-    break;
+    // break;
 
     default:
       return state;

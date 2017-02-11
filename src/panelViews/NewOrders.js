@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {Component} from 'react';
 import CheckboxWrapper from '../components/CheckboxWrapper';
 import LabelledSelect from '../components/LabelledSelect';

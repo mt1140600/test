@@ -9,11 +9,11 @@ const dashboardReducer = (state = initial_value , action) => {
   switch(action.type){
     case SELECT_DASHBOARD_TAB:
       return Object.assign({}, state, {currentTab: action.payload});
-    break;
+    // break;
 
     case COLLAPSE_VERTICAL_TAB_BAR:
       return Object.assign({}, state, {collapsed: action.payload});
-    break;
+    // break;
 
     default:
       return state;

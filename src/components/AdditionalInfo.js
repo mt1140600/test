@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-import LabelledTextArea from './LabelledTextArea';
-import Immutable from 'immutable';
 
 class AdditionalInfo extends Component{
 

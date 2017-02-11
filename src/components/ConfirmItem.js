@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Overlay, Button, Intent} from "@blueprintjs/core";
+import {Overlay, Button} from "@blueprintjs/core";
 import CheckboxWrapper from './CheckboxWrapper';
 
 class ConfirmItem extends Component{

@@ -1,5 +1,4 @@
 import {createReducer} from '../utils';
-import { Map } from 'immutable';
 import {LOGIN_USER_REQUEST, LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE, LOGOUT_USER, SIGNUP_SUCCESS, SIGNUP_FAILED, SIGNUP_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILED, LOGOUT, RESTORE_LOGIN} from '../constant';
 
 const initialState = {

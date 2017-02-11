@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import Baby from "babyparse";
-import {Button, Menu, MenuDivider, MenuItem, Popover, Position} from '@blueprintjs/core';
+import {Button, Menu, MenuItem} from '@blueprintjs/core';
 import { Cell, Table, Column, EditableCell } from 'prokure_blueprint_table';
 import cascadedDisplay from '../actions/cascadedDisplay';
 import * as productUploadActions from '../actions/productUpload';
 import * as _ from 'lodash';
 import Callout from '../components/Callout';
-let classNames = require("classnames");
+// let classNames = require("classnames");
 import Tether from 'tether';
 import * as firebase from 'firebase';
 import {uploadProducts} from '../actions/productUpload';
@@ -96,7 +96,6 @@ class AutoCompleteDropDown extends Component{
   }
 
   render(){
-    let textInput;
     return(
       <div className= "autoCompleteDropDown" style= {this.props.style}>
         <div style={{padding: "5px 5px 5px 5px", backgroundColor: "whitesmoke"}}>
@@ -161,7 +160,7 @@ class UploadProductThree extends Component{
     if(this.columnNames[col].ref){
       //check if value is in options
       let newArray = [];
-      _.each(this.props.productUploadData.keyValue[this.columnNames[col].ref], (value, key) => {newArray.push(value.name)} );
+      _.each(this.props.productUploadData.keyValue[this.columnNames[col].ref], (value) => {newArray.push(value.name)} );
       if(newArray.indexOf(value) > -1){
         newRow[col] = true;
       }
@@ -195,7 +194,7 @@ class UploadProductThree extends Component{
     this.setState({ tableCells: newArray });
   }
 
-  openHoverTop = (parentClassName, ref) => {
+  openHoverTop = (parentClassName) => {
     let cellNameArray = parentClassName.split("-");
     //if the field has a help text, set that as hoverTopValue
     let helpText = "Invalid value";
@@ -224,7 +223,7 @@ class UploadProductThree extends Component{
     }
     //set autocomplete state
     let newArray = [];
-    _.each(this.props.productUploadData.keyValue[ref], (value, key) => {newArray.push(value.name)} );
+    _.each(this.props.productUploadData.keyValue[ref], (value) => {newArray.push(value.name)} );
     //The first time the dropdown is supposed to appear, the tether happens only after another click or scroll. to fix this, i'm mocking a tiny scroll
     this.setState({dropdownOptions: newArray, selectedCell: parentClassName, dbSubPath: ref, dropdownValue: this.state.tableCells[cellNameArray[1]][cellNameArray[2]], showAutoComplete: true}, () => {
       this.dropdown = new Tether({
@@ -282,7 +281,7 @@ class UploadProductThree extends Component{
   download = () => {
     this.setState({calloutText:"Do not change table headers in csv!", showCallout: true});
     var csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += this.columnNames.map( (item, index) => (item.required)? item.key+"*": item.key).join(",") + "\n";
+    csvContent += this.columnNames.map( (item) => (item.required)? item.key+"*": item.key).join(",") + "\n";
     this.state.tableCells.forEach( (infoArray, index) => {
       let dataString = infoArray.join(",");
       csvContent += index < this.state.tableCells.length ? dataString+ "\n" : dataString;
@@ -330,7 +329,7 @@ class UploadProductThree extends Component{
       //Reseting fileInput's value so that, even if same named file is uploaded, onChange callback is triggered
       this.fileInput.value = '';
     }
-    reader.onerror = function (evt) {
+    reader.onerror = function () {
       this.setState({calloutText:"Error reading file", showCallout: true});
       console.log("error reading file");
       //Reseting fileInput's value so that, even if same named file is uploaded, onChange callback is triggered
@@ -355,7 +354,7 @@ class UploadProductThree extends Component{
       let productObject = {
         sub_category_filters: []
       };
-      _.each(this.props.productUploadData.keyValue.categories, (value, key) => {
+      _.each(this.props.productUploadData.keyValue.categories, (value) => {
         if(value.ref === this.props.productUploadData.selectedCategory){
           productObject.category = value.category,
           productObject.sub_category = value.name
@@ -406,7 +405,6 @@ class UploadProductThree extends Component{
           default:
             console.log("Type not found ", this.columnNames);
             return null;
-          break;
         }
       }
       payload.push(productObject);

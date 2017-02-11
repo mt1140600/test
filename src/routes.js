@@ -10,12 +10,7 @@ import ResetPassword2 from './views/ResetPassword2';
 import Login from './views/Login';
 import ProductUpload from './containers/ProductUpload';
 import Verification from './views/Verification';
-import LabelledAutoComplete from './components/LabelledAutoComplete';
-import MultipleImageUpload from './components/MultipleImageUpload';
 import VerifyEmail from './views/VerifyEmail';
-import ConfirmItem from './components/ConfirmItem';
-import RejectItem from './components/RejectItem';
-import DateRangePopover from './components/DateRangePopover';
 import UploadProductDumb from './panelViews/UploadProductDumb';
 import UploadProduct from './panelViews/UploadProduct';
 import UploadHistory from './panelViews/UploadHistory';
@@ -24,10 +19,9 @@ import Returns from './panelViews/Returns';
 import Completed from './panelViews/Completed';
 import Payment from './panelViews/Payment';
 import ManageInventory from './panelViews/ManageInventory';
-import CascadedDisplay from './components/CascadedDisplay';
-import SampleHOC from './components/SampleHOC';
-import UploadProductViaSearch from './panelViews/UploadProductViaSearch';
-import Test from './components/Test';
+// import SampleHOC from './components/SampleHOC';
+// import UploadProductViaSearch from './panelViews/UploadProductViaSearch';
+// import Test from './components/Test';
 
 export default (
   <Route path="/" component={App}>
@@ -82,8 +76,6 @@ export default (
   //     <Route path="inventory" component={ManageInventory} />
   //   </Route>
   //
-  //   <Route path="auto" component={LabelledAutoComplete} />
-  //   <Route path="image" component={MultipleImageUpload} />
   //   <Route path="verification" component={Verification} />
   //   <Route path="hoc" component={SampleHOC} />
   //   <Route path="search" component={UploadProductViaSearch} />

@@ -1,6 +1,6 @@
 /* global cloudinary*/
 import React, {Component} from 'react';
-let Immutable = require('immutable');
+// let Immutable = require('immutable');
 import {Tooltip, Position} from '@blueprintjs/core';
 
 class MultipleImageUpload extends Component{

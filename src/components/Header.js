@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, {Component} from 'react';
 import logo from '../images/prokure_logo.png';
 import {bindActionCreators} from 'redux';

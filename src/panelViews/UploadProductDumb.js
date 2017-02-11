@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import LabelledUploadMultiple from '../components/LabelledUploadMultiple';
 import * as constants from '../constants';
-import * as fieldValidations from '../utils/fieldValidations';
 /* global cloudinary*/
 
 //Files uploaded get stored in productUploadDumb/user_id folder
@@ -11,7 +9,7 @@ class UploadProductDumb extends Component{
     this.state={status: 0};
   }
 
-  handleUpload = (value) => {
+  handleUpload = () => {
     cloudinary.openUploadWidget({ cloud_name: constants.cloudinaryCloudName, upload_preset: constants.cloudinaryProductUploadDumbPreset, folder: `productUploadDumb/${localStorage.getItem("user_id")}` },
     (error, result) => {
        console.log(error, result);

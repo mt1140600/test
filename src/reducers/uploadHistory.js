@@ -1,5 +1,4 @@
 import { FETCH_UPLOADS, UPLOAD_HISTORY_SET_SEARCH_SPECS  } from '../constant';
-import Immutable from 'immutable';
 
 const initial_state = {
   searchSpecs: {
@@ -12,16 +11,16 @@ const initial_state = {
 };
 
 const uploadHistory = (state = initial_state, action) => {
-
+  let newPayload, newSearchSpecs;
   switch(action.type){
       case FETCH_UPLOADS:
-        const newPayload = action.payload.uploads;
+        newPayload = action.payload.uploads;
         return Object.assign({}, state, {orders: newPayload});
-      break;
+      // break;
       case UPLOAD_HISTORY_SET_SEARCH_SPECS:
-        let newSearchSpecs = Object.assign({}, state.searchSpecs, action.payload.searchSpecs);
+        newSearchSpecs = Object.assign({}, state.searchSpecs, action.payload.searchSpecs);
         return Object.assign({}, state, {searchSpecs: newSearchSpecs});
-      break;
+      // break;
       default:
         return state;
   }

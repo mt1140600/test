@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import {Overlay, Button, RadioGroup, Radio} from "@blueprintjs/core";
-import {DateInput, TimePicker} from '@blueprintjs/datetime'
+import {DateInput} from '@blueprintjs/datetime'
 import LabelledTextInput from './LabelledTextInput';
 import PlainSelect from '../components/PlainSelect';
 import {validatePositiveNumber} from '../utils/fieldValidations';
 import {operationalHours2} from '../constants';
-// import moment from "moment";
-window.moment = require('moment');
+import moment from "moment";
+// window.moment = require('moment');
 
 class ChangeQuantity extends Component{
 
@@ -21,7 +21,7 @@ class ChangeQuantity extends Component{
   }
 
   componentWillReceiveProps(nextProps){
-    this.setState({ quantity: this.props.quantity});
+    this.setState({ quantity: nextProps.quantity});
   }
 
   toggleOverlay = () => {
@@ -46,6 +46,7 @@ class ChangeQuantity extends Component{
 
   handleConfirm = () => {
     //Combining all date components into one
+    let date = null;
     switch (this.state.reason) {
       case "one":
         //Post callwith reason: "Item is not available"
@@ -63,7 +64,7 @@ class ChangeQuantity extends Component{
       break;
 
       case "three":
-        let date = moment(this.state.date).format("DD-MM-YYYY h:mm a");
+        date = moment(this.state.date).format("DD-MM-YYYY h:mm a");
         date = date.split(" ");
         date[1] = this.state.time;
         date[2] = this.state.ampm;
