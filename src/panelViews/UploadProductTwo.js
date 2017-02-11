@@ -266,6 +266,10 @@ class UploadProductTwo extends Component{
     this.handleStepTwoState();
   }
 
+  componentWillUnmount(){
+    this.props.clearStepTwoState();
+  }
+
   // componentWillReceiveProps(nextProps){
   //   if( !_.isEqual(this.props.productUploadData.selectedCommonFields, nextProps.productUploadData.selectedCommonFields) ){
   //     console.log("new field selected");

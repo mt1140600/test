@@ -1,5 +1,5 @@
 import {firebaseApp} from './firebase';
-import {GET_PRODUCT_KEY_VALUES, SELECT_COMMON_FIELDS, SELECT_CATEGORY, HANDLE_STEP_TWO_STATE_CHANGE, REMOVE_SELECTED_FIELD, SET_PRODUCTS} from '../constant';
+import {GET_PRODUCT_KEY_VALUES, SELECT_COMMON_FIELDS, SELECT_CATEGORY, HANDLE_STEP_TWO_STATE_CHANGE, REMOVE_SELECTED_FIELD, SET_PRODUCTS, CLEAR_STEP_TWO_STATE} from '../constant';
 import * as constants from '../constants';
 import { checkHttpStatus, parseJSON } from '../utils';
 import 'whatwg-fetch';
@@ -54,6 +54,13 @@ export const handleStepTwoStateChange = (value) => {
   return{
     type: HANDLE_STEP_TWO_STATE_CHANGE,
     payload: value
+  }
+}
+
+export const clearStepTwoState = () => {
+  return{
+    type: CLEAR_STEP_TWO_STATE,
+    payload: {}
   }
 }
 
