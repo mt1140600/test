@@ -34,3 +34,10 @@ export const VisibleOnlyAdmin = UserAuthWrapper({
   predicate: userData => userData.isAdmin,
   FailureComponent: null
 });
+
+export const UserIsApproved = UserAuthWrapper({
+  authSelector: state => state.userData,
+  wrapperDisplayName: 'UserIsApproved',
+  predicate: userData => userData.isApproved,
+  failureRedirectPath: state => (state.userData.registration_complete === true ?'/verification':'/registration')
+});

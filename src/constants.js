@@ -10,7 +10,7 @@ export const reCaptchaSecretKey = "6Lf8BA4UAAAAAP22CL02OVXJnlr3xoxZSEs4qIRA";
 
 // export const url = (process.env.NODE_ENV === "development")? "http://dev.adminapi.prokure.it": "http://adminapi.prokure.it";
 // export const url = "http://localhost:3000";
-export const url = "http://192.168.0.112:3001";
+export const url = "http://192.168.0.109:3001";
 
 export const pincodeToAddress = `${url}/api/bank_address?pincode=`;
 export const requestOtp = `${url}/api/phone/request_otp/`;

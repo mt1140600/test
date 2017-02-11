@@ -32,16 +32,6 @@ const notifications_intitalState = [
     route: "/dashboard",
     new: true,
     content: "Welcome to Prokure!"
-  },
-  {
-    route: "/dashboard",
-    new: false,
-    content: "Welcome to Prokure!"
-  },
-  {
-    route: "/dashboard",
-    new: false,
-    content: "Welcome to Prokure!"
   }
 ];
 
