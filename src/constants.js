@@ -11,6 +11,7 @@ export const reCaptchaSecretKey = "6Lf8BA4UAAAAAP22CL02OVXJnlr3xoxZSEs4qIRA";
 
 
 export const url = (process.env.NODE_ENV === "development")? "http://dev.adminapi.prokure.it": "http://adminapi.prokure.it";
+// export const url = "http://adminapi.prokure.it";
 // export const url = "http://localhost:3000";
 //export const url = "http://192.168.0.109:3001";
 

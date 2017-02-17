@@ -247,7 +247,7 @@ export const restoreLogin = () => {
       token: localStorage.getItem('token'),
       email_verified: localStorage.getItem('email_verified') === 'false'? false: true,
       registration_complete: localStorage.getItem('registration_complete') === 'false'? false: true,
-      isApproved: localStorage.getItem('isApproved') === 'false'? false: true
+      isApproved: localStorage.getItem('isApproved') === 'true'? true: false
     }
   }
 }
