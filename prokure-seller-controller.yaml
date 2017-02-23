@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: prokure-seller
+  name: prokure-seller-controller-commit_id
+spec:
+  replicas: 1
+  selector:
+    name: prokure-seller
+    commit-id: commit_id
+  template:
+    metadata:
+      labels:
+        name: prokure-seller
+        commit-id: commit_id
+    spec:
+      containers:
+      - image: 10.240.255.5:5000/prokure-seller:commit_id
+        name: prokure-seller-commit_id
+        ports:
+        - containerPort: 80
+          name: http-server
