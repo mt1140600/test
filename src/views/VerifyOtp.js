@@ -7,11 +7,43 @@ import {showFloatingNotification} from '../actions/generic';
 import * as constants from '../constants';
 import { checkHttpStatus, parseJSON } from '../utils';
 
+
+require('velocity-animate');
+require('velocity-animate/velocity.ui');
+import AlertContainer from 'react-alert';
+var effects1 = ['fade'];
+var Box = require('../components/box');
+var VelocityComponent = require('../../velocity-component');
+// import {VelocityComponent, VelocityTransitionGroup} from 'velocity-react';
+
+
+
 class VerifyOtp extends Component {
   constructor(){
     super();
+    this.effects = effects1[0];
     this.state = {codeSent: false, code: "", validCode: true, otpTimeout: false};
     this.tokenId = null;
+    this.alertOptions = {
+        offset: 14,                                                                                                                                                                                                                                                                                 
+        position: 'bottom left',
+        theme: 'dark',
+        time: 5000,
+        transition: 'scale'
+      };
+    this.isIn = true;
+  }
+
+  showAlert(){
+    msg.show('Some text or component', {
+      time: 2000,
+      type: 'success',
+      // icon: <img src="../1.png"/>
+    });
+  }
+
+  whenToggleClicked() {
+    this.isIn =  !this.isIn;
   }
 
   handleChange = (event) => {
@@ -49,6 +81,10 @@ class VerifyOtp extends Component {
   }
 
   sendSMS = () => {
+    this.showAlert();
+    // console.log('toggling');
+    this.whenToggleClicked();
+    // console.log('toggled');
     if(validateMobileNumber(this.props.verifyOtp.value.phoneNo)){
       this.setState({validNo: true})
       this.props.updateVerifyOtp("phoneNo", this.props.verifyOtp.value.phoneNo, true);
@@ -66,10 +102,13 @@ class VerifyOtp extends Component {
           setTimeout(()=>{this.setState({otpTimeout: true})}, 20000)
           const responseObj = JSON.parse(smsRequest.response);
           this.tokenId = responseObj.token_id;
+          
+          // console.log('alert shown');
         }
         else{
           alert("Something went wrong");
           console.log("Something went wrong; Status: "+smsRequest.status);
+          // console.log('alert not shown');
         }
       }
       smsRequest.send(null);
@@ -149,15 +188,20 @@ class VerifyOtp extends Component {
   }
 
   render() {
+    console.log(this.isIn);
+    var animation = 'transition.' + this.effects + (this.isIn ? 'Out' : 'In');
     return(
       <div className="container">
-
+            
+        
+        
         <div className="col">
 
           <h2 className="pt-intent-primary item">Verify Mobile Number</h2>
           <br/>
           <p>Enter the mobile number below</p>
           <div className="pt-control-group">
+            // <AlertContainer ref={(a) => global.msg = a} {...this.alertOptions} />
             <p className="pt-button pt-active" style={{cursor:"default"}}>+91 </p>
             <input type="text" className="pt-input" value={this.props.verifyOtp.value.phoneNo} onChange={this.handleChange} onKeyUp={this.handleSMSEnter}/>
             <button className="pt-button" onClick={this.sendSMS}>Send SMS</button>
@@ -192,7 +236,7 @@ class VerifyOtp extends Component {
             :null
           }
         </div>
-
+        
       </div>
     );
   }
