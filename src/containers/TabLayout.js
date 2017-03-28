@@ -14,17 +14,15 @@ import {actionTabChange, loadForm} from '../actions/registration';
 
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
-// import AlertContainer from 'react-alert';
-var effects1 = ['fade'];
-var i=0;
+var effects1 = ['slideLeft','slideRight', 'fade'];
 var VelocityComponent = require('../../velocity-component');
-
-
+var prevTabIndex = 0;
 
 
 
 const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Terms & Conditions"];
 const tabPanels = [     VerifyOtp,            SellerInfo,          TaxDetails,    PaymentDetails,       POCDetails,            AddInfo,                    TnC];
+
 
 class TabLayout extends Component {
   constructor() {
@@ -40,15 +38,24 @@ class TabLayout extends Component {
       <Tab key={index} isSelected={true} className={dynamicClassName}>{item}</Tab>
     );
   }
+  find(){
+    console.log(this.props.currentTab);
+  }
   renderTabPanels(item, index) {
-    var animation = 'transition.' + this.effects + (this.isIn ? 'In' : 'Out');
+    
+    if(prevTabIndex<=this.props.currentTab ){
+      var animation = 'transition.'+effects1[0] + (this.isIn ? 'In' : 'Out');
+    }
+    else
+      var animation = 'transition.'+effects1[1] + (this.isIn ? 'Out' : 'In');
     let DynamicTabPanel = item; //Not using item directly as JSX requires First letter to be capitalised
+    prevTabIndex = this.props.currentTab;
     return(
       <TabPanel key={index}>
-      <VelocityComponent key={this.effects} animation={animation} duration = {2000}>
+      <VelocityComponent key={this.effects} animation={animation} duration = {3000}>
           <DynamicTabPanel/>
       </VelocityComponent>
-      </TabPanel>
+      </TabPanel> 
     );
   }
 
@@ -59,15 +66,13 @@ class TabLayout extends Component {
 
   handleTabChange = (selectedTab) => {
     this.isIn = !this.isIn;
+    console.log(this.props);
     this.props.actionTabChange(selectedTab);
   }
 
-  handleChange() {
-    this.isIn = !this.isIn;
-    this.render();
-  }
   render() {
-    
+    // console.log(this.props.currentTab);
+    // console.log(prevTabIndex);
     return(
       
         <Tabs className="tabs1" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
