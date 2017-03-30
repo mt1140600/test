@@ -13,6 +13,7 @@ import {updateSellerInfo, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
 import {storeSubForm} from '../utils';
 import * as _ from 'lodash';
+import {prevActionTabChange} from '../actions/registration';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -70,6 +71,10 @@ class SellerInfo extends Component {
     this.props.updateSellerInfo("wstate", this.props.sellerInfo.value.state, this.props.sellerInfo.vState.state);
     this.props.updateSellerInfo("wcity", this.props.sellerInfo.value.city, this.props.sellerInfo.vState.city);
     this.props.updateSellerInfo("wpincode", this.props.sellerInfo.value.pincode, this.props.sellerInfo.vState.pincode);
+  }
+
+  componentWillUnmount(){
+    this.props.prevActionTabChange(this.props.currentTab);
   }
 
   handleCopyAddress = () => {
@@ -316,12 +321,13 @@ class SellerInfo extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    sellerInfo : state.sellerInfo
+    sellerInfo : state.sellerInfo,
+    currentTab : state.registrationPrevTab
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ updateSellerInfo, updateTabValidation, actionTabChange }, dispatch);
+  return bindActionCreators({prevActionTabChange, updateSellerInfo, updateTabValidation, actionTabChange }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SellerInfo);

@@ -7,6 +7,8 @@ import {updateTabValidation} from '../actions/registration';
 import {push} from 'react-router-redux';
 import {pushSubFormToDB} from '../utils';
 import * as constants from '../constants';
+import {prevActionTabChange} from '../actions/registration';
+
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -56,6 +58,10 @@ class TnC extends Component {
       this.setState({showSpinner: false});
     }
 
+  }
+
+  componentWillUnmount(){
+    this.props.prevActionTabChange(this.props.currentTab);
   }
 
   render() {
@@ -560,12 +566,13 @@ class TnC extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    tabValidation: state.tabValidation
+    tabValidation: state.tabValidation,
+    currentTab : state.registrationCurrentTab
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({updateTabValidation, dispatch}, dispatch);
+  return bindActionCreators({prevActionTabChange, updateTabValidation, dispatch}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TnC);

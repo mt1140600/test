@@ -4,6 +4,16 @@ export const tabReducer = (state = 0, action) => {
     case "Set Registration Tab":
       return action.value;
     // break;
+    
+    default:
+      return state;
+  }
+}
+
+export const prevTabReducer = (state=0, action) =>{
+  switch(action.type){
+    case "Set Previous Tab":
+      return action.value;
 
     default:
       return state;

@@ -12,7 +12,7 @@ import {actionTabChange} from '../actions/registration';
 import * as constants from '../constants';
 import {storeSubForm} from '../utils';
 import {cloudinaryCloudName, cloudinaryImageUploadPreset} from '../constants';
-
+import {prevActionTabChange} from '../actions/registration';
 FocusStyleManager.onlyShowFocusOnTabs();
 
 class TaxDetails extends Component{
@@ -58,6 +58,10 @@ class TaxDetails extends Component{
       const subFormValid = storeSubForm(this.props.taxDetails, this.props.updateTaxDetails, this.props.updateTabValidation.bind(null, 2, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
 
       if(!subFormValid) this.setState({showSpinner: false});
+  }
+
+  componentWillUnmount(){
+    this.props.prevActionTabChange(this.props.currentTab);
   }
 
   render() {
@@ -152,12 +156,13 @@ class TaxDetails extends Component{
 
 const mapStateToProps = (state) => {
   return {
-    taxDetails : state.taxDetails
+    taxDetails : state.taxDetails,
+    currentTab : state.registrationCurrentTab
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ updateTaxDetails, updateTabValidation, actionTabChange }, dispatch);
+  return bindActionCreators({prevActionTabChange,  updateTaxDetails, updateTabValidation, actionTabChange }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaxDetails);

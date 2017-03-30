@@ -10,6 +10,7 @@ import {bindActionCreators} from 'redux';
 import {updatePaymentDetails, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
 import {storeSubForm} from '../utils';
+import {prevActionTabChange} from '../actions/registration';
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -52,6 +53,10 @@ class PaymentDetails extends Component {
     }
     const subFormValid = storeSubForm(this.props.paymentDetails, this.props.updatePaymentDetails, this.props.updateTabValidation.bind(null, 3, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
     if(!subFormValid) this.setState({showSpinner: false});
+  }
+
+  componentWillUnmount(){
+    this.props.prevActionTabChange(this.props.currentTab);
   }
 
   render() {
@@ -126,12 +131,13 @@ class PaymentDetails extends Component {
 
 const mapStateToProps = (state) => {
   return{
-    paymentDetails : state.paymentDetails
+    paymentDetails : state.paymentDetails,
+    currentTab : state.registrationCurrentTab
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({updatePaymentDetails, updateTabValidation, actionTabChange}, dispatch);
+  return bindActionCreators({prevActionTabChange, updatePaymentDetails, updateTabValidation, actionTabChange}, dispatch);
 
 }
 

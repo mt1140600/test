@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   productUploadData: productUploadData,
   uploadHistoryData: uploadHistoryData,
   notificationsLog: notificationsLog,
-
+  registrationPrevTab: registrationForm.prevTabReducer,
   registrationCurrentTab: registrationForm.tabReducer,
   verifyOtp: registrationForm.verifyOtp,
   sellerInfo: registrationForm.sellerInfo,

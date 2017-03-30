@@ -9,15 +9,13 @@ import PaymentDetails from '../views/PaymentDetails';
 import POCDetails from '../views/POCDetails';
 import AddInfo from '../views/AddInfo';
 import TnC from '../views/TnC';
-import {actionTabChange, loadForm} from '../actions/registration';
+import {actionTabChange, loadForm, prevActionTabChange} from '../actions/registration';
 
 
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
 var effects1 = ['slideLeft','slideRight', 'fade'];
 var VelocityComponent = require('../../velocity-component');
-var prevTabIndex = 0;
-
 
 
 const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Terms & Conditions"];
@@ -38,21 +36,19 @@ class TabLayout extends Component {
       <Tab key={index} isSelected={true} className={dynamicClassName}>{item}</Tab>
     );
   }
-  find(){
-    console.log(this.props.currentTab);
-  }
+  
   renderTabPanels(item, index) {
     
-    if(prevTabIndex<=this.props.currentTab ){
+    if(this.props.prevTabIndex<=this.props.currentTab ){
       var animation = 'transition.'+effects1[0] + (this.isIn ? 'In' : 'Out');
     }
     else
-      var animation = 'transition.'+effects1[1] + (this.isIn ? 'Out' : 'In');
+      var animation = 'transition.'+effects1[1] + (this.isIn ? 'In' : 'Out');
     let DynamicTabPanel = item; //Not using item directly as JSX requires First letter to be capitalised
-    prevTabIndex = this.props.currentTab;
+    
     return(
       <TabPanel key={index}>
-      <VelocityComponent key={this.effects} animation={animation} duration = {3000}>
+      <VelocityComponent key={this.effects} animation={animation} duration = {2000}>
           <DynamicTabPanel/>
       </VelocityComponent>
       </TabPanel> 
@@ -66,22 +62,19 @@ class TabLayout extends Component {
 
   handleTabChange = (selectedTab) => {
     this.isIn = !this.isIn;
-    console.log(this.props);
     this.props.actionTabChange(selectedTab);
   }
 
   render() {
-    // console.log(this.props.currentTab);
-    // console.log(prevTabIndex);
+    console.log('prev', this.props.prevTabIndex);
+    console.log('current',this.props.currentTab);
     return(
       
         <Tabs className="tabs1" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
           <TabList className="pt-large" style={{padding: "0px 20px 0px 20px"}}>
             {tabs.map(this.renderTabs)}
-          </TabList>
-          
-            {tabPanels.map(this.renderTabPanels)}
-          
+          </TabList>          
+            {tabPanels.map(this.renderTabPanels)}          
         </Tabs>
             
     );
@@ -91,12 +84,13 @@ class TabLayout extends Component {
 const mapStateToProps = (state) => {
   return {
     currentTab : state.registrationCurrentTab,
-    tabValidation: state.tabValidation
+    tabValidation: state.tabValidation,
+    prevTabIndex : state.registrationPrevTab
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({actionTabChange, loadForm}, dispatch);
+  return bindActionCreators({prevActionTabChange, actionTabChange, loadForm}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TabLayout);

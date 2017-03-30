@@ -9,6 +9,13 @@ export const actionTabChange = (tab) => {
   }
 }
 
+export const prevActionTabChange = (tab) => {
+    return {
+    type: 'Set Previous Tab',
+    value: tab
+  }
+}
+
 function actionCreator(actionName){   //bad naming convention. An action is the returned object. The method returning the action is the action creator. So, technically this is actionCreatorCreator
   return (field, value, vState) => {
     return{

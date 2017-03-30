@@ -8,6 +8,8 @@ import {updatePOCDetails, updateTabValidation} from '../actions/registration';
 import {actionTabChange} from '../actions/registration';
 import * as constants from '../constants';
 import {storeSubForm} from '../utils';
+import {prevActionTabChange} from '../actions/registration';
+
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
@@ -46,6 +48,10 @@ class POCDetails extends Component {
     const subFormValid = storeSubForm(this.props.pocDetails, this.props.updatePOCDetails, this.props.updateTabValidation.bind(null, 4, false), mapToDbObj, constants.saveForm, successHandler, failureHandler);
 
     if(!subFormValid) this.setState({showSpinner: false});
+  }
+
+  componentWillUnmount(){
+    this.props.prevActionTabChange(this.props.currentTab);
   }
 
   render() {
@@ -96,12 +102,13 @@ class POCDetails extends Component {
 
 const mapStateToProps = (state) => {
     return {
-      pocDetails: state.pocDetails
+      pocDetails: state.pocDetails,
+      currentTab : state.registrationCurrentTab
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ updatePOCDetails, updateTabValidation, actionTabChange }, dispatch );
+  return bindActionCreators({ prevActionTabChange, updatePOCDetails, updateTabValidation, actionTabChange }, dispatch );
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(POCDetails);

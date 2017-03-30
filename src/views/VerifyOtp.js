@@ -6,7 +6,7 @@ import {actionTabChange, updateTabValidation, updateVerifyOtp} from '../actions/
 import {showFloatingNotification} from '../actions/generic';
 import * as constants from '../constants';
 import { checkHttpStatus, parseJSON } from '../utils';
-
+import {prevActionTabChange} from '../actions/registration';
 
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
@@ -44,6 +44,10 @@ class VerifyOtp extends Component {
 
   whenToggleClicked() {
     this.isIn =  !this.isIn;
+  }
+
+  componentWillUnmount(){
+    this.props.prevActionTabChange(this.props.currentTab);
   }
 
   handleChange = (event) => {
@@ -244,12 +248,13 @@ class VerifyOtp extends Component {
 
 const mapStateToProps = (state) => {
     return {
-      verifyOtp: state.verifyOtp
+      verifyOtp: state.verifyOtp,
+      currentTab: state.registrationCurrentTab
     }
 }
 
 const mapDispatchToProps= (dispatch) => {
-  return bindActionCreators({updateTabValidation, actionTabChange, updateVerifyOtp, showFloatingNotification}, dispatch);
+  return bindActionCreators({prevActionTabChange, updateTabValidation, actionTabChange, updateVerifyOtp, showFloatingNotification}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(VerifyOtp);
