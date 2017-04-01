@@ -85,7 +85,7 @@ class VerifyOtp extends Component {
   }
 
   sendSMS = () => {
-    this.showAlert();
+    // this.showAlert();
     // console.log('toggling');
     this.whenToggleClicked();
     // console.log('toggled');

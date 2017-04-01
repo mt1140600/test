@@ -30,6 +30,7 @@ class TabLayout extends Component {
     this.renderTabs = this.renderTabs.bind(this);
     this.renderTabPanels = this.renderTabPanels.bind(this);
   }
+  
   renderTabs(item, index) {
     let dynamicClassName = (this.props.tabValidation[index] === false)?"pt-icon-small-cross red":(this.props.tabValidation[index]===true)?"pt-icon-small-tick green": "pt-icon-caret-right";
     return(
@@ -44,14 +45,16 @@ class TabLayout extends Component {
     }
     else
       var animation = 'transition.'+effects1[1] + (this.isIn ? 'In' : 'Out');
+    
+    
     let DynamicTabPanel = item; //Not using item directly as JSX requires First letter to be capitalised
     
     return(
+      <VelocityComponent key={this.effects} animation={animation} duration = {2000} >
       <TabPanel key={index}>
-      <VelocityComponent key={this.effects} animation={animation} duration = {2000}>
-          <DynamicTabPanel/>
-      </VelocityComponent>
+        <DynamicTabPanel/>
       </TabPanel> 
+      </VelocityComponent>
     );
   }
 
@@ -68,15 +71,14 @@ class TabLayout extends Component {
   render() {
     console.log('prev', this.props.prevTabIndex);
     console.log('current',this.props.currentTab);
-    return(
-      
+
+    return(      
         <Tabs className="tabs1" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
           <TabList className="pt-large" style={{padding: "0px 20px 0px 20px"}}>
             {tabs.map(this.renderTabs)}
           </TabList>          
             {tabPanels.map(this.renderTabPanels)}          
-        </Tabs>
-            
+        </Tabs>           
     );
   }
 }
