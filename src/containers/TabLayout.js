@@ -16,7 +16,7 @@ require('velocity-animate');
 require('velocity-animate/velocity.ui');
 var effects1 = ['slideLeft','slideRight', 'fade'];
 var VelocityComponent = require('../../velocity-component');
-
+import VelocityTransitionGroup from 'velocity-transition-group';
 
 const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Terms & Conditions"];
 const tabPanels = [     VerifyOtp,            SellerInfo,          TaxDetails,    PaymentDetails,       POCDetails,            AddInfo,                    TnC];
@@ -50,13 +50,15 @@ class TabLayout extends Component {
     let DynamicTabPanel = item; //Not using item directly as JSX requires First letter to be capitalised
     
     return(
-      
-      <TabPanel key={index}>
+      <TabPanel key={index} >
+      <VelocityComponent  animation={animation} duration = {2000} >
+      <TabPanel key={index} >
       
         <DynamicTabPanel/>
         
       </TabPanel> 
-      
+      </VelocityComponent>
+      </TabPanel>
     );
   }
 
@@ -79,15 +81,14 @@ class TabLayout extends Component {
     else
       var animation = 'transition.'+effects1[1] + (this.isIn ? 'In' : 'Out');
 
-    return(  
-    <VelocityComponent key={this.effects} animation={animation} duration = {2000} >    
+    return(           
         <Tabs className="tabs1" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
           <TabList className="pt-large" style={{padding: "0px 20px 0px 20px"}}>
             {tabs.map(this.renderTabs)}
           </TabList>          
             {tabPanels.map(this.renderTabPanels)}          
         </Tabs>  
-        </VelocityComponent>         
+                 
     );
   }
 }

@@ -78,6 +78,7 @@
     "tether-drop": "1.4.2",
     "velocity-animate": "^1.4.0",
     "velocity-react": "1.1.11",
+    "velocity-transition-group": "1.2.2",
     "whatwg-fetch": "2.0.1",
     "yarn": "^0.17.10"
   },
