@@ -50,11 +50,13 @@ class TabLayout extends Component {
     let DynamicTabPanel = item; //Not using item directly as JSX requires First letter to be capitalised
     
     return(
-      <VelocityComponent key={this.effects} animation={animation} duration = {2000} >
+      
       <TabPanel key={index}>
+      
         <DynamicTabPanel/>
+        
       </TabPanel> 
-      </VelocityComponent>
+      
     );
   }
 
@@ -71,14 +73,21 @@ class TabLayout extends Component {
   render() {
     console.log('prev', this.props.prevTabIndex);
     console.log('current',this.props.currentTab);
+    if(this.props.prevTabIndex<=this.props.currentTab ){
+      var animation = 'transition.'+effects1[0] + (this.isIn ? 'In' : 'Out');
+    }
+    else
+      var animation = 'transition.'+effects1[1] + (this.isIn ? 'In' : 'Out');
 
-    return(      
+    return(  
+    <VelocityComponent key={this.effects} animation={animation} duration = {2000} >    
         <Tabs className="tabs1" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
           <TabList className="pt-large" style={{padding: "0px 20px 0px 20px"}}>
             {tabs.map(this.renderTabs)}
           </TabList>          
             {tabPanels.map(this.renderTabPanels)}          
-        </Tabs>           
+        </Tabs>  
+        </VelocityComponent>         
     );
   }
 }
