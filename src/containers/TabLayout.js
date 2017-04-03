@@ -18,6 +18,7 @@ var effects1 = ['slideLeft','slideRight', 'fade'];
 var VelocityComponent = require('../../velocity-component');
 import VelocityTransitionGroup from 'velocity-transition-group';
 
+
 const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Terms & Conditions"];
 const tabPanels = [     VerifyOtp,            SellerInfo,          TaxDetails,    PaymentDetails,       POCDetails,            AddInfo,                    TnC];
 
@@ -51,11 +52,9 @@ class TabLayout extends Component {
     
     return(
       <TabPanel key={index} >
-      <VelocityComponent  animation={animation} duration = {2000} >
+      <VelocityComponent key = {this.effects1} animation={animation} runOnMount={false} duration = {2000} >
       <TabPanel key={index} >
-      
         <DynamicTabPanel/>
-        
       </TabPanel> 
       </VelocityComponent>
       </TabPanel>
@@ -73,14 +72,6 @@ class TabLayout extends Component {
   }
 
   render() {
-    console.log('prev', this.props.prevTabIndex);
-    console.log('current',this.props.currentTab);
-    if(this.props.prevTabIndex<=this.props.currentTab ){
-      var animation = 'transition.'+effects1[0] + (this.isIn ? 'In' : 'Out');
-    }
-    else
-      var animation = 'transition.'+effects1[1] + (this.isIn ? 'In' : 'Out');
-
     return(           
         <Tabs className="tabs1" selectedTabIndex={this.props.currentTab} onChange={this.handleTabChange}>
           <TabList className="pt-large" style={{padding: "0px 20px 0px 20px"}}>
