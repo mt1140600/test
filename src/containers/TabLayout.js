@@ -15,7 +15,6 @@ import {actionTabChange, loadForm, prevActionTabChange} from '../actions/registr
 require('velocity-animate');
 require('velocity-animate/velocity.ui');
 var effects1 = ['slideLeft','slideRight', 'fade'];
-var VelocityComponent = require('../../velocity-component');
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 const tabs      = ["Mobile Verification", "Seller Information",  "Tax Details",  "Payment Details",  "Point of Contact", "Additional Information", "Terms & Conditions"];
@@ -40,16 +39,16 @@ class TabLayout extends Component {
   renderTabPanels(item, index) {
     
     if(this.props.prevTabIndex<=this.props.currentTab ){
-      var animation = 'transition.'+effects1[0] + (this.isIn ? 'In' : 'Out');
+      var animation = "slide";
     }
     else
-      var animation = 'transition.'+effects1[1] + (this.isIn ? 'In' : 'Out');
+      var animation = "slide1";
     
     let DynamicTabPanel = item; //Not using item directly as JSX requires First letter to be capitalised
     return(
       <TabPanel key={index}> 
            <ReactCSSTransitionGroup
-          transitionName="slide"
+          transitionName={animation}
           transitionAppear={true}
           transitionAppearTimeout={500}
           transitionEnterTimeout={300}
