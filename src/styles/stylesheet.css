@@ -33,9 +33,9 @@ body:-moz-full-screen {
 }*/
 .slide-appear {
   /*opacity    : 0;*/
-  -webkit-animation: slideIn 2s forwards;
-  -moz-animation: slideIn 2s forwards;
-  animation: slideIn 2s forwards;
+  -webkit-animation: slideIn 1s forwards;
+  -moz-animation: slideIn 1s forwards;
+  animation: slideIn 1s forwards;
 }
 
 .slide-appear.slide-appear-active {
@@ -44,9 +44,9 @@ body:-moz-full-screen {
 
 .slide-enter {
   /*max-height : 0;*/
-  -webkit-animation: slideIn 2s forwards;
-  -moz-animation: slideIn 2s forwards;
-  animation: slideIn 2s forwards;
+  -webkit-animation: slideIn 1s forwards;
+  -moz-animation: slideIn 1s forwards;
+  animation: slideIn 1s forwards;
 }
 
 .slide-enter.slide-enter-active {
@@ -55,9 +55,9 @@ body:-moz-full-screen {
 
 .slide-leave {
   /*max-height : 1000px;*/
-  -webkit-animation: slideIn 2s forwards;
-  -moz-animation: slideIn 2s forwards;
-  animation: slideIn 2s forwards;
+  -webkit-animation: slideIn 1s forwards;
+  -moz-animation: slideIn 1s forwards;
+  animation: slideIn 1s forwards;
 }
 
 .slide-leave.slide-leave-active {
@@ -97,9 +97,9 @@ body:-moz-full-screen {
 
 .slide1-appear {
   /*opacity    : 0;*/
-  -webkit-animation: slideOut 2s forwards;
-  -moz-animation: slideOut 2s forwards;
-  animation: slideOut 2s forwards;
+  -webkit-animation: slideOut 1s forwards;
+  -moz-animation: slideOut 1s forwards;
+  animation: slideOut 1s forwards;
 }
 
 .slide1-appear.slide1-appear-active {
@@ -108,9 +108,9 @@ body:-moz-full-screen {
 
 .slide1-enter {
   /*max-height : 0;*/
-  -webkit-animation: slideOut 2s forwards;
-  -moz-animation: slideOut 2s forwards;
-  animation: slideOut 2s forwards;
+  -webkit-animation: slideOut 1s forwards;
+  -moz-animation: slideOut 1s forwards;
+  animation: slideOut 1s forwards;
 }
 
 .slide1-enter.slide1-enter-active {
@@ -119,9 +119,9 @@ body:-moz-full-screen {
 
 .slide1-leave {
   /*max-height : 1000px;*/
-  -webkit-animation: slideOut 2s forwards;
-  -moz-animation: slideOut 2s forwards;
-  animation: slideOut 2s forwards;
+  -webkit-animation: slideOut 1s forwards;
+  -moz-animation: slideOut 1s forwards;
+  animation: slideOut 1s forwards;
 }
 
 .slide1-leave.slide1-leave-active {
